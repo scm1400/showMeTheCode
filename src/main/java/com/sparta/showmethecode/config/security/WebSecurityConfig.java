@@ -19,6 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.headers().frameOptions().disable();
 
+        // 일단 모든 요청 허용
         http.authorizeRequests()
                 .anyRequest().permitAll();
     }

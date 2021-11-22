@@ -32,10 +32,7 @@ public class ReviewRequestService {
      */
     @Transactional(readOnly = true)
     public ReviewRequestListResponseDto getReviewRequestList(int page, int size, String sortBy, boolean isAsc) {
-        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Sort sort = Sort.by(direction, sortBy);
-
-        Pageable pageable = PageRequest.of(page, size, sort);
+        Pageable pageable = makePageable(page, size, sortBy, isAsc);
 
         Page<ReviewRequest> reviewRequests = reviewRequestRepository.findAll(pageable);
         List<ReviewRequestResponseDto> reviewRequestResponseDtos = reviewRequests.getContent().stream()
@@ -48,7 +45,7 @@ public class ReviewRequestService {
                         )
                 ).collect(Collectors.toList());
 
-        return new ReviewRequestListResponseDto(reviewRequestResponseDtos, reviewRequests.getTotalPages(), reviewRequests.getNumberOfElements(), page, size);
+        return new ReviewRequestListResponseDto(reviewRequestResponseDtos, reviewRequests.getTotalPages(), (int) reviewRequests.getTotalElements(), page, size);
     }
 
     /**
@@ -57,8 +54,29 @@ public class ReviewRequestService {
     @Transactional(readOnly = true)
     public void addReviewRequest(ReviewRequestDto requestDto) {
         ReviewRequest reviewRequest
-                = new ReviewRequest(requestDto.getTitle(), requestDto.getCode(), requestDto.getComment(), ReviewRequestStatus.REQUESTED, requestDto.getLanguage().toUpperCase());
+                = new ReviewRequest(null, requestDto.getTitle(), requestDto.getCode(), requestDto.getComment(), ReviewRequestStatus.REQUESTED, requestDto.getLanguage().toUpperCase());
 
         reviewRequestRepository.save(reviewRequest);
+    }
+
+    /**
+     * 코드리뷰 검색 API
+     */
+    @Transactional(readOnly = true)
+    public ReviewRequestListResponseDto searchByTitleOrComment(
+            String keyword,
+            int page, int size, String sortBy, boolean isAsc
+    ) {
+        Pageable pageable = makePageable(page, size, sortBy, isAsc);
+
+        return reviewRequestRepository.findSearchByTitleOrComment(keyword, pageable);
+    }
+
+
+    private Pageable makePageable(int page, int size, String sortBy, boolean isAsc) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+
+        return PageRequest.of(page, size, sort);
     }
 }

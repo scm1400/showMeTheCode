@@ -49,7 +49,8 @@ public class ReviewRequest extends Timestamped{
     @ManyToOne(fetch = FetchType.LAZY)
     private ReviewAnswer reviewAnswer;
 
-    public ReviewRequest(String title, String code, String comment, ReviewRequestStatus status, String languageName) {
+    public ReviewRequest(User requestUser, String title, String code, String comment, ReviewRequestStatus status, String languageName) {
+        this.requestUser = requestUser;
         this.title = title;
         this.code = code;
         this.comment = comment;

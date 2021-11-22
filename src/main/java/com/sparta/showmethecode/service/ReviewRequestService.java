@@ -63,7 +63,7 @@ public class ReviewRequestService {
      * 코드리뷰 검색 API
      */
     @Transactional(readOnly = true)
-    public ReviewRequestListResponseDto searchByTitleOrComment(
+    public Page<ReviewRequestResponseDto> searchByTitleOrComment(
             String keyword,
             int page, int size, String sortBy, boolean isAsc
     ) {

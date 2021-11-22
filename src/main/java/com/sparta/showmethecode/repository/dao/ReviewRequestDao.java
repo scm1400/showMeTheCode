@@ -1,10 +1,12 @@
 package com.sparta.showmethecode.repository.dao;
 
-import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
-import lombok.RequiredArgsConstructor;
+import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface ReviewRequestDao {
 
-    ReviewRequestListResponseDto findSearchByTitleOrComment(String keyword, Pageable pageable);
+    Page<ReviewRequestResponseDto> findSearchByTitleOrComment(String keyword, Pageable pageable);
+
+    Page<ReviewRequestResponseDto> findSearchByTitleOrCommentAdvanced(String keyword, Pageable pageable);
 }

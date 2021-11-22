@@ -15,8 +15,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +32,7 @@ public class ReviewRequestDaoTest {
     UserRepository userRepository;
 
     @BeforeEach
-    void init() {
+    void init() throws InterruptedException {
         User user = new User("user1", "pass1", UserRole.ROLE_USER, 0, 0);
         userRepository.save(user);
 
@@ -41,27 +43,53 @@ public class ReviewRequestDaoTest {
         reviewRequestRepository.saveAll(Arrays.asList(reviewRequest1, reviewRequest2, reviewRequest3));
 
         for (int i=0;i<11;i++) {
-            ReviewRequest reviewRequest = new ReviewRequest(user, "jpa가 이상해요", "code3", "spring에서 jpa가 이상해요", ReviewRequestStatus.REQUESTED, "PYTHON");
+            Thread.sleep(500);
+            ReviewRequest reviewRequest = new ReviewRequest(user, "jpa가 이상해요"+i, "code3", "spring에서 jpa가 이상해요", ReviewRequestStatus.REQUESTED, "PYTHON");
             reviewRequestRepository.save(reviewRequest);
         }
     }
 
     @Test
-    void 검색_테스트() {
+    void 검색_테스트1() {
         final String keyword = "jpa";
-        final int page = 1;
-        final int size = 6;
+        final int page = 0;
+        final int size = 12;
 
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = makePageable(page, size, "createdAt", false);
 
-        ReviewRequestListResponseDto results = reviewRequestRepository.findSearchByTitleOrComment(keyword, pageable);
-        List<ReviewRequestResponseDto> list = results.getList();
+        Page<ReviewRequestResponseDto> results = reviewRequestRepository.findSearchByTitleOrComment(keyword, pageable);
+        List<ReviewRequestResponseDto> list = results.getContent();
 
-        list.forEach(l -> System.out.println(l.getTitle() + ": " + l.getComment()));
-        System.out.println("totalPage  = " + results.getTotalPage());
+        list.forEach(l -> System.out.println(l.getTitle() + ": " + l.getComment() + ": " + l.getCreatedAt()));
+        System.out.println("totalPage  = " + results.getTotalPages());
         System.out.println("totalElements = " + results.getTotalElements());
-        System.out.println("page = " + results.getPage());
+        System.out.println("page = " + results.getNumber());
         System.out.println("size = " + results.getSize());
 
+    }
+
+    @Test
+    void 검색_테스트2() {
+        final String keyword = "jpa";
+        final int page = 0;
+        final int size = 12;
+
+        Pageable pageable = makePageable(page, size, "createdAt", false);
+
+        Page<ReviewRequestResponseDto> results = reviewRequestRepository.findSearchByTitleOrCommentAdvanced(keyword, pageable);
+        List<ReviewRequestResponseDto> list = results.getContent();
+
+        list.forEach(l -> System.out.println(l.getTitle() + ": " + l.getComment() + ": " + l.getCreatedAt()));
+        System.out.println("totalPage  = " + results.getTotalPages());
+        System.out.println("totalElements = " + results.getTotalElements());
+        System.out.println("page = " + results.getNumber());
+        System.out.println("size = " + results.getSize());
+    }
+
+    private Pageable makePageable(int page, int size, String sortBy, boolean isAsc) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+
+        return PageRequest.of(page, size, sort);
     }
 }

@@ -19,11 +19,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
 
+@TestPropertySource(locations = "/application-test.yml")
 @SpringBootTest
+@Transactional
 public class ReviewRequestDaoTest {
 
     @Autowired
@@ -43,7 +47,6 @@ public class ReviewRequestDaoTest {
         reviewRequestRepository.saveAll(Arrays.asList(reviewRequest1, reviewRequest2, reviewRequest3));
 
         for (int i=0;i<11;i++) {
-            Thread.sleep(500);
             ReviewRequest reviewRequest = new ReviewRequest(user, "jpa가 이상해요"+i, "code3", "spring에서 jpa가 이상해요", ReviewRequestStatus.REQUESTED, "PYTHON");
             reviewRequestRepository.save(reviewRequest);
         }
@@ -57,7 +60,7 @@ public class ReviewRequestDaoTest {
 
         Pageable pageable = makePageable(page, size, "createdAt", false);
 
-        Page<ReviewRequestResponseDto> results = reviewRequestRepository.findSearchByTitleOrComment(keyword, pageable);
+        Page<ReviewRequestResponseDto> results = reviewRequestRepository.findSearchByTitleOrCommentAdvanced(keyword, pageable, false);
         List<ReviewRequestResponseDto> list = results.getContent();
 
         list.forEach(l -> System.out.println(l.getTitle() + ": " + l.getComment() + ": " + l.getCreatedAt()));
@@ -69,14 +72,14 @@ public class ReviewRequestDaoTest {
     }
 
     @Test
-    void 검색_테스트2() {
+    void 검색_테스트_정렬() {
         final String keyword = "jpa";
         final int page = 0;
         final int size = 12;
 
         Pageable pageable = makePageable(page, size, "createdAt", false);
 
-        Page<ReviewRequestResponseDto> results = reviewRequestRepository.findSearchByTitleOrCommentAdvanced(keyword, pageable);
+        Page<ReviewRequestResponseDto> results = reviewRequestRepository.findSearchByTitleOrCommentAdvanced(keyword, pageable, true);
         List<ReviewRequestResponseDto> list = results.getContent();
 
         list.forEach(l -> System.out.println(l.getTitle() + ": " + l.getComment() + ": " + l.getCreatedAt()));

@@ -1,12 +1,10 @@
 package com.sparta.showmethecode.service;
 
-import com.sparta.showmethecode.domain.Language;
 import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
-import com.sparta.showmethecode.repository.LanguageRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,13 +61,14 @@ public class ReviewRequestService {
      * 코드리뷰 검색 API
      */
     @Transactional(readOnly = true)
-    public Page<ReviewRequestResponseDto> searchByTitleOrComment(
+    public ReviewRequestListResponseDto searchByTitleOrComment(
             String keyword,
             int page, int size, String sortBy, boolean isAsc
     ) {
         Pageable pageable = makePageable(page, size, sortBy, isAsc);
+        Page<ReviewRequestResponseDto> results = reviewRequestRepository.findSearchByTitleOrCommentAdvanced(keyword, pageable, isAsc);
 
-        return reviewRequestRepository.findSearchByTitleOrComment(keyword, pageable);
+        return new ReviewRequestListResponseDto(results.getContent(), results.getTotalPages(), (int) results.getTotalElements(), page, size);
     }
 
 

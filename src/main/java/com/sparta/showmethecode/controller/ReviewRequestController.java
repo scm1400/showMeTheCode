@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+import java.util.Optional;
+
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -21,8 +24,17 @@ public class ReviewRequestController {
      */
     @GetMapping("/requests")
     public ResponseEntity<ReviewRequestListResponseDto> getReviewRequestList(
-            @RequestParam int page, @RequestParam int size, @RequestParam String sortBy, @RequestParam boolean isAsc
+            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "createdAt") String sortBy, @RequestParam(defaultValue = "true") Boolean isAsc,
+            @RequestParam(required = false) String query
     ) {
+
+        --page;
+
+        if (!Objects.isNull(query)) {
+            return ResponseEntity.ok(reviewRequestService.searchByTitleOrComment(query, page, size, sortBy, isAsc));
+        }
+
         ReviewRequestListResponseDto reviewRequestList = reviewRequestService.getReviewRequestList(page, size, sortBy, isAsc);
 
         return ResponseEntity.ok(reviewRequestList);
@@ -32,7 +44,7 @@ public class ReviewRequestController {
      * 코드리뷰 요청 API
      */
     @PostMapping("/request")
-    public ResponseEntity addReviewRequest(@RequestBody ReviewRequestDto requestDto) {
+    public ResponseEntity<String> addReviewRequest(@RequestBody ReviewRequestDto requestDto) {
         reviewRequestService.addReviewRequest(requestDto);
 
         return ResponseEntity.ok("ok");

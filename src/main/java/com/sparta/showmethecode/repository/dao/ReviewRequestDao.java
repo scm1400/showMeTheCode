@@ -8,5 +8,5 @@ public interface ReviewRequestDao {
 
     Page<ReviewRequestResponseDto> findSearchByTitleOrComment(String keyword, Pageable pageable);
 
-    Page<ReviewRequestResponseDto> findSearchByTitleOrCommentAdvanced(String keyword, Pageable pageable);
+    Page<ReviewRequestResponseDto> findSearchByTitleOrCommentAdvanced(String keyword, Pageable pageable, boolean isAsc);
 }

@@ -54,7 +54,7 @@ public class ReviewRequestDaoImpl implements ReviewRequestDao {
     }
 
     @Override
-    public Page<ReviewRequestResponseDto> findSearchByTitleOrCommentAdvanced(String keyword, Pageable pageable) {
+    public Page<ReviewRequestResponseDto> findSearchByTitleOrCommentAdvanced(String keyword, Pageable pageable, boolean isAsc) {
 
         List<ReviewRequestResponseDto> results = query
                 .select(new QReviewRequestResponseDto(
@@ -69,6 +69,7 @@ public class ReviewRequestDaoImpl implements ReviewRequestDao {
                 .where(containingTitleOrComment(keyword))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
+                .orderBy(isAsc ? reviewRequest.createdAt.desc() : reviewRequest.createdAt.asc())
                 .fetch();
 
         JPAQuery<ReviewRequestResponseDto> jpaQuery = query

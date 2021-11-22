@@ -20,6 +20,7 @@ public class ReviewRequest extends Timestamped{
 
     @Id @GeneratedValue
     private Long id;
+
     @Column(nullable = false)
     private String title;
 

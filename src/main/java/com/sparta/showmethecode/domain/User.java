@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -38,5 +37,22 @@ public class User extends Timestamped{
     private void addLanguage(Language language) {
             this.getLanguages().add(language);
             language.setUser(this);
+    }
+
+    public User(String username, String password, UserRole userRole, int reviewCount, int rankingPoint, List<Language> languages) {
+        this.username = username;
+        this.password = password;
+        this.userRole = userRole;
+        this.reviewCount = reviewCount;
+        this.rankingPoint = rankingPoint;
+        this.languages = languages;
+    }
+
+    public User(String username, String password, UserRole userRole, int reviewCount, int rankingPoint) {
+        this.username = username;
+        this.password = password;
+        this.userRole = userRole;
+        this.reviewCount = reviewCount;
+        this.rankingPoint = rankingPoint;
     }
 }

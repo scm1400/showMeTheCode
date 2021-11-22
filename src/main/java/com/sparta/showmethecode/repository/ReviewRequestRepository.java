@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ReviewRequestRepository extends JpaRepository<ReviewRequest, Long> {
 
     Page<ReviewRequest> findAll(Pageable pageable);
+
 }

@@ -1,16 +1,15 @@
 package com.sparta.showmethecode.controller;
 
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
+import com.sparta.showmethecode.dto.response.ReviewRequestDetailResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
 import com.sparta.showmethecode.service.ReviewRequestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,7 +21,7 @@ public class ReviewRequestController {
     /**
      * 코드리뷰 요청목록 API
      */
-    @GetMapping("/requests")
+    @GetMapping("/questions")
     public ResponseEntity<ReviewRequestListResponseDto> getReviewRequestList(
             @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size,
             @RequestParam(defaultValue = "createdAt") String sortBy, @RequestParam(defaultValue = "true") Boolean isAsc,
@@ -43,10 +42,20 @@ public class ReviewRequestController {
     /**
      * 코드리뷰 요청 API
      */
-    @PostMapping("/request")
+    @PostMapping("/question")
     public ResponseEntity<String> addReviewRequest(@RequestBody ReviewRequestDto requestDto) {
         reviewRequestService.addReviewRequest(requestDto);
 
         return ResponseEntity.ok("ok");
+    }
+
+    /**
+     * 코드리뷰 단건조회 API (코드리뷰 요청 상세정보)
+     */
+    @GetMapping("/question")
+    public ResponseEntity<ReviewRequestDetailResponseDto> getReviewRequest(@RequestParam Long id) {
+        ReviewRequestDetailResponseDto reviewRequest = reviewRequestService.getReviewRequest(id);
+
+        return ResponseEntity.ok(reviewRequest);
     }
 }

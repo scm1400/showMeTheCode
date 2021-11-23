@@ -3,6 +3,7 @@ package com.sparta.showmethecode.service;
 import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
+import com.sparta.showmethecode.dto.response.ReviewRequestDetailResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
@@ -35,6 +36,7 @@ public class ReviewRequestService {
         Page<ReviewRequest> reviewRequests = reviewRequestRepository.findAll(pageable);
         List<ReviewRequestResponseDto> reviewRequestResponseDtos = reviewRequests.getContent().stream()
                 .map(r -> new ReviewRequestResponseDto(
+                                r.getId(),
                                 r.getRequestUser().getUsername(),
                                 r.getTitle(),
                                 r.getComment(),
@@ -77,5 +79,25 @@ public class ReviewRequestService {
         Sort sort = Sort.by(direction, sortBy);
 
         return PageRequest.of(page, size, sort);
+    }
+
+    /**
+     * 코드리뷰 단건조회 API (코드리뷰 요청 상세정보)
+     */
+    @Transactional(readOnly = true)
+    public ReviewRequestDetailResponseDto getReviewRequest(Long id) {
+        ReviewRequest review = reviewRequestRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("존재하지 않는 코드리뷰입니다.")
+        );
+
+        return new ReviewRequestDetailResponseDto(
+                review.getId(),
+                review.getRequestUser().getUsername(),
+                review.getTitle(),
+                review.getCode(),
+                review.getComment(),
+                review.getStatus().toString(),
+                review.getCreatedAt()
+        );
     }
 }

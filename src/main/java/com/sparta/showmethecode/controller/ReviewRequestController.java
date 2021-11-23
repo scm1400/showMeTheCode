@@ -54,6 +54,7 @@ public class ReviewRequestController {
      */
     @GetMapping("/question")
     public ResponseEntity<ReviewRequestDetailResponseDto> getReviewRequest(@RequestParam Long id) {
+        log.info("getReviewRequest = {}", id);
         ReviewRequestDetailResponseDto reviewRequest = reviewRequestService.getReviewRequest(id);
 
         return ResponseEntity.ok(reviewRequest);

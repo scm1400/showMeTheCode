@@ -57,4 +57,14 @@ public class ReviewRequest extends Timestamped{
         this.status = status;
         this.languageName = languageName;
     }
+
+    public ReviewRequest(User requestUser, User answerUser,String title, String code, String comment, ReviewRequestStatus status, String languageName) {
+        this.requestUser = requestUser;
+        this.answerUser = answerUser;
+        this.title = title;
+        this.code = code;
+        this.comment = comment;
+        this.status = status;
+        this.languageName = languageName;
+    }
 }

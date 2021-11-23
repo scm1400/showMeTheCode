@@ -6,6 +6,7 @@ import com.sparta.showmethecode.dto.request.ReviewRequestDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestDetailResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
+import com.sparta.showmethecode.repository.ReviewRequestCommentRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 public class ReviewRequestService {
 
     private final ReviewRequestRepository reviewRequestRepository;
+    private final ReviewRequestCommentRepository reviewRequestCommentRepository;
 
     /**
      * 코드리뷰 요청목록 API
@@ -40,6 +42,7 @@ public class ReviewRequestService {
                                 r.getRequestUser().getUsername(),
                                 r.getTitle(),
                                 r.getComment(),
+                                r.getLanguageName(),
                                 r.getStatus().toString(),
                                 r.getCreatedAt()
                         )
@@ -86,18 +89,8 @@ public class ReviewRequestService {
      */
     @Transactional(readOnly = true)
     public ReviewRequestDetailResponseDto getReviewRequest(Long id) {
-        ReviewRequest review = reviewRequestRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 코드리뷰입니다.")
-        );
-
-        return new ReviewRequestDetailResponseDto(
-                review.getId(),
-                review.getRequestUser().getUsername(),
-                review.getTitle(),
-                review.getCode(),
-                review.getComment(),
-                review.getStatus().toString(),
-                review.getCreatedAt()
-        );
+        ReviewRequestDetailResponseDto reviewRequestDetailWithComment = reviewRequestCommentRepository.getReviewRequestDetailWithCommentAdvanced(id);
+       // ReviewRequestDetailResponseDto reviewRequestDetailWithComment = reviewRequestCommentRepository.getReviewRequestDetailWithComment(id);
+        return reviewRequestDetailWithComment;
     }
 }

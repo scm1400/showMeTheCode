@@ -5,8 +5,10 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.showmethecode.domain.QReviewRequest;
+import com.sparta.showmethecode.domain.QReviewRequestComment;
 import com.sparta.showmethecode.domain.QUser;
 import com.sparta.showmethecode.dto.response.QReviewRequestResponseDto;
+import com.sparta.showmethecode.dto.response.ReviewRequestDetailResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,7 @@ import java.util.Objects;
 
 import static com.sparta.showmethecode.domain.QReviewRequest.*;
 import static com.sparta.showmethecode.domain.QReviewRequest.reviewRequest;
+import static com.sparta.showmethecode.domain.QReviewRequestComment.*;
 import static com.sparta.showmethecode.domain.QUser.*;
 
 @Slf4j
@@ -37,6 +40,7 @@ public class ReviewRequestDaoImpl implements ReviewRequestDao {
                         user.username,
                         reviewRequest.title,
                         reviewRequest.comment,
+                        reviewRequest.languageName,
                         reviewRequest.status.stringValue(),
                         reviewRequest.createdAt)
                 )
@@ -54,6 +58,7 @@ public class ReviewRequestDaoImpl implements ReviewRequestDao {
                         user.username,
                         reviewRequest.title,
                         reviewRequest.comment,
+                        reviewRequest.languageName,
                         reviewRequest.status.stringValue(),
                         reviewRequest.createdAt)
                 )
@@ -77,6 +82,7 @@ public class ReviewRequestDaoImpl implements ReviewRequestDao {
                         user.username,
                         reviewRequest.title,
                         reviewRequest.comment,
+                        reviewRequest.languageName,
                         reviewRequest.status.stringValue(),
                         reviewRequest.createdAt)
                 )

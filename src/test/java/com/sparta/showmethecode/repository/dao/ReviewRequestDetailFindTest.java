@@ -37,17 +37,7 @@ public class ReviewRequestDetailFindTest {
 
     @BeforeEach
     void init() {
-        User user = createNormalUser("test1", "Test1");
-        User reviewer = createReviewer("reviewer", "reviewer", "Java");
 
-        ReviewRequest reviewRequest = new ReviewRequest(user, reviewer,"title1", "code1", "comment1", ReviewRequestStatus.REQUESTED, "Java");
-        reviewRequestRepository.save(reviewRequest);
-
-        ReviewRequestComment comment1 = new ReviewRequestComment("comment1", user, reviewRequest);
-        ReviewRequestComment comment2 = new ReviewRequestComment("comment2", user, reviewRequest);
-        ReviewRequestComment comment3 = new ReviewRequestComment("comment3", user, reviewRequest);
-
-        reviewRequestCommentRepository.saveAll(Arrays.asList(comment1, comment2, comment3));
     }
 
     @Test

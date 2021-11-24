@@ -30,14 +30,20 @@ public class TestDataInit implements ApplicationRunner {
         User savedUser2 = userRepository.save(answerUser);
 
         ReviewRequest reviewRequest = createdReviewRequest("title1", "code1", "comment1", "Java", savedQuestionUser1, savedUser2);
+
+        ReviewRequestComment reviewRequestComment = addRequestComment("content1", savedUser2);
+        ReviewRequestComment reviewRequestComment1 = addRequestComment("content2", savedUser2);
+        ReviewRequestComment reviewRequestComment2 = addRequestComment("content3", savedQuestionUser2);
+        ReviewRequestComment reviewRequestComment3 = addRequestComment("content4", savedQuestionUser2);
+
+        reviewRequest.addComment(reviewRequestComment);
+        reviewRequest.addComment(reviewRequestComment1);
+        reviewRequest.addComment(reviewRequestComment2);
+        reviewRequest.addComment(reviewRequestComment3);
+
         ReviewRequest savedReviewRequest = reviewRequestRepository.save(reviewRequest);
 
-        ReviewRequestComment reviewRequestComment = addRequestComment("content1", savedReviewRequest, savedUser2);
-        ReviewRequestComment reviewRequestComment1 = addRequestComment("content2", savedReviewRequest, savedUser2);
-        ReviewRequestComment reviewRequestComment2 = addRequestComment("content3", savedReviewRequest, savedQuestionUser2);
-        ReviewRequestComment reviewRequestComment3 = addRequestComment("content4", savedReviewRequest, savedQuestionUser2);
 
-        reviewRequestCommentRepository.saveAll(Arrays.asList(reviewRequestComment, reviewRequestComment1, reviewRequestComment2, reviewRequestComment3));
     }
 
     private User createdNormalUser(String username, String password) {
@@ -48,7 +54,7 @@ public class TestDataInit implements ApplicationRunner {
         return new ReviewRequest(requestUser, title, code, comment, ReviewRequestStatus.REQUESTED, language);
     }
 
-    private ReviewRequestComment addRequestComment(String content, ReviewRequest reviewRequest, User user) {
-        return new ReviewRequestComment(content, user, reviewRequest);
+    private ReviewRequestComment addRequestComment(String content, User user) {
+        return new ReviewRequestComment(content, user);
     }
 }

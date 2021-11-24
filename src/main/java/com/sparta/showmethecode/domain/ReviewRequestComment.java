@@ -1,5 +1,6 @@
 package com.sparta.showmethecode.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,13 +29,17 @@ public class ReviewRequestComment extends Timestamped{
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    @JsonIgnore
     @JoinColumn(name = "review_request_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private ReviewRequest reviewRequest;
 
-    public ReviewRequestComment(String content, User user, ReviewRequest reviewRequest) {
+    public void setReviewRequest(ReviewRequest reviewRequest) {
+        this.reviewRequest = reviewRequest;
+    }
+
+    public ReviewRequestComment(String content, User user) {
         this.content = content;
         this.user = user;
-        this.reviewRequest = reviewRequest;
     }
 }

@@ -11,4 +11,6 @@ public interface ReviewRequestDao {
 
     Page<ReviewRequestResponseDto> findSearchByTitleOrCommentAdvanced(String keyword, Pageable pageable, boolean isAsc);
 
+    ReviewRequestDetailResponseDto getReviewRequestDetailWithComment(Long id);
+
 }

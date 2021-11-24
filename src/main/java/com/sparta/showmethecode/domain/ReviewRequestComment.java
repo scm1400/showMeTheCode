@@ -31,4 +31,10 @@ public class ReviewRequestComment extends Timestamped{
     @JoinColumn(name = "review_request_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private ReviewRequest reviewRequest;
+
+    public ReviewRequestComment(String content, User user, ReviewRequest reviewRequest) {
+        this.content = content;
+        this.user = user;
+        this.reviewRequest = reviewRequest;
+    }
 }

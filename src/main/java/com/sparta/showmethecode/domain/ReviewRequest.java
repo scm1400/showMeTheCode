@@ -20,6 +20,7 @@ public class ReviewRequest extends Timestamped{
 
     @Id @GeneratedValue
     private Long id;
+
     @Column(nullable = false)
     private String title;
 
@@ -47,4 +48,23 @@ public class ReviewRequest extends Timestamped{
     @JoinColumn(name = "review_answer_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private ReviewAnswer reviewAnswer;
+
+    public ReviewRequest(User requestUser, String title, String code, String comment, ReviewRequestStatus status, String languageName) {
+        this.requestUser = requestUser;
+        this.title = title;
+        this.code = code;
+        this.comment = comment;
+        this.status = status;
+        this.languageName = languageName;
+    }
+
+    public ReviewRequest(User requestUser, User answerUser,String title, String code, String comment, ReviewRequestStatus status, String languageName) {
+        this.requestUser = requestUser;
+        this.answerUser = answerUser;
+        this.title = title;
+        this.code = code;
+        this.comment = comment;
+        this.status = status;
+        this.languageName = languageName;
+    }
 }

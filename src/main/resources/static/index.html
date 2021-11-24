@@ -47,6 +47,13 @@
             crossorigin="anonymous"
     />
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <script src="./js/index.js"></script>
+
 </head>
 <body id="inflearn" class="community all_questions_list posts-by-type is_logged_out is-student-user">
 
@@ -401,7 +408,7 @@
                                                                                                clip-rule="evenodd"/></svg></span>
                             <span class="posts-container-header__button-text">글쓰기</span></button>
                     </div>
-                    <ul class="question-list">
+                    <ul class="question-list" id="reviewQuestionList">
                         <li class="question-container"><a href="/questions/353805">
                             <div class="question">
                                 <div class="question__info">
@@ -483,23 +490,12 @@
                 <nav class="pagination is-centered is-small" role="navagation" aria-label="pagination">
 
                     <a class="pagination-next" href="?page=2">다음 페이지</a>
-                    <ul class="pagination-list">
-
-
+                    <ul class="pagination-list" id="pagingList">
                         <li>
                             <a class="pagination-link is-current" href="?page=1" aria-label="1 페이지로 이동">
                                 1
                             </a>
                         </li>
-
-
-                        <li>
-                            <a class="pagination-link " href="?page=2" aria-label="2 페이지로 이동">
-                                2
-                            </a>
-                        </li>
-
-
                     </ul>
                 </nav>
 
@@ -578,6 +574,5 @@
             class="gototop-text">TOP</span></button>
 
 </div>
-
 </body>
 </html>

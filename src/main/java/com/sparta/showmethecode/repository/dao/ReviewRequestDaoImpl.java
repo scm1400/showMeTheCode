@@ -7,6 +7,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.showmethecode.domain.*;
 import com.sparta.showmethecode.dto.response.*;
+import com.sparta.showmethecode.repository.querydslutil.OrderByNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -123,6 +124,7 @@ public class ReviewRequestDaoImpl implements ReviewRequestDao {
         List<Tuple> result = query.select(reviewRequest.languageName, reviewRequest.id.count())
                 .from(reviewRequest)
                 .groupBy(reviewRequest.languageName)
+                .orderBy(OrderByNull.DEFAULT)
                 .fetch();
 
         return result.stream().map(

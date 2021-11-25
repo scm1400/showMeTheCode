@@ -5,6 +5,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.showmethecode.domain.*;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import com.sparta.showmethecode.repository.UserRepository;
+import com.sparta.showmethecode.repository.querydslutil.OrderByNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,7 @@ public class GroupbyTest {
         List<Tuple> result = query.select(reviewRequest.languageName, reviewRequest.id.count())
                 .from(reviewRequest)
                 .groupBy(reviewRequest.languageName)
+                .orderBy(OrderByNull.DEFAULT)
                 .fetch();
 
         for (Tuple tuple : result) {

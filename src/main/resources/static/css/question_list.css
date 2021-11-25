@@ -215,7 +215,7 @@
 }
 
 .button.is-brand {
-    background: #00c471;
+    background: #3E8ED0;
     color: #fff
 }
 
@@ -1362,7 +1362,7 @@ div:not(.course_description) .content ul ul ul {
 }
 
 .posts-by-type .order-pc .active path {
-    fill: #00c471
+    fill: #3E8ED0
 }
 
 .posts-by-type .order-pc .active .ac-button {
@@ -1463,7 +1463,7 @@ div:not(.course_description) .content ul ul ul {
 
 .posts-by-type .navigation__menu--selected a {
     font-weight: 700;
-    color: #00c471
+    color: #3E8ED0
 }
 
 .posts-by-type .navigation__menu .ac-icon--new {
@@ -1642,6 +1642,6 @@ div:not(.course_description) .content ul ul ul {
 }
 
 .posts-by-type .modal section.modal-card.question-modal .question-modal__type--selected .is-solid.is-primary {
-    border-color: #00c471;
+    border-color: #3E8ED0;
     color: #fff
 }

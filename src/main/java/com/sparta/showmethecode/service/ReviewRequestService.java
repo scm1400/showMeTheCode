@@ -88,7 +88,7 @@ public class ReviewRequestService {
      */
     @Transactional(readOnly = true)
     public ReviewRequestDetailResponseDto getReviewRequest(Long id) {
-        ReviewRequestDetailResponseDto reviewRequestDetailWithComment = reviewRequestRepository.getReviewRequestDetailWithComment(id);
+        ReviewRequestDetailResponse Dto reviewRequestDetailWithComment = reviewRequestRepository.getReviewRequestDetailWithComment(id);
         return reviewRequestDetailWithComment;
     }
 }

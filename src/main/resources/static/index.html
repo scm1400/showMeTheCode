@@ -52,8 +52,7 @@
             crossorigin="anonymous"></script>
 
     <script src="./js/index.js"></script>
-    <!--    <script src="./js/layout.js"></script>-->
-    <!--    <script src="./js/post_question.js"></script>-->
+
     <script>
         $(document).ready(function () {
             $("#write").click(function () {
@@ -72,26 +71,26 @@
 
 <body id="inflearn" class="community all_questions_list posts-by-type is_logged_out is-student-user">
 <script>
-    $(function() {
+    $(function () {
 
-        CKEDITOR.replace('contents',{
+        CKEDITOR.replace('contents', {
             // filebrowserUploadUrl: './ckeditor/fileUpload',
             // //font_names : "맑은 고딕/Malgun Gothic;굴림/Gulim;돋움/Dotum;바탕/Batang;궁서/Gungsuh;Arial/Arial;Comic Sans MS/Comic Sans MS;Courier New/Courier New;Georgia/Georgia;Lucida Sans Unicode/Lucida Sans Unicode;Tahoma/Tahoma;Times New Roman/Times New Roman;MS Mincho/MS Mincho;Trebuchet MS/Trebuchet MS;Verdana/Verdana",
             // font_defaultLabel : "맑은 고딕/Malgun Gothic",
-            fontSize_defaultLabel : "12",
-            skin : "minimalist",
-            language : "ko"
+            fontSize_defaultLabel: "12",
+            skin: "minimalist",
+            language: "ko"
         });
 
-        $("#files").on("change", function(e) {
+        $("#files").on("change", function (e) {
             inputFile(e);
         });
 
-        $("#btnSave").on("click", function() {
+        $("#btnSave").on("click", function () {
             saveGallery();
         });
 
-        $("#btnCancel").on("click", function() {
+        $("#btnCancel").on("click", function () {
             window.history.back();
         });
     });
@@ -691,7 +690,6 @@
                 </div>
                 <div class="form__item">
                     <label class="form__label">내용</label>
-<!--                    <textarea class="tinymce" id="mce_2"></textarea>-->
 
                     <textarea name="contents" class="form-control" id="contents">dd</textarea>
 

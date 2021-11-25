@@ -45,10 +45,40 @@
             integrity="sha384-ekOryaXPbeCpWQNxMwSWVvQ0+1VrStoPJq54shlYhR8HzQgig1v5fas6YgOqLoKz"
             crossorigin="anonymous"
     />
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="./js/ckeditor/ckeditor.js"></script>
 
 </head>
 <body id="inflearn" class="question_detail pg___questions_detail is_logged_in is-student-user">
+<script>
+    $(function () {
+
+        CKEDITOR.replace('contents', {
+            // filebrowserUploadUrl: './ckeditor/fileUpload',
+            // //font_names : "맑은 고딕/Malgun Gothic;굴림/Gulim;돋움/Dotum;바탕/Batang;궁서/Gungsuh;Arial/Arial;Comic Sans MS/Comic Sans MS;Courier New/Courier New;Georgia/Georgia;Lucida Sans Unicode/Lucida Sans Unicode;Tahoma/Tahoma;Times New Roman/Times New Roman;MS Mincho/MS Mincho;Trebuchet MS/Trebuchet MS;Verdana/Verdana",
+            // font_defaultLabel : "맑은 고딕/Malgun Gothic",
+            fontSize_defaultLabel: "12",
+            skin: "minimalist",
+            language: "ko"
+        });
+
+        $("#files").on("change", function (e) {
+            inputFile(e);
+        });
+
+        $("#btnSave").on("click", function () {
+            saveGallery();
+        });
+
+        $("#btnCancel").on("click", function () {
+            window.history.back();
+        });
+    });
+
+</script>
 <div id="root">
     <!--    모바일 하위 Nav바 -->
     <nav class="InfD__BottomNavigation">
@@ -219,7 +249,7 @@
         <section class="community-post-detail__section community-post-detail__post" data-id="355975">
             <div class="section__sider">
                 <div class="sider__left">
-                    <button class="ac-button is-md is-outlined is-white button-rounded community-post-detail__move-back e-move-back"
+                    <button onclick="go_back()" class="ac-button is-md is-outlined is-white button-rounded community-post-detail__move-back e-move-back"
                             style="min-width: 40px">
                         <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                             <path fill="#1b1c1d" fill-rule="evenodd" clip-rule="evenodd"
@@ -382,7 +412,7 @@
                                         </div>
                                     </div>
                                     <div class="comment__body markdown-body">
-                                        <textarea class="tinymce new-comment-editor"></textarea>
+                                        <textarea name="contents" class="form-control" id="contents">dd</textarea>
                                     </div>
                                     <div class="comment__footer flex-row">
                                         <div class="flex-right">
@@ -440,7 +470,7 @@
 </footer>
 
 
-<script src="https://cdn.inflearn.com/assets/js/jquery-1.12.4.min.js"></script>
+
 
 
 </body>

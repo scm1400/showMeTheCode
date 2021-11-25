@@ -1,14 +1,12 @@
 package com.sparta.showmethecode.repository.dao;
 
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.showmethecode.domain.*;
-import com.sparta.showmethecode.dto.response.CommentResponseDto;
-import com.sparta.showmethecode.dto.response.QReviewRequestResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewRequestDetailResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
+import com.sparta.showmethecode.dto.response.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -118,5 +116,17 @@ public class ReviewRequestDaoImpl implements ReviewRequestDao {
                 result.getId(), result.getRequestUser().getUsername(), result.getTitle(), result.getCode(), result.getComment(),
                 result.getStatus().toString(), result.getCreatedAt(), comments
         );
+    }
+
+    @Override
+    public List<ReviewRequestLanguageCount> getReviewRequestLanguageCountGroupByLanguage() {
+        List<Tuple> result = query.select(reviewRequest.languageName, reviewRequest.id.count())
+                .from(reviewRequest)
+                .groupBy(reviewRequest.languageName)
+                .fetch();
+
+        return result.stream().map(
+                r -> new ReviewRequestLanguageCount(r.get(0, String.class), r.get(1, Long.class))
+        ).collect(Collectors.toList());
     }
 }

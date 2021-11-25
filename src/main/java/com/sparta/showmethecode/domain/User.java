@@ -1,9 +1,6 @@
 package com.sparta.showmethecode.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -30,11 +27,11 @@ public class User extends Timestamped{
     private int reviewCount; // 몇 개의 코드리뷰를 완료했는지
     private int rankingPoint; // 리뷰어의 랭킹포인트
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Language> languages = new ArrayList<>();
 
     // 연관관계 편의 메서드
-    private void addLanguage(Language language) {
+    public void addLanguage(Language language) {
             this.getLanguages().add(language);
             language.setUser(this);
     }

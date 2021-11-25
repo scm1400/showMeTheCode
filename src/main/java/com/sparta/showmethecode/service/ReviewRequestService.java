@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 public class ReviewRequestService {
 
     private final ReviewRequestRepository reviewRequestRepository;
-    private final ReviewRequestCommentRepository reviewRequestCommentRepository;
 
     /**
      * 코드리뷰 요청목록 API
@@ -90,8 +89,6 @@ public class ReviewRequestService {
     @Transactional(readOnly = true)
     public ReviewRequestDetailResponseDto getReviewRequest(Long id) {
         ReviewRequestDetailResponseDto reviewRequestDetailWithComment = reviewRequestRepository.getReviewRequestDetailWithComment(id);
-//        ReviewRequestDetailResponseDto reviewRequestDetailWithComment = reviewRequestCommentRepository.getReviewRequestDetailWithCommentAdvanced(id);
-       // ReviewRequestDetailResponseDto reviewRequestDetailWithComment = reviewRequestCommentRepository.getReviewRequestDetailWithComment(id);
         return reviewRequestDetailWithComment;
     }
 }

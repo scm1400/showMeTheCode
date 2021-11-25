@@ -4,6 +4,7 @@ import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.domain.UserRole;
+import com.sparta.showmethecode.dto.response.ReviewRequestLanguageCount;
 import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import com.sparta.showmethecode.repository.UserRepository;
@@ -83,6 +84,13 @@ public class ReviewRequestDaoTest {
         System.out.println("totalElements = " + results.getTotalElements());
         System.out.println("page = " + results.getNumber());
         System.out.println("size = " + results.getSize());
+    }
+
+    @Test
+    void 리뷰요청_언어별_카운팅() {
+        List<ReviewRequestLanguageCount> result = reviewRequestRepository.getReviewRequestLanguageCountGroupByLanguage();
+
+        result.forEach(System.out::println);
     }
 
     private Pageable makePageable(int page, int size, String sortBy, boolean isAsc) {

@@ -2,6 +2,7 @@ package com.sparta.showmethecode.controller;
 
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestDetailResponseDto;
+import com.sparta.showmethecode.dto.response.ReviewRequestLanguageCount;
 import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
 import com.sparta.showmethecode.service.ReviewRequestService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -58,5 +60,12 @@ public class ReviewRequestController {
         ReviewRequestDetailResponseDto reviewRequest = reviewRequestService.getReviewRequest(id);
 
         return ResponseEntity.ok(reviewRequest);
+    }
+
+    /**
+     * 코드리뷰 요청 언어별 카운팅 API
+     */
+    public List<ReviewRequestLanguageCount> getCountGroupByLanguageName() {
+        return reviewRequestService.getCountGroupByLanguageName();
     }
 }

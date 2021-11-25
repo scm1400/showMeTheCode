@@ -66,7 +66,7 @@ public class ReviewRequest extends Timestamped{
         this.code = code;
         this.comment = comment;
         this.status = status;
-        this.languageName = languageName;
+        this.languageName = languageName.toUpperCase();
     }
 
     public ReviewRequest(User requestUser, User answerUser,String title, String code, String comment, ReviewRequestStatus status, String languageName) {
@@ -76,6 +76,6 @@ public class ReviewRequest extends Timestamped{
         this.code = code;
         this.comment = comment;
         this.status = status;
-        this.languageName = languageName;
+        this.languageName = languageName.toUpperCase();
     }
 }

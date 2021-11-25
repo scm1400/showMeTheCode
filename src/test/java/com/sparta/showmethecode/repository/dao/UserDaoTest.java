@@ -37,10 +37,6 @@ public class UserDaoTest {
     void 언어별_리뷰어_조회() {
         List<User> users = userRepository.findReviewerByLanguage("JAVA");
 
-        users.forEach(
-
-        );
-
         Assertions.assertEquals(2, users.size());
     }
 }

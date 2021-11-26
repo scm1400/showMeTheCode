@@ -1,12 +1,17 @@
 package com.sparta.showmethecode.controller;
 
+import com.sparta.showmethecode.dto.request.SigninRequestDto;
+import com.sparta.showmethecode.dto.request.SignupRequestDto;
+import com.sparta.showmethecode.dto.response.BasicResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewerInfoDto;
+import com.sparta.showmethecode.dto.response.SigninResponseDto;
 import com.sparta.showmethecode.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,6 +21,22 @@ public class UserController {
 
     private final UserService userService;
 
+    @PostMapping("/user/signup")
+    public ResponseEntity<BasicResponseDto> signup(@RequestBody SignupRequestDto requestDto) {
+        userService.saveUser(requestDto);
+        BasicResponseDto responseDto = BasicResponseDto.builder()
+                .result("success").httpStatus(HttpStatus.CREATED).message("회원가입에 성공했습니다.").build();
+
+        return ResponseEntity.ok(responseDto);
+    }
+
+
+    @PostMapping("/user/signin")
+    public SigninResponseDto signin(@RequestBody SigninRequestDto requestDto) {
+
+        return userService.signin(requestDto);
+    }
+
     /**
      * 해당 언어의 리뷰어 조회 API
      */
@@ -23,5 +44,13 @@ public class UserController {
     public ResponseEntity<List<ReviewerInfoDto>> findReviewerByLanguage(@RequestParam String language) {
         List<ReviewerInfoDto> reviewerInfoList = userService.findReviewerByLanguage(language);
         return ResponseEntity.ok(reviewerInfoList);
+    }
+
+    @Secured({"ROLE_USER", "ROLE_REVIEWER"})
+    @PostMapping("/user/logout")
+    public BasicResponseDto logout() {
+        SecurityContextHolder.clearContext();
+
+        return new BasicResponseDto(null, "success", "로그아웃 완료", HttpStatus.OK);
     }
 }

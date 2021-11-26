@@ -131,4 +131,25 @@ public class ReviewRequestDaoImpl implements ReviewRequestDao {
                 r -> new ReviewRequestLanguageCount(r.get(0, String.class), r.get(1, Long.class))
         ).collect(Collectors.toList());
     }
+
+    @Override
+    public List<ReviewRequestResponseDto> findMyReviewRequestList(Long userId) {
+        List<ReviewRequest> result = query.select(reviewRequest)
+                .from(reviewRequest)
+                .join(reviewRequest.requestUser, user)
+                .where(user.id.eq(userId))
+                .fetch();
+
+        return result.stream().map(
+                r -> new ReviewRequestResponseDto(
+                        r.getId(),
+                        r.getRequestUser().getUsername(),
+                        r.getTitle(),
+                        r.getComment(),
+                        r.getLanguageName(),
+                        r.getStatus().toString(),
+                        r.getCreatedAt()
+                )
+        ).collect(Collectors.toList());
+    }
 }

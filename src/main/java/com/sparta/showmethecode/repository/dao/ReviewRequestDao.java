@@ -17,4 +17,6 @@ public interface ReviewRequestDao {
     ReviewRequestDetailResponseDto getReviewRequestDetailWithComment(Long id);
     // 언어별 코드리뷰요청 카운팅
     List<ReviewRequestLanguageCount> getReviewRequestLanguageCountGroupByLanguage();
+    // 자신이 요청한 리뷰 조회
+    List<ReviewRequestResponseDto> findMyReviewRequestList(Long userId);
 }

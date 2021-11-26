@@ -37,7 +37,7 @@ public class ReviewRequest extends Timestamped{
     @Column(nullable = false)
     private String languageName;
 
-    // 한 명의 사용자는 여러 개 쿄드리뷰 요청서를 작성할 수 있다.
+    // 한 명의 사용자는 여러 개 코드리뷰 요청서를 작성할 수 있다.
     @JoinColumn(name = "request_user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User requestUser;

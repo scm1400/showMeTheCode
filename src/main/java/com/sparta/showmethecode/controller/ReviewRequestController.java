@@ -1,5 +1,7 @@
 package com.sparta.showmethecode.controller;
 
+import com.sparta.showmethecode.config.security.UserDetailsImpl;
+import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestDetailResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestLanguageCount;
@@ -8,6 +10,7 @@ import com.sparta.showmethecode.service.ReviewRequestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,8 +48,11 @@ public class ReviewRequestController {
      * 코드리뷰 요청 API
      */
     @PostMapping("/question")
-    public ResponseEntity<String> addReviewRequest(@RequestBody ReviewRequestDto requestDto) {
-        reviewRequestService.addReviewRequest(requestDto);
+    public ResponseEntity<String> addReviewRequest(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestBody ReviewRequestDto requestDto) {
+        User user = userDetails.getUser();
+        reviewRequestService.addReviewRequest(requestDto, user);
 
         return ResponseEntity.ok("ok");
     }

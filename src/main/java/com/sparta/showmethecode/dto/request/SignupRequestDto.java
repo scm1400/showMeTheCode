@@ -8,7 +8,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
-@Getter()
+@Getter
 @Builder
 public class SignupRequestDto {
 

@@ -2,6 +2,7 @@ package com.sparta.showmethecode.service;
 
 import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
+import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestDetailResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestLanguageCount;
@@ -54,10 +55,10 @@ public class ReviewRequestService {
     /**
      * 코드리뷰 요청 API
      */
-    @Transactional(readOnly = true)
-    public void addReviewRequest(ReviewRequestDto requestDto) {
+    @Transactional
+    public void addReviewRequest(ReviewRequestDto requestDto, User user) {
         ReviewRequest reviewRequest
-                = new ReviewRequest(null, requestDto.getTitle(), requestDto.getCode(), requestDto.getComment(), ReviewRequestStatus.REQUESTED, requestDto.getLanguage().toUpperCase());
+                = new ReviewRequest(user, requestDto.getTitle(), requestDto.getCode(), requestDto.getComment(), ReviewRequestStatus.REQUESTED, requestDto.getLanguage().toUpperCase());
 
         reviewRequestRepository.save(reviewRequest);
     }

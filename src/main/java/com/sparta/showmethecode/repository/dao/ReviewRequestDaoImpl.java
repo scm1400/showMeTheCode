@@ -133,13 +133,12 @@ public class ReviewRequestDaoImpl implements ReviewRequestDao {
     }
 
     @Override
-    public List<ReviewRequestResponseDto> findMyReviewRequestList(Long userId) {
+    public List<ReviewRequestResponseDto> findMyReviewRequestList(Long id) {
         List<ReviewRequest> result = query.select(reviewRequest)
                 .from(reviewRequest)
-                .join(reviewRequest.requestUser, user)
-                .where(user.id.eq(userId))
+                .join(reviewRequest.requestUser, user).fetchJoin()
+                .where(user.id.eq(id))
                 .fetch();
-
         return result.stream().map(
                 r -> new ReviewRequestResponseDto(
                         r.getId(),

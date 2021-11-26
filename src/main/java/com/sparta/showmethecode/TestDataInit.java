@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 
 @RequiredArgsConstructor
-@Component
+//@Component
 public class TestDataInit implements ApplicationRunner {
 
     private final UserRepository userRepository;

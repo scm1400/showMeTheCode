@@ -1,5 +1,6 @@
 package com.sparta.showmethecode.repository.dao;
 
+import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.response.ReviewRequestDetailResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestLanguageCount;
 import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
@@ -18,5 +19,5 @@ public interface ReviewRequestDao {
     // 언어별 코드리뷰요청 카운팅
     List<ReviewRequestLanguageCount> getReviewRequestLanguageCountGroupByLanguage();
     // 자신이 요청한 리뷰 조회
-    List<ReviewRequestResponseDto> findMyReviewRequestList(Long userId);
+    List<ReviewRequestResponseDto> findMyReviewRequestList(Long userIdr);
 }

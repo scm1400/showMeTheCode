@@ -13,7 +13,6 @@ import java.util.List;
  * 코드리뷰 요청서
  */
 
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

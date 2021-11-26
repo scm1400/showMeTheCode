@@ -23,7 +23,7 @@ public class UserDaoImpl implements UserDao {
         List<User> result = query.select(QUser.user)
                 .from(QUser.user)
                 .join(QUser.user.languages, language)
-                .where(QUser.user.userRole.eq(UserRole.ROLE_REVIEWER).and(language.name.eq(languageName)))
+                .where(QUser.user.role.eq(UserRole.ROLE_REVIEWER).and(language.name.eq(languageName)))
                 .fetch();
 
         return result;

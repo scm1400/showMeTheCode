@@ -26,7 +26,6 @@
     <!-- og tag END -->
 
     <link rel="stylesheet" href="./css/question_list.css"/>
-    <link rel="stylesheet" href="./css/tinymce.css"/>
     <link rel="stylesheet" href="./css/main.css"/>
     <link
             rel="stylesheet"
@@ -54,8 +53,50 @@
 
     <script src="./js/index.js"></script>
 
+    <script>
+        $(document).ready(function () {
+            $("#write").click(function () {
+                $("#write_modal").removeClass("is-hidden");
+            });
+
+            $("#close_modal").click(function () {
+                $("#write_modal").addClass("is-hidden");
+            });
+        });
+    </script>
+    <script src="./js/ckeditor/ckeditor.js"></script>
+
 </head>
+
+
 <body id="inflearn" class="community all_questions_list posts-by-type is_logged_out is-student-user">
+<script>
+    $(function () {
+
+        CKEDITOR.replace('contents', {
+            // filebrowserUploadUrl: './ckeditor/fileUpload',
+            // //font_names : "맑은 고딕/Malgun Gothic;굴림/Gulim;돋움/Dotum;바탕/Batang;궁서/Gungsuh;Arial/Arial;Comic Sans MS/Comic Sans MS;Courier New/Courier New;Georgia/Georgia;Lucida Sans Unicode/Lucida Sans Unicode;Tahoma/Tahoma;Times New Roman/Times New Roman;MS Mincho/MS Mincho;Trebuchet MS/Trebuchet MS;Verdana/Verdana",
+            // font_defaultLabel : "맑은 고딕/Malgun Gothic",
+            fontSize_defaultLabel: "12",
+            skin: "minimalist",
+            language: "ko"
+        });
+
+        $("#files").on("change", function (e) {
+            inputFile(e);
+        });
+
+        $("#btnSave").on("click", function () {
+            saveGallery();
+        });
+
+        $("#btnCancel").on("click", function () {
+            window.history.back();
+        });
+    });
+
+</script>
+
 
 <div id="root">
     <!--    모바일 하위 Nav바 -->
@@ -406,7 +447,7 @@
                                                                                                fill-rule="evenodd"
                                                                                                d="M11.508 1.451c.456-.455 1.195-.455 1.65 0l1.724 1.724c.456.456.456 1.194 0 1.65L13.02 6.687l-.008.008-7.219 6.89c-.132.126-.291.22-.466.273l-3.681 1.12c-.177.054-.369.006-.5-.124-.13-.131-.178-.323-.124-.5l1.115-3.666c.059-.192.166-.365.311-.504L9.651 3.31l1.857-1.858zM9.992 4.366l-6.854 6.542c-.02.02-.036.044-.044.072l-.843 2.769 2.785-.848c.025-.007.048-.02.067-.039l6.848-6.537-1.96-1.96zm2.675 1.26l1.508-1.508c.065-.065.065-.17 0-.236l-1.724-1.724c-.065-.065-.17-.065-.236 0l-1.508 1.509 1.96 1.96z"
                                                                                                clip-rule="evenodd"/></svg></span>
-                            <span class="posts-container-header__button-text">글쓰기</span></button>
+                            <span id="write" class="posts-container-header__button-text">글쓰기</span></button>
                     </div>
                     <ul class="question-list" id="reviewQuestionList">
                         <li class="question-container"><a href="/questions/353805">
@@ -573,6 +614,100 @@
     <button class="gototop-btn e-gototop" fxd-data='{"left":30,"bottom":70}'><i class="far fa-chevron-up"></i><span
             class="gototop-text">TOP</span></button>
 
+</div>
+
+<div id="write_modal" class="modal is-hidden">
+    <div class="dimmed"></div>
+    <section class="modal-card question-modal">
+        <div class="question-modal__form e-form-question-modal" onsubmit="return false">
+            <div class="modal-card-body">
+                <div class="form__item form__item--type">
+                    <label class="form__label">커뮤니티</label>
+                    <ul class="question-modal__type-list">
+
+                        <li class="question-modal__type question-modal__type--selected" data-type="question">
+
+                            <button class="ac-button is-md is-solid is-primary question-modal__type-button e-type"
+                                    style="min-width: 90px" data-type="question">질문
+                            </button>
+                        </li>
+                        <li class="question-modal__type " data-type="chat">
+
+                            <button class="ac-button is-md is-solid is-primary question-modal__type-button e-type"
+                                    style="min-width: 90px" data-type="chat">자유주제
+                            </button>
+                        </li>
+                        <li class="question-modal__type " data-type="study">
+
+                            <button class="ac-button is-md is-solid is-primary question-modal__type-button e-type"
+                                    style="min-width: 90px" data-type="study">스터디
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form__item">
+                    <label class="form__label" for="question-modal-title">제목</label>
+
+                    <div class="ac-input-with-item--large question-modal__title ">
+
+                        <input value="" data-kv="title" type="text" placeholder="제목을 입력해주세요.">
+
+                    </div>
+
+                </div>
+                <div class="form__item">
+                    <label class="form__label" for="question-modal-tag">태그</label>
+
+
+                    <div class="ac-input-with-item question-modal__tag e-input-tags ac-input-tags ">
+
+                        <svg width="16" xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 16 16">
+                            <path fill="#3E4042" fill-rule="evenodd"
+                                  d="M5.773 1.455c-.283 0-.518.216-.542.498L5 4.727H2.545c-.3 0-.545.244-.545.546 0 .301.244.545.545.545H4.91l-.364 4.364h-2c-.3 0-.545.244-.545.545 0 .301.244.546.545.546h1.91l-.224 2.684c-.027.317.224.588.542.588.282 0 .518-.216.541-.498l.231-2.774H9.91l-.224 2.684c-.026.317.224.588.542.588.283 0 .518-.216.542-.498L11 11.273h2.454c.302 0 .546-.245.546-.546 0-.301-.244-.545-.546-.545h-2.363l.364-4.364h2c.3 0 .545-.244.545-.545 0-.302-.244-.546-.546-.546h-1.909l.224-2.684c.027-.317-.224-.588-.542-.588-.282 0-.518.216-.541.498l-.232 2.774H6.091l.224-2.684c.026-.317-.224-.588-.542-.588zM6 5.818l-.364 4.364H10l.364-4.364H6z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
+
+
+                        <input value="" type="text" placeholder="태그를 설정해주세요." initial-value="">
+
+                    </div>
+
+
+                    <span class="input-tags__description input-tags__description--default">
+                      최대 10개의 태그를 달 수 있어요!
+                    </span>
+
+                </div>
+                <div class="form__item">
+                    <label class="form__label" for="question-modal-reviewer">리뷰어 지정</label>
+
+                    <div class="ac-input-with-item--large question-modal__title ">
+
+                        <input value="" data-kv="title" type="text" placeholder="리뷰어를 지정해보세요.">
+
+                    </div>
+
+                </div>
+                <div class="form__item">
+                    <label class="form__label">내용</label>
+
+                    <textarea name="contents" class="form-control" id="contents">dd</textarea>
+
+                </div>
+            </div>
+            <footer class="modal-card-foot">
+
+                <button id="close_modal"
+                        class="ac-button is-lg is-outlined is-gray question-modal__button--cancel e-cancel-question-modal">
+                    취소
+                </button>
+
+                <button class="ac-button is-lg is-solid is-primary question-modal__button--cancel e-submit-question-modal">
+                    저장
+                </button>
+            </footer>
+        </div>
+    </section>
 </div>
 </body>
 </html>

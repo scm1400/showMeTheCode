@@ -4,6 +4,7 @@ import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestDetailResponseDto;
+import com.sparta.showmethecode.dto.response.ReviewRequestLanguageCount;
 import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
 import com.sparta.showmethecode.repository.ReviewRequestCommentRepository;
@@ -26,7 +27,6 @@ import java.util.stream.Collectors;
 public class ReviewRequestService {
 
     private final ReviewRequestRepository reviewRequestRepository;
-    private final ReviewRequestCommentRepository reviewRequestCommentRepository;
 
     /**
      * 코드리뷰 요청목록 API
@@ -89,8 +89,15 @@ public class ReviewRequestService {
      */
     @Transactional(readOnly = true)
     public ReviewRequestDetailResponseDto getReviewRequest(Long id) {
-        ReviewRequestDetailResponseDto reviewRequestDetailWithComment = reviewRequestCommentRepository.getReviewRequestDetailWithCommentAdvanced(id);
-       // ReviewRequestDetailResponseDto reviewRequestDetailWithComment = reviewRequestCommentRepository.getReviewRequestDetailWithComment(id);
+        ReviewRequestDetailResponse Dto reviewRequestDetailWithComment = reviewRequestRepository.getReviewRequestDetailWithComment(id);
         return reviewRequestDetailWithComment;
+    }
+
+    /**
+     * 코드리뷰 요청 언어별 카운팅 API
+     */
+    @Transactional(readOnly = true)
+    public List<ReviewRequestLanguageCount> getCountGroupByLanguageName() {
+        return reviewRequestRepository.getReviewRequestLanguageCountGroupByLanguage();
     }
 }

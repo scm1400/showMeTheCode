@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 코드리뷰 요청서
@@ -49,13 +51,22 @@ public class ReviewRequest extends Timestamped{
     @ManyToOne(fetch = FetchType.LAZY)
     private ReviewAnswer reviewAnswer;
 
+    @OneToMany(mappedBy = "reviewRequest", cascade = CascadeType.ALL)
+    private List<ReviewRequestComment> reviewRequestComments = new ArrayList<>();
+
+    public void addComment(ReviewRequestComment comment) {
+        this.reviewRequestComments.add(comment);
+        comment.setReviewRequest(this);
+    }
+
+
     public ReviewRequest(User requestUser, String title, String code, String comment, ReviewRequestStatus status, String languageName) {
         this.requestUser = requestUser;
         this.title = title;
         this.code = code;
         this.comment = comment;
         this.status = status;
-        this.languageName = languageName;
+        this.languageName = languageName.toUpperCase();
     }
 
     public ReviewRequest(User requestUser, User answerUser,String title, String code, String comment, ReviewRequestStatus status, String languageName) {
@@ -65,6 +76,6 @@ public class ReviewRequest extends Timestamped{
         this.code = code;
         this.comment = comment;
         this.status = status;
-        this.languageName = languageName;
+        this.languageName = languageName.toUpperCase();
     }
 }

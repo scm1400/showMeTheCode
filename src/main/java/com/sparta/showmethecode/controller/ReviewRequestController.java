@@ -86,6 +86,17 @@ public class ReviewRequestController {
     }
 
     /**
+     * 코드리뷰 삭제 API
+     */
+    @DeleteMapping("/question")
+    public ResponseEntity deleteReviewRequest(
+            @RequestParam Long id,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        return null;
+    }
+
+    /**
      * 코드리뷰 요청 언어별 카운팅 API
      */
     @GetMapping("/question/languages/count")

@@ -151,4 +151,14 @@ public class ReviewRequestDaoImpl implements ReviewRequestDao {
                 )
         ).collect(Collectors.toList());
     }
+
+    @Override
+    public boolean isMyReviewRequest(Long reviewId, User user) {
+        Integer exist = query.selectOne()
+                .from(reviewRequest)
+                .where(reviewRequest.id.eq(reviewId).and(reviewRequest.requestUser.eq(user)))
+                .fetchFirst();
+
+        return exist != null;
+    }
 }

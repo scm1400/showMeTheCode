@@ -72,7 +72,7 @@ public class ReviewRequestService {
      */
     @Transactional
     public void updateReviewRequest(ReviewRequestUpdateDto updateDto, Long reviewId, User user) {
-        boolean isMyRequest = reviewRequestRepository.existsByRequestUser(user);
+        boolean isMyRequest = reviewRequestRepository.isMyReviewRequest(reviewId, user);
         if (isMyRequest) {
             User newAnswerUser = null;
             if (!Objects.isNull(updateDto.getReviewerId())) {
@@ -86,6 +86,14 @@ public class ReviewRequestService {
 
             reviewRequest.update(updateDto, newAnswerUser);
         }
+    }
+
+    /**
+     * 코드리뷰 삭제 API
+     */
+    @Transactional
+    public void deleteReviewRequest(Long reviewId, User user){
+
     }
 
     /**

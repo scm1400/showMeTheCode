@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.Arrays;
+import java.util.List;
 
 @SpringBootTest
 @Transactional
@@ -39,6 +40,8 @@ public class ReviewRequestRepositoryTest {
 
         ReviewRequest reviewRequest1 = new ReviewRequest(user, reviewer1,"Java가 여려워요.", "code1", "java도 어려운데 jpa는 ㅠ", ReviewRequestStatus.REQUESTED, "JAVA");
         reviewRequestRepository.save(reviewRequest1);
+        ReviewRequest reviewRequest2 = new ReviewRequest(user, reviewer1,"Java가 여려워요!!", "code1", "java도 어려운데 jpa는 ㅠ", ReviewRequestStatus.REQUESTED, "JAVA");
+        reviewRequestRepository.save(reviewRequest2);
     }
 
     @DisplayName("리뷰요청 수정 테스트")
@@ -92,5 +95,18 @@ public class ReviewRequestRepositoryTest {
         Assertions.assertEquals(updateCode, reviewRequest.getCode());
         Assertions.assertEquals(updateComment, reviewRequest.getComment());
         Assertions.assertEquals(newReviewer.getId(), reviewRequest.getAnswerUser().getId());
+    }
+
+    @DisplayName("리뷰요청 삭제 테스트")
+    @Test
+    void 삭제_테스트() {
+        User user = userRepository.findByUsername("user1").get();
+        ReviewRequest reviewRequest = reviewRequestRepository.findByTitle("Java가 여려워요.").get(0);
+
+        reviewRequestService.deleteReviewRequest(reviewRequest.getId(), user);
+
+        List<ReviewRequest> requests = reviewRequestRepository.findAll();
+
+        Assertions.assertEquals(1, requests.size());
     }
 }

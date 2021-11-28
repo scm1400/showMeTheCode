@@ -93,7 +93,9 @@ public class ReviewRequestController {
             @RequestParam Long id,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        return null;
+        User user = userDetails.getUser();
+        reviewRequestService.deleteReviewRequest(id, user);
+        return ResponseEntity.ok("ok");
     }
 
     /**

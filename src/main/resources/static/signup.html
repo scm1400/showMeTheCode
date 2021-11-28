@@ -20,6 +20,13 @@
     <meta property="og:locale" content="ko-KR">
     <!-- og tag END -->
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="./css/main.css"/>
     <link rel="stylesheet" href="./css/signup.css"/>
     <link
@@ -40,8 +47,12 @@
             integrity="sha384-ekOryaXPbeCpWQNxMwSWVvQ0+1VrStoPJq54shlYhR8HzQgig1v5fas6YgOqLoKz"
             crossorigin="anonymous"
     />
-
-
+    <script src="./js/user.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/login.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
 
 
 
@@ -134,8 +145,8 @@
                         </a>
                     </div>
                     <div class="mobile_right">
-                        <a role="button" class="button space-inset-4 text is-5 signin">로그인</a>
-                        <a class="e-signup button space-inset-4 text is-5 is-primary ">회원가입</a></div>
+                        <a onclick="show_login_modal()" role="button" class="button space-inset-4 text is-5 signin">로그인</a>
+                        <a href="signup.html" class="e-signup button space-inset-4 text is-5 is-primary ">회원가입</a></div>
                 </div>
             </div>
 
@@ -202,8 +213,8 @@
                             </div>
 
                             <div class="navbar-item buttons">
-                                <a role="button" class="button space-inset-4 signin">로그인</a>
-                                <a class="e-signup button space-inset-4 is-primary">회원가입</a>
+                                <a onclick="show_login_modal()" role="button" class="button space-inset-4 signin">로그인</a>
+                                <a href="signup.html" class="e-signup button space-inset-4 is-primary">회원가입</a>
                             </div>
                         </div>
                     </div>
@@ -2299,9 +2310,9 @@
                 <form class="signup__form">
 
                     <div class="form__input-block">
-                        <label for="email" class="form__label">이메일</label>
+                        <label for="signup-id" class="form__label">이메일</label>
                         <input
-                                id="email"
+                                id="signup-id"
                                 data-kv="email"
                                 type="text"
                                 class="form__input--email ac-input--large form__input e-sign-up-input e-email"
@@ -2321,9 +2332,9 @@
                     </div>
 
                     <div class="form__input-block">
-                        <label for="usernameConfirm" class="form__label">닉네임</label>
+                        <label for="signup-nickname" class="form__label">닉네임</label>
                         <input
-                                id="usernameConfirm"
+                                id="signup-nickname"
                                 data-kv="usernameConfirm"
                                 type="text"
                                 class="ac-input--large form__input e-sign-up-input"
@@ -2331,19 +2342,19 @@
                         <span class="form__error form__error--hide"></span>
                     </div>
 
-                    <div class="form__input-block">
-                        <label for="codeConfirm" class="form__label">사용 언어</label>
-                        <input
-                                id="codeConfirm"
-                                data-kv="codeConfirm"
-                                type="text"
-                                class="ac-input--large form__input e-sign-up-input"
-                                placeholder="java"/>
-                        <span class="form__error form__error--hide"></span>
-                    </div>
+<!--                    <div class="form__input-block">-->
+<!--                        <label for="codeConfirm" class="form__label">사용 언어</label>-->
+<!--                        <input-->
+<!--                                id="codeConfirm"-->
+<!--                                data-kv="codeConfirm"-->
+<!--                                type="text"-->
+<!--                                class="ac-input&#45;&#45;large form__input e-sign-up-input"-->
+<!--                                placeholder="java"/>-->
+<!--                        <span class="form__error form__error&#45;&#45;hide"></span>-->
+<!--                    </div>-->
 
                     <div class="form__input-block">
-                        <label for="password" class="form__label">비밀번호</label>
+                        <label for="signup-password" class="form__label">비밀번호</label>
 
                         <div class="ac-input-with-item--large password-input form__input--password form__input e-password ">
 
@@ -2353,7 +2364,7 @@
                                     data-kv="password"
 
 
-                                    type="password" id="password" placeholder="******"
+                                    type="password" id="signup-password" placeholder="******"
                             />
                             <span class="e-toggle-password form__toggle-password form__toggle-password--hidden"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path
@@ -2397,7 +2408,24 @@
                         <span class="form__error form__error--passwordConfirm form__error--hide"></span>
                     </div>
 
-                    <button class="ac-button is-lg is-solid is-primary e-sign-up-button form__button">가입하기</button>
+                    <div class="mb-3" id="chooseReviewer">
+                        <input class="form-check-input" type="checkbox" id="signup-isReviewer">
+                        <label class="form-check-label" for="signup-isReviewer">
+                            리뷰어로 회원가입
+                        </label>
+                    </div>
+
+                    <div id="language-check-box" style="display: none">
+                        <select name="language">
+                            <option value="">대표 언어를 선택해주세요.</option>
+                            <option value="Java" name="languageSelectBox">Java</option>
+                            <option value="Python" name="languageSelectBox">Python</option>
+                            <option value="Javascript" name="languageSelectBox">Javascript</option>
+                            <option value="HTML&CSS" name="languageSelectBox">HTML&CSS</option>
+                        </select>
+                    </div>
+
+                    <button onclick="signup()" class="ac-button is-lg is-solid is-primary e-sign-up-button form__button">가입하기</button>
                     <div class="form__footer">
         <span class="footer__policy">
           가입 시, 쇼미 더 코드의

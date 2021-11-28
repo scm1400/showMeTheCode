@@ -3,6 +3,8 @@ package com.sparta.showmethecode.controller;
 import com.sparta.showmethecode.config.security.UserDetailsImpl;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
+import com.sparta.showmethecode.dto.request.ReviewRequestUpdateDto;
+import com.sparta.showmethecode.dto.response.BasicResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestDetailResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestLanguageCount;
 import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
@@ -69,8 +71,24 @@ public class ReviewRequestController {
     }
 
     /**
+     * 코드리뷰 수정 API
+     */
+    @PutMapping("/question")
+    public ResponseEntity updateReviewRequest(
+            @RequestBody ReviewRequestUpdateDto updateDto,
+            @RequestParam Long id,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        User user = userDetails.getUser();
+        reviewRequestService.updateReviewRequest(updateDto, id, user);
+
+        return ResponseEntity.ok("ok");
+    }
+
+    /**
      * 코드리뷰 요청 언어별 카운팅 API
      */
+    @GetMapping("/question/languages/count")
     public List<ReviewRequestLanguageCount> getCountGroupByLanguageName() {
         return reviewRequestService.getCountGroupByLanguageName();
     }

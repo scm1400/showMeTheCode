@@ -1,5 +1,6 @@
 package com.sparta.showmethecode.domain;
 
+import com.sparta.showmethecode.dto.request.ReviewRequestUpdateDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 코드리뷰 요청서
@@ -76,5 +78,15 @@ public class ReviewRequest extends Timestamped{
         this.comment = comment;
         this.status = status;
         this.languageName = languageName.toUpperCase();
+    }
+
+    public void update(ReviewRequestUpdateDto dto, User newAnswerUser) {
+        this.title = dto.getTitle();
+        this.code = dto.getCode();
+        this.comment = dto.getComment();
+
+        if (!Objects.isNull(newAnswerUser)) {
+            this.answerUser = newAnswerUser;
+        }
     }
 }

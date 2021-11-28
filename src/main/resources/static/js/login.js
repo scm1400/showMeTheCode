@@ -46,10 +46,10 @@ function show_login_modal() {
     $('body').append(temp_html);
 }
 
-function close_login_modal(){
+function close_login_modal() {
     $('#login_modal').remove();
 }
 
-function signup_page(){
-    location.href="/signup.html"
+function signup_page() {
+    location.href = "/signup.html"
 }

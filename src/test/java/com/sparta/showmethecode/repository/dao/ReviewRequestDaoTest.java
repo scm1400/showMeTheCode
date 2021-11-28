@@ -50,11 +50,6 @@ public class ReviewRequestDaoTest {
         ReviewRequest reviewRequest4 = new ReviewRequest(savedUser2, "jpa가 이상해요", "code3", "spring에서 jpa가 이상해요", ReviewRequestStatus.REQUESTED, "PYTHON");
 
         reviewRequestRepository.saveAll(Arrays.asList(reviewRequest1, reviewRequest2, reviewRequest3, reviewRequest4));
-
-        for (int i=0;i<6;i++) {
-            ReviewRequest reviewRequest = new ReviewRequest(savedUser, "jpa가 이상해요"+i, "code3", "spring에서 jpa가 이상해요", ReviewRequestStatus.REQUESTED, "PYTHON");
-            reviewRequestRepository.save(reviewRequest);
-        }
     }
 
     @Test

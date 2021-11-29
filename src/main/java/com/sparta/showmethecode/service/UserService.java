@@ -3,14 +3,17 @@ package com.sparta.showmethecode.service;
 import com.sparta.showmethecode.config.security.JwtUtils;
 import com.sparta.showmethecode.config.security.UserDetailsServiceImpl;
 import com.sparta.showmethecode.domain.Language;
+import com.sparta.showmethecode.domain.ReviewAnswer;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.domain.UserRole;
+import com.sparta.showmethecode.dto.request.EvaluateAnswerDto;
 import com.sparta.showmethecode.dto.request.SigninRequestDto;
 import com.sparta.showmethecode.dto.request.SignupRequestDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewerInfoDto;
 import com.sparta.showmethecode.dto.response.SigninResponseDto;
 import com.sparta.showmethecode.repository.LanguageRepository;
+import com.sparta.showmethecode.repository.ReviewAnswerRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import com.sparta.showmethecode.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +40,8 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final ReviewRequestRepository reviewRequestRepository;
+    private final ReviewAnswerRepository reviewAnswerRepository;
+
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
@@ -44,7 +49,6 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-//    public User saveUser(@Valid SignupRequestDto requestDto) {
     public User saveUser(SignupRequestDto requestDto) {
         UserRole userRole = requestDto.isReviewer() ? UserRole.ROLE_REVIEWER : UserRole.ROLE_USER;
 
@@ -54,8 +58,9 @@ public class UserService {
                 .username(requestDto.getUsername())
                 .password(passwordEncoder.encode(requestDto.getPassword()))
                 .role(userRole)
-                .reviewCount(0)
-                .rankingPoint(0)
+                .evalCount(0)
+                .evalCount(0)
+                .answerCount(0)
                 .languages(new ArrayList<>())
                 .build();
 
@@ -103,12 +108,29 @@ public class UserService {
                 r -> new ReviewerInfoDto(
                         r.getUsername(),
                         r.getLanguages().stream().map(l -> new String(l.getName())).collect(Collectors.toList()),
-                        r.getReviewCount(),
-                        r.getRankingPoint())
+                        r.getAnswerCount(),
+                        r.getEvalTotal() / r.getEvalCount())
         ).collect(Collectors.toList());
     }
 
     public List<ReviewRequestResponseDto> getMyReviewRequestList(User user) {
         return reviewRequestRepository.findMyReviewRequestList(user.getId());
+    }
+
+    /**
+     * 답변에 대한 평가 API
+     *
+     * 평가하고자 하는 답변이 내가 요청한 코드리뷰에 대한 답변인지 확인해야 함
+     */
+    @Transactional
+    public void evaluateAnswer(User user, Long answerId, EvaluateAnswerDto evaluateAnswerDto) {
+        if(reviewRequestRepository.isAnswerToMe(answerId, user)) {
+            ReviewAnswer reviewAnswer = reviewAnswerRepository.findById(answerId).orElseThrow(
+                    () -> new IllegalArgumentException("존재하지 않는 답변입니다.")
+            );
+
+            reviewAnswer.evaluate(evaluateAnswerDto.getPoint());
+            reviewAnswer.getAnswerUser().evaluate(evaluateAnswerDto.getPoint());
+        }
     }
 }

@@ -29,7 +29,7 @@ public class GroupbyTest {
 
     @BeforeEach
     void init() {
-        User user = new User("user1", "pass1", UserRole.ROLE_USER, 0, 0);
+        User user = new User("user1", "pass1", UserRole.ROLE_USER, 0, 0, 0);
         userRepository.save(user);
 
         ReviewRequest reviewRequest1 = new ReviewRequest(user, "Java가 여려워요.", "code1", "java도 어려운데 jpa는 ㅠ", ReviewRequestStatus.REQUESTED, "Java");

@@ -21,6 +21,10 @@ public interface ReviewRequestDao {
     // 자신이 요청한 리뷰 조회
     List<ReviewRequestResponseDto> findMyReviewRequestList(Long userId);
 
-    // 파라미터로 받은 리뷰요청Id가 현재 인증된 사용자의 소유인지 조회
+    // 내가 요청한 리뷰가 맞는지 체크
     boolean isMyReviewRequest(Long reviewId, User user);
+    // 나에게 요청된 리뷰가 맞는지 체크
+    boolean isRequestedToMe(Long reviewId, User reviewer);
+
+    boolean isAnswerToMe(Long answerId, User user);
 }

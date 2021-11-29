@@ -47,7 +47,7 @@ public class TestDataInit implements ApplicationRunner {
     }
 
     private User createdNormalUser(String username, String password) {
-        return new User(username, password, UserRole.ROLE_USER, 0, 0);
+        return new User(username, password, UserRole.ROLE_USER, 0, 0,0);
     }
 
     private ReviewRequest createdReviewRequest(String title, String code, String comment, String language, User requestUser, User answerUser) {

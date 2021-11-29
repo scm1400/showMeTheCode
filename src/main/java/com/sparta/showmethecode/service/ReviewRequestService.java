@@ -93,7 +93,10 @@ public class ReviewRequestService {
      */
     @Transactional
     public void deleteReviewRequest(Long reviewId, User user){
-
+        boolean isMyRequest = reviewRequestRepository.isMyReviewRequest(reviewId, user);
+        if (isMyRequest) {
+            reviewRequestRepository.deleteById(reviewId);
+        }
     }
 
     /**

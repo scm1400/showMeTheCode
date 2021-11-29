@@ -181,4 +181,23 @@ public class ReviewRequestDaoImpl implements ReviewRequestDao {
 
         return exist != null;
     }
+
+    @Override
+    public Page<ReviewRequest> searchRequestByLanguageName(String languageName, Pageable pageable, boolean isAsc) {
+
+        List<ReviewRequest> result = query.select(reviewRequest)
+                .from(reviewRequest)
+                .join(reviewRequest.requestUser, user).fetchJoin()
+                .where(reviewRequest.languageName.eq(languageName))
+                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
+                .orderBy(isAsc ? reviewRequest.createdAt.asc() : reviewRequest.createdAt.desc())
+                .fetch();
+
+        JPAQuery<ReviewRequest> jpaQuery = query.select(reviewRequest)
+                .from(reviewRequest)
+                .where(reviewRequest.languageName.eq(languageName));
+
+        return PageableExecutionUtils.getPage(result, pageable, jpaQuery::fetchCount);
+    }
 }

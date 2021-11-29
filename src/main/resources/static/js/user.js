@@ -21,6 +21,7 @@ function signin() {
             sessionStorage.setItem("myAuthority", res['authority'])
             alert('로그인에 성공했습니다.')
             window.location.reload()
+            alert('로그인에 성공했습니다.')
         }, error: function(err) {
             alert('로그인에 실패했습니다.')
         }

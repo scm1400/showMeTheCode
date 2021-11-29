@@ -24,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -43,6 +44,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
+//    public User saveUser(@Valid SignupRequestDto requestDto) {
     public User saveUser(SignupRequestDto requestDto) {
         UserRole userRole = requestDto.isReviewer() ? UserRole.ROLE_REVIEWER : UserRole.ROLE_USER;
 
@@ -92,7 +94,6 @@ public class UserService {
     public List<String> getMyLanguage(Long userId) {
         return languageRepository.findByUserId(userId);
     }
-
 
 
     public List<ReviewerInfoDto> findReviewerByLanguage(String languageName) {

@@ -27,6 +27,8 @@ public class ReviewAnswer extends Timestamped {
 
     private String comment;
 
+    private double point;
+
     @JoinColumn(name = "answer_user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User answerUser;
@@ -36,5 +38,9 @@ public class ReviewAnswer extends Timestamped {
         this.code = code;
         this.comment = comment;
         this.answerUser = answerUser;
+    }
+
+    public void evaluate(double point) {
+        this.point = point;
     }
 }

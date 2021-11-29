@@ -171,4 +171,14 @@ public class ReviewRequestDaoImpl implements ReviewRequestDao {
 
         return exist != null;
     }
+
+    @Override
+    public boolean isAnswerToMe(Long answerId, User user) {
+        Integer exist = query.selectOne()
+                .from(reviewRequest)
+                .where(reviewRequest.reviewAnswer.id.eq(answerId).and(reviewRequest.requestUser.id.eq(user.getId())))
+                .fetchFirst();
+
+        return exist != null;
+    }
 }

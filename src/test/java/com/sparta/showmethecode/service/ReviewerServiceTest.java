@@ -33,8 +33,8 @@ public class ReviewerServiceTest {
 
     @BeforeEach
     void init() {
-        User user1 = new User("user1", "user1", UserRole.ROLE_USER, 0, 0);
-        User reviewer1 = new User("reviewer1", "reviewer1", UserRole.ROLE_REVIEWER, 0, 0, Arrays.asList(new Language("Java")));
+        User user1 = new User("user1", "user1", UserRole.ROLE_USER, 0, 0, 0);
+        User reviewer1 = new User("reviewer1", "reviewer1", UserRole.ROLE_REVIEWER, 0, 0, 0, Arrays.asList(new Language("Java")));
         userRepository.saveAll(Arrays.asList(user1, reviewer1));
 
         ReviewRequest reviewRequest = new ReviewRequest(user1, reviewer1, "title1", "code1", "comment1", ReviewRequestStatus.REQUESTED, "Java");

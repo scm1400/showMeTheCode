@@ -13,6 +13,6 @@ public class ReviewerInfoDto {
     private String username;
     private List<String> languages = new ArrayList<>();
 
-    private int reviewCount;
-    private int rankingPoint;
+    private int answerCount;
+    private double point;
 }

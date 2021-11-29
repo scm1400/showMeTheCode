@@ -3,6 +3,7 @@ package com.sparta.showmethecode.controller;
 import com.sparta.showmethecode.config.security.UserDetailsImpl;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.AddReviewDto;
+import com.sparta.showmethecode.dto.request.EvaluateAnswerDto;
 import com.sparta.showmethecode.dto.request.SigninRequestDto;
 import com.sparta.showmethecode.dto.request.SignupRequestDto;
 import com.sparta.showmethecode.dto.response.*;
@@ -66,7 +67,9 @@ public class UserController {
      * 내가 등록한 리뷰요청목록 조회 API
      */
     @GetMapping("/user/requests")
-    public ResponseEntity<List<ReviewRequestResponseDto>> getMyRequestList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<List<ReviewRequestResponseDto>> getMyRequestList(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
         User user = userDetails.getUser();
         List<ReviewRequestResponseDto> response = userService.getMyReviewRequestList(user);
 
@@ -90,11 +93,11 @@ public class UserController {
     @PostMapping("/user/reviewer/request")
     public ResponseEntity addReviewAndComment(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestParam Long id,
+            @RequestParam Long questionId,
             @RequestBody AddReviewDto addReviewDto
     ) {
         User reviewer = userDetails.getUser();
-        reviewerService.addReviewAndComment(reviewer, id, addReviewDto);
+        reviewerService.addReviewAndComment(reviewer, questionId, addReviewDto);
         return ResponseEntity.ok("ok");
     }
 
@@ -104,11 +107,27 @@ public class UserController {
     @GetMapping("/user/reviewer/request/reject")
     public ResponseEntity rejectRequestedReview(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestParam Long id
+            @RequestParam Long questionId
     ) {
         User user = userDetails.getUser();
-        reviewerService.rejectRequestedReview(user, id);
+        reviewerService.rejectRequestedReview(user, questionId);
 
         return ResponseEntity.ok("ok");
     }
+
+    /**
+     * 답변에 대한 평가 API
+     */
+    @PostMapping("/user/question/{answerId}/eval")
+    public ResponseEntity evaluateAnswer(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable Long answerId,
+            @RequestBody EvaluateAnswerDto evaluateAnswerDto
+    ) {
+        User user = userDetails.getUser();
+        userService.evaluateAnswer(user, answerId, evaluateAnswerDto);
+
+        return ResponseEntity.ok("ok");
+    }
+
 }

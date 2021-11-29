@@ -51,9 +51,9 @@ public class ReviewerService {
      * 자신에게 요청된 리뷰가 아닌 경우에 대한 처리 필요
      */
     @Transactional
-    public void rejectRequestedReview(User reviewer, Long reviewId) {
-        if (isRequestedToMe(reviewId, reviewer)) {
-            ReviewRequest reviewRequest = reviewRequestRepository.findById(reviewId).orElseThrow(
+    public void rejectRequestedReview(User reviewer, Long questionId) {
+        if (isRequestedToMe(questionId, reviewer)) {
+            ReviewRequest reviewRequest = reviewRequestRepository.findById(questionId).orElseThrow(
                     () -> new IllegalArgumentException("존재하지 않는 리뷰요청입니다.")
             );
 
@@ -64,7 +64,7 @@ public class ReviewerService {
     /**
      * 나에게 요청된 리뷰인지 확인
      */
-    private boolean isRequestedToMe(Long reviewId, User reviewer) {
-        return reviewRequestRepository.isRequestedToMe(reviewId, reviewer);
+    private boolean isRequestedToMe(Long questionId, User reviewer) {
+        return reviewRequestRepository.isRequestedToMe(questionId, reviewer);
     }
 }

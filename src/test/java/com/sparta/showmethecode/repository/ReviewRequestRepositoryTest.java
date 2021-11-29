@@ -30,12 +30,12 @@ public class ReviewRequestRepositoryTest {
 
     @BeforeEach
     void init() throws InterruptedException {
-        User user = new User("user1", "pass1", UserRole.ROLE_USER, 0, 0);
+        User user = new User("user1", "pass1", UserRole.ROLE_USER, 0, 0, 0);
         userRepository.save(user);
 
-        User reviewer1 = new User("user2", "pass2", UserRole.ROLE_REVIEWER, 0, 0, Arrays.asList(new Language("JAVA")));
+        User reviewer1 = new User("user2", "pass2", UserRole.ROLE_REVIEWER, 0, 0, 0, Arrays.asList(new Language("JAVA")));
         userRepository.save(reviewer1);
-        User reviewer2 = new User("user3", "pass3", UserRole.ROLE_REVIEWER, 0, 0, Arrays.asList(new Language("JAVA")));
+        User reviewer2 = new User("user3", "pass3", UserRole.ROLE_REVIEWER, 0, 0, 0, Arrays.asList(new Language("JAVA")));
         userRepository.save(reviewer2);
 
         ReviewRequest reviewRequest1 = new ReviewRequest(user, reviewer1,"Java가 여려워요.", "code1", "java도 어려운데 jpa는 ㅠ", ReviewRequestStatus.REQUESTED, "JAVA");

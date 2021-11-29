@@ -21,8 +21,8 @@ public class UserDaoTest {
 
     @BeforeEach
     void init() {
-        User user1 = new User("user1", "pass1", UserRole.ROLE_REVIEWER, 0, 0);
-        User user2 = new User("user2", "pass2", UserRole.ROLE_REVIEWER, 0, 0);
+        User user1 = new User("user1", "pass1", UserRole.ROLE_REVIEWER, 0, 0, 0);
+        User user2 = new User("user2", "pass2", UserRole.ROLE_REVIEWER, 0, 0, 0);
 
         user1.addLanguage(new Language("JAVA"));
         user1.addLanguage(new Language("PYTHON"));

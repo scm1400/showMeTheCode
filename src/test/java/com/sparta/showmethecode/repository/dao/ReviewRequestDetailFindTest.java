@@ -56,13 +56,13 @@ public class ReviewRequestDetailFindTest {
     }
 
     private User createNormalUser(String username, String password) {
-        User user = new User(username, password, UserRole.ROLE_USER, 0, 0);
+        User user = new User(username, password, UserRole.ROLE_USER, 0, 0, 0);
         return userRepository.save(user);
     }
 
     private User createReviewer(String username, String password, String language) {
         Language savedLanguage = languageRepository.save(new Language(language));
-        User user = new User(username, password, UserRole.ROLE_REVIEWER, 0, 0, Arrays.asList(savedLanguage));
+        User user = new User(username, password, UserRole.ROLE_REVIEWER, 0, 0, 0, Arrays.asList(savedLanguage));
         return userRepository.save(user);
     }
 }

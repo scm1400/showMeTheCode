@@ -25,4 +25,6 @@ public interface ReviewRequestDao {
     boolean isMyReviewRequest(Long reviewId, User user);
     // 나에게 요청된 리뷰가 맞는지 체크
     boolean isRequestedToMe(Long reviewId, User reviewer);
+
+    boolean isAnswerToMe(Long answerId, User user);
 }

@@ -2,12 +2,10 @@ package com.sparta.showmethecode.controller;
 
 import com.sparta.showmethecode.config.security.UserDetailsImpl;
 import com.sparta.showmethecode.domain.User;
+import com.sparta.showmethecode.dto.request.AddReviewDto;
 import com.sparta.showmethecode.dto.request.SigninRequestDto;
 import com.sparta.showmethecode.dto.request.SignupRequestDto;
-import com.sparta.showmethecode.dto.response.BasicResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewerInfoDto;
-import com.sparta.showmethecode.dto.response.SigninResponseDto;
+import com.sparta.showmethecode.dto.response.*;
 import com.sparta.showmethecode.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -50,6 +48,10 @@ public class UserController {
         return ResponseEntity.ok(reviewerInfoList);
     }
 
+
+    /**
+     * 로그아웃 API
+     */
     @Secured({"ROLE_USER", "ROLE_REVIEWER"})
     @PostMapping("/user/logout")
     public BasicResponseDto logout() {
@@ -67,5 +69,29 @@ public class UserController {
         List<ReviewRequestResponseDto> response = userService.getMyReviewRequestList(user);
 
         return ResponseEntity.ok(response);
+    }
+
+    /**
+     * 나에게 요청된 리뷰요청목록 조회 API
+     */
+    @GetMapping("/user/reviewer/requests")
+    public ResponseEntity<ReviewRequestListResponseDto> getRequestedReviewList(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+
+        return null;
+    }
+
+    /**
+     * 리뷰요청에 대한 리뷰등록 API
+     */
+    @PostMapping("/user/reviewer/request")
+    public ResponseEntity addReviewAndComment(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestParam Long id,
+            @RequestBody AddReviewDto addReviewDto
+    ) {
+
+        return null;
     }
 }

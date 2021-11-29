@@ -22525,7 +22525,7 @@ body .gototop-btn .gototop-text {
 
 .modal .dimmed {
     position: absolute;
-    background: rgba(11, 19, 30, .37)
+    background: rgba(11,19,30,.37)
 }
 
 @media screen and (max-width: 768px) {

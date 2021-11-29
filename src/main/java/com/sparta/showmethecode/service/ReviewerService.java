@@ -2,6 +2,7 @@ package com.sparta.showmethecode.service;
 
 import com.sparta.showmethecode.domain.ReviewAnswer;
 import com.sparta.showmethecode.domain.ReviewRequest;
+import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.AddReviewDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
@@ -23,21 +24,47 @@ public class ReviewerService {
 
     /**
      * 리뷰요청에 대한 리뷰등록 API
+     * 자신에게 요청된 리뷰가 아닌 경우에 대한 처리 필요
      */
     @Transactional
     public void addReviewAndComment(User reviewer, Long reviewId, AddReviewDto addReviewDto) {
-        ReviewAnswer reviewAnswer = ReviewAnswer.builder()
-                .title(addReviewDto.getTitle())
-                .code(addReviewDto.getCode())
-                .comment(addReviewDto.getComment())
-                .answerUser(reviewer)
-                .build();
-        ReviewAnswer savedReviewAnswer = reviewAnswerRepository.save(reviewAnswer);
+        if (isRequestedToMe(reviewId, reviewer)) {
+            ReviewAnswer reviewAnswer = ReviewAnswer.builder()
+                    .title(addReviewDto.getTitle())
+                    .code(addReviewDto.getCode())
+                    .comment(addReviewDto.getComment())
+                    .answerUser(reviewer)
+                    .build();
+            ReviewAnswer savedReviewAnswer = reviewAnswerRepository.save(reviewAnswer);
 
-        ReviewRequest reviewRequest = reviewRequestRepository.findById(reviewId).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 리뷰요청입니다.")
-        );
+            ReviewRequest reviewRequest = reviewRequestRepository.findById(reviewId).orElseThrow(
+                    () -> new IllegalArgumentException("존재하지 않는 리뷰요청입니다.")
+            );
 
-        reviewRequest.setReviewAnswer(savedReviewAnswer);
+            reviewRequest.setStatus(ReviewRequestStatus.COMPLETED);
+            reviewRequest.setReviewAnswer(savedReviewAnswer);
+        }
+    }
+
+    /**
+     * 리뷰요청 거절 API
+     * 자신에게 요청된 리뷰가 아닌 경우에 대한 처리 필요
+     */
+    @Transactional
+    public void rejectRequestedReview(User reviewer, Long reviewId) {
+        if (isRequestedToMe(reviewId, reviewer)) {
+            ReviewRequest reviewRequest = reviewRequestRepository.findById(reviewId).orElseThrow(
+                    () -> new IllegalArgumentException("존재하지 않는 리뷰요청입니다.")
+            );
+
+            reviewRequest.setStatus(ReviewRequestStatus.REJECTED);
+        }
+    }
+
+    /**
+     * 나에게 요청된 리뷰인지 확인
+     */
+    private boolean isRequestedToMe(Long reviewId, User reviewer) {
+        return reviewRequestRepository.isRequestedToMe(reviewId, reviewer);
     }
 }

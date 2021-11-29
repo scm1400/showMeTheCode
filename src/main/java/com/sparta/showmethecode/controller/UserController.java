@@ -6,6 +6,7 @@ import com.sparta.showmethecode.dto.request.AddReviewDto;
 import com.sparta.showmethecode.dto.request.SigninRequestDto;
 import com.sparta.showmethecode.dto.request.SignupRequestDto;
 import com.sparta.showmethecode.dto.response.*;
+import com.sparta.showmethecode.service.ReviewerService;
 import com.sparta.showmethecode.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final ReviewerService reviewerService;
 
     @PostMapping("/user/signup")
     public ResponseEntity<BasicResponseDto> signup(@RequestBody SignupRequestDto requestDto) {
@@ -91,7 +93,22 @@ public class UserController {
             @RequestParam Long id,
             @RequestBody AddReviewDto addReviewDto
     ) {
+        User reviewer = userDetails.getUser();
+        reviewerService.addReviewAndComment(reviewer, id, addReviewDto);
+        return ResponseEntity.ok("ok");
+    }
 
-        return null;
+    /**
+     * 리뷰요청 거절 API
+     */
+    @GetMapping("/user/reviewer/request/reject")
+    public ResponseEntity rejectRequestedReview(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestParam Long id
+    ) {
+        User user = userDetails.getUser();
+        reviewerService.rejectRequestedReview(user, id);
+
+        return ResponseEntity.ok("ok");
     }
 }

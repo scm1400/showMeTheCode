@@ -8,6 +8,7 @@ import com.sparta.showmethecode.dto.response.ReviewRequestLanguageCount;
 import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import com.sparta.showmethecode.repository.UserRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @TestPropertySource(locations = "/application-test.yml")
 @SpringBootTest
 @Transactional
@@ -35,18 +38,18 @@ public class ReviewRequestDaoTest {
     @BeforeEach
     void init() throws InterruptedException {
         User user = new User("user1", "pass1", UserRole.ROLE_USER, 0, 0);
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
 
-        ReviewRequest reviewRequest1 = new ReviewRequest(user, "Java가 여려워요.", "code1", "java도 어려운데 jpa는 ㅠ", ReviewRequestStatus.REQUESTED, "JAVA");
-        ReviewRequest reviewRequest2 = new ReviewRequest(user, "spring이 이상해요", "code2", "comment2", ReviewRequestStatus.REQUESTED, "JAVA");
-        ReviewRequest reviewRequest3 = new ReviewRequest(user, "jpa가 이상해요", "code3", "spring에서 jpa가 이상해요", ReviewRequestStatus.REQUESTED, "PYTHON");
+        User user2 = new User("user2", "pass2", UserRole.ROLE_USER, 0, 0);
+        User savedUser2 = userRepository.save(user2);
 
-        reviewRequestRepository.saveAll(Arrays.asList(reviewRequest1, reviewRequest2, reviewRequest3));
+        ReviewRequest reviewRequest1 = new ReviewRequest(savedUser, "Java가 여려워요.", "code1", "java도 어려운데 jpa는 ㅠ", ReviewRequestStatus.REQUESTED, "JAVA");
+        ReviewRequest reviewRequest2 = new ReviewRequest(savedUser, "spring이 이상해요", "code2", "comment2", ReviewRequestStatus.REQUESTED, "JAVA");
+        ReviewRequest reviewRequest3 = new ReviewRequest(savedUser, "jpa가 이상해요", "code3", "spring에서 jpa가 이상해요", ReviewRequestStatus.REQUESTED, "PYTHON");
 
-        for (int i=0;i<11;i++) {
-            ReviewRequest reviewRequest = new ReviewRequest(user, "jpa가 이상해요"+i, "code3", "spring에서 jpa가 이상해요", ReviewRequestStatus.REQUESTED, "PYTHON");
-            reviewRequestRepository.save(reviewRequest);
-        }
+        ReviewRequest reviewRequest4 = new ReviewRequest(savedUser2, "jpa가 이상해요", "code3", "spring에서 jpa가 이상해요", ReviewRequestStatus.REQUESTED, "PYTHON");
+
+        reviewRequestRepository.saveAll(Arrays.asList(reviewRequest1, reviewRequest2, reviewRequest3, reviewRequest4));
     }
 
     @Test
@@ -98,5 +101,17 @@ public class ReviewRequestDaoTest {
         Sort sort = Sort.by(direction, sortBy);
 
         return PageRequest.of(page, size, sort);
+    }
+
+    @Test
+    void 자신이_요청한_리뷰목록_조회() {
+        User user = userRepository.findByUsername("user1").get();
+        List<ReviewRequest> all = reviewRequestRepository.findAll();
+
+        List<ReviewRequestResponseDto> result = reviewRequestRepository.findMyReviewRequestList(user.getId());
+
+        result.forEach(System.out::println);
+
+        assertEquals(all.size()-1, result.size());
     }
 }

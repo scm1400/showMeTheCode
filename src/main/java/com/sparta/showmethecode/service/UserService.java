@@ -7,9 +7,11 @@ import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.domain.UserRole;
 import com.sparta.showmethecode.dto.request.SigninRequestDto;
 import com.sparta.showmethecode.dto.request.SignupRequestDto;
+import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewerInfoDto;
 import com.sparta.showmethecode.dto.response.SigninResponseDto;
 import com.sparta.showmethecode.repository.LanguageRepository;
+import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import com.sparta.showmethecode.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -33,6 +36,7 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final ReviewRequestRepository reviewRequestRepository;
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
@@ -40,6 +44,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
+//    public User saveUser(@Valid SignupRequestDto requestDto) {
     public User saveUser(SignupRequestDto requestDto) {
         UserRole userRole = requestDto.isReviewer() ? UserRole.ROLE_REVIEWER : UserRole.ROLE_USER;
 
@@ -91,7 +96,6 @@ public class UserService {
     }
 
 
-
     public List<ReviewerInfoDto> findReviewerByLanguage(String languageName) {
         List<User> reviewers = userRepository.findReviewerByLanguage(languageName);
 
@@ -102,5 +106,9 @@ public class UserService {
                         r.getReviewCount(),
                         r.getRankingPoint())
         ).collect(Collectors.toList());
+    }
+
+    public List<ReviewRequestResponseDto> getMyReviewRequestList(User user) {
+        return reviewRequestRepository.findMyReviewRequestList(user.getId());
     }
 }

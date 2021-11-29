@@ -2,13 +2,16 @@ package com.sparta.showmethecode.service;
 
 import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
+import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
+import com.sparta.showmethecode.dto.request.ReviewRequestUpdateDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestDetailResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestLanguageCount;
 import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
 import com.sparta.showmethecode.repository.ReviewRequestCommentRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
+import com.sparta.showmethecode.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -19,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -27,6 +31,7 @@ import java.util.stream.Collectors;
 public class ReviewRequestService {
 
     private final ReviewRequestRepository reviewRequestRepository;
+    private final UserRepository userRepository;
 
     /**
      * 코드리뷰 요청목록 API
@@ -54,12 +59,41 @@ public class ReviewRequestService {
     /**
      * 코드리뷰 요청 API
      */
-    @Transactional(readOnly = true)
-    public void addReviewRequest(ReviewRequestDto requestDto) {
+    @Transactional
+    public void addReviewRequest(ReviewRequestDto requestDto, User user) {
         ReviewRequest reviewRequest
-                = new ReviewRequest(null, requestDto.getTitle(), requestDto.getCode(), requestDto.getComment(), ReviewRequestStatus.REQUESTED, requestDto.getLanguage().toUpperCase());
+                = new ReviewRequest(user, requestDto.getTitle(), requestDto.getCode(), requestDto.getComment(), ReviewRequestStatus.REQUESTED, requestDto.getLanguage().toUpperCase());
 
         reviewRequestRepository.save(reviewRequest);
+    }
+
+    /**
+     * 코드리뷰 수정 API
+     */
+    @Transactional
+    public void updateReviewRequest(ReviewRequestUpdateDto updateDto, Long reviewId, User user) {
+        boolean isMyRequest = reviewRequestRepository.isMyReviewRequest(reviewId, user);
+        if (isMyRequest) {
+            User newAnswerUser = null;
+            if (!Objects.isNull(updateDto.getReviewerId())) {
+                newAnswerUser = userRepository.findById(updateDto.getReviewerId()).orElseThrow(
+                        () -> new IllegalArgumentException("존재하지 않는 리뷰어입니다.")
+                );
+            }
+            ReviewRequest reviewRequest = reviewRequestRepository.findById(reviewId).orElseThrow(
+                    () -> new IllegalArgumentException("존재하지 않는 요청입니다.")
+            );
+
+            reviewRequest.update(updateDto, newAnswerUser);
+        }
+    }
+
+    /**
+     * 코드리뷰 삭제 API
+     */
+    @Transactional
+    public void deleteReviewRequest(Long reviewId, User user){
+
     }
 
     /**

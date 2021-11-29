@@ -22525,7 +22525,7 @@ body .gototop-btn .gototop-text {
 
 .modal .dimmed {
     position: absolute;
-    background: rgba(11, 19, 30, .37)
+    background: rgba(11,19,30,.37)
 }
 
 @media screen and (max-width: 768px) {
@@ -26985,7 +26985,7 @@ body.is-loading .loading_spinner_container #loading_spinner, body.is_loading .lo
 }
 
 #main {
-    min-height: 800px
+    min-height: 1000px
 }
 
 #main.sticky {

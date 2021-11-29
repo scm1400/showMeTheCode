@@ -2,9 +2,11 @@ package com.sparta.showmethecode.dto.response;
 
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
+@ToString
 @Data
 public class ReviewRequestResponseDto {
 

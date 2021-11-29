@@ -1,5 +1,6 @@
 package com.sparta.showmethecode.domain;
 
+import com.sparta.showmethecode.dto.request.ReviewRequestUpdateDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,12 +9,12 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 코드리뷰 요청서
  */
 
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -37,7 +38,7 @@ public class ReviewRequest extends Timestamped{
     @Column(nullable = false)
     private String languageName;
 
-    // 한 명의 사용자는 여러 개 쿄드리뷰 요청서를 작성할 수 있다.
+    // 한 명의 사용자는 여러 개 코드리뷰 요청서를 작성할 수 있다.
     @JoinColumn(name = "request_user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User requestUser;
@@ -77,5 +78,15 @@ public class ReviewRequest extends Timestamped{
         this.comment = comment;
         this.status = status;
         this.languageName = languageName.toUpperCase();
+    }
+
+    public void update(ReviewRequestUpdateDto dto, User newAnswerUser) {
+        this.title = dto.getTitle();
+        this.code = dto.getCode();
+        this.comment = dto.getComment();
+
+        if (!Objects.isNull(newAnswerUser)) {
+            this.answerUser = newAnswerUser;
+        }
     }
 }

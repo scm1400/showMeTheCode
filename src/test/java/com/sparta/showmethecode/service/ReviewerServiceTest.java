@@ -2,6 +2,7 @@ package com.sparta.showmethecode.service;
 
 import com.sparta.showmethecode.domain.*;
 import com.sparta.showmethecode.dto.request.AddReviewDto;
+import com.sparta.showmethecode.dto.response.ReviewerInfoDto;
 import com.sparta.showmethecode.repository.ReviewAnswerRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import com.sparta.showmethecode.repository.UserRepository;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.Arrays;
+import java.util.List;
 
 @Transactional
 @SpringBootTest
@@ -86,5 +88,38 @@ public class ReviewerServiceTest {
         ReviewRequest reviewRequest1 = reviewRequestRepository.findById(reviewRequest.getId()).get();
 
         Assertions.assertEquals(ReviewRequestStatus.REJECTED, reviewRequest1.getStatus());
+    }
+
+    @Test
+    @DisplayName("3. 리부어 랭킹 조회 테스트 (상위 5명 조회)")
+    void 리뷰어_랭킹() {
+        User reviewer1 = createReviewer("test1", "test1", 30, 30, 4.5);
+        User reviewer2 = createReviewer("test2", "test1", 30, 30, 4.3);
+        User reviewer3 = createReviewer("test3", "test1", 30, 30, 4.8);
+        User reviewer4 = createReviewer("test4", "test1", 30, 30, 4.9);
+        User reviewer5 = createReviewer("test5", "test1", 30, 30, 3.0);
+        User reviewer6 = createReviewer("test6", "test1", 30, 30, 2.0);
+        User reviewer7 = createReviewer("test7", "test1", 30, 30, 3.8);
+
+        userRepository.saveAll(Arrays.asList(reviewer1, reviewer2, reviewer3, reviewer4, reviewer5, reviewer6, reviewer7));
+
+        List<ReviewerInfoDto> reviewerRanking = reviewerService.getReviewerTop5Ranking();
+
+        System.out.println(reviewerRanking.get(0));
+        System.out.println(reviewerRanking.get(reviewerRanking.size()-1));
+
+        Assertions.assertEquals(5, reviewerRanking.size());
+        Assertions.assertEquals("test4", reviewerRanking.get(0).getUsername());
+        Assertions.assertEquals("test7", reviewerRanking.get(4).getUsername());
+    }
+
+    private User createReviewer(String username, String password, int answerCount, int evalCount, double avg) {
+        return User.builder()
+                .username(username)
+                .password(password)
+                .answerCount(10)
+                .evalCount(30)
+                .evalTotal(evalCount*avg)
+                .languages(Arrays.asList(new Language("Java"))).build();
     }
 }

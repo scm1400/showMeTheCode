@@ -106,6 +106,7 @@ public class UserService {
 
         return reviewers.stream().map(
                 r -> new ReviewerInfoDto(
+                        r.getId(),
                         r.getUsername(),
                         r.getLanguages().stream().map(l -> new String(l.getName())).collect(Collectors.toList()),
                         r.getAnswerCount(),

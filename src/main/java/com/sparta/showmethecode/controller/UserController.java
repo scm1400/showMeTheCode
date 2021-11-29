@@ -130,4 +130,14 @@ public class UserController {
         return ResponseEntity.ok("ok");
     }
 
+    /**
+     * 리뷰어 랭킹 조회 API (상위 5위)
+     */
+    @GetMapping("/user/reviewer/rank")
+    public ResponseEntity getReviewerTop5Ranking() {
+        List<ReviewerInfoDto> reviewers = reviewerService.getReviewerTop5Ranking();
+
+        return ResponseEntity.ok(reviewers);
+    }
+
 }

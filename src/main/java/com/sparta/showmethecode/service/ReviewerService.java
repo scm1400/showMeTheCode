@@ -6,6 +6,7 @@ import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.AddReviewDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
+import com.sparta.showmethecode.dto.response.ReviewerInfoDto;
 import com.sparta.showmethecode.repository.ReviewAnswerRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import com.sparta.showmethecode.repository.UserRepository;
@@ -14,6 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -21,6 +25,7 @@ public class ReviewerService {
 
     private final ReviewAnswerRepository reviewAnswerRepository;
     private final ReviewRequestRepository reviewRequestRepository;
+    private final UserRepository userRepository;
 
     /**
      * 리뷰요청에 대한 리뷰등록 API
@@ -66,5 +71,22 @@ public class ReviewerService {
      */
     private boolean isRequestedToMe(Long questionId, User reviewer) {
         return reviewRequestRepository.isRequestedToMe(questionId, reviewer);
+    }
+
+    /**
+     * 리뷰어 랭킹 조회 API (상위 5명)
+     */
+    public List<ReviewerInfoDto> getReviewerTop5Ranking() {
+        return userRepository.findTop5ByOrderByEvalTotalDesc().stream().map(
+                u -> new ReviewerInfoDto(
+                        u.getId(),
+                        u.getUsername(),
+                        u.getLanguages().stream().map(
+                                l -> new String(l.toString())
+                        ).collect(Collectors.toList()),
+                        u.getAnswerCount(),
+                        u.getEvalTotal() / u.getEvalCount()
+                )
+        ).collect(Collectors.toList());
     }
 }

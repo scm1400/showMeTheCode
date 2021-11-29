@@ -131,13 +131,28 @@ public class UserController {
     }
 
     /**
-     * 리뷰어 랭킹 조회 API (상위 5위)
+     * 리뷰어 랭킹 조회 API (전체랭킹 조회)
      */
     @GetMapping("/user/reviewer/rank")
+    public ResponseEntity getReviewerRanking(
+            @RequestParam(required = false) int page,
+            @RequestParam(required = false) int size,
+            @RequestParam(required = false) boolean isAsc
+    ) {
+        --page;
+
+        PageResponseDto<ReviewerInfoDto> reviewerRanking = reviewerService.getReviewerRanking(page, size, isAsc);
+
+        return ResponseEntity.ok(reviewerRanking);
+    }
+
+    /**
+     * 리뷰어 랭킹 조회 API (상위 5위)
+     */
+    @GetMapping("/user/reviewer/top")
     public ResponseEntity getReviewerTop5Ranking() {
         List<ReviewerInfoDto> reviewers = reviewerService.getReviewerTop5Ranking();
 
         return ResponseEntity.ok(reviewers);
     }
-
 }

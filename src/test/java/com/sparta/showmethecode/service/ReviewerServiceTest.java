@@ -2,6 +2,7 @@ package com.sparta.showmethecode.service;
 
 import com.sparta.showmethecode.domain.*;
 import com.sparta.showmethecode.dto.request.AddReviewDto;
+import com.sparta.showmethecode.dto.response.PageResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewerInfoDto;
 import com.sparta.showmethecode.repository.ReviewAnswerRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
@@ -91,8 +92,33 @@ public class ReviewerServiceTest {
     }
 
     @Test
-    @DisplayName("3. 리부어 랭킹 조회 테스트 (상위 5명 조회)")
+    @DisplayName("3. 리뷰어 랭킹 조회 테스트")
     void 리뷰어_랭킹() {
+        User reviewer1 = createReviewer("test1", "test1", 30, 30, 4.5);
+        User reviewer2 = createReviewer("test2", "test1", 30, 30, 4.3);
+        User reviewer3 = createReviewer("test3", "test1", 30, 30, 4.8);
+        User reviewer4 = createReviewer("test4", "test1", 30, 30, 4.9);
+        User reviewer5 = createReviewer("test5", "test1", 30, 30, 3.0);
+        User reviewer6 = createReviewer("test6", "test1", 30, 30, 2.0);
+        User reviewer7 = createReviewer("test7", "test1", 30, 30, 3.8);
+
+        userRepository.saveAll(Arrays.asList(reviewer1, reviewer2, reviewer3, reviewer4, reviewer5, reviewer6, reviewer7));
+
+        PageResponseDto<ReviewerInfoDto> reviewerRanking = reviewerService.getReviewerRanking(0, 10, false);
+
+        System.out.println("===============내림차순================");
+        reviewerRanking.getData().forEach(System.out::println);
+        System.out.println("======================================");
+
+        reviewerRanking = reviewerService.getReviewerRanking(0, 10, true);
+        System.out.println("===============오름차순================");
+        reviewerRanking.getData().forEach(System.out::println);
+        System.out.println("======================================");
+    }
+
+    @Test
+    @DisplayName("4. 리뷰어 랭킹 조회 테스트 (상위 5명 조회)")
+    void 리뷰어_랭킹_상위5명() {
         User reviewer1 = createReviewer("test1", "test1", 30, 30, 4.5);
         User reviewer2 = createReviewer("test2", "test1", 30, 30, 4.3);
         User reviewer3 = createReviewer("test3", "test1", 30, 30, 4.8);
@@ -120,6 +146,7 @@ public class ReviewerServiceTest {
                 .answerCount(10)
                 .evalCount(30)
                 .evalTotal(evalCount*avg)
+                .role(UserRole.ROLE_REVIEWER)
                 .languages(Arrays.asList(new Language("Java"))).build();
     }
 }

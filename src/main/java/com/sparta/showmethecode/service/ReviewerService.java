@@ -5,6 +5,7 @@ import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.AddReviewDto;
+import com.sparta.showmethecode.dto.response.PageResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewerInfoDto;
 import com.sparta.showmethecode.repository.ReviewAnswerRepository;
@@ -12,6 +13,10 @@ import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import com.sparta.showmethecode.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,6 +76,36 @@ public class ReviewerService {
      */
     private boolean isRequestedToMe(Long questionId, User reviewer) {
         return reviewRequestRepository.isRequestedToMe(questionId, reviewer);
+    }
+
+    /**
+     * 리뷰어 랭킹 조회 API (전체랭킹 조회)
+     */
+    public PageResponseDto<ReviewerInfoDto> getReviewerRanking(
+            int page, int size, boolean isAsc
+    ) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, "evalTotal");
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<User> result = userRepository.getReviewerRanking(pageable, isAsc);
+
+        List<ReviewerInfoDto> reviewerInfo = result.getContent().stream().map(
+                u -> new ReviewerInfoDto(
+                        u.getId(),
+                        u.getUsername(),
+                        u.getLanguages().stream().map(l -> new String(l.getName())).collect(Collectors.toList()),
+                        u.getAnswerCount(),
+                        u.getEvalTotal() / u.getEvalCount()
+                )
+        ).collect(Collectors.toList());
+
+        return new PageResponseDto<ReviewerInfoDto>(
+                reviewerInfo,
+                result.getTotalPages(),
+                result.getTotalElements(),
+                page, size
+        );
     }
 
     /**

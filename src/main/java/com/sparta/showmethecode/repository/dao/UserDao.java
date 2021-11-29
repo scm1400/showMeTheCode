@@ -1,6 +1,7 @@
 package com.sparta.showmethecode.repository.dao;
 
 import com.sparta.showmethecode.domain.User;
+import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
 
 import java.util.List;

@@ -2,6 +2,7 @@ package com.sparta.showmethecode.repository.dao;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.showmethecode.domain.*;
+import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
 import lombok.RequiredArgsConstructor;
 

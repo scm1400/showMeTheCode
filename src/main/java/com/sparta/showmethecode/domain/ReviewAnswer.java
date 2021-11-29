@@ -30,4 +30,11 @@ public class ReviewAnswer extends Timestamped {
     @JoinColumn(name = "answer_user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User answerUser;
+
+    public ReviewAnswer(String title, String code, String comment, User answerUser) {
+        this.title = title;
+        this.code = code;
+        this.comment = comment;
+        this.answerUser = answerUser;
+    }
 }

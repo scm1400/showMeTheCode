@@ -44,7 +44,6 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-//    public User saveUser(@Valid SignupRequestDto requestDto) {
     public User saveUser(SignupRequestDto requestDto) {
         UserRole userRole = requestDto.isReviewer() ? UserRole.ROLE_REVIEWER : UserRole.ROLE_USER;
 

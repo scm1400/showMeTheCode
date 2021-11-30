@@ -1,6 +1,8 @@
 package com.sparta.showmethecode.controller;
 
 import com.sparta.showmethecode.config.security.UserDetailsImpl;
+import com.sparta.showmethecode.domain.Result;
+import com.sparta.showmethecode.domain.StatusEnum;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.SigninRequestDto;
 import com.sparta.showmethecode.dto.request.SignupRequestDto;
@@ -10,14 +12,23 @@ import com.sparta.showmethecode.dto.response.ReviewerInfoDto;
 import com.sparta.showmethecode.dto.response.SigninResponseDto;
 import com.sparta.showmethecode.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -26,10 +37,33 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/user/signup")
-    public ResponseEntity<BasicResponseDto> signup(@RequestBody SignupRequestDto requestDto) {
+    public ResponseEntity<BasicResponseDto> signup(@Valid @RequestBody SignupRequestDto requestDto, Errors error) {
+
+        if (error.hasErrors()) {
+
+            String message = "";
+//            BasicResponseDto basicResponseDto = new BasicResponseDto();
+
+            Map<String, String> errors = new HashMap<>();
+            for (FieldError value : error.getFieldErrors()) {
+                errors.put(value.getField(), value.getDefaultMessage());
+                message = value.getDefaultMessage();
+                System.out.println(value.getDefaultMessage());
+            }
+
+
+            BasicResponseDto responseDto = BasicResponseDto.builder()
+                    .result("fail").httpStatus(HttpStatus.FORBIDDEN).message(message).build();
+
+            return ResponseEntity.badRequest().body(responseDto);
+//            return new ResponseEntity<>(result, headers, HttpStatus.FORBIDDEN);
+
+        }
+
         userService.saveUser(requestDto);
         BasicResponseDto responseDto = BasicResponseDto.builder()
                 .result("success").httpStatus(HttpStatus.CREATED).message("회원가입에 성공했습니다.").build();
+
 
         return ResponseEntity.ok(responseDto);
     }

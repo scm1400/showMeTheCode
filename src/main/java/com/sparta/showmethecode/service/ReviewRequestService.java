@@ -143,6 +143,8 @@ public class ReviewRequestService {
         Sort sort = Sort.by(direction, "createdAt");
         Pageable pageable = PageRequest.of(page, size, sort);
 
+        language = language.toUpperCase();
+
         Page<ReviewRequest> reviewRequests = reviewRequestRepository.searchRequestByLanguageName(language, pageable, isAsc);
 
         List<ReviewRequestResponseDto> collect = reviewRequests.stream().map(

@@ -27,7 +27,7 @@ public class ReviewRequestController {
      */
     @GetMapping("/questions")
     public ResponseEntity<ReviewRequestListResponseDto> getReviewRequestList(
-            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "createdAt") String sortBy, @RequestParam(defaultValue = "true") Boolean isAsc,
             @RequestParam(required = false) String query
     ) {
@@ -61,7 +61,6 @@ public class ReviewRequestController {
      */
     @GetMapping("/question")
     public ResponseEntity<ReviewRequestDetailResponseDto> getReviewRequest(@RequestParam Long id) {
-        log.info("getReviewRequest = {}", id);
         ReviewRequestDetailResponseDto reviewRequest = reviewRequestService.getReviewRequest(id);
 
         return ResponseEntity.ok(reviewRequest);
@@ -109,8 +108,9 @@ public class ReviewRequestController {
     @GetMapping("/question/language")
     public ResponseEntity searchRequestByLanguageName(
             @RequestParam String language,
-            @RequestParam(required = false) int page, @RequestParam(required = false) int size, @RequestParam(defaultValue = "true") boolean isAsc
+            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "true") boolean isAsc
     ) {
+        --page;
         PageResponseDto<ReviewRequestResponseDto> result = reviewRequestService.searchRequestByLanguageName(language, page, size, isAsc);
 
         return ResponseEntity.ok(result);

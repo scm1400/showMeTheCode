@@ -135,9 +135,9 @@ public class UserController {
      */
     @GetMapping("/user/reviewer/rank")
     public ResponseEntity getReviewerRanking(
-            @RequestParam(required = false) int page,
-            @RequestParam(required = false) int size,
-            @RequestParam(required = false) boolean isAsc
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "true") boolean isAsc
     ) {
         --page;
 

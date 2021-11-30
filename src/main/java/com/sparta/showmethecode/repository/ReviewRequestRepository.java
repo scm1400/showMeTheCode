@@ -14,6 +14,8 @@ public interface ReviewRequestRepository extends JpaRepository<ReviewRequest, Lo
 
     Page<ReviewRequest> findAll(Pageable pageable);
 
+    Page<ReviewRequest> findByAnswerUser(User answerUser, Pageable pageable);
+
     // 테스트
     List<ReviewRequest> findByTitle(String title);
 

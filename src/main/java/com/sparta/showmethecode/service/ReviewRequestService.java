@@ -5,10 +5,7 @@ import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
 import com.sparta.showmethecode.dto.request.ReviewRequestUpdateDto;
-import com.sparta.showmethecode.dto.response.ReviewRequestDetailResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewRequestLanguageCount;
-import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
+import com.sparta.showmethecode.dto.response.*;
 import com.sparta.showmethecode.repository.ReviewRequestCommentRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import com.sparta.showmethecode.repository.UserRepository;
@@ -93,7 +90,10 @@ public class ReviewRequestService {
      */
     @Transactional
     public void deleteReviewRequest(Long reviewId, User user){
-
+        boolean isMyRequest = reviewRequestRepository.isMyReviewRequest(reviewId, user);
+        if (isMyRequest) {
+            reviewRequestRepository.deleteById(reviewId);
+        }
     }
 
     /**
@@ -135,5 +135,36 @@ public class ReviewRequestService {
         return reviewRequestRepository.getReviewRequestLanguageCountGroupByLanguage();
     }
 
+    /**
+     * 코드리뷰 요청 언어이름 검색 API
+     */
+    public PageResponseDto<ReviewRequestResponseDto> searchRequestByLanguageName(String language, int page, int size, boolean isAsc) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, "createdAt");
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        language = language.toUpperCase();
+
+        Page<ReviewRequest> reviewRequests = reviewRequestRepository.searchRequestByLanguageName(language, pageable, isAsc);
+
+        List<ReviewRequestResponseDto> collect = reviewRequests.stream().map(
+                r -> new ReviewRequestResponseDto(
+                        r.getId(),
+                        r.getRequestUser().getUsername(),
+                        r.getTitle(),
+                        r.getComment(),
+                        r.getLanguageName(),
+                        r.getStatus().toString(),
+                        r.getCreatedAt()
+                )
+        ).collect(Collectors.toList());
+
+        return new PageResponseDto<ReviewRequestResponseDto>(
+                collect,
+                reviewRequests.getTotalPages(),
+                reviewRequests.getTotalElements(),
+                page, size
+        );
+    }
 
 }

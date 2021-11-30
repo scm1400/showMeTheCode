@@ -52,6 +52,8 @@ public class ReviewRequest extends Timestamped{
     @ManyToOne(fetch = FetchType.LAZY)
     private ReviewAnswer reviewAnswer;
 
+
+
     @OneToMany(mappedBy = "reviewRequest", cascade = CascadeType.ALL)
     private List<ReviewRequestComment> reviewRequestComments = new ArrayList<>();
 
@@ -59,7 +61,6 @@ public class ReviewRequest extends Timestamped{
         this.reviewRequestComments.add(comment);
         comment.setReviewRequest(this);
     }
-
 
     public ReviewRequest(User requestUser, String title, String code, String comment, ReviewRequestStatus status, String languageName) {
         this.requestUser = requestUser;
@@ -88,5 +89,13 @@ public class ReviewRequest extends Timestamped{
         if (!Objects.isNull(newAnswerUser)) {
             this.answerUser = newAnswerUser;
         }
+    }
+
+    public void setReviewAnswer(ReviewAnswer reviewAnswer) {
+        this.reviewAnswer = reviewAnswer;
+    }
+
+    public void setStatus(ReviewRequestStatus status) {
+        this.status = status;
     }
 }

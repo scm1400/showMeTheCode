@@ -1,6 +1,8 @@
 package com.sparta.showmethecode.repository.dao;
 
+import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.User;
+import com.sparta.showmethecode.dto.response.ReviewAnswerResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestDetailResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestLanguageCount;
 import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
@@ -23,6 +25,16 @@ public interface ReviewRequestDao {
     // 자신에게 요청된 리뷰 조회
     List<ReviewRequestResponseDto> findMyReceivedRequestList(Long userId);
 
-    // 파라미터로 받은 리뷰요청Id가 현재 인증된 사용자의 소유인지 조회
+    // 내가 요청한 리뷰가 맞는지 체크
     boolean isMyReviewRequest(Long reviewId, User user);
+    // 나에게 요청된 리뷰가 맞는지 체크
+    boolean isRequestedToMe(Long reviewId, User reviewer);
+    // 나에게 답변된 리뷰가 맞는지 체크
+    boolean isAnswerToMe(Long answerId, User user);
+
+    // 언어이름으로 코드리뷰요청 조회
+    Page<ReviewRequest> searchRequestByLanguageName(String languageName, Pageable pageable, boolean isAsc);
+
+    // 내가 답변한 리뷰목록 조회
+    Page<ReviewAnswerResponseDto> findMyAnswer(Long userId, Pageable pageable, boolean isAsc, String sortBy);
 }

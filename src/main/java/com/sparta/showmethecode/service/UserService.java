@@ -3,8 +3,10 @@ package com.sparta.showmethecode.service;
 import com.sparta.showmethecode.config.security.JwtUtils;
 import com.sparta.showmethecode.config.security.UserDetailsServiceImpl;
 import com.sparta.showmethecode.domain.Language;
+import com.sparta.showmethecode.domain.ReviewAnswer;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.domain.UserRole;
+import com.sparta.showmethecode.dto.request.EvaluateAnswerDto;
 import com.sparta.showmethecode.dto.request.SigninRequestDto;
 import com.sparta.showmethecode.dto.request.SignupRequestDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
@@ -54,8 +56,9 @@ public class UserService {
                 .username(requestDto.getUsername())
                 .password(passwordEncoder.encode(requestDto.getPassword()))
                 .role(userRole)
-                .reviewCount(0)
-                .rankingPoint(0)
+                .evalCount(0)
+                .evalCount(0)
+                .answerCount(0)
                 .languages(new ArrayList<>())
                 .build();
 
@@ -101,10 +104,11 @@ public class UserService {
 
         return reviewers.stream().map(
                 r -> new ReviewerInfoDto(
+                        r.getId(),
                         r.getUsername(),
                         r.getLanguages().stream().map(l -> new String(l.getName())).collect(Collectors.toList()),
-                        r.getReviewCount(),
-                        r.getRankingPoint())
+                        r.getAnswerCount(),
+                        r.getEvalTotal() / r.getEvalCount())
         ).collect(Collectors.toList());
     }
 
@@ -112,7 +116,27 @@ public class UserService {
         return reviewRequestRepository.findMyReviewRequestList(user.getId());
     }
 
+
+     /**
+     * 나에게 요청온 리뷰 조회
+     */
     public List<ReviewRequestResponseDto> getMyReceivedRequestList(User user) {
         return reviewRequestRepository.findMyReceivedRequestList(user.getId());
+    }
+    /**
+     * 답변에 대한 평가 API
+     *
+     * 평가하고자 하는 답변이 내가 요청한 코드리뷰에 대한 답변인지 확인해야 함
+     */
+    @Transactional
+    public void evaluateAnswer(User user, Long answerId, EvaluateAnswerDto evaluateAnswerDto) {
+        if(reviewRequestRepository.isAnswerToMe(answerId, user)) {
+            ReviewAnswer reviewAnswer = reviewAnswerRepository.findById(answerId).orElseThrow(
+                    () -> new IllegalArgumentException("존재하지 않는 답변입니다.")
+            );
+
+            reviewAnswer.evaluate(evaluateAnswerDto.getPoint());
+            reviewAnswer.getAnswerUser().evaluate(evaluateAnswerDto.getPoint());
+        }
     }
 }

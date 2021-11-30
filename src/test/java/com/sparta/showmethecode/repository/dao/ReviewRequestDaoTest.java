@@ -37,10 +37,10 @@ public class ReviewRequestDaoTest {
 
     @BeforeEach
     void init() throws InterruptedException {
-        User user = new User("user1", "pass1", UserRole.ROLE_USER, 0, 0);
+        User user = new User("user1", "pass1", UserRole.ROLE_USER, 0, 0, 0);
         User savedUser = userRepository.save(user);
 
-        User user2 = new User("user2", "pass2", UserRole.ROLE_USER, 0, 0);
+        User user2 = new User("user2", "pass2", UserRole.ROLE_USER, 0, 0, 0);
         User savedUser2 = userRepository.save(user2);
 
         ReviewRequest reviewRequest1 = new ReviewRequest(savedUser, "Java가 여려워요.", "code1", "java도 어려운데 jpa는 ㅠ", ReviewRequestStatus.REQUESTED, "JAVA");

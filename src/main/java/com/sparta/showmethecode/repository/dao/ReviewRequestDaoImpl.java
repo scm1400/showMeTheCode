@@ -2,7 +2,11 @@ package com.sparta.showmethecode.repository.dao;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.showmethecode.domain.*;
@@ -13,22 +17,32 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.support.Querydsl;
+import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.data.support.PageableExecutionUtils;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.sparta.showmethecode.domain.QReviewAnswer.*;
 import static com.sparta.showmethecode.domain.QReviewRequest.*;
 import static com.sparta.showmethecode.domain.QReviewRequest.reviewRequest;
 import static com.sparta.showmethecode.domain.QReviewRequestComment.*;
 import static com.sparta.showmethecode.domain.QUser.*;
 
 @Slf4j
-@RequiredArgsConstructor
-public class ReviewRequestDaoImpl implements ReviewRequestDao {
+public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements ReviewRequestDao {
 
+    private final EntityManager em;
     private final JPAQueryFactory query;
+
+    public ReviewRequestDaoImpl(JPAQueryFactory jpaQueryFactory, EntityManager entityManager) {
+        super(ReviewRequest.class);
+        this.em = entityManager;
+        this.query = jpaQueryFactory;
+    }
 
     @Override
     public Page<ReviewRequestResponseDto> findSearchByTitleOrCommentAdvanced(String keyword, Pageable pageable, boolean isAsc) {
@@ -180,5 +194,66 @@ public class ReviewRequestDaoImpl implements ReviewRequestDao {
                 .fetchFirst();
 
         return exist != null;
+    }
+
+    @Override
+    public boolean isRequestedToMe(Long reviewId, User reviewer) {
+        Integer exist = query.selectOne()
+                .from(reviewRequest)
+                .where(reviewRequest.id.eq(reviewId).and(reviewRequest.answerUser.eq(reviewer)))
+                .fetchFirst();
+
+        return exist != null;
+    }
+
+    @Override
+    public boolean isAnswerToMe(Long answerId, User user) {
+        Integer exist = query.selectOne()
+                .from(reviewRequest)
+                .where(reviewRequest.reviewAnswer.id.eq(answerId).and(reviewRequest.requestUser.id.eq(user.getId())))
+                .fetchFirst();
+
+        return exist != null;
+    }
+
+    @Override
+    public Page<ReviewRequest> searchRequestByLanguageName(String languageName, Pageable pageable, boolean isAsc) {
+
+        List<ReviewRequest> result = query.select(reviewRequest)
+                .from(reviewRequest)
+                .join(reviewRequest.requestUser, user).fetchJoin()
+                .where(reviewRequest.languageName.eq(languageName))
+                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
+                .orderBy(isAsc ? reviewRequest.createdAt.asc() : reviewRequest.createdAt.desc())
+                .fetch();
+
+        JPAQuery<ReviewRequest> jpaQuery = query.select(reviewRequest)
+                .from(reviewRequest)
+                .where(reviewRequest.languageName.eq(languageName));
+
+        return PageableExecutionUtils.getPage(result, pageable, jpaQuery::fetchCount);
+    }
+
+    @Override
+    public Page<ReviewAnswerResponseDto> findMyAnswer(Long userId, Pageable pageable, boolean isAsc, String sortBy) {
+        PathBuilder<ReviewAnswer> pathBuilder = new PathBuilder<>(ReviewAnswer.class, sortBy);
+        JPAQuery<ReviewAnswerResponseDto> jpaQuery = query.select(
+                        new QReviewAnswerResponseDto(
+                                reviewRequest.reviewAnswer.id,
+                                reviewRequest.id,
+                                reviewRequest.reviewAnswer.title,
+                                reviewRequest.reviewAnswer.code,
+                                reviewRequest.reviewAnswer.comment,
+                                reviewRequest.reviewAnswer.point,
+                                reviewRequest.reviewAnswer.createdAt
+                        )
+                ).from(reviewRequest)
+                .join(reviewRequest.reviewAnswer, reviewAnswer)
+                .where(reviewRequest.reviewAnswer.answerUser.id.eq(userId));
+
+        List<ReviewAnswerResponseDto> result = getQuerydsl().applyPagination(pageable, jpaQuery).fetch();
+
+        return PageableExecutionUtils.getPage(result, pageable, jpaQuery::fetchCount);
     }
 }

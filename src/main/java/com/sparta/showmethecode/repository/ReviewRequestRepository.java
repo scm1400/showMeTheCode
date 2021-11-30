@@ -16,4 +16,6 @@ public interface ReviewRequestRepository extends JpaRepository<ReviewRequest, Lo
 
     // 테스트
     List<ReviewRequest> findByTitle(String title);
+
+    List<ReviewRequest> findByAnswerUser(Long id);
 }

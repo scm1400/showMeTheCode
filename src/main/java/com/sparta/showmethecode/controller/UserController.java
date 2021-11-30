@@ -1,20 +1,14 @@
 package com.sparta.showmethecode.controller;
 
 import com.sparta.showmethecode.config.security.UserDetailsImpl;
-import com.sparta.showmethecode.domain.Result;
-import com.sparta.showmethecode.domain.StatusEnum;
+import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.SigninRequestDto;
 import com.sparta.showmethecode.dto.request.SignupRequestDto;
-import com.sparta.showmethecode.dto.response.BasicResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewerInfoDto;
-import com.sparta.showmethecode.dto.response.SigninResponseDto;
+import com.sparta.showmethecode.dto.response.*;
 import com.sparta.showmethecode.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,8 +18,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,6 +91,17 @@ public class UserController {
     public ResponseEntity<List<ReviewRequestResponseDto>> getMyRequestList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         User user = userDetails.getUser();
         List<ReviewRequestResponseDto> response = userService.getMyReviewRequestList(user);
+
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * 나에게 요청된 리뷰목록 조회
+     */
+    @GetMapping("/user/received")
+    public ResponseEntity<List<ReviewRequestResponseDto>> getMyReceivedList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        User user = userDetails.getUser();
+        List<ReviewRequestResponseDto> response = userService.getMyReceivedRequestList(user);
 
         return ResponseEntity.ok(response);
     }

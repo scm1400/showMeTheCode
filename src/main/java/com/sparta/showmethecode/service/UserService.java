@@ -11,6 +11,7 @@ import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewerInfoDto;
 import com.sparta.showmethecode.dto.response.SigninResponseDto;
 import com.sparta.showmethecode.repository.LanguageRepository;
+import com.sparta.showmethecode.repository.ReviewAnswerRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import com.sparta.showmethecode.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -37,6 +37,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final ReviewRequestRepository reviewRequestRepository;
+    private final ReviewAnswerRepository reviewAnswerRepository;
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
@@ -109,5 +110,9 @@ public class UserService {
 
     public List<ReviewRequestResponseDto> getMyReviewRequestList(User user) {
         return reviewRequestRepository.findMyReviewRequestList(user.getId());
+    }
+
+    public List<ReviewRequestResponseDto> getMyReceivedRequestList(User user) {
+        return reviewRequestRepository.findMyReceivedRequestList(user.getId());
     }
 }

@@ -20,6 +20,8 @@ public interface ReviewRequestDao {
     List<ReviewRequestLanguageCount> getReviewRequestLanguageCountGroupByLanguage();
     // 자신이 요청한 리뷰 조회
     List<ReviewRequestResponseDto> findMyReviewRequestList(Long userId);
+    // 자신에게 요청된 리뷰 조회
+    List<ReviewRequestResponseDto> findMyReceivedRequestList(Long userId);
 
     // 파라미터로 받은 리뷰요청Id가 현재 인증된 사용자의 소유인지 조회
     boolean isMyReviewRequest(Long reviewId, User user);

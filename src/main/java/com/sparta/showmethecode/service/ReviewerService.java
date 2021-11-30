@@ -5,10 +5,7 @@ import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.AddReviewDto;
-import com.sparta.showmethecode.dto.response.PageResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewerInfoDto;
+import com.sparta.showmethecode.dto.response.*;
 import com.sparta.showmethecode.repository.ReviewAnswerRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import com.sparta.showmethecode.repository.UserRepository;
@@ -82,6 +79,7 @@ public class ReviewerService {
     /**
      * 리뷰어 랭킹 조회 API (전체랭킹 조회)
      */
+    @Transactional(readOnly = true)
     public PageResponseDto<ReviewerInfoDto> getReviewerRanking(
             int page, int size, boolean isAsc
     ) {
@@ -112,6 +110,7 @@ public class ReviewerService {
     /**
      * 리뷰어 랭킹 조회 API (상위 5명)
      */
+    @Transactional(readOnly = true)
     public List<ReviewerInfoDto> getReviewerTop5Ranking() {
         return userRepository.findTop5ByOrderByEvalTotalDesc().stream().map(
                 u -> new ReviewerInfoDto(
@@ -124,5 +123,24 @@ public class ReviewerService {
                         u.getEvalTotal() / u.getEvalCount()
                 )
         ).collect(Collectors.toList());
+    }
+
+    /**
+     * 내가 답변한 리뷰목록 조회 API
+     */
+    @Transactional(readOnly = true)
+    public PageResponseDto<ReviewAnswerResponseDto> getMyAnswerList(User reviewer, int page, int size, boolean isAsc, String sortBy) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<ReviewAnswerResponseDto> myAnswer = reviewRequestRepository.findMyAnswer(reviewer.getId(), pageable, isAsc, sortBy);
+
+        return new PageResponseDto<ReviewAnswerResponseDto>(
+                myAnswer.getContent(),
+                myAnswer.getTotalPages(),
+                myAnswer.getTotalElements(),
+                page, size
+        );
     }
 }

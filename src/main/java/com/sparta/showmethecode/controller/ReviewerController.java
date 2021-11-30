@@ -4,12 +4,14 @@ import com.sparta.showmethecode.config.security.UserDetailsImpl;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.AddReviewDto;
 import com.sparta.showmethecode.dto.response.PageResponseDto;
+import com.sparta.showmethecode.dto.response.ReviewAnswerResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewerInfoDto;
 import com.sparta.showmethecode.service.ReviewerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +28,7 @@ public class ReviewerController {
     /**
      * 리뷰어 랭킹 조회 API (전체랭킹 조회)
      */
-    @GetMapping("/user/reviewer/rank")
+    @GetMapping("/reviewer/rank")
     public ResponseEntity getReviewerRanking(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -42,7 +44,7 @@ public class ReviewerController {
     /**
      * 리뷰어 랭킹 조회 API (상위 5위)
      */
-    @GetMapping("/user/reviewer/top")
+    @GetMapping("/reviewer/top")
     public ResponseEntity getReviewerTop5Ranking() {
         List<ReviewerInfoDto> reviewers = reviewerService.getReviewerTop5Ranking();
 
@@ -52,7 +54,7 @@ public class ReviewerController {
     /**
      * 리뷰요청 거절 API
      */
-    @GetMapping("/user/reviewer/request/reject")
+    @GetMapping("/reviewer/request/reject")
     public ResponseEntity rejectRequestedReview(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestParam Long questionId
@@ -66,7 +68,7 @@ public class ReviewerController {
     /**
      * 리뷰요청에 대한 리뷰등록 API
      */
-    @PostMapping("/user/reviewer/request")
+    @PostMapping("/reviewer/request")
     public ResponseEntity addReviewAndComment(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestParam Long questionId,
@@ -78,9 +80,26 @@ public class ReviewerController {
     }
 
     /**
+     * 내가 답변한 리뷰목록 조회 API
+     */
+    @GetMapping("/reviewer/answers")
+    public ResponseEntity getMyAnswerList(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "true") boolean isAsc,
+            @RequestParam(defaultValue = "createdAt") String sortBy
+    ) {
+        User user = userDetails.getUser();
+        PageResponseDto<ReviewAnswerResponseDto> result = reviewerService.getMyAnswerList(user, page, size, isAsc, sortBy);
+
+        return ResponseEntity.ok(result);
+    }
+
+
+    /**
      * 나에게 요청된 리뷰요청목록 조회 API
      */
-    @GetMapping("/user/reviewer/requests")
+    @GetMapping("/reviewer/requests")
     public ResponseEntity<ReviewRequestListResponseDto> getRequestedReviewList(
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {

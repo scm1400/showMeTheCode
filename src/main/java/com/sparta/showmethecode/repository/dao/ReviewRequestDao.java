@@ -2,6 +2,7 @@ package com.sparta.showmethecode.repository.dao;
 
 import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.User;
+import com.sparta.showmethecode.dto.response.ReviewAnswerResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestDetailResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestLanguageCount;
 import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
@@ -31,4 +32,7 @@ public interface ReviewRequestDao {
 
     // 언어이름으로 코드리뷰요청 조회
     Page<ReviewRequest> searchRequestByLanguageName(String languageName, Pageable pageable, boolean isAsc);
+
+    // 내가 답변한 리뷰목록 조회
+    Page<ReviewAnswerResponseDto> findMyAnswer(Long userId, Pageable pageable, boolean isAsc, String sortBy);
 }

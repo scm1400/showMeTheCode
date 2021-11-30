@@ -3,6 +3,7 @@ package com.sparta.showmethecode.service;
 import com.sparta.showmethecode.domain.*;
 import com.sparta.showmethecode.dto.request.AddReviewDto;
 import com.sparta.showmethecode.dto.response.PageResponseDto;
+import com.sparta.showmethecode.dto.response.ReviewAnswerResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewerInfoDto;
 import com.sparta.showmethecode.repository.ReviewAnswerRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -40,8 +42,10 @@ public class ReviewerServiceTest {
         User reviewer1 = new User("reviewer1", "reviewer1", UserRole.ROLE_REVIEWER, 0, 0, 0, Arrays.asList(new Language("Java")));
         userRepository.saveAll(Arrays.asList(user1, reviewer1));
 
-        ReviewRequest reviewRequest = new ReviewRequest(user1, reviewer1, "title1", "code1", "comment1", ReviewRequestStatus.REQUESTED, "Java");
-        reviewRequestRepository.save(reviewRequest);
+        ReviewRequest reviewRequest1 = new ReviewRequest(user1, reviewer1, "title1", "code1", "comment1", ReviewRequestStatus.REQUESTED, "Java");
+        ReviewRequest reviewRequest2 = new ReviewRequest(user1, reviewer1, "title2", "code2", "comment2", ReviewRequestStatus.REQUESTED, "Java");
+        ReviewRequest reviewRequest3 = new ReviewRequest(user1, reviewer1, "title3", "code3", "comment3", ReviewRequestStatus.REQUESTED, "Java");
+        reviewRequestRepository.saveAll(Arrays.asList(reviewRequest1, reviewRequest2, reviewRequest3));
     }
 
     @DisplayName("1. 나에게 요청된 리뷰에 리뷰하기")
@@ -137,6 +141,36 @@ public class ReviewerServiceTest {
         Assertions.assertEquals(5, reviewerRanking.size());
         Assertions.assertEquals("test4", reviewerRanking.get(0).getUsername());
         Assertions.assertEquals("test7", reviewerRanking.get(4).getUsername());
+    }
+
+    @DisplayName("5. 내가 답변한 리뷰 조회하기")
+    @Test
+    void 답변한_리뷰_조회() {
+        List<ReviewRequest> requests = reviewRequestRepository.findAll();
+        User user1 = userRepository.findByUsername("user1").get();
+        User reviewer1 = userRepository.findByUsername("reviewer1").get();
+
+        em.flush();
+        em.clear();
+
+        for (ReviewRequest request : requests) {
+            AddReviewDto addReviewDto = new AddReviewDto("답변제목", "답변코드", "답변설명");
+            reviewerService.addReviewAndComment(reviewer1, request.getId(), addReviewDto);
+        }
+        List<ReviewAnswer> answers = reviewAnswerRepository.findAll();
+        for (int i=0;i<answers.size();i++) {
+            answers.get(i).evaluate(3 + i);
+        }
+
+        System.out.println("================================================");
+        System.out.println("================================================");
+        System.out.println("================================================");
+
+        final String sortBy = "createdAt";
+//        final String sortBy = "point";
+        PageResponseDto<ReviewAnswerResponseDto> result = reviewerService.getMyAnswerList(reviewer1, 0, 10, false, sortBy);
+        List<ReviewAnswerResponseDto> data = result.getData();
+        data.forEach(System.out::println);
     }
 
     private User createReviewer(String username, String password, int answerCount, int evalCount, double avg) {

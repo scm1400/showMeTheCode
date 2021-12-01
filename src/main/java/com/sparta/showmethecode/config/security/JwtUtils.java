@@ -30,6 +30,12 @@ public class JwtUtils {
                 .compact();
     }
 
+    public Long getUserIdFromToken(String token) {
+        Claims claims = getAllClaims(token);
+
+        return Long.valueOf(String.valueOf(claims.get("userId")));
+    }
+
     public boolean isValidToken(String token){
         Claims claims = getAllClaims(token);
 

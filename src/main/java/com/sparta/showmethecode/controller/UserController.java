@@ -52,7 +52,7 @@ public class UserController {
                     .result("fail").httpStatus(HttpStatus.FORBIDDEN).message(message).build();
 
 //            return ResponseEntity.badRequest().body(responseDto);
-            return new ResponseEntity<>(result, headers, HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(responseDto, HttpStatus.FORBIDDEN);
 
         }
 

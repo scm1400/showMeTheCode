@@ -256,6 +256,6 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
     public void deleteComment(Long reviewId, Long commentId, Long userId) {
         query.delete(reviewRequest)
                 .where(reviewRequest.id.eq(reviewId))
-                .where()
+                .where();
     }
 }

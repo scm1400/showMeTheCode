@@ -61,9 +61,11 @@ function signup() {
         contentType: "application/json;charset=utf-8;",
         data: JSON.stringify(data),
         success: function (res) {
+            // console.log(res)
             alert('회원가입에 성공했습니다.')
             window.location.reload()
         }, error: function(err) {
+            console.log(err)
             alert('회원가입에 실패했습니다.')
         }
     })

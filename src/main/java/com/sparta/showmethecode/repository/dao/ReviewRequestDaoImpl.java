@@ -167,6 +167,26 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
     }
 
     @Override
+    public List<ReviewRequestResponseDto> findMyReceivedRequestList(Long id) {
+        List<ReviewRequest> result = query.select(reviewRequest)
+                .from(reviewRequest)
+                .join(reviewRequest.answerUser, user).fetchJoin()
+                .where(user.id.eq(id))
+                .fetch();
+        return result.stream().map(
+                r -> new ReviewRequestResponseDto(
+                        r.getId(),
+                        r.getRequestUser().getUsername(),
+                        r.getTitle(),
+                        r.getComment(),
+                        r.getLanguageName(),
+                        r.getStatus().toString(),
+                        r.getCreatedAt()
+                )
+        ).collect(Collectors.toList());
+    }
+
+    @Override
     public boolean isMyReviewRequest(Long reviewId, User user) {
         Integer exist = query.selectOne()
                 .from(reviewRequest)

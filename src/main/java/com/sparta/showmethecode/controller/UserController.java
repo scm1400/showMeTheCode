@@ -1,6 +1,7 @@
 package com.sparta.showmethecode.controller;
 
 import com.sparta.showmethecode.config.security.UserDetailsImpl;
+import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.AddReviewDto;
 import com.sparta.showmethecode.dto.request.EvaluateAnswerDto;
@@ -15,9 +16,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -27,10 +33,33 @@ public class UserController {
     private final ReviewerService reviewerService;
 
     @PostMapping("/user/signup")
-    public ResponseEntity<BasicResponseDto> signup(@RequestBody SignupRequestDto requestDto) {
+    public ResponseEntity<BasicResponseDto> signup(@Valid @RequestBody SignupRequestDto requestDto, Errors error) {
+
+        if (error.hasErrors()) {
+
+            String message = "";
+//            BasicResponseDto basicResponseDto = new BasicResponseDto();
+
+            Map<String, String> errors = new HashMap<>();
+            for (FieldError value : error.getFieldErrors()) {
+                errors.put(value.getField(), value.getDefaultMessage());
+                message = value.getDefaultMessage();
+                System.out.println(value.getDefaultMessage());
+            }
+
+
+            BasicResponseDto responseDto = BasicResponseDto.builder()
+                    .result("fail").httpStatus(HttpStatus.FORBIDDEN).message(message).build();
+
+            return ResponseEntity.badRequest().body(responseDto);
+//            return new ResponseEntity<>(result, headers, HttpStatus.FORBIDDEN);
+
+        }
+
         userService.saveUser(requestDto);
         BasicResponseDto responseDto = BasicResponseDto.builder()
                 .result("success").httpStatus(HttpStatus.CREATED).message("회원가입에 성공했습니다.").build();
+
 
         return ResponseEntity.ok(responseDto);
     }
@@ -77,6 +106,17 @@ public class UserController {
     }
 
     /**
+
+     * 나에게 요청된 리뷰목록 조회
+     */
+    @GetMapping("/user/received")
+    public ResponseEntity<List<ReviewRequestResponseDto>> getMyReceivedList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        User user = userDetails.getUser();
+        List<ReviewRequestResponseDto> response = userService.getMyReceivedRequestList(user);
+
+        return ResponseEntity.ok(response);
+    }
+    /**
      * 답변에 대한 평가 API
      */
     @PostMapping("/user/question/{answerId}/eval")
@@ -89,5 +129,6 @@ public class UserController {
         userService.evaluateAnswer(user, answerId, evaluateAnswerDto);
 
         return ResponseEntity.ok("ok");
+
     }
 }

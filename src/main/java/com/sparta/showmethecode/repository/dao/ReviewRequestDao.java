@@ -22,6 +22,8 @@ public interface ReviewRequestDao {
     List<ReviewRequestLanguageCount> getReviewRequestLanguageCountGroupByLanguage();
     // 자신이 요청한 리뷰 조회
     List<ReviewRequestResponseDto> findMyReviewRequestList(Long userId);
+    // 자신에게 요청된 리뷰 조회
+    List<ReviewRequestResponseDto> findMyReceivedRequestList(Long userId);
 
     // 내가 요청한 리뷰가 맞는지 체크
     boolean isMyReviewRequest(Long reviewId, User user);

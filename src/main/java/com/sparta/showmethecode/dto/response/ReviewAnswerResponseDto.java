@@ -1,6 +1,7 @@
 package com.sparta.showmethecode.dto.response;
 
 import com.querydsl.core.annotations.QueryProjection;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,4 +35,5 @@ public class ReviewAnswerResponseDto {
         this.point = point;
         this.createdAt = createdAt;
     }
+
 }

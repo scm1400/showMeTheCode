@@ -27,7 +27,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -41,7 +40,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final ReviewRequestRepository reviewRequestRepository;
     private final ReviewAnswerRepository reviewAnswerRepository;
-
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
@@ -118,6 +116,13 @@ public class UserService {
         return reviewRequestRepository.findMyReviewRequestList(user.getId());
     }
 
+
+     /**
+     * 나에게 요청온 리뷰 조회
+     */
+    public List<ReviewRequestResponseDto> getMyReceivedRequestList(User user) {
+        return reviewRequestRepository.findMyReceivedRequestList(user.getId());
+    }
     /**
      * 답변에 대한 평가 API
      *

@@ -91,10 +91,9 @@ public class UserServiceTest {
     void 내가받은_요청_조회() {
         User user1 = userRepository.findByUsername("reviewer1").get();
         List<ReviewRequestResponseDto> result = userService.getMyReceivedRequestList(user1);
-        List<ReviewRequestResponseDto> data = result;
 
-        data.forEach(System.out::println);
+        result.forEach(System.out::println);
 
-        Assertions.assertEquals(1, data.size());
+        Assertions.assertEquals(1, result.size());
     }
 }

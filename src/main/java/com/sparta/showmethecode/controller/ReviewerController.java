@@ -120,7 +120,6 @@ public class ReviewerController {
     public ResponseEntity<ReviewRequestListResponseDto> getRequestedReviewList(
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-
         return null;
     }
 }

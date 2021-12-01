@@ -51,8 +51,8 @@ public class UserController {
             BasicResponseDto responseDto = BasicResponseDto.builder()
                     .result("fail").httpStatus(HttpStatus.FORBIDDEN).message(message).build();
 
-            return ResponseEntity.badRequest().body(responseDto);
-//            return new ResponseEntity<>(result, headers, HttpStatus.FORBIDDEN);
+//            return ResponseEntity.badRequest().body(responseDto);
+            return new ResponseEntity<>(result, headers, HttpStatus.FORBIDDEN);
 
         }
 

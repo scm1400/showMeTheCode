@@ -37,4 +37,7 @@ public interface ReviewRequestDao {
 
     // 내가 답변한 리뷰목록 조회
     Page<ReviewAnswerResponseDto> findMyAnswer(Long userId, Pageable pageable);
+
+    // 현재 리뷰요청에 달린 댓글 삭제
+    void deleteComment(Long reviewId, Long commentId, Long userId);
 }

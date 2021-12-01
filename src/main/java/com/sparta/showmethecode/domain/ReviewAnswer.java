@@ -1,6 +1,10 @@
 package com.sparta.showmethecode.domain;
 
+<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonIgnore;
+=======
+import com.sparta.showmethecode.dto.request.UpdateAnswerDto;
+>>>>>>> daehyun
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -50,4 +54,9 @@ public class ReviewAnswer extends Timestamped {
         this.point = point;
     }
 
+    public void update(UpdateAnswerDto dto) {
+        this.title = dto.getTitle();
+        this.code = dto.getCode();
+        this.comment = dto.getComment();
+    }
 }

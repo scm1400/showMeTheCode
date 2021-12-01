@@ -5,6 +5,7 @@ import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.AddReviewDto;
+import com.sparta.showmethecode.dto.request.UpdateAnswerDto;
 import com.sparta.showmethecode.dto.response.*;
 import com.sparta.showmethecode.repository.ReviewAnswerRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
@@ -134,7 +135,7 @@ public class ReviewerService {
         Sort sort = Sort.by(direction, sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
 
-        Page<ReviewAnswerResponseDto> myAnswer = reviewRequestRepository.findMyAnswer(reviewer.getId(), pageable, isAsc, sortBy);
+        Page<ReviewAnswerResponseDto> myAnswer = reviewRequestRepository.findMyAnswer(reviewer.getId(), pageable);
 
         return new PageResponseDto<ReviewAnswerResponseDto>(
                 myAnswer.getContent(),
@@ -142,5 +143,23 @@ public class ReviewerService {
                 myAnswer.getTotalElements(),
                 page, size
         );
+    }
+
+    /**
+     * 답변한 리뷰 수정 API
+     */
+    @Transactional
+    public void updateAnswer(User reviewer, Long answerId, UpdateAnswerDto updateAnswerDto) {
+        if (isMyAnswer(reviewer.getId(), answerId)) {
+            ReviewAnswer reviewAnswer = reviewAnswerRepository.findById(answerId).orElseThrow(
+                    () -> new IllegalArgumentException("존재하지 않는 답변입니다.")
+            );
+
+            reviewAnswer.update(updateAnswerDto);
+        }
+    }
+
+    private boolean isMyAnswer(Long reviewerId, Long answerId) {
+        return reviewAnswerRepository.isMyAnswer(reviewerId, answerId);
     }
 }

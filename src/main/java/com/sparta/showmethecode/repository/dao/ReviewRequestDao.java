@@ -36,5 +36,5 @@ public interface ReviewRequestDao {
     Page<ReviewRequest> searchRequestByLanguageName(String languageName, Pageable pageable, boolean isAsc);
 
     // 내가 답변한 리뷰목록 조회
-    Page<ReviewAnswerResponseDto> findMyAnswer(Long userId, Pageable pageable, boolean isAsc, String sortBy);
+    Page<ReviewAnswerResponseDto> findMyAnswer(Long userId, Pageable pageable);
 }

@@ -251,4 +251,11 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
 
         return PageableExecutionUtils.getPage(result, pageable, jpaQuery::fetchCount);
     }
+
+    @Override
+    public void deleteComment(Long reviewId, Long commentId, Long userId) {
+        query.delete(reviewRequest)
+                .where(reviewRequest.id.eq(reviewId))
+                .where()
+    }
 }

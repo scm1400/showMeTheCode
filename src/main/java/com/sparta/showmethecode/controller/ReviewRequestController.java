@@ -4,10 +4,7 @@ import com.sparta.showmethecode.config.security.UserDetailsImpl;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
 import com.sparta.showmethecode.dto.request.ReviewRequestUpdateDto;
-import com.sparta.showmethecode.dto.response.BasicResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewRequestDetailResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewRequestLanguageCount;
-import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
+import com.sparta.showmethecode.dto.response.*;
 import com.sparta.showmethecode.service.ReviewRequestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +27,7 @@ public class ReviewRequestController {
      */
     @GetMapping("/questions")
     public ResponseEntity<ReviewRequestListResponseDto> getReviewRequestList(
-            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "createdAt") String sortBy, @RequestParam(defaultValue = "true") Boolean isAsc,
             @RequestParam(required = false) String query
     ) {
@@ -64,7 +61,6 @@ public class ReviewRequestController {
      */
     @GetMapping("/question")
     public ResponseEntity<ReviewRequestDetailResponseDto> getReviewRequest(@RequestParam Long id) {
-        log.info("getReviewRequest = {}", id);
         ReviewRequestDetailResponseDto reviewRequest = reviewRequestService.getReviewRequest(id);
 
         return ResponseEntity.ok(reviewRequest);
@@ -105,4 +101,19 @@ public class ReviewRequestController {
     public List<ReviewRequestLanguageCount> getCountGroupByLanguageName() {
         return reviewRequestService.getCountGroupByLanguageName();
     }
+
+    /**
+     * 코드리뷰 요청 언어이름 검색 API
+     */
+    @GetMapping("/question/language")
+    public ResponseEntity searchRequestByLanguageName(
+            @RequestParam String language,
+            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "true") boolean isAsc
+    ) {
+        --page;
+        PageResponseDto<ReviewRequestResponseDto> result = reviewRequestService.searchRequestByLanguageName(language, page, size, isAsc);
+
+        return ResponseEntity.ok(result);
+    }
+
 }

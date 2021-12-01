@@ -27,7 +27,7 @@ public class User extends Timestamped{
 
     private int answerCount; // 몇 개의 코드리뷰를 완료했는지
     private int evalCount; // 몇 명의 평가를 받았는지
-    private double evalTotal; // 평가점수 평균
+    private double evalTotal; // 평가점수 총점
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Language> languages = new ArrayList<>();

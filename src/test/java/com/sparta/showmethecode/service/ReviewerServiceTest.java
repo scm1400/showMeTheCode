@@ -2,6 +2,10 @@ package com.sparta.showmethecode.service;
 
 import com.sparta.showmethecode.domain.*;
 import com.sparta.showmethecode.dto.request.AddReviewDto;
+import com.sparta.showmethecode.dto.request.UpdateAnswerDto;
+import com.sparta.showmethecode.dto.response.PageResponseDto;
+import com.sparta.showmethecode.dto.response.ReviewAnswerResponseDto;
+import com.sparta.showmethecode.dto.response.ReviewerInfoDto;
 import com.sparta.showmethecode.repository.ReviewAnswerRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import com.sparta.showmethecode.repository.UserRepository;
@@ -11,10 +15,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.Arrays;
+import java.util.List;
 
 @Transactional
 @SpringBootTest
@@ -37,8 +43,10 @@ public class ReviewerServiceTest {
         User reviewer1 = new User("reviewer1", "reviewer1", UserRole.ROLE_REVIEWER, 0, 0, 0, Arrays.asList(new Language("Java")));
         userRepository.saveAll(Arrays.asList(user1, reviewer1));
 
-        ReviewRequest reviewRequest = new ReviewRequest(user1, reviewer1, "title1", "code1", "comment1", ReviewRequestStatus.REQUESTED, "Java");
-        reviewRequestRepository.save(reviewRequest);
+        ReviewRequest reviewRequest1 = new ReviewRequest(user1, reviewer1, "title1", "code1", "comment1", ReviewRequestStatus.REQUESTED, "Java");
+        ReviewRequest reviewRequest2 = new ReviewRequest(user1, reviewer1, "title2", "code2", "comment2", ReviewRequestStatus.REQUESTED, "Java");
+        ReviewRequest reviewRequest3 = new ReviewRequest(user1, reviewer1, "title3", "code3", "comment3", ReviewRequestStatus.REQUESTED, "Java");
+        reviewRequestRepository.saveAll(Arrays.asList(reviewRequest1, reviewRequest2, reviewRequest3));
     }
 
     @DisplayName("1. 나에게 요청된 리뷰에 리뷰하기")
@@ -86,5 +94,120 @@ public class ReviewerServiceTest {
         ReviewRequest reviewRequest1 = reviewRequestRepository.findById(reviewRequest.getId()).get();
 
         Assertions.assertEquals(ReviewRequestStatus.REJECTED, reviewRequest1.getStatus());
+    }
+
+    @Test
+    @DisplayName("3. 리뷰어 랭킹 조회 테스트")
+    void 리뷰어_랭킹() {
+        User reviewer1 = createReviewer("test1", "test1", 30, 30, 4.5);
+        User reviewer2 = createReviewer("test2", "test1", 30, 30, 4.3);
+        User reviewer3 = createReviewer("test3", "test1", 30, 30, 4.8);
+        User reviewer4 = createReviewer("test4", "test1", 30, 30, 4.9);
+        User reviewer5 = createReviewer("test5", "test1", 30, 30, 3.0);
+        User reviewer6 = createReviewer("test6", "test1", 30, 30, 2.0);
+        User reviewer7 = createReviewer("test7", "test1", 30, 30, 3.8);
+
+        userRepository.saveAll(Arrays.asList(reviewer1, reviewer2, reviewer3, reviewer4, reviewer5, reviewer6, reviewer7));
+
+        PageResponseDto<ReviewerInfoDto> reviewerRanking = reviewerService.getReviewerRanking(0, 10, false);
+
+        System.out.println("===============내림차순================");
+        reviewerRanking.getData().forEach(System.out::println);
+        System.out.println("======================================");
+
+        reviewerRanking = reviewerService.getReviewerRanking(0, 10, true);
+        System.out.println("===============오름차순================");
+        reviewerRanking.getData().forEach(System.out::println);
+        System.out.println("======================================");
+    }
+
+    @Test
+    @DisplayName("4. 리뷰어 랭킹 조회 테스트 (상위 5명 조회)")
+    void 리뷰어_랭킹_상위5명() {
+        User reviewer1 = createReviewer("test1", "test1", 30, 30, 4.5);
+        User reviewer2 = createReviewer("test2", "test1", 30, 30, 4.3);
+        User reviewer3 = createReviewer("test3", "test1", 30, 30, 4.8);
+        User reviewer4 = createReviewer("test4", "test1", 30, 30, 4.9);
+        User reviewer5 = createReviewer("test5", "test1", 30, 30, 3.0);
+        User reviewer6 = createReviewer("test6", "test1", 30, 30, 2.0);
+        User reviewer7 = createReviewer("test7", "test1", 30, 30, 3.8);
+
+        userRepository.saveAll(Arrays.asList(reviewer1, reviewer2, reviewer3, reviewer4, reviewer5, reviewer6, reviewer7));
+
+        List<ReviewerInfoDto> reviewerRanking = reviewerService.getReviewerTop5Ranking();
+
+        System.out.println(reviewerRanking.get(0));
+        System.out.println(reviewerRanking.get(reviewerRanking.size()-1));
+
+        Assertions.assertEquals(5, reviewerRanking.size());
+        Assertions.assertEquals("test4", reviewerRanking.get(0).getUsername());
+        Assertions.assertEquals("test7", reviewerRanking.get(4).getUsername());
+    }
+
+    @DisplayName("5. 내가 답변한 리뷰 조회하기")
+    @Test
+    void 답변한_리뷰_조회() {
+        List<ReviewRequest> requests = reviewRequestRepository.findAll();
+        User user1 = userRepository.findByUsername("user1").get();
+        User reviewer1 = userRepository.findByUsername("reviewer1").get();
+
+        em.flush();
+        em.clear();
+
+        for (ReviewRequest request : requests) {
+            AddReviewDto addReviewDto = new AddReviewDto("답변제목", "답변코드", "답변설명");
+            reviewerService.addReviewAndComment(reviewer1, request.getId(), addReviewDto);
+        }
+        List<ReviewAnswer> answers = reviewAnswerRepository.findAll();
+        for (int i=0;i<answers.size();i++) {
+            answers.get(i).evaluate(3 + i);
+        }
+
+        System.out.println("================================================");
+
+        final String sortBy = "createdAt";
+//        final String sortBy = "point";
+        PageResponseDto<ReviewAnswerResponseDto> result = reviewerService.getMyAnswerList(reviewer1, 0, 10, false, sortBy);
+        List<ReviewAnswerResponseDto> data = result.getData();
+        data.forEach(System.out::println);
+    }
+
+    private User createReviewer(String username, String password, int answerCount, int evalCount, double avg) {
+        return User.builder()
+                .username(username)
+                .password(password)
+                .answerCount(10)
+                .evalCount(30)
+                .evalTotal(evalCount*avg)
+                .role(UserRole.ROLE_REVIEWER)
+                .languages(Arrays.asList(new Language("Java"))).build();
+    }
+
+    @Test
+    @DisplayName("6. 답변 수정하기")
+    void 답변_수정하기() {
+        User user1 = userRepository.findByUsername("user1").get();
+        User reviewer1 = userRepository.findByUsername("reviewer1").get();
+        ReviewRequest reviewRequest = reviewRequestRepository.findAll().get(0);
+
+        em.flush();
+        em.clear();
+
+        AddReviewDto addReviewDto = new AddReviewDto("답변제목", "답변코드", "답변설명");
+        reviewerService.addReviewAndComment(reviewer1, reviewRequest.getId(), addReviewDto);
+
+        List<ReviewAnswerResponseDto> answerList = reviewerService.getMyAnswerList(reviewer1, 0, 10, true, "createdAt").getData();
+
+        UpdateAnswerDto updateAnswerDto = new UpdateAnswerDto("답변제목수정", "답변코드수정", "답변설명수정");
+        reviewerService.updateAnswer(reviewer1, answerList.get(0).getReviewAnswerId(), updateAnswerDto);
+
+        em.flush();
+        em.clear();
+
+        answerList = reviewerService.getMyAnswerList(reviewer1, 0, 10, true, "createdAt").getData();
+        System.out.println(answerList.get(0));
+
+        Assertions.assertEquals("답변제목수정", answerList.get(0).getAnswerTitle());
+
     }
 }

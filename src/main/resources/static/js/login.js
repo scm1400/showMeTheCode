@@ -20,7 +20,7 @@ function show_login_modal() {
 
       </div>
       
-    <button onclick="signin()" class="ac-button is-md is-solid is-primary form__button e-sign-in">로그인</button>
+    <button type="button" onclick="signin()" class="ac-button is-md is-solid is-primary form__button e-sign-in">로그인</button>
     </form>
     <p class="sign-in-modal__more-action">
       <span class="e-find-password more-action__text">비밀번호 찾기</span>

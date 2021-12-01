@@ -51,8 +51,8 @@ public class UserController {
             BasicResponseDto responseDto = BasicResponseDto.builder()
                     .result("fail").httpStatus(HttpStatus.FORBIDDEN).message(message).build();
 
-            return ResponseEntity.badRequest().body(responseDto);
-//            return new ResponseEntity<>(result, headers, HttpStatus.FORBIDDEN);
+//            return ResponseEntity.badRequest().body(responseDto);
+            return new ResponseEntity<>(responseDto, HttpStatus.FORBIDDEN);
 
         }
 
@@ -106,16 +106,21 @@ public class UserController {
     }
 
     /**
-
      * 나에게 요청된 리뷰목록 조회
      */
     @GetMapping("/user/received")
     public ResponseEntity<List<ReviewRequestResponseDto>> getMyReceivedList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         User user = userDetails.getUser();
+
         List<ReviewRequestResponseDto> response = userService.getMyReceivedRequestList(user);
+
+        if (response == null) {
+            System.out.println("조회된 목록이 없습니다.");
+        }
 
         return ResponseEntity.ok(response);
     }
+
     /**
      * 답변에 대한 평가 API
      */
@@ -129,6 +134,5 @@ public class UserController {
         userService.evaluateAnswer(user, answerId, evaluateAnswerDto);
 
         return ResponseEntity.ok("ok");
-
     }
 }

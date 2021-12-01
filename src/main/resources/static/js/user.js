@@ -65,8 +65,9 @@ function signup() {
             alert('회원가입에 성공했습니다.')
             window.location.reload()
         }, error: function(err) {
-            console.log(err)
-            alert('회원가입에 실패했습니다.')
+            // console.log(err)
+            // console.log(err.responseJSON.message)
+            alert(err.responseJSON.message)
         }
     })
 }

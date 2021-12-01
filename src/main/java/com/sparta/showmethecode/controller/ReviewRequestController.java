@@ -2,6 +2,7 @@ package com.sparta.showmethecode.controller;
 
 import com.sparta.showmethecode.config.security.UserDetailsImpl;
 import com.sparta.showmethecode.domain.User;
+import com.sparta.showmethecode.dto.request.AddCommentDto;
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
 import com.sparta.showmethecode.dto.request.ReviewRequestUpdateDto;
 import com.sparta.showmethecode.dto.response.*;
@@ -114,6 +115,19 @@ public class ReviewRequestController {
         PageResponseDto<ReviewRequestResponseDto> result = reviewRequestService.searchRequestByLanguageName(language, page, size, isAsc);
 
         return ResponseEntity.ok(result);
+    }
+
+    /**
+     * 댓글추가 API
+     */
+    @PostMapping("/question/{id}/comment")
+    public ResponseEntity addComment(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable(name = "id") Long reviewId,
+            @RequestBody AddCommentDto addCommentDto
+    ) {
+
+        return null;
     }
 
 }

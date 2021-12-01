@@ -3,9 +3,12 @@ package com.sparta.showmethecode.service;
 import com.sparta.showmethecode.domain.*;
 import com.sparta.showmethecode.dto.request.AddReviewDto;
 import com.sparta.showmethecode.dto.request.EvaluateAnswerDto;
+import com.sparta.showmethecode.dto.response.PageResponseDto;
+import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
 import com.sparta.showmethecode.repository.ReviewAnswerRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import com.sparta.showmethecode.repository.UserRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.Arrays;
+import java.util.List;
 
 @Transactional
 @SpringBootTest
@@ -32,6 +36,8 @@ public class UserServiceTest {
     ReviewAnswerRepository reviewAnswerRepository;
     @Autowired
     UserService userService;
+    @Autowired
+    ReviewRequestService reviewRequestService;
 
     @BeforeEach
     void init() {
@@ -78,5 +84,17 @@ public class UserServiceTest {
         System.out.println(reviewAnswer.getAnswerUser().getUsername());
         System.out.println(reviewAnswer.getPoint());
         System.out.println("=======================================");
+    }
+
+    @DisplayName("2. 내가 받은 요청 조회 테스트")
+    @Test
+    void 내가받은_요청_조회() {
+        User user1 = userRepository.findByUsername("reviewer1").get();
+        List<ReviewRequestResponseDto> result = userService.getMyReceivedRequestList(user1);
+        List<ReviewRequestResponseDto> data = result;
+
+        data.forEach(System.out::println);
+
+        Assertions.assertEquals(1, data.size());
     }
 }

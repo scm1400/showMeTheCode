@@ -1,22 +1,9 @@
 package com.sparta.showmethecode.repository.dao;
 
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.sparta.showmethecode.domain.QReviewAnswer;
-import com.sparta.showmethecode.domain.QReviewRequest;
-import com.sparta.showmethecode.domain.ReviewAnswer;
-import com.sparta.showmethecode.domain.UserRole;
-import com.sparta.showmethecode.dto.response.QReviewAnswerResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewAnswerResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.support.PageableExecutionUtils;
 
-import java.util.List;
-
-import static com.sparta.showmethecode.domain.QReviewAnswer.*;
-import static com.sparta.showmethecode.domain.QReviewRequest.reviewRequest;
+import static com.sparta.showmethecode.domain.QReviewAnswer.reviewAnswer;
 
 @RequiredArgsConstructor
 public class ReviewAnswerDaoImpl implements ReviewAnswerDao{
@@ -28,6 +15,19 @@ public class ReviewAnswerDaoImpl implements ReviewAnswerDao{
         Integer exist = query.selectOne()
                 .from(reviewAnswer)
                 .where(reviewAnswer.point.gt(0))
+                .fetchFirst();
+
+        return exist != null;
+    }
+
+    @Override
+    public boolean isMyAnswer(Long reviewerId, Long answerId) {
+
+        Integer exist = query.selectOne()
+                .from(reviewAnswer)
+                .where(reviewAnswer.answerUser.id.eq(reviewerId).
+                        and(reviewAnswer.id.eq(answerId))
+                )
                 .fetchFirst();
 
         return exist != null;

@@ -3,6 +3,7 @@ package com.sparta.showmethecode.controller;
 import com.sparta.showmethecode.config.security.UserDetailsImpl;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.AddReviewDto;
+import com.sparta.showmethecode.dto.request.UpdateAnswerDto;
 import com.sparta.showmethecode.dto.response.PageResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewAnswerResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
@@ -93,6 +94,22 @@ public class ReviewerController {
         PageResponseDto<ReviewAnswerResponseDto> result = reviewerService.getMyAnswerList(user, page, size, isAsc, sortBy);
 
         return ResponseEntity.ok(result);
+    }
+
+    /**
+     * 답변한 리뷰 수정 API
+     */
+    @PutMapping("/reviewer/answer/{answerId}")
+    public ResponseEntity updateMyAnswer(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable Long answerId,
+            @RequestBody UpdateAnswerDto updateAnswerDto
+    ) {
+        User reviewer = userDetails.getUser();
+
+        reviewerService.updateAnswer(reviewer, answerId, updateAnswerDto);
+
+        return ResponseEntity.ok("ok");
     }
 
 

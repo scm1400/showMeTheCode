@@ -2,6 +2,7 @@ package com.sparta.showmethecode.service;
 
 import com.sparta.showmethecode.domain.*;
 import com.sparta.showmethecode.dto.request.AddReviewDto;
+import com.sparta.showmethecode.dto.request.UpdateAnswerDto;
 import com.sparta.showmethecode.dto.response.PageResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewAnswerResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewerInfoDto;
@@ -163,8 +164,6 @@ public class ReviewerServiceTest {
         }
 
         System.out.println("================================================");
-        System.out.println("================================================");
-        System.out.println("================================================");
 
         final String sortBy = "createdAt";
 //        final String sortBy = "point";
@@ -182,5 +181,33 @@ public class ReviewerServiceTest {
                 .evalTotal(evalCount*avg)
                 .role(UserRole.ROLE_REVIEWER)
                 .languages(Arrays.asList(new Language("Java"))).build();
+    }
+
+    @Test
+    @DisplayName("6. 답변 수정하기")
+    void 답변_수정하기() {
+        User user1 = userRepository.findByUsername("user1").get();
+        User reviewer1 = userRepository.findByUsername("reviewer1").get();
+        ReviewRequest reviewRequest = reviewRequestRepository.findAll().get(0);
+
+        em.flush();
+        em.clear();
+
+        AddReviewDto addReviewDto = new AddReviewDto("답변제목", "답변코드", "답변설명");
+        reviewerService.addReviewAndComment(reviewer1, reviewRequest.getId(), addReviewDto);
+
+        List<ReviewAnswerResponseDto> answerList = reviewerService.getMyAnswerList(reviewer1, 0, 10, true, "createdAt").getData();
+
+        UpdateAnswerDto updateAnswerDto = new UpdateAnswerDto("답변제목수정", "답변코드수정", "답변설명수정");
+        reviewerService.updateAnswer(reviewer1, answerList.get(0).getReviewAnswerId(), updateAnswerDto);
+
+        em.flush();
+        em.clear();
+
+        answerList = reviewerService.getMyAnswerList(reviewer1, 0, 10, true, "createdAt").getData();
+        System.out.println(answerList.get(0));
+
+        Assertions.assertEquals("답변제목수정", answerList.get(0).getAnswerTitle());
+
     }
 }

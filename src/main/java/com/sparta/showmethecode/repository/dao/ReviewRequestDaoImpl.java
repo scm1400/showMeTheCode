@@ -2,22 +2,19 @@ package com.sparta.showmethecode.repository.dao;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
-import com.querydsl.core.types.Expression;
-import com.querydsl.core.types.Order;
-import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.sparta.showmethecode.domain.*;
+import com.sparta.showmethecode.domain.ReviewAnswer;
+import com.sparta.showmethecode.domain.ReviewRequest;
+import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.response.*;
 import com.sparta.showmethecode.repository.querydslutil.OrderByNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.data.support.PageableExecutionUtils;
 
@@ -26,11 +23,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.sparta.showmethecode.domain.QReviewAnswer.*;
-import static com.sparta.showmethecode.domain.QReviewRequest.*;
+import static com.sparta.showmethecode.domain.QReviewAnswer.reviewAnswer;
 import static com.sparta.showmethecode.domain.QReviewRequest.reviewRequest;
-import static com.sparta.showmethecode.domain.QReviewRequestComment.*;
-import static com.sparta.showmethecode.domain.QUser.*;
+import static com.sparta.showmethecode.domain.QReviewRequestComment.reviewRequestComment;
+import static com.sparta.showmethecode.domain.QUser.user;
 
 @Slf4j
 public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements ReviewRequestDao {
@@ -216,8 +212,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
     }
 
     @Override
-    public Page<ReviewAnswerResponseDto> findMyAnswer(Long userId, Pageable pageable, boolean isAsc, String sortBy) {
-        PathBuilder<ReviewAnswer> pathBuilder = new PathBuilder<>(ReviewAnswer.class, sortBy);
+    public Page<ReviewAnswerResponseDto> findMyAnswer(Long userId, Pageable pageable) {
         JPAQuery<ReviewAnswerResponseDto> jpaQuery = query.select(
                         new QReviewAnswerResponseDto(
                                 reviewRequest.reviewAnswer.id,

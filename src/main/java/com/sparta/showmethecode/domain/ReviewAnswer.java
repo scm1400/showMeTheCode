@@ -1,5 +1,6 @@
 package com.sparta.showmethecode.domain;
 
+import com.sparta.showmethecode.dto.request.UpdateAnswerDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,5 +43,11 @@ public class ReviewAnswer extends Timestamped {
 
     public void evaluate(double point) {
         this.point = point;
+    }
+
+    public void update(UpdateAnswerDto dto) {
+        this.title = dto.getTitle();
+        this.code = dto.getCode();
+        this.comment = dto.getComment();
     }
 }

@@ -1,10 +1,7 @@
 package com.sparta.showmethecode.domain;
 
-<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonIgnore;
-=======
 import com.sparta.showmethecode.dto.request.UpdateAnswerDto;
->>>>>>> daehyun
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

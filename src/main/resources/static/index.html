@@ -78,6 +78,7 @@
         });
     </script>
     <script src="./js/ckeditor/ckeditor.js"></script>
+    <script src="js/index.js"></script>
 
 </head>
 
@@ -730,89 +731,12 @@
                     취소
                 </button>
 
-                <button class="ac-button is-lg is-solid is-primary question-modal__button--cancel e-submit-question-modal">
+                <button class="ac-button is-lg is-solid is-primary question-modal__button--cancel e-submit-question-modal" onclick="saveQuestion()">
                     저장
                 </button>
             </footer>
         </div>
     </section>
 </div>
-
-<!--&lt;!&ndash; 회원가입 모달&ndash;&gt;-->
-<!--<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="articleModalLabel"-->
-<!--     aria-hidden="true">-->
-<!--    <div class="modal-dialog" role="document">-->
-<!--        <div class="modal-content">-->
-<!--            <div class="modal-header">-->
-<!--                <h5 class="modal-title">회원가입</h5>-->
-<!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--                    <span aria-hidden="true">&times;</span>-->
-<!--                </button>-->
-<!--            </div>-->
-<!--            <div class="modal-body" id="modal-content">-->
-<!--                <div class="mb-3">-->
-<!--                    <label for="signup-id" class="form-label">아이디</label>-->
-<!--                    <input type="text" class="form-control" id="signup-id">-->
-<!--                </div>-->
-<!--                <div class="mb-3">-->
-<!--                    <label for="signup-password" class="form-label">비밀번호</label>-->
-<!--                    <input type="password" class="form-control" id="signup-password">-->
-<!--                </div>-->
-<!--                <div class="mb-3" id="chooseReviewer">-->
-<!--                    <input class="form-check-input" type="checkbox" id="signup-isReviewer">-->
-<!--                    <label class="form-check-label" for="signup-isReviewer">-->
-<!--                        리뷰어로 회원가입-->
-<!--                    </label>-->
-<!--                </div>-->
-
-<!--                <div id="language-check-box" style="display: none">-->
-<!--                    <select name="language">-->
-<!--                        <option value="">대표 언어를 선택해주세요.</option>-->
-<!--                        <option value="Java" name="languageSelectBox">Java</option>-->
-<!--                        <option value="Python" name="languageSelectBox">Python</option>-->
-<!--                        <option value="Javascript" name="languageSelectBox">Javascript</option>-->
-<!--                        <option value="HTML&CSS" name="languageSelectBox">HTML&CSS</option>-->
-<!--                    </select>-->
-<!--                </div>-->
-
-<!--            </div>-->
-<!--            <div class="modal-footer">-->
-<!--                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-<!--                <button type="button" class="btn btn-primary" onclick="signup()">확인</button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--&lt;!&ndash; 로그인 모달&ndash;&gt;-->
-<!--<div class="modal fade" id="signinModal" tabindex="-1" role="dialog" aria-labelledby="articleModalLabel"-->
-<!--     aria-hidden="true">-->
-<!--    <div class="modal-dialog" role="document">-->
-<!--        <div class="modal-content">-->
-<!--            <div class="modal-header">-->
-<!--                <h5 class="modal-title" id="modal-title">로그인</h5>-->
-<!--                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">-->
-<!--                    <span aria-hidden="true">&times;</span>-->
-<!--                </button>-->
-<!--            </div>-->
-<!--            <div class="modal-body" id="modal-content">-->
-<!--                <div class="mb-3">-->
-<!--                    <label for="signin-id" class="form-label">아이디</label>-->
-<!--                    <input type="text" class="form-control" id="signin-id">-->
-<!--                </div>-->
-<!--                <div class="mb-3">-->
-<!--                    <label for="signin-password" class="form-label">비밀번호</label>-->
-<!--                    <input type="password" class="form-control" id="signin-password">-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="modal-footer">-->
-<!--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-<!--                <button type="button" class="btn btn-primary" onclick="signin()">로그인</button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-
 </body>
 </html>

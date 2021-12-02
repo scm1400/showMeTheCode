@@ -1,19 +1,3 @@
-function saveQuestion() {
-    let code = $('#contents').val();
-
-    let data = {"code": code};
-
-    $.ajax({
-        type: "POST",
-        url: "/question",
-        contentType: "application/json;charset-utf-8;",
-        data: JSON.stringify(data),
-        success: function(res) {
-            console.log(res);
-    }
-    })
-}
-
 function go_back(){
     history.go(-1);
 }

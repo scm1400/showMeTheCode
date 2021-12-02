@@ -56,6 +56,7 @@
     <script src="./js/index.js"></script>
     <script src="./js/login.js"></script>
     <script src="./js/user.js"></script>
+    <script src="./js/post_question.js"></script>
     <script src="./js/bootstrap-tagsinput.js"></script>
 
 
@@ -681,8 +682,8 @@
                         class="ac-button is-lg is-outlined is-gray question-modal__button--cancel e-cancel-question-modal">
                     취소
                 </button>
-
-                <button class="ac-button is-lg is-solid is-primary question-modal__button--cancel e-submit-question-modal" onclick="saveQuestion()">
+                
+                <button id="send" class="ac-button is-lg is-solid is-primary question-modal__button--cancel e-submit-question-modal" onclick="postQuestion()">
                     저장
                 </button>
             </footer>

@@ -1,0 +1,2788 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="user_id" content="601090"/>
+
+    <meta name="viewport" content="height=device-height,
+                      width=device-width, initial-scale=1.0,
+                      minimum-scale=1.0, maximum-scale=1.0,
+                      user-scalable=no, target-densitydpi=device-dpi">
+
+
+    <!-- Require SEO -->
+    <title>제 코드좀 봐주세요.. - 쇼미 더 코드 | 질문 & 답변</title>
+    <meta name="description" content="제 코드좀 봐주세요..">
+
+    <!-- og tag START -->
+    <meta property="og:url" content="https://www.inflearn.com/questions/256304">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="제 코드좀 봐주세요.. - 쇼미 더 코드 | 질문 & 답변">
+    <meta property="og:description" content="제 코드좀 봐주세요..">
+
+
+    <link rel="stylesheet" href="https://cdn.inflearn.com/dist/css/npm_tinymce.7d2889b076629803d85c.css"/>
+    <link rel="stylesheet" href="https://cdn.inflearn.com/dist/css/MAIN.77377d61afc642238445.css"/>
+    <link rel="stylesheet" href="https://cdn.inflearn.com/dist/css/posts_question_item.443c7817e0623b7f0c2c.css"/>
+    <link
+            rel="stylesheet"
+            href="https://cdn.inflearn.com/dist/vendor/bulma-accordion.min.css"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdn.inflearn.com/dist/vendor/bulma-switch.min.css"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdn.inflearn.com/dist/vendor/bulma-tooltip.min.css"
+    />
+    <link
+            rel="stylesheet"
+            href="https://pro.fontawesome.com/releases/v5.12.0/css/all.css"
+            integrity="sha384-ekOryaXPbeCpWQNxMwSWVvQ0+1VrStoPJq54shlYhR8HzQgig1v5fas6YgOqLoKz"
+            crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="./js/ckeditor/ckeditor.js"></script>
+    <script src="js/index.js"></script>
+
+</head>
+<body id="inflearn" class="question_detail pg___questions_detail is_logged_in is-student-user">
+<script>
+    $(function () {
+
+        CKEDITOR.replace('content-answer', {
+            fontSize_defaultLabel: "12",
+            skin: "minimalist",
+            language: "ko"
+        });
+        CKEDITOR.replace('content-comment', {
+            fontSize_defaultLabel: "12",
+            skin: "minimalist",
+            language: "ko"
+        });
+
+        $("#files").on("change", function (e) {
+            inputFile(e);
+        });
+
+        $("#btnSave").on("click", function () {
+            saveGallery();
+        });
+
+        $("#btnCancel").on("click", function () {
+            window.history.back();
+        });
+    });
+
+
+    $(document).ready(function () {
+        $("#comment-button").click(function () {
+            if($("#comment-hidden").hasClass("is-hidden")) {
+                $("#comment-hidden").removeClass("is-hidden");
+            }
+            else{
+                $("#comment-hidden").addClass("is-hidden");
+            }
+        });
+
+    });
+
+
+</script>
+<div id="root">
+
+    <!--    모바일 하위 Nav바 -->
+    <nav class="InfD__BottomNavigation">
+        <div class="more_content">
+            <div class="el_list">
+
+                <div class="el">
+                    <a href="/community/questions"></a>
+                    <span class="icon_cover"><span class="icon circle"><i
+                            class="fal fa-comment-alt-check"></i></span></span>
+                    <div class="text is-3">질문 게시판</div>
+                </div>
+
+                <div class="el">
+                    <a href="/mentors"></a>
+                    <span class="icon_cover"><span class="icon circle"><i class="fal fa-lightbulb-on"></i></span></span>
+                    <div class="text is-3">멘토링</div>
+                </div>
+            </div>
+        </div>
+        <div class="nav_content">
+            <div class="el_list">
+
+                <div class="el e_el__dashboard ">
+                    <a href="/dashboard"></a>
+                    <span class="icon_cover"><span class="icon"><i class="fal fa-user-chart"></i></span></span>
+                    <span class="icon_cover is_active"><span class="icon"><i
+                            class="fas fa-user-chart"></i></span></span>
+                    <div class="text is-5">대시보드</div>
+                </div>
+
+                <div class="el e_el__courses ">
+                    <a href="/courses"></a>
+                    <span class="icon_cover"><span class="icon"><i class="fal fa-list-ul"></i></span></span>
+                    <span class="icon_cover is_active"><span class="icon"><i class="far fa-list-ul"></i></span></span>
+                    <div class="text is-5">강의</div>
+                </div>
+
+                <div class="el e_el__home ">
+                    <a href="/"></a>
+                    <span class="icon_cover"><span class="icon"><i class="fal fa-home-lg-alt"></i></span></span>
+                    <span class="icon_cover is_active"><span class="icon"><i
+                            class="fas fa-home-lg-alt"></i></span></span>
+                    <div class="text is-5">홈</div>
+                </div>
+
+                <div class="el e_el__roadmaps ">
+                    <a href="/roadmaps"></a>
+                    <span class="icon_cover"><span class="icon circle"><i class="fal fa-road"></i></span></span>
+                    <span class="icon_cover is_active"><span class="icon"><i class="fas fa-road"></i></span></span>
+                    <div class="text is-5">로드맵</div>
+                </div>
+
+                <div class="el e_el__more ">
+
+                    <span class="icon_cover"><span class="icon"><i class="fal fa-ellipsis-h-alt"></i></span></span>
+                    <span class="icon_cover is_active"><span class="icon"><i
+                            class="fas fa-ellipsis-h-alt"></i></span></span>
+                    <div class="text is-5">더보기</div>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+    <!--모바일 하단 Nav 끝-->
+
+
+    <header id="header">
+        <nav class="navbar">
+
+            <div class="container mobile_container">
+                <div class="content">
+                    <div class="mobile_left"><span class="infd-icon e_left_aside_btn" data-type="open"><svg width="30"
+                                                                                                            height="30"
+                                                                                                            width="24"
+                                                                                                            height="24"
+                                                                                                            viewBox="0 0 24 24"
+                                                                                                            xmlns="http://www.w3.org/2000/svg"><path
+                            fill="#495057" fill-rule="evenodd" clip-rule="evenodd"
+                            d="M1.5 6C1.22386 6 1 6.22386 1 6.5C1 6.77614 1.22386 7 1.5 7H10C10.2761 7 10.5 6.77614 10.5 6.5C10.5 6.22386 10.2761 6 10 6H1.5ZM1.5 16C1.22386 16 1 16.2239 1 16.5C1 16.7761 1.22386 17 1.5 17H10C10.2761 17 10.5 16.7761 10.5 16.5C10.5 16.2239 10.2761 16 10 16H1.5ZM1 11.5C1 11.2239 1.22386 11 1.5 11H8.5C8.77614 11 9 11.2239 9 11.5C9 11.7761 8.77614 12 8.5 12H1.5C1.22386 12 1 11.7761 1 11.5ZM15.5 15.5C17.7091 15.5 19.5 13.7091 19.5 11.5C19.5 9.29086 17.7091 7.5 15.5 7.5C13.2909 7.5 11.5 9.29086 11.5 11.5C11.5 13.7091 13.2909 15.5 15.5 15.5ZM15.5 16.5C16.7006 16.5 17.8024 16.0768 18.6644 15.3715L22.1464 18.8536C22.3417 19.0488 22.6583 19.0488 22.8536 18.8536C23.0488 18.6583 23.0488 18.3417 22.8536 18.1464L19.3715 14.6644C20.0768 13.8024 20.5 12.7006 20.5 11.5C20.5 8.73858 18.2614 6.5 15.5 6.5C12.7386 6.5 10.5 8.73858 10.5 11.5C10.5 14.2614 12.7386 16.5 15.5 16.5Z"/></svg></span>
+                    </div>
+                    <div class="brand_header">
+                        <a href="/" class="brand_logo"><span class="visually_hidden">쇼미 더 코드</span>
+
+                            [ 모바일 로고 넣는 곳 ]
+                        </a>
+                    </div>
+                    <div class="mobile_right">
+
+                        <a role="button" onclick="show_login_modal()"
+                           class="button space-inset-4 text is-5 signin">로그인</a>
+                        <a href="signup.html" class="e-signup button space-inset-4 text is-5 is-primary ">회원가입</a></div>
+                </div>
+
+            </div>
+
+
+            <div class="container desktop_container">
+                <div class="content">
+                    <div class="brand_header">
+                        <a href="/" class="brand_logo"> <span class="visually_hidden">쇼미 더 코드</span>
+                            [ 로고 넣는 곳 ]
+                        </a>
+                    </div>
+                    <!--상단 Nav바 펼쳐지는 부분-->
+                    <div class="navbar-menu">
+                        <div class="navbar-left">
+                            <div class="has-dropdown is-hoverable navbar-item  icon_drop_menu">
+                                <a href="/community/questions" class="navbar-item "><span>커뮤니티</span></a>
+                                <div class="navbar-dropdown is-boxed is-right">
+
+                                    <a class="navbar-item " href="/community/questions">
+                                        <span class="icon"><i class="fal fa-comment-alt-edit"></i></span> <span
+                                            class="name">질문 & 답변</span>
+
+                                    </a>
+
+                                    <a class="navbar-item " href="/community/chats">
+                                        <span class="icon"><i class="fal fa-comment-alt-dots"></i></span> <span
+                                            class="name">자유주제</span>
+
+                                    </a>
+
+                                    <a class="navbar-item " href="/community/studies">
+                                        <span class="icon"><i class="fal fa-book-open"></i></span> <span class="name">스터디</span>
+
+                                    </a>
+
+                                    <a class="navbar-item " href="/blogs">
+                                        <span class="icon"><i class="fal fa-feather-alt"></i></span> <span class="name">블로그</span>
+
+                                    </a>
+
+                                </div>
+                                </a>
+                            </div>
+
+
+                            <div class="has-dropdown is-hoverable navbar-item  icon_drop_menu">
+                                <a href="/inflearn" class="navbar-item "><span>쇼미 더 코드</span></a>
+                                <div class="navbar-dropdown is-boxed is-right">
+
+                                    <a class="navbar-item " href="/community/reviews">
+                                        <span class="icon"><i class="fal fa-star"></i></span> <span
+                                            class="name">수강평</span>
+
+                                    </a>
+                                </div>
+                                </a>
+                            </div>
+
+                        </div>
+                        <div class="navbar-right">
+
+                            <div class="search search_bar navbar-item header_search">
+                                <input type="text" class="input" placeholder="" data-kv="headerSearchWord">
+                                <span class="search__icon e-header-search"><i class="far fa-search"></i></span>
+                            </div>
+
+                            <div class="navbar-item buttons">
+
+                                <a onclick="show_login_modal()" role="button"
+                                   class="button space-inset-4 signin">로그인</a>
+                                <a href="signup.html" class="e-signup button space-inset-4 is-primary">회원가입</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="sidebar_dimmed e-sidebar-dimmed" data-type="close"></div>
+    <aside class="mobile_left_aside">
+
+        <div class="search search_bar header_search e_header_search">
+            <input type="text" class="input" placeholder="강의/강사명을 입력해주세요" data-kv="headerSearchWord">
+            <span class="search__icon e-header-search"><i class="far fa-search"></i></span>
+        </div>
+        <div class="category-content">
+            <div class="menu_list">
+                <div class="p-menu"><a class="title" href="/courses">전체</a></div>
+
+                <div class="p-menu " data-id="5">
+                    <div class="title">개발 · 프로그래밍</div>
+                </div>
+                <div class="p-menu " data-id="492">
+                    <div class="title">보안 · 네트워크</div>
+                </div>
+                <div class="p-menu " data-id="9">
+                    <div class="title">데이터 사이언스</div>
+                </div>
+                <div class="p-menu " data-id="22">
+                    <div class="title">크리에이티브</div>
+                </div>
+                <div class="p-menu " data-id="33">
+                    <div class="title">직무 · 마케팅</div>
+                </div>
+                <div class="p-menu " data-id="493">
+                    <div class="title">학문 · 외국어</div>
+                </div>
+                <div class="p-menu " data-id="494">
+                    <div class="title">커리어</div>
+                </div>
+                <div class="p-menu " data-id="666">
+                    <div class="title">교양</div>
+                </div>
+                <div class="p-menu"><a class="title" href="/tag-curation/tag/18123">청강대 게임스쿨</a></div>
+            </div>
+            <div class="submenu-content">
+                <div class="p-submenu " data-id="5">
+                    <a class="c-menu" href="/courses/it-programming">
+                        <div class="title">ALL</div>
+                    </a>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            웹 개발 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/it-programming/web-dev" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/it-programming/web-dev?skill=html-css" class="s_menu_el">
+                            <div class="title">HTML/CSS</div>
+                        </a>
+                        <a href="/courses/it-programming/web-dev?skill=front-end" class="s_menu_el">
+                            <div class="title">Front-End</div>
+                        </a>
+                        <a href="/courses/it-programming/web-dev?skill=javascript" class="s_menu_el">
+                            <div class="title">JavaScript</div>
+                        </a>
+                        <a href="/courses/it-programming/web-dev?skill=web-dev" class="s_menu_el">
+                            <div class="title">웹 개발</div>
+                        </a>
+                        <a href="/courses/it-programming/web-dev?skill=back-end" class="s_menu_el">
+                            <div class="title">Back-End</div>
+                        </a>
+                        <a href="/courses/it-programming/web-dev?skill=web-publish" class="s_menu_el">
+                            <div class="title">웹 퍼블리싱</div>
+                        </a>
+                        <a href="/courses/it-programming/web-dev?skill=react" class="s_menu_el">
+                            <div class="title">React</div>
+                        </a>
+                        <a href="/courses/it-programming/web-dev?skill=java" class="s_menu_el">
+                            <div class="title">Java</div>
+                        </a>
+                        <a href="/courses/it-programming/web-dev?skill=nodejs" class="s_menu_el">
+                            <div class="title">Node.js</div>
+                        </a>
+                        <a href="/courses/it-programming/web-dev?skill=vuejs" class="s_menu_el">
+                            <div class="title">Vue.js</div>
+                        </a>
+                        <a href="/courses/it-programming/web-dev?skill=spring" class="s_menu_el">
+                            <div class="title">Spring</div>
+                        </a>
+                        <a href="/courses/it-programming/web-dev?skill=web-app" class="s_menu_el">
+                            <div class="title">웹앱</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            프론트엔드 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/it-programming/front-end" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/it-programming/front-end?skill=front-end" class="s_menu_el">
+                            <div class="title">Front-End</div>
+                        </a>
+                        <a href="/courses/it-programming/front-end?skill=javascript" class="s_menu_el">
+                            <div class="title">JavaScript</div>
+                        </a>
+                        <a href="/courses/it-programming/front-end?skill=html-css" class="s_menu_el">
+                            <div class="title">HTML/CSS</div>
+                        </a>
+                        <a href="/courses/it-programming/front-end?skill=web-dev" class="s_menu_el">
+                            <div class="title">웹 개발</div>
+                        </a>
+                        <a href="/courses/it-programming/front-end?skill=vuejs" class="s_menu_el">
+                            <div class="title">Vue.js</div>
+                        </a>
+                        <a href="/courses/it-programming/front-end?skill=react" class="s_menu_el">
+                            <div class="title">React</div>
+                        </a>
+                        <a href="/courses/it-programming/front-end?skill=web-publish" class="s_menu_el">
+                            <div class="title">웹 퍼블리싱</div>
+                        </a>
+                        <a href="/courses/it-programming/front-end?skill=jquery" class="s_menu_el">
+                            <div class="title">jQuery</div>
+                        </a>
+                        <a href="/courses/it-programming/front-end?skill=interactive-web" class="s_menu_el">
+                            <div class="title">인터랙티브 웹</div>
+                        </a>
+                        <a href="/courses/it-programming/front-end?skill=es6" class="s_menu_el">
+                            <div class="title">ES6</div>
+                        </a>
+                        <a href="/courses/it-programming/front-end?skill=web-app" class="s_menu_el">
+                            <div class="title">웹앱</div>
+                        </a>
+                        <a href="/courses/it-programming/front-end?skill=vuex" class="s_menu_el">
+                            <div class="title">Vuex</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            백엔드 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/it-programming/back-end" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/it-programming/back-end?skill=back-end" class="s_menu_el">
+                            <div class="title">Back-End</div>
+                        </a>
+                        <a href="/courses/it-programming/back-end?skill=java" class="s_menu_el">
+                            <div class="title">Java</div>
+                        </a>
+                        <a href="/courses/it-programming/back-end?skill=spring" class="s_menu_el">
+                            <div class="title">Spring</div>
+                        </a>
+                        <a href="/courses/it-programming/back-end?skill=nodejs" class="s_menu_el">
+                            <div class="title">Node.js</div>
+                        </a>
+                        <a href="/courses/it-programming/back-end?skill=spring-boot" class="s_menu_el">
+                            <div class="title">Spring Boot</div>
+                        </a>
+                        <a href="/courses/it-programming/back-end?skill=mvc-design-pattern" class="s_menu_el">
+                            <div class="title">MVC</div>
+                        </a>
+                        <a href="/courses/it-programming/back-end?skill=java-persistence-api" class="s_menu_el">
+                            <div class="title">JPA</div>
+                        </a>
+                        <a href="/courses/it-programming/back-end?skill=rest-api" class="s_menu_el">
+                            <div class="title">REST API</div>
+                        </a>
+                        <a href="/courses/it-programming/back-end?skill=docker" class="s_menu_el">
+                            <div class="title">Docker</div>
+                        </a>
+                        <a href="/courses/it-programming/back-end?skill=devops" class="s_menu_el">
+                            <div class="title">DevOps</div>
+                        </a>
+                        <a href="/courses/it-programming/back-end?skill=aws" class="s_menu_el">
+                            <div class="title">AWS</div>
+                        </a>
+                        <a href="/courses/it-programming/back-end?skill=express" class="s_menu_el">
+                            <div class="title">Express</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            풀스택 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/it-programming/full-stack" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/it-programming/full-stack?skill=django" class="s_menu_el">
+                            <div class="title">Django</div>
+                        </a>
+                        <a href="/courses/it-programming/full-stack?skill=react" class="s_menu_el">
+                            <div class="title">React</div>
+                        </a>
+                        <a href="/courses/it-programming/full-stack?skill=nodejs" class="s_menu_el">
+                            <div class="title">Node.js</div>
+                        </a>
+                        <a href="/courses/it-programming/full-stack?skill=web-dev" class="s_menu_el">
+                            <div class="title">웹 개발</div>
+                        </a>
+                        <a href="/courses/it-programming/full-stack?skill=full-stack" class="s_menu_el">
+                            <div class="title">Full-Stack</div>
+                        </a>
+                        <a href="/courses/it-programming/full-stack?skill=python" class="s_menu_el">
+                            <div class="title">Python</div>
+                        </a>
+                        <a href="/courses/it-programming/full-stack?skill=mongodb" class="s_menu_el">
+                            <div class="title">MongoDB</div>
+                        </a>
+                        <a href="/courses/it-programming/full-stack?skill=html-css" class="s_menu_el">
+                            <div class="title">HTML/CSS</div>
+                        </a>
+                        <a href="/courses/it-programming/full-stack?skill=express" class="s_menu_el">
+                            <div class="title">Express</div>
+                        </a>
+                        <a href="/courses/it-programming/full-stack?skill=back-end" class="s_menu_el">
+                            <div class="title">Back-End</div>
+                        </a>
+                        <a href="/courses/it-programming/full-stack?skill=javascript" class="s_menu_el">
+                            <div class="title">JavaScript</div>
+                        </a>
+                        <a href="/courses/it-programming/full-stack?skill=firebase" class="s_menu_el">
+                            <div class="title">Firebase</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            모바일 앱 개발 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/it-programming/mobile-app" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/it-programming/mobile-app?skill=mobile-app" class="s_menu_el">
+                            <div class="title">모바일 앱 개발</div>
+                        </a>
+                        <a href="/courses/it-programming/mobile-app?skill=android" class="s_menu_el">
+                            <div class="title">Android</div>
+                        </a>
+                        <a href="/courses/it-programming/mobile-app?skill=ios" class="s_menu_el">
+                            <div class="title">iOS</div>
+                        </a>
+                        <a href="/courses/it-programming/mobile-app?skill=swift" class="s_menu_el">
+                            <div class="title">Swift</div>
+                        </a>
+                        <a href="/courses/it-programming/mobile-app?skill=kotlin" class="s_menu_el">
+                            <div class="title">Kotlin</div>
+                        </a>
+                        <a href="/courses/it-programming/mobile-app?skill=firebase" class="s_menu_el">
+                            <div class="title">Firebase</div>
+                        </a>
+                        <a href="/courses/it-programming/mobile-app?skill=google-flutter" class="s_menu_el">
+                            <div class="title">Flutter</div>
+                        </a>
+                        <a href="/courses/it-programming/mobile-app?skill=java" class="s_menu_el">
+                            <div class="title">Java</div>
+                        </a>
+                        <a href="/courses/it-programming/mobile-app?skill=ionic" class="s_menu_el">
+                            <div class="title">IONIC</div>
+                        </a>
+                        <a href="/courses/it-programming/mobile-app?skill=game-dev" class="s_menu_el">
+                            <div class="title">게임개발</div>
+                        </a>
+                        <a href="/courses/it-programming/mobile-app?skill=react-native" class="s_menu_el">
+                            <div class="title">React Native</div>
+                        </a>
+                        <a href="/courses/it-programming/mobile-app?skill=swift-ui" class="s_menu_el">
+                            <div class="title">SwiftUI</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            프로그래밍 언어 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/it-programming/programming-lang" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-lang?skill=python" class="s_menu_el">
+                            <div class="title">Python</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-lang?skill=javascript" class="s_menu_el">
+                            <div class="title">JavaScript</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-lang?skill=java" class="s_menu_el">
+                            <div class="title">Java</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-lang?skill=algorithm" class="s_menu_el">
+                            <div class="title">알고리즘</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-lang?skill=data-analysis" class="s_menu_el">
+                            <div class="title">데이터 분석</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-lang?skill=swift" class="s_menu_el">
+                            <div class="title">Swift</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-lang?skill=c" class="s_menu_el">
+                            <div class="title">C</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-lang?skill=c-sharp" class="s_menu_el">
+                            <div class="title">C#</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-lang?skill=front-end" class="s_menu_el">
+                            <div class="title">Front-End</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-lang?skill=es6" class="s_menu_el">
+                            <div class="title">ES6</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-lang?skill=coding-test" class="s_menu_el">
+                            <div class="title">코딩 테스트</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-lang?skill=mobile-app" class="s_menu_el">
+                            <div class="title">모바일 앱 개발</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            알고리즘 · 자료구조 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/it-programming/algorithm" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/it-programming/algorithm?skill=algorithm" class="s_menu_el">
+                            <div class="title">알고리즘</div>
+                        </a>
+                        <a href="/courses/it-programming/algorithm?skill=coding-test" class="s_menu_el">
+                            <div class="title">코딩 테스트</div>
+                        </a>
+                        <a href="/courses/it-programming/algorithm?skill=data-structure" class="s_menu_el">
+                            <div class="title">자료구조</div>
+                        </a>
+                        <a href="/courses/it-programming/algorithm?skill=java" class="s_menu_el">
+                            <div class="title">Java</div>
+                        </a>
+                        <a href="/courses/it-programming/algorithm?skill=employment" class="s_menu_el">
+                            <div class="title">취업</div>
+                        </a>
+                        <a href="/courses/it-programming/algorithm?skill=c" class="s_menu_el">
+                            <div class="title">C</div>
+                        </a>
+                        <a href="/courses/it-programming/algorithm?skill=python" class="s_menu_el">
+                            <div class="title">Python</div>
+                        </a>
+                        <a href="/courses/it-programming/algorithm?skill=oop" class="s_menu_el">
+                            <div class="title">객체지향</div>
+                        </a>
+                        <a href="/courses/it-programming/algorithm?skill=c-plus" class="s_menu_el">
+                            <div class="title">C++</div>
+                        </a>
+                        <a href="/courses/it-programming/algorithm?skill=javascript" class="s_menu_el">
+                            <div class="title">JavaScript</div>
+                        </a>
+                        <a href="/courses/it-programming/algorithm?skill=game-dev" class="s_menu_el">
+                            <div class="title">게임개발</div>
+                        </a>
+                        <a href="/courses/it-programming/algorithm?skill=scratch" class="s_menu_el">
+                            <div class="title">Scratch</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            데이터 사이언스 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/it-programming/dev-data-science" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/it-programming/dev-data-science?skill=data-analysis" class="s_menu_el">
+                            <div class="title">데이터 분석</div>
+                        </a>
+                        <a href="/courses/it-programming/dev-data-science?skill=machine-learning" class="s_menu_el">
+                            <div class="title">머신러닝</div>
+                        </a>
+                        <a href="/courses/it-programming/dev-data-science?skill=deep-learning" class="s_menu_el">
+                            <div class="title">딥러닝</div>
+                        </a>
+                        <a href="/courses/it-programming/dev-data-science?skill=python" class="s_menu_el">
+                            <div class="title">Python</div>
+                        </a>
+                        <a href="/courses/it-programming/dev-data-science?skill=ai" class="s_menu_el">
+                            <div class="title">인공지능</div>
+                        </a>
+                        <a href="/courses/it-programming/dev-data-science?skill=tensorflow" class="s_menu_el">
+                            <div class="title">Tensorflow</div>
+                        </a>
+                        <a href="/courses/it-programming/dev-data-science?skill=data-science" class="s_menu_el">
+                            <div class="title">데이터 과학</div>
+                        </a>
+                        <a href="/courses/it-programming/dev-data-science?skill=pandas" class="s_menu_el">
+                            <div class="title">Pandas</div>
+                        </a>
+                        <a href="/courses/it-programming/dev-data-science?skill=keras" class="s_menu_el">
+                            <div class="title">Keras</div>
+                        </a>
+                        <a href="/courses/it-programming/dev-data-science?skill=Data-Visualization" class="s_menu_el">
+                            <div class="title">데이터 시각화</div>
+                        </a>
+                        <a href="/courses/it-programming/dev-data-science?skill=computer-vision" class="s_menu_el">
+                            <div class="title">컴퓨터 비전</div>
+                        </a>
+                        <a href="/courses/it-programming/dev-data-science?skill=sql" class="s_menu_el">
+                            <div class="title">SQL</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            데이터베이스 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/it-programming/database-dev" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/it-programming/database-dev?skill=sql" class="s_menu_el">
+                            <div class="title">SQL</div>
+                        </a>
+                        <a href="/courses/it-programming/database-dev?skill=database" class="s_menu_el">
+                            <div class="title">데이터베이스</div>
+                        </a>
+                        <a href="/courses/it-programming/database-dev?skill=data-analysis" class="s_menu_el">
+                            <div class="title">데이터 분석</div>
+                        </a>
+                        <a href="/courses/it-programming/database-dev?skill=mysql" class="s_menu_el">
+                            <div class="title">MySQL</div>
+                        </a>
+                        <a href="/courses/it-programming/database-dev?skill=rdbms" class="s_menu_el">
+                            <div class="title">RDBMS</div>
+                        </a>
+                        <a href="/courses/it-programming/database-dev?skill=ms-sql" class="s_menu_el">
+                            <div class="title">MSSQL</div>
+                        </a>
+                        <a href="/courses/it-programming/database-dev?skill=oracle" class="s_menu_el">
+                            <div class="title">Oracle</div>
+                        </a>
+                        <a href="/courses/it-programming/database-dev?skill=back-end" class="s_menu_el">
+                            <div class="title">Back-End</div>
+                        </a>
+                        <a href="/courses/it-programming/database-dev?skill=mongodb" class="s_menu_el">
+                            <div class="title">MongoDB</div>
+                        </a>
+                        <a href="/courses/it-programming/database-dev?skill=python" class="s_menu_el">
+                            <div class="title">Python</div>
+                        </a>
+                        <a href="/courses/it-programming/database-dev?skill=notion" class="s_menu_el">
+                            <div class="title">Notion</div>
+                        </a>
+                        <a href="/courses/it-programming/database-dev?skill=nodejs" class="s_menu_el">
+                            <div class="title">Node.js</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            개발 도구 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/it-programming/programming-tool" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-tool?skill=git" class="s_menu_el">
+                            <div class="title">Git</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-tool?skill=version-control-system"
+                           class="s_menu_el">
+                            <div class="title">버전관리시스템</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-tool?skill=github" class="s_menu_el">
+                            <div class="title">Github</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-tool?skill=web-dev" class="s_menu_el">
+                            <div class="title">웹 개발</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-tool?skill=java" class="s_menu_el">
+                            <div class="title">Java</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-tool?skill=jetbrains" class="s_menu_el">
+                            <div class="title">Jetbrains</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-tool?skill=intellij" class="s_menu_el">
+                            <div class="title">IntelliJ IDEA</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-tool?skill=Mockito" class="s_menu_el">
+                            <div class="title">Mockito</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-tool?skill=testcontainers" class="s_menu_el">
+                            <div class="title">Testcontainers</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-tool?skill=JMeter" class="s_menu_el">
+                            <div class="title">JMeter</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-tool?skill=Chaos-Monkey_for_Spring_Boot"
+                           class="s_menu_el">
+                            <div class="title">Chaos Monkey</div>
+                        </a>
+                        <a href="/courses/it-programming/programming-tool?skill=arch-unit" class="s_menu_el">
+                            <div class="title">ArchUnit</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            데브옵스 · 인프라 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/it-programming/devops-infra" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/it-programming/devops-infra?skill=aws" class="s_menu_el">
+                            <div class="title">AWS</div>
+                        </a>
+                        <a href="/courses/it-programming/devops-infra?skill=cloud" class="s_menu_el">
+                            <div class="title">클라우드</div>
+                        </a>
+                        <a href="/courses/it-programming/devops-infra?skill=devops" class="s_menu_el">
+                            <div class="title">DevOps</div>
+                        </a>
+                        <a href="/courses/it-programming/devops-infra?skill=docker" class="s_menu_el">
+                            <div class="title">Docker</div>
+                        </a>
+                        <a href="/courses/it-programming/devops-infra?skill=back-end" class="s_menu_el">
+                            <div class="title">Back-End</div>
+                        </a>
+                        <a href="/courses/it-programming/devops-infra?skill=linux" class="s_menu_el">
+                            <div class="title">Linux</div>
+                        </a>
+                        <a href="/courses/it-programming/devops-infra?skill=kubernetes" class="s_menu_el">
+                            <div class="title">Kubernetes</div>
+                        </a>
+                        <a href="/courses/it-programming/devops-infra?skill=network" class="s_menu_el">
+                            <div class="title">네트워크</div>
+                        </a>
+                        <a href="/courses/it-programming/devops-infra?skill=azure" class="s_menu_el">
+                            <div class="title">Azure</div>
+                        </a>
+                        <a href="/courses/it-programming/devops-infra?skill=serverless" class="s_menu_el">
+                            <div class="title">서버리스</div>
+                        </a>
+                        <a href="/courses/it-programming/devops-infra?skill=ansible" class="s_menu_el">
+                            <div class="title">Ansible</div>
+                        </a>
+                        <a href="/courses/it-programming/devops-infra?skill=information-security" class="s_menu_el">
+                            <div class="title">정보보안</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            게임 개발 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/it-programming/game-dev" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/it-programming/game-dev?skill=game-dev" class="s_menu_el">
+                            <div class="title">게임개발</div>
+                        </a>
+                        <a href="/courses/it-programming/game-dev?skill=unity" class="s_menu_el">
+                            <div class="title">Unity</div>
+                        </a>
+                        <a href="/courses/it-programming/game-dev?skill=c-sharp" class="s_menu_el">
+                            <div class="title">C#</div>
+                        </a>
+                        <a href="/courses/it-programming/game-dev?skill=unreal" class="s_menu_el">
+                            <div class="title">Unreal Engine</div>
+                        </a>
+                        <a href="/courses/it-programming/game-dev?skill=ios" class="s_menu_el">
+                            <div class="title">iOS</div>
+                        </a>
+                        <a href="/courses/it-programming/game-dev?skill=swift" class="s_menu_el">
+                            <div class="title">Swift</div>
+                        </a>
+                        <a href="/courses/it-programming/game-dev?skill=c-plus" class="s_menu_el">
+                            <div class="title">C++</div>
+                        </a>
+                        <a href="/courses/it-programming/game-dev?skill=game-design" class="s_menu_el">
+                            <div class="title">게임기획</div>
+                        </a>
+                        <a href="/courses/it-programming/game-dev?skill=scratch" class="s_menu_el">
+                            <div class="title">Scratch</div>
+                        </a>
+                        <a href="/courses/it-programming/game-dev?skill=blueprint" class="s_menu_el">
+                            <div class="title">UE Blueprints</div>
+                        </a>
+                        <a href="/courses/it-programming/game-dev?skill=block-coding" class="s_menu_el">
+                            <div class="title">블록코딩</div>
+                        </a>
+                        <a href="/courses/it-programming/game-dev?skill=javascript" class="s_menu_el">
+                            <div class="title">JavaScript</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="p-submenu " data-id="492">
+                    <a class="c-menu" href="/courses/it">
+                        <div class="title">ALL</div>
+                    </a>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            보안 <span class="caret_el"><span class="icon"><i class="fas fa-chevron-down"></i></span><span
+                                class="icon"><i class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/it/security" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/it/security?skill=information-security" class="s_menu_el">
+                            <div class="title">정보보안</div>
+                        </a>
+                        <a href="/courses/it/security?skill=penetration-testing" class="s_menu_el">
+                            <div class="title">모의해킹</div>
+                        </a>
+                        <a href="/courses/it/security?skill=isms-p" class="s_menu_el">
+                            <div class="title">ISMS-P</div>
+                        </a>
+                        <a href="/courses/it/security?skill=forensic" class="s_menu_el">
+                            <div class="title">Forensic</div>
+                        </a>
+                        <a href="/courses/it/security?skill=system-hacking" class="s_menu_el">
+                            <div class="title">시스템 해킹</div>
+                        </a>
+                        <a href="/courses/it/security?skill=android" class="s_menu_el">
+                            <div class="title">Android</div>
+                        </a>
+                        <a href="/courses/it/security?skill=malware" class="s_menu_el">
+                            <div class="title">악성코드</div>
+                        </a>
+                        <a href="/courses/it/security?skill=reversing" class="s_menu_el">
+                            <div class="title">리버싱</div>
+                        </a>
+                        <a href="/courses/it/security?skill=employment" class="s_menu_el">
+                            <div class="title">취업</div>
+                        </a>
+                        <a href="/courses/it/security?skill=network" class="s_menu_el">
+                            <div class="title">네트워크</div>
+                        </a>
+                        <a href="/courses/it/security?skill=injection" class="s_menu_el">
+                            <div class="title">인젝션</div>
+                        </a>
+                        <a href="/courses/it/security?skill=windows" class="s_menu_el">
+                            <div class="title">Microsoft Windows</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            시스템 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/it/system" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/it/system?skill=linux" class="s_menu_el">
+                            <div class="title">Linux</div>
+                        </a>
+                        <a href="/courses/it/system?skill=back-end" class="s_menu_el">
+                            <div class="title">Back-End</div>
+                        </a>
+                        <a href="/courses/it/system?skill=shell-script" class="s_menu_el">
+                            <div class="title">Shell Script</div>
+                        </a>
+                        <a href="/courses/it/system?skill=powershell" class="s_menu_el">
+                            <div class="title">Powershell</div>
+                        </a>
+                        <a href="/courses/it/system?skill=information-security" class="s_menu_el">
+                            <div class="title">정보보안</div>
+                        </a>
+                        <a href="/courses/it/system?skill=spring-boot" class="s_menu_el">
+                            <div class="title">Spring Boot</div>
+                        </a>
+                        <a href="/courses/it/system?skill=java-persistence-api" class="s_menu_el">
+                            <div class="title">JPA</div>
+                        </a>
+                        <a href="/courses/it/system?skill=system-hacking" class="s_menu_el">
+                            <div class="title">시스템 해킹</div>
+                        </a>
+                        <a href="/courses/it/system?skill=domain" class="s_menu_el">
+                            <div class="title">도메인</div>
+                        </a>
+                        <a href="/courses/it/system?skill=architecture" class="s_menu_el">
+                            <div class="title">아키텍처</div>
+                        </a>
+                        <a href="/courses/it/system?skill=virtualization" class="s_menu_el">
+                            <div class="title">가상화</div>
+                        </a>
+                        <a href="/courses/it/system?skill=spring-cloud" class="s_menu_el">
+                            <div class="title">Spring Cloud</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            클라우드 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/it/cloud" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/it/cloud?skill=cloud" class="s_menu_el">
+                            <div class="title">클라우드</div>
+                        </a>
+                        <a href="/courses/it/cloud?skill=aws" class="s_menu_el">
+                            <div class="title">AWS</div>
+                        </a>
+                        <a href="/courses/it/cloud?skill=devops" class="s_menu_el">
+                            <div class="title">DevOps</div>
+                        </a>
+                        <a href="/courses/it/cloud?skill=docker" class="s_menu_el">
+                            <div class="title">Docker</div>
+                        </a>
+                        <a href="/courses/it/cloud?skill=serverless" class="s_menu_el">
+                            <div class="title">서버리스</div>
+                        </a>
+                        <a href="/courses/it/cloud?skill=azure" class="s_menu_el">
+                            <div class="title">Azure</div>
+                        </a>
+                        <a href="/courses/it/cloud?skill=back-end" class="s_menu_el">
+                            <div class="title">Back-End</div>
+                        </a>
+                        <a href="/courses/it/cloud?skill=kubernetes" class="s_menu_el">
+                            <div class="title">Kubernetes</div>
+                        </a>
+                        <a href="/courses/it/cloud?skill=travis-ci" class="s_menu_el">
+                            <div class="title">Travis CI</div>
+                        </a>
+                        <a href="/courses/it/cloud?skill=github" class="s_menu_el">
+                            <div class="title">Github</div>
+                        </a>
+                        <a href="/courses/it/cloud?skill=virtualization" class="s_menu_el">
+                            <div class="title">가상화</div>
+                        </a>
+                        <a href="/courses/it/cloud?skill=terraform" class="s_menu_el">
+                            <div class="title">Terraform</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            블록체인 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/it/blockchain" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/it/blockchain?skill=blockchain" class="s_menu_el">
+                            <div class="title">블록체인</div>
+                        </a>
+                        <a href="/courses/it/blockchain?skill=dapp" class="s_menu_el">
+                            <div class="title">DApp</div>
+                        </a>
+                        <a href="/courses/it/blockchain?skill=etherium" class="s_menu_el">
+                            <div class="title">Ethereum</div>
+                        </a>
+                        <a href="/courses/it/blockchain?skill=solidity" class="s_menu_el">
+                            <div class="title">Solidity</div>
+                        </a>
+                        <a href="/courses/it/blockchain?skill=truffle" class="s_menu_el">
+                            <div class="title">Truffle</div>
+                        </a>
+                        <a href="/courses/it/blockchain?skill=react" class="s_menu_el">
+                            <div class="title">React</div>
+                        </a>
+                        <a href="/courses/it/blockchain?skill=game-dev" class="s_menu_el">
+                            <div class="title">게임개발</div>
+                        </a>
+                        <a href="/courses/it/blockchain?skill=javascript" class="s_menu_el">
+                            <div class="title">JavaScript</div>
+                        </a>
+                        <a href="/courses/it/blockchain?skill=java" class="s_menu_el">
+                            <div class="title">Java</div>
+                        </a>
+                        <a href="/courses/it/blockchain?skill=mongodb" class="s_menu_el">
+                            <div class="title">MongoDB</div>
+                        </a>
+                        <a href="/courses/it/blockchain?skill=docker" class="s_menu_el">
+                            <div class="title">Docker</div>
+                        </a>
+                        <a href="/courses/it/blockchain?skill=ipfs" class="s_menu_el">
+                            <div class="title">IPFS</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            기타 <span class="caret_el"><span class="icon"><i class="fas fa-chevron-down"></i></span><span
+                                class="icon"><i class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/it/it-besides" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/it/it-besides?skill=android" class="s_menu_el">
+                            <div class="title">Android</div>
+                        </a>
+                        <a href="/courses/it/it-besides?skill=cheat-engine" class="s_menu_el">
+                            <div class="title">Cheat Engine</div>
+                        </a>
+                        <a href="/courses/it/it-besides?skill=frida" class="s_menu_el">
+                            <div class="title">Frida</div>
+                        </a>
+                        <a href="/courses/it/it-besides?skill=information-security" class="s_menu_el">
+                            <div class="title">정보보안</div>
+                        </a>
+                        <a href="/courses/it/it-besides?skill=engineer-info-process" class="s_menu_el">
+                            <div class="title">정보처리기사</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="p-submenu " data-id="9">
+                    <a class="c-menu" href="/courses/data-science">
+                        <div class="title">ALL</div>
+                    </a>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            데이터 분석 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/data-science/data-analysis" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/data-science/data-analysis?skill=data-analysis" class="s_menu_el">
+                            <div class="title">데이터 분석</div>
+                        </a>
+                        <a href="/courses/data-science/data-analysis?skill=Data-Visualization" class="s_menu_el">
+                            <div class="title">데이터 시각화</div>
+                        </a>
+                        <a href="/courses/data-science/data-analysis?skill=python" class="s_menu_el">
+                            <div class="title">Python</div>
+                        </a>
+                        <a href="/courses/data-science/data-analysis?skill=pandas" class="s_menu_el">
+                            <div class="title">Pandas</div>
+                        </a>
+                        <a href="/courses/data-science/data-analysis?skill=r-programming" class="s_menu_el">
+                            <div class="title">R</div>
+                        </a>
+                        <a href="/courses/data-science/data-analysis?skill=sql" class="s_menu_el">
+                            <div class="title">SQL</div>
+                        </a>
+                        <a href="/courses/data-science/data-analysis?skill=excel" class="s_menu_el">
+                            <div class="title">Excel</div>
+                        </a>
+                        <a href="/courses/data-science/data-analysis?skill=web-crawling" class="s_menu_el">
+                            <div class="title">웹 크롤링</div>
+                        </a>
+                        <a href="/courses/data-science/data-analysis?skill=ms-office" class="s_menu_el">
+                            <div class="title">MS-Office</div>
+                        </a>
+                        <a href="/courses/data-science/data-analysis?skill=bigdata" class="s_menu_el">
+                            <div class="title">빅데이터</div>
+                        </a>
+                        <a href="/courses/data-science/data-analysis?skill=data-science" class="s_menu_el">
+                            <div class="title">데이터 과학</div>
+                        </a>
+                        <a href="/courses/data-science/data-analysis?skill=business-automation" class="s_menu_el">
+                            <div class="title">업무자동화</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            인공지능 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/data-science/artificial-intelligence" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/data-science/artificial-intelligence?skill=deep-learning" class="s_menu_el">
+                            <div class="title">딥러닝</div>
+                        </a>
+                        <a href="/courses/data-science/artificial-intelligence?skill=machine-learning"
+                           class="s_menu_el">
+                            <div class="title">머신러닝</div>
+                        </a>
+                        <a href="/courses/data-science/artificial-intelligence?skill=ai" class="s_menu_el">
+                            <div class="title">인공지능</div>
+                        </a>
+                        <a href="/courses/data-science/artificial-intelligence?skill=tensorflow" class="s_menu_el">
+                            <div class="title">Tensorflow</div>
+                        </a>
+                        <a href="/courses/data-science/artificial-intelligence?skill=keras" class="s_menu_el">
+                            <div class="title">Keras</div>
+                        </a>
+                        <a href="/courses/data-science/artificial-intelligence?skill=computer-vision" class="s_menu_el">
+                            <div class="title">컴퓨터 비전</div>
+                        </a>
+                        <a href="/courses/data-science/artificial-intelligence?skill=python" class="s_menu_el">
+                            <div class="title">Python</div>
+                        </a>
+                        <a href="/courses/data-science/artificial-intelligence?skill=neural-network" class="s_menu_el">
+                            <div class="title">인공신경망</div>
+                        </a>
+                        <a href="/courses/data-science/artificial-intelligence?skill=data-analysis" class="s_menu_el">
+                            <div class="title">데이터 분석</div>
+                        </a>
+                        <a href="/courses/data-science/artificial-intelligence?skill=reinforcement-learning"
+                           class="s_menu_el">
+                            <div class="title">강화학습</div>
+                        </a>
+                        <a href="/courses/data-science/artificial-intelligence?skill=data-science" class="s_menu_el">
+                            <div class="title">데이터 과학</div>
+                        </a>
+                        <a href="/courses/data-science/artificial-intelligence?skill=opencv" class="s_menu_el">
+                            <div class="title">OpenCV</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            데이터 시각화 <span class="caret_el"><span class="icon"><i class="fas fa-chevron-down"></i></span><span
+                                class="icon"><i class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/data-science/data-visualization" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/data-science/data-visualization?skill=Data-Visualization" class="s_menu_el">
+                            <div class="title">데이터 시각화</div>
+                        </a>
+                        <a href="/courses/data-science/data-visualization?skill=data-analysis" class="s_menu_el">
+                            <div class="title">데이터 분석</div>
+                        </a>
+                        <a href="/courses/data-science/data-visualization?skill=r-programming" class="s_menu_el">
+                            <div class="title">R</div>
+                        </a>
+                        <a href="/courses/data-science/data-visualization?skill=pandas" class="s_menu_el">
+                            <div class="title">Pandas</div>
+                        </a>
+                        <a href="/courses/data-science/data-visualization?skill=ms-office" class="s_menu_el">
+                            <div class="title">MS-Office</div>
+                        </a>
+                        <a href="/courses/data-science/data-visualization?skill=tableau" class="s_menu_el">
+                            <div class="title">Tableau</div>
+                        </a>
+                        <a href="/courses/data-science/data-visualization?skill=python" class="s_menu_el">
+                            <div class="title">Python</div>
+                        </a>
+                        <a href="/courses/data-science/data-visualization?skill=matplotlib" class="s_menu_el">
+                            <div class="title">Matplotlib</div>
+                        </a>
+                        <a href="/courses/data-science/data-visualization?skill=excel" class="s_menu_el">
+                            <div class="title">Excel</div>
+                        </a>
+                        <a href="/courses/data-science/data-visualization?skill=bigdata" class="s_menu_el">
+                            <div class="title">빅데이터</div>
+                        </a>
+                        <a href="/courses/data-science/data-visualization?skill=web-crawling" class="s_menu_el">
+                            <div class="title">웹 크롤링</div>
+                        </a>
+                        <a href="/courses/data-science/data-visualization?skill=power-bi" class="s_menu_el">
+                            <div class="title">Power BI</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            데이터 수집 · 처리 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/data-science/data-processing" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/data-science/data-processing?skill=data-analysis" class="s_menu_el">
+                            <div class="title">데이터 분석</div>
+                        </a>
+                        <a href="/courses/data-science/data-processing?skill=web-crawling" class="s_menu_el">
+                            <div class="title">웹 크롤링</div>
+                        </a>
+                        <a href="/courses/data-science/data-processing?skill=python" class="s_menu_el">
+                            <div class="title">Python</div>
+                        </a>
+                        <a href="/courses/data-science/data-processing?skill=bigdata" class="s_menu_el">
+                            <div class="title">빅데이터</div>
+                        </a>
+                        <a href="/courses/data-science/data-processing?skill=Data-Visualization" class="s_menu_el">
+                            <div class="title">데이터 시각화</div>
+                        </a>
+                        <a href="/courses/data-science/data-processing?skill=pandas" class="s_menu_el">
+                            <div class="title">Pandas</div>
+                        </a>
+                        <a href="/courses/data-science/data-processing?skill=data-processing" class="s_menu_el">
+                            <div class="title">데이터 처리</div>
+                        </a>
+                        <a href="/courses/data-science/data-processing?skill=r-programming" class="s_menu_el">
+                            <div class="title">R</div>
+                        </a>
+                        <a href="/courses/data-science/data-processing?skill=data-science" class="s_menu_el">
+                            <div class="title">데이터 과학</div>
+                        </a>
+                        <a href="/courses/data-science/data-processing?skill=business-automation" class="s_menu_el">
+                            <div class="title">업무자동화</div>
+                        </a>
+                        <a href="/courses/data-science/data-processing?skill=apache-hadoop" class="s_menu_el">
+                            <div class="title">Hadoop</div>
+                        </a>
+                        <a href="/courses/data-science/data-processing?skill=excel" class="s_menu_el">
+                            <div class="title">Excel</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            기타 <span class="caret_el"><span class="icon"><i class="fas fa-chevron-down"></i></span><span
+                                class="icon"><i class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/data-science/data-besides" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/data-science/data-besides?skill=employment" class="s_menu_el">
+                            <div class="title">취업</div>
+                        </a>
+                        <a href="/courses/data-science/data-besides?skill=ai" class="s_menu_el">
+                            <div class="title">인공지능</div>
+                        </a>
+                        <a href="/courses/data-science/data-besides?skill=data-science" class="s_menu_el">
+                            <div class="title">데이터 과학</div>
+                        </a>
+                        <a href="/courses/data-science/data-besides?skill=rpa" class="s_menu_el">
+                            <div class="title">RPA</div>
+                        </a>
+                        <a href="/courses/data-science/data-besides?skill=service-planning" class="s_menu_el">
+                            <div class="title">서비스 기획</div>
+                        </a>
+                        <a href="/courses/data-science/data-besides?skill=bigdata" class="s_menu_el">
+                            <div class="title">빅데이터</div>
+                        </a>
+                        <a href="/courses/data-science/data-besides?skill=process-mining" class="s_menu_el">
+                            <div class="title">Process Mining</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="p-submenu " data-id="22">
+                    <a class="c-menu" href="/courses/creative">
+                        <div class="title">ALL</div>
+                    </a>
+                    <div class="c-menu dropdown_el">
+                        <div class="title small">
+                            CAD · 3D 모델링 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/creative/3d-modeling" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/creative/3d-modeling?skill=3d-modeling" class="s_menu_el">
+                            <div class="title">3D 모델링</div>
+                        </a>
+                        <a href="/courses/creative/3d-modeling?skill=cad" class="s_menu_el">
+                            <div class="title">CAD</div>
+                        </a>
+                        <a href="/courses/creative/3d-modeling?skill=maya" class="s_menu_el">
+                            <div class="title">MAYA</div>
+                        </a>
+                        <a href="/courses/creative/3d-modeling?skill=siemens-nx" class="s_menu_el">
+                            <div class="title">Siemens NX</div>
+                        </a>
+                        <a href="/courses/creative/3d-modeling?skill=cinema4d" class="s_menu_el">
+                            <div class="title">Cinema 4D</div>
+                        </a>
+                        <a href="/courses/creative/3d-modeling?skill=3ds-max" class="s_menu_el">
+                            <div class="title">3ds MAX</div>
+                        </a>
+                        <a href="/courses/creative/3d-modeling?skill=catia" class="s_menu_el">
+                            <div class="title">Catia</div>
+                        </a>
+                        <a href="/courses/creative/3d-modeling?skill=Rhino" class="s_menu_el">
+                            <div class="title">Rhino</div>
+                        </a>
+                        <a href="/courses/creative/3d-modeling?skill=sketch-up" class="s_menu_el">
+                            <div class="title">SketchUp</div>
+                        </a>
+                        <a href="/courses/creative/3d-modeling?skill=solidworks" class="s_menu_el">
+                            <div class="title">SOLIDWORKS</div>
+                        </a>
+                        <a href="/courses/creative/3d-modeling?skill=zbrush" class="s_menu_el">
+                            <div class="title">ZBrush</div>
+                        </a>
+                        <a href="/courses/creative/3d-modeling?skill=autocad" class="s_menu_el">
+                            <div class="title">Autocad</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            웹 퍼블리싱 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/creative/web-publishing" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/creative/web-publishing?skill=html-css" class="s_menu_el">
+                            <div class="title">HTML/CSS</div>
+                        </a>
+                        <a href="/courses/creative/web-publishing?skill=web-publish" class="s_menu_el">
+                            <div class="title">웹 퍼블리싱</div>
+                        </a>
+                        <a href="/courses/creative/web-publishing?skill=jquery" class="s_menu_el">
+                            <div class="title">jQuery</div>
+                        </a>
+                        <a href="/courses/creative/web-publishing?skill=web-design" class="s_menu_el">
+                            <div class="title">웹 디자인</div>
+                        </a>
+                        <a href="/courses/creative/web-publishing?skill=interactive-web" class="s_menu_el">
+                            <div class="title">인터랙티브 웹</div>
+                        </a>
+                        <a href="/courses/creative/web-publishing?skill=responsive-web" class="s_menu_el">
+                            <div class="title">반응형 웹</div>
+                        </a>
+                        <a href="/courses/creative/web-publishing?skill=javascript" class="s_menu_el">
+                            <div class="title">JavaScript</div>
+                        </a>
+                        <a href="/courses/creative/web-publishing?skill=front-end" class="s_menu_el">
+                            <div class="title">Front-End</div>
+                        </a>
+                        <a href="/courses/creative/web-publishing?skill=web-dev" class="s_menu_el">
+                            <div class="title">웹 개발</div>
+                        </a>
+                        <a href="/courses/creative/web-publishing?skill=flex" class="s_menu_el">
+                            <div class="title">Flex</div>
+                        </a>
+                        <a href="/courses/creative/web-publishing?skill=clone-coding" class="s_menu_el">
+                            <div class="title">클론코딩</div>
+                        </a>
+                        <a href="/courses/creative/web-publishing?skill=uxui" class="s_menu_el">
+                            <div class="title">UX/UI</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            UX/UI <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/creative/ux-ui" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/creative/ux-ui?skill=uxui" class="s_menu_el">
+                            <div class="title">UX/UI</div>
+                        </a>
+                        <a href="/courses/creative/ux-ui?skill=app-design" class="s_menu_el">
+                            <div class="title">모바일 디자인</div>
+                        </a>
+                        <a href="/courses/creative/ux-ui?skill=prototyping" class="s_menu_el">
+                            <div class="title">프로토타이핑</div>
+                        </a>
+                        <a href="/courses/creative/ux-ui?skill=adobe-xd" class="s_menu_el">
+                            <div class="title">XD</div>
+                        </a>
+                        <a href="/courses/creative/ux-ui?skill=web-design" class="s_menu_el">
+                            <div class="title">웹 디자인</div>
+                        </a>
+                        <a href="/courses/creative/ux-ui?skill=figma" class="s_menu_el">
+                            <div class="title">Figma</div>
+                        </a>
+                        <a href="/courses/creative/ux-ui?skill=mobile-app" class="s_menu_el">
+                            <div class="title">모바일 앱 개발</div>
+                        </a>
+                        <a href="/courses/creative/ux-ui?skill=sketch" class="s_menu_el">
+                            <div class="title">Sketch</div>
+                        </a>
+                        <a href="/courses/creative/ux-ui?skill=html-css" class="s_menu_el">
+                            <div class="title">HTML/CSS</div>
+                        </a>
+                        <a href="/courses/creative/ux-ui?skill=interactive-web" class="s_menu_el">
+                            <div class="title">인터랙티브 웹</div>
+                        </a>
+                        <a href="/courses/creative/ux-ui?skill=ios-autolayout" class="s_menu_el">
+                            <div class="title">iOS Autolayout</div>
+                        </a>
+                        <a href="/courses/creative/ux-ui?skill=contents-marketing" class="s_menu_el">
+                            <div class="title">콘텐츠 마케팅</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            그래픽 디자인 <span class="caret_el"><span class="icon"><i class="fas fa-chevron-down"></i></span><span
+                                class="icon"><i class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/creative/graphic-design" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/creative/graphic-design?skill=photoshop" class="s_menu_el">
+                            <div class="title">Photoshop</div>
+                        </a>
+                        <a href="/courses/creative/graphic-design?skill=drawing" class="s_menu_el">
+                            <div class="title">드로잉</div>
+                        </a>
+                        <a href="/courses/creative/graphic-design?skill=emoticon" class="s_menu_el">
+                            <div class="title">이모티콘</div>
+                        </a>
+                        <a href="/courses/creative/graphic-design?skill=illustrator" class="s_menu_el">
+                            <div class="title">Illustrator</div>
+                        </a>
+                        <a href="/courses/creative/graphic-design?skill=character-design" class="s_menu_el">
+                            <div class="title">캐릭터 디자인</div>
+                        </a>
+                        <a href="/courses/creative/graphic-design?skill=clip-studio-paint" class="s_menu_el">
+                            <div class="title">CLIP STUDIO PAINT</div>
+                        </a>
+                        <a href="/courses/creative/graphic-design?skill=animate" class="s_menu_el">
+                            <div class="title">Animate</div>
+                        </a>
+                        <a href="/courses/creative/graphic-design?skill=cad" class="s_menu_el">
+                            <div class="title">CAD</div>
+                        </a>
+                        <a href="/courses/creative/graphic-design?skill=figma" class="s_menu_el">
+                            <div class="title">Figma</div>
+                        </a>
+                        <a href="/courses/creative/graphic-design?skill=contents-marketing" class="s_menu_el">
+                            <div class="title">콘텐츠 마케팅</div>
+                        </a>
+                        <a href="/courses/creative/graphic-design?skill=cnc" class="s_menu_el">
+                            <div class="title">CNC</div>
+                        </a>
+                        <a href="/courses/creative/graphic-design?skill=affinity-designer" class="s_menu_el">
+                            <div class="title">Affinity Designer</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            디자인 툴 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/creative/design-tool" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/creative/design-tool?skill=uxui" class="s_menu_el">
+                            <div class="title">UX/UI</div>
+                        </a>
+                        <a href="/courses/creative/design-tool?skill=photoshop" class="s_menu_el">
+                            <div class="title">Photoshop</div>
+                        </a>
+                        <a href="/courses/creative/design-tool?skill=3d-modeling" class="s_menu_el">
+                            <div class="title">3D 모델링</div>
+                        </a>
+                        <a href="/courses/creative/design-tool?skill=maya" class="s_menu_el">
+                            <div class="title">MAYA</div>
+                        </a>
+                        <a href="/courses/creative/design-tool?skill=prototyping" class="s_menu_el">
+                            <div class="title">프로토타이핑</div>
+                        </a>
+                        <a href="/courses/creative/design-tool?skill=figma" class="s_menu_el">
+                            <div class="title">Figma</div>
+                        </a>
+                        <a href="/courses/creative/design-tool?skill=app-design" class="s_menu_el">
+                            <div class="title">모바일 디자인</div>
+                        </a>
+                        <a href="/courses/creative/design-tool?skill=adobe-xd" class="s_menu_el">
+                            <div class="title">XD</div>
+                        </a>
+                        <a href="/courses/creative/design-tool?skill=illustrator" class="s_menu_el">
+                            <div class="title">Illustrator</div>
+                        </a>
+                        <a href="/courses/creative/design-tool?skill=web-design" class="s_menu_el">
+                            <div class="title">웹 디자인</div>
+                        </a>
+                        <a href="/courses/creative/design-tool?skill=motion-graphic" class="s_menu_el">
+                            <div class="title">모션그래픽</div>
+                        </a>
+                        <a href="/courses/creative/design-tool?skill=sketch" class="s_menu_el">
+                            <div class="title">Sketch</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            사진 · 영상 <span class="caret_el"><span class="icon"><i class="fas fa-chevron-down"></i></span><span
+                                class="icon"><i class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/creative/video-editing" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/creative/video-editing?skill=Video-Production" class="s_menu_el">
+                            <div class="title">영상제작</div>
+                        </a>
+                        <a href="/courses/creative/video-editing?skill=aftereffect" class="s_menu_el">
+                            <div class="title">After Effects</div>
+                        </a>
+                        <a href="/courses/creative/video-editing?skill=photography" class="s_menu_el">
+                            <div class="title">사진</div>
+                        </a>
+                        <a href="/courses/creative/video-editing?skill=premiere" class="s_menu_el">
+                            <div class="title">Premiere Pro</div>
+                        </a>
+                        <a href="/courses/creative/video-editing?skill=youtube-creator" class="s_menu_el">
+                            <div class="title">유튜브</div>
+                        </a>
+                        <a href="/courses/creative/video-editing?skill=motion-graphic" class="s_menu_el">
+                            <div class="title">모션그래픽</div>
+                        </a>
+                        <a href="/courses/creative/video-editing?skill=lightroom" class="s_menu_el">
+                            <div class="title">Lightroom</div>
+                        </a>
+                        <a href="/courses/creative/video-editing?skill=davinci-resolve" class="s_menu_el">
+                            <div class="title">Davinci Resolve</div>
+                        </a>
+                        <a href="/courses/creative/video-editing?skill=finalcut" class="s_menu_el">
+                            <div class="title">Final Cut Pro</div>
+                        </a>
+                        <a href="/courses/creative/video-editing?skill=movavi" class="s_menu_el">
+                            <div class="title">Movavi</div>
+                        </a>
+                        <a href="/courses/creative/video-editing?skill=cinema4d" class="s_menu_el">
+                            <div class="title">Cinema 4D</div>
+                        </a>
+                        <a href="/courses/creative/video-editing?skill=motion-5" class="s_menu_el">
+                            <div class="title">Motion 5</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            VR/AR <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/creative/vr-ar" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/creative/vr-ar?skill=vr-ar" class="s_menu_el">
+                            <div class="title">VR/AR</div>
+                        </a>
+                        <a href="/courses/creative/vr-ar?skill=unity" class="s_menu_el">
+                            <div class="title">Unity</div>
+                        </a>
+                        <a href="/courses/creative/vr-ar?skill=3d-modeling" class="s_menu_el">
+                            <div class="title">3D 모델링</div>
+                        </a>
+                        <a href="/courses/creative/vr-ar?skill=ios" class="s_menu_el">
+                            <div class="title">iOS</div>
+                        </a>
+                        <a href="/courses/creative/vr-ar?skill=swift-ui" class="s_menu_el">
+                            <div class="title">SwiftUI</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            사운드 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/creative/sound" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/creative/sound?skill=sound system" class="s_menu_el">
+                            <div class="title">음향 시스템</div>
+                        </a>
+                        <a href="/courses/creative/sound?skill=studio-one" class="s_menu_el">
+                            <div class="title">Studio One</div>
+                        </a>
+                        <a href="/courses/creative/sound?skill=music-compose" class="s_menu_el">
+                            <div class="title">작곡</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            기타 <span class="caret_el"><span class="icon"><i class="fas fa-chevron-down"></i></span><span
+                                class="icon"><i class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/creative/creative-besides" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/creative/creative-besides?skill=sigil" class="s_menu_el">
+                            <div class="title">Sigil</div>
+                        </a>
+                        <a href="/courses/creative/creative-besides?skill=e-pub" class="s_menu_el">
+                            <div class="title">EPUB</div>
+                        </a>
+                        <a href="/courses/creative/creative-besides?skill=cnc" class="s_menu_el">
+                            <div class="title">CNC</div>
+                        </a>
+                        <a href="/courses/creative/creative-besides?skill=3d-modeling" class="s_menu_el">
+                            <div class="title">3D 모델링</div>
+                        </a>
+                        <a href="/courses/creative/creative-besides?skill=emoticon" class="s_menu_el">
+                            <div class="title">이모티콘</div>
+                        </a>
+                        <a href="/courses/creative/creative-besides?skill=html-css" class="s_menu_el">
+                            <div class="title">HTML/CSS</div>
+                        </a>
+                        <a href="/courses/creative/creative-besides?skill=cad" class="s_menu_el">
+                            <div class="title">CAD</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="p-submenu " data-id="33">
+                    <a class="c-menu" href="/courses/business">
+                        <div class="title">ALL</div>
+                    </a>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            오피스 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/business/office" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/business/office?skill=ms-office" class="s_menu_el">
+                            <div class="title">MS-Office</div>
+                        </a>
+                        <a href="/courses/business/office?skill=excel" class="s_menu_el">
+                            <div class="title">Excel</div>
+                        </a>
+                        <a href="/courses/business/office?skill=knowhow" class="s_menu_el">
+                            <div class="title">사무실무</div>
+                        </a>
+                        <a href="/courses/business/office?skill=powerpoint" class="s_menu_el">
+                            <div class="title">PowerPoint</div>
+                        </a>
+                        <a href="/courses/business/office?skill=business-automation" class="s_menu_el">
+                            <div class="title">업무자동화</div>
+                        </a>
+                        <a href="/courses/business/office?skill=business-productivity" class="s_menu_el">
+                            <div class="title">업무 생산성</div>
+                        </a>
+                        <a href="/courses/business/office?skill=data-analysis" class="s_menu_el">
+                            <div class="title">데이터 분석</div>
+                        </a>
+                        <a href="/courses/business/office?skill=Data-Visualization" class="s_menu_el">
+                            <div class="title">데이터 시각화</div>
+                        </a>
+                        <a href="/courses/business/office?skill=ms-teams" class="s_menu_el">
+                            <div class="title">Teams</div>
+                        </a>
+                        <a href="/courses/business/office?skill=word" class="s_menu_el">
+                            <div class="title">Word</div>
+                        </a>
+                        <a href="/courses/business/office?skill=vba" class="s_menu_el">
+                            <div class="title">VBA</div>
+                        </a>
+                        <a href="/courses/business/office?skill=presentation" class="s_menu_el">
+                            <div class="title">PT</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            마케팅 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/business/marketing" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/business/marketing?skill=digital-marketing" class="s_menu_el">
+                            <div class="title">디지털 마케팅</div>
+                        </a>
+                        <a href="/courses/business/marketing?skill=performance-marketing" class="s_menu_el">
+                            <div class="title">퍼포먼스 마케팅</div>
+                        </a>
+                        <a href="/courses/business/marketing?skill=contents-marketing" class="s_menu_el">
+                            <div class="title">콘텐츠 마케팅</div>
+                        </a>
+                        <a href="/courses/business/marketing?skill=marketing-theory" class="s_menu_el">
+                            <div class="title">마케팅 이론</div>
+                        </a>
+                        <a href="/courses/business/marketing?skill=growth-hacking" class="s_menu_el">
+                            <div class="title">그로스해킹</div>
+                        </a>
+                        <a href="/courses/business/marketing?skill=google-analytics" class="s_menu_el">
+                            <div class="title">Google Analytics</div>
+                        </a>
+                        <a href="/courses/business/marketing?skill=data-analysis" class="s_menu_el">
+                            <div class="title">데이터 분석</div>
+                        </a>
+                        <a href="/courses/business/marketing?skill=copywriting" class="s_menu_el">
+                            <div class="title">카피라이팅</div>
+                        </a>
+                        <a href="/courses/business/marketing?skill=facebook-advertise" class="s_menu_el">
+                            <div class="title">Facebook Ads</div>
+                        </a>
+                        <a href="/courses/business/marketing?skill=blog" class="s_menu_el">
+                            <div class="title">블로그</div>
+                        </a>
+                        <a href="/courses/business/marketing?skill=facebook-pixel" class="s_menu_el">
+                            <div class="title">Facebook Pixel</div>
+                        </a>
+                        <a href="/courses/business/marketing?skill=establishment" class="s_menu_el">
+                            <div class="title">창업</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title small">
+                            기획 · 전략 · PM <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/business/project-manage" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/business/project-manage?skill=business-productivity" class="s_menu_el">
+                            <div class="title">업무 생산성</div>
+                        </a>
+                        <a href="/courses/business/project-manage?skill=collaboration_tool" class="s_menu_el">
+                            <div class="title">협업 툴</div>
+                        </a>
+                        <a href="/courses/business/project-manage?skill=project-management" class="s_menu_el">
+                            <div class="title">프로젝트 관리</div>
+                        </a>
+                        <a href="/courses/business/project-manage?skill=presentation" class="s_menu_el">
+                            <div class="title">PT</div>
+                        </a>
+                        <a href="/courses/business/project-manage?skill=knowhow" class="s_menu_el">
+                            <div class="title">사무실무</div>
+                        </a>
+                        <a href="/courses/business/project-manage?skill=game-design" class="s_menu_el">
+                            <div class="title">게임기획</div>
+                        </a>
+                        <a href="/courses/business/project-manage?skill=service-planning" class="s_menu_el">
+                            <div class="title">서비스 기획</div>
+                        </a>
+                        <a href="/courses/business/project-manage?skill=game-dev" class="s_menu_el">
+                            <div class="title">게임개발</div>
+                        </a>
+                        <a href="/courses/business/project-manage?skill=uxui" class="s_menu_el">
+                            <div class="title">UX/UI</div>
+                        </a>
+                        <a href="/courses/business/project-manage?skill=경영노하우" class="s_menu_el">
+                            <div class="title">경영노하우</div>
+                        </a>
+                        <a href="/courses/business/project-manage?skill=notion" class="s_menu_el">
+                            <div class="title">Notion</div>
+                        </a>
+                        <a href="/courses/business/project-manage?skill=prototyping" class="s_menu_el">
+                            <div class="title">프로토타이핑</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            업무 자동화 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/business/task-automation" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/business/task-automation?skill=business-automation" class="s_menu_el">
+                            <div class="title">업무자동화</div>
+                        </a>
+                        <a href="/courses/business/task-automation?skill=python" class="s_menu_el">
+                            <div class="title">Python</div>
+                        </a>
+                        <a href="/courses/business/task-automation?skill=excel" class="s_menu_el">
+                            <div class="title">Excel</div>
+                        </a>
+                        <a href="/courses/business/task-automation?skill=web-crawling" class="s_menu_el">
+                            <div class="title">웹 크롤링</div>
+                        </a>
+                        <a href="/courses/business/task-automation?skill=ms-office" class="s_menu_el">
+                            <div class="title">MS-Office</div>
+                        </a>
+                        <a href="/courses/business/task-automation?skill=vba" class="s_menu_el">
+                            <div class="title">VBA</div>
+                        </a>
+                        <a href="/courses/business/task-automation?skill=rpa" class="s_menu_el">
+                            <div class="title">RPA</div>
+                        </a>
+                        <a href="/courses/business/task-automation?skill=selenium" class="s_menu_el">
+                            <div class="title">Selenium</div>
+                        </a>
+                        <a href="/courses/business/task-automation?skill=business-productivity" class="s_menu_el">
+                            <div class="title">업무 생산성</div>
+                        </a>
+                        <a href="/courses/business/task-automation?skill=uipath" class="s_menu_el">
+                            <div class="title">UiPath</div>
+                        </a>
+                        <a href="/courses/business/task-automation?skill=data-analysis" class="s_menu_el">
+                            <div class="title">데이터 분석</div>
+                        </a>
+                        <a href="/courses/business/task-automation?skill=Data-Visualization" class="s_menu_el">
+                            <div class="title">데이터 시각화</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            금융 · 경영 <span class="caret_el"><span class="icon"><i class="fas fa-chevron-down"></i></span><span
+                                class="icon"><i class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/business/finance-management" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/business/finance-management?skill=Investment" class="s_menu_el">
+                            <div class="title">투자</div>
+                        </a>
+                        <a href="/courses/business/finance-management?skill=accounting" class="s_menu_el">
+                            <div class="title">회계</div>
+                        </a>
+                        <a href="/courses/business/finance-management?skill=경영노하우" class="s_menu_el">
+                            <div class="title">경영노하우</div>
+                        </a>
+                        <a href="/courses/business/finance-management?skill=chart-analysis" class="s_menu_el">
+                            <div class="title">차트분석</div>
+                        </a>
+                        <a href="/courses/business/finance-management?skill=financial-technology" class="s_menu_el">
+                            <div class="title">재테크</div>
+                        </a>
+                        <a href="/courses/business/finance-management?skill=pandas" class="s_menu_el">
+                            <div class="title">Pandas</div>
+                        </a>
+                        <a href="/courses/business/finance-management?skill=financial-management" class="s_menu_el">
+                            <div class="title">재무</div>
+                        </a>
+                        <a href="/courses/business/finance-management?skill=tax" class="s_menu_el">
+                            <div class="title">세무</div>
+                        </a>
+                        <a href="/courses/business/finance-management?skill=human-resource" class="s_menu_el">
+                            <div class="title">HR</div>
+                        </a>
+                        <a href="/courses/business/finance-management?skill=python" class="s_menu_el">
+                            <div class="title">Python</div>
+                        </a>
+                        <a href="/courses/business/finance-management?skill=cfo" class="s_menu_el">
+                            <div class="title">CFO</div>
+                        </a>
+                        <a href="/courses/business/finance-management?skill=marketing-theory" class="s_menu_el">
+                            <div class="title">마케팅 이론</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            기타 <span class="caret_el"><span class="icon"><i class="fas fa-chevron-down"></i></span><span
+                                class="icon"><i class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/business/business-besides" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/business/business-besides?skill=business-productivity" class="s_menu_el">
+                            <div class="title">업무 생산성</div>
+                        </a>
+                        <a href="/courses/business/business-besides?skill=notion" class="s_menu_el">
+                            <div class="title">Notion</div>
+                        </a>
+                        <a href="/courses/business/business-besides?skill=knowhow" class="s_menu_el">
+                            <div class="title">사무실무</div>
+                        </a>
+                        <a href="/courses/business/business-besides?skill=communication" class="s_menu_el">
+                            <div class="title">커뮤니케이션</div>
+                        </a>
+                        <a href="/courses/business/business-besides?skill=database" class="s_menu_el">
+                            <div class="title">데이터베이스</div>
+                        </a>
+                        <a href="/courses/business/business-besides?skill=project-management" class="s_menu_el">
+                            <div class="title">프로젝트 관리</div>
+                        </a>
+                        <a href="/courses/business/business-besides?skill=sql" class="s_menu_el">
+                            <div class="title">SQL</div>
+                        </a>
+                        <a href="/courses/business/business-besides?skill=speech" class="s_menu_el">
+                            <div class="title">스피치</div>
+                        </a>
+                        <a href="/courses/business/business-besides?skill=collaboration_tool" class="s_menu_el">
+                            <div class="title">협업 툴</div>
+                        </a>
+                        <a href="/courses/business/business-besides?skill=collaboration" class="s_menu_el">
+                            <div class="title">협업</div>
+                        </a>
+                        <a href="/courses/business/business-besides?skill=business-automation" class="s_menu_el">
+                            <div class="title">업무자동화</div>
+                        </a>
+                        <a href="/courses/business/business-besides?skill=book-pub" class="s_menu_el">
+                            <div class="title">출간, 출판</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="p-submenu " data-id="493">
+                    <a class="c-menu" href="/courses/academics">
+                        <div class="title">ALL</div>
+                    </a>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            수학 <span class="caret_el"><span class="icon"><i class="fas fa-chevron-down"></i></span><span
+                                class="icon"><i class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/academics/math" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/academics/math?skill=mathmatics" class="s_menu_el">
+                            <div class="title">수학</div>
+                        </a>
+                        <a href="/courses/academics/math?skill=integral-differential" class="s_menu_el">
+                            <div class="title">미적분</div>
+                        </a>
+                        <a href="/courses/academics/math?skill=linear-algebra" class="s_menu_el">
+                            <div class="title">선형대수학</div>
+                        </a>
+                        <a href="/courses/academics/math?skill=statistics" class="s_menu_el">
+                            <div class="title">통계</div>
+                        </a>
+                        <a href="/courses/academics/math?skill=game-dev" class="s_menu_el">
+                            <div class="title">게임개발</div>
+                        </a>
+                        <a href="/courses/academics/math?skill=r-programming" class="s_menu_el">
+                            <div class="title">R</div>
+                        </a>
+                        <a href="/courses/academics/math?skill=game-math" class="s_menu_el">
+                            <div class="title">게임수학</div>
+                        </a>
+                        <a href="/courses/academics/math?skill=machine-learning" class="s_menu_el">
+                            <div class="title">머신러닝</div>
+                        </a>
+                        <a href="/courses/academics/math?skill=deep-learning" class="s_menu_el">
+                            <div class="title">딥러닝</div>
+                        </a>
+                        <a href="/courses/academics/math?skill=ai" class="s_menu_el">
+                            <div class="title">인공지능</div>
+                        </a>
+                        <a href="/courses/academics/math?skill=procession" class="s_menu_el">
+                            <div class="title">행렬</div>
+                        </a>
+                        <a href="/courses/academics/math?skill=scratch" class="s_menu_el">
+                            <div class="title">Scratch</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            외국어 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/academics/foreign-language" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/academics/foreign-language?skill=english" class="s_menu_el">
+                            <div class="title">영어</div>
+                        </a>
+                        <a href="/courses/academics/foreign-language?skill=opic" class="s_menu_el">
+                            <div class="title">OPIc</div>
+                        </a>
+                        <a href="/courses/academics/foreign-language?skill=toeic" class="s_menu_el">
+                            <div class="title">TOEIC</div>
+                        </a>
+                        <a href="/courses/academics/foreign-language?skill=toeic-speaking" class="s_menu_el">
+                            <div class="title">TOEIC Speaking</div>
+                        </a>
+                        <a href="/courses/academics/foreign-language?skill=Chinese" class="s_menu_el">
+                            <div class="title">중국어</div>
+                        </a>
+                        <a href="/courses/academics/foreign-language?skill=japanese" class="s_menu_el">
+                            <div class="title">일본어</div>
+                        </a>
+                        <a href="/courses/academics/foreign-language?skill=business-productivity" class="s_menu_el">
+                            <div class="title">업무 생산성</div>
+                        </a>
+                        <a href="/courses/academics/foreign-language?skill=knowhow" class="s_menu_el">
+                            <div class="title">사무실무</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            기타 <span class="caret_el"><span class="icon"><i class="fas fa-chevron-down"></i></span><span
+                                class="icon"><i class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/academics/academic-besides" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/academics/academic-besides?skill=economics" class="s_menu_el">
+                            <div class="title">경제학</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="p-submenu " data-id="494">
+                    <a class="c-menu" href="/courses/career">
+                        <div class="title">ALL</div>
+                    </a>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            취업 · 이직 <span class="caret_el"><span class="icon"><i class="fas fa-chevron-down"></i></span><span
+                                class="icon"><i class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/career/get-jobs" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/career/get-jobs?skill=employment" class="s_menu_el">
+                            <div class="title">취업</div>
+                        </a>
+                        <a href="/courses/career/get-jobs?skill=interview" class="s_menu_el">
+                            <div class="title">면접</div>
+                        </a>
+                        <a href="/courses/career/get-jobs?skill=portfolio" class="s_menu_el">
+                            <div class="title">포트폴리오</div>
+                        </a>
+                        <a href="/courses/career/get-jobs?skill=information-security" class="s_menu_el">
+                            <div class="title">정보보안</div>
+                        </a>
+                        <a href="/courses/career/get-jobs?skill=game-design" class="s_menu_el">
+                            <div class="title">게임기획</div>
+                        </a>
+                        <a href="/courses/career/get-jobs?skill=game-dev" class="s_menu_el">
+                            <div class="title">게임개발</div>
+                        </a>
+                        <a href="/courses/career/get-jobs?skill=github" class="s_menu_el">
+                            <div class="title">Github</div>
+                        </a>
+                        <a href="/courses/career/get-jobs?skill=data-science" class="s_menu_el">
+                            <div class="title">데이터 과학</div>
+                        </a>
+                        <a href="/courses/career/get-jobs?skill=web-design" class="s_menu_el">
+                            <div class="title">웹 디자인</div>
+                        </a>
+                        <a href="/courses/career/get-jobs?skill=tech-interview" class="s_menu_el">
+                            <div class="title">기술면접</div>
+                        </a>
+                        <a href="/courses/career/get-jobs?skill=accounting" class="s_menu_el">
+                            <div class="title">회계</div>
+                        </a>
+                        <a href="/courses/career/get-jobs?skill=service-planning" class="s_menu_el">
+                            <div class="title">서비스 기획</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            개인 브랜딩 <span class="caret_el"><span class="icon"><i
+                                class="fas fa-chevron-down"></i></span><span class="icon"><i
+                                class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/career/personal-branding" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/career/personal-branding?skill=writing" class="s_menu_el">
+                            <div class="title">집필</div>
+                        </a>
+                        <a href="/courses/career/personal-branding?skill=book-pub" class="s_menu_el">
+                            <div class="title">출간, 출판</div>
+                        </a>
+                        <a href="/courses/career/personal-branding?skill=copywriting" class="s_menu_el">
+                            <div class="title">카피라이팅</div>
+                        </a>
+                        <a href="/courses/career/personal-branding?skill=establishment" class="s_menu_el">
+                            <div class="title">창업</div>
+                        </a>
+                        <a href="/courses/career/personal-branding?skill=employment" class="s_menu_el">
+                            <div class="title">취업</div>
+                        </a>
+                        <a href="/courses/career/personal-branding?skill=relationship" class="s_menu_el">
+                            <div class="title">대인관계</div>
+                        </a>
+                        <a href="/courses/career/personal-branding?skill=contents-marketing" class="s_menu_el">
+                            <div class="title">콘텐츠 마케팅</div>
+                        </a>
+                        <a href="/courses/career/personal-branding?skill=speech" class="s_menu_el">
+                            <div class="title">스피치</div>
+                        </a>
+                        <a href="/courses/career/personal-branding?skill=presentation" class="s_menu_el">
+                            <div class="title">PT</div>
+                        </a>
+                        <a href="/courses/career/personal-branding?skill=경영노하우" class="s_menu_el">
+                            <div class="title">경영노하우</div>
+                        </a>
+                        <a href="/courses/career/personal-branding?skill=knowhow" class="s_menu_el">
+                            <div class="title">사무실무</div>
+                        </a>
+                        <a href="/courses/career/personal-branding?skill=github" class="s_menu_el">
+                            <div class="title">Github</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            창업 <span class="caret_el"><span class="icon"><i class="fas fa-chevron-down"></i></span><span
+                                class="icon"><i class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/career/business-start-up" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/career/business-start-up?skill=establishment" class="s_menu_el">
+                            <div class="title">창업</div>
+                        </a>
+                        <a href="/courses/career/business-start-up?skill=smart-store" class="s_menu_el">
+                            <div class="title">스마트스토어</div>
+                        </a>
+                        <a href="/courses/career/business-start-up?skill=digital-marketing" class="s_menu_el">
+                            <div class="title">디지털 마케팅</div>
+                        </a>
+                        <a href="/courses/career/business-start-up?skill=경영노하우" class="s_menu_el">
+                            <div class="title">경영노하우</div>
+                        </a>
+                        <a href="/courses/career/business-start-up?skill=knowhow" class="s_menu_el">
+                            <div class="title">사무실무</div>
+                        </a>
+                        <a href="/courses/career/business-start-up?skill=cfo" class="s_menu_el">
+                            <div class="title">CFO</div>
+                        </a>
+                        <a href="/courses/career/business-start-up?skill=blog" class="s_menu_el">
+                            <div class="title">블로그</div>
+                        </a>
+                        <a href="/courses/career/business-start-up?skill=financial-management" class="s_menu_el">
+                            <div class="title">재무</div>
+                        </a>
+                    </div>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            기타 <span class="caret_el"><span class="icon"><i class="fas fa-chevron-down"></i></span><span
+                                class="icon"><i class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/career/career-besides" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/career/career-besides?skill=engineer-info-process" class="s_menu_el">
+                            <div class="title">정보처리기사</div>
+                        </a>
+                        <a href="/courses/career/career-besides?skill=ms-office" class="s_menu_el">
+                            <div class="title">MS-Office</div>
+                        </a>
+                        <a href="/courses/career/career-besides?skill=employment" class="s_menu_el">
+                            <div class="title">취업</div>
+                        </a>
+                        <a href="/courses/career/career-besides?skill=writing" class="s_menu_el">
+                            <div class="title">집필</div>
+                        </a>
+                        <a href="/courses/career/career-besides?skill=digital-marketing" class="s_menu_el">
+                            <div class="title">디지털 마케팅</div>
+                        </a>
+                        <a href="/courses/career/career-besides?skill=business-productivity" class="s_menu_el">
+                            <div class="title">업무 생산성</div>
+                        </a>
+                        <a href="/courses/career/career-besides?skill=blog" class="s_menu_el">
+                            <div class="title">블로그</div>
+                        </a>
+                        <a href="/courses/career/career-besides?skill=information-security" class="s_menu_el">
+                            <div class="title">정보보안</div>
+                        </a>
+                        <a href="/courses/career/career-besides?skill=forensic" class="s_menu_el">
+                            <div class="title">Forensic</div>
+                        </a>
+                        <a href="/courses/career/career-besides?skill=contents-marketing" class="s_menu_el">
+                            <div class="title">콘텐츠 마케팅</div>
+                        </a>
+                        <a href="/courses/career/career-besides?skill=book-pub" class="s_menu_el">
+                            <div class="title">출간, 출판</div>
+                        </a>
+                        <a href="/courses/career/career-besides?skill=knowhow" class="s_menu_el">
+                            <div class="title">사무실무</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="p-submenu " data-id="666">
+                    <a class="c-menu" href="/courses/life">
+                        <div class="title">ALL</div>
+                    </a>
+                    <div class="c-menu dropdown_el">
+                        <div class="title ">
+                            교양 <span class="caret_el"><span class="icon"><i class="fas fa-chevron-down"></i></span><span
+                                class="icon"><i class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="c-submenu">
+                        <a href="/courses/life/lifestyle" class="s_menu_el">
+                            <div class="title">ALL</div>
+                        </a>
+                        <a href="/courses/life/lifestyle?skill=writing" class="s_menu_el">
+                            <div class="title">집필</div>
+                        </a>
+                        <a href="/courses/life/lifestyle?skill=financial-technology" class="s_menu_el">
+                            <div class="title">재테크</div>
+                        </a>
+                        <a href="/courses/life/lifestyle?skill=Investment" class="s_menu_el">
+                            <div class="title">투자</div>
+                        </a>
+                        <a href="/courses/life/lifestyle?skill=photography" class="s_menu_el">
+                            <div class="title">사진</div>
+                        </a>
+                        <a href="/courses/life/lifestyle?skill=book-pub" class="s_menu_el">
+                            <div class="title">출간, 출판</div>
+                        </a>
+                        <a href="/courses/life/lifestyle?skill=Video-Production" class="s_menu_el">
+                            <div class="title">영상제작</div>
+                        </a>
+                        <a href="/courses/life/lifestyle?skill=presentation" class="s_menu_el">
+                            <div class="title">PT</div>
+                        </a>
+                        <a href="/courses/life/lifestyle?skill=relationship" class="s_menu_el">
+                            <div class="title">대인관계</div>
+                        </a>
+                        <a href="/courses/life/lifestyle?skill=contents-marketing" class="s_menu_el">
+                            <div class="title">콘텐츠 마케팅</div>
+                        </a>
+                        <a href="/courses/life/lifestyle?skill=speech" class="s_menu_el">
+                            <div class="title">스피치</div>
+                        </a>
+                        <a href="/courses/life/lifestyle?skill=communication" class="s_menu_el">
+                            <div class="title">커뮤니케이션</div>
+                        </a>
+                        <a href="/courses/life/lifestyle?skill=tax" class="s_menu_el">
+                            <div class="title">세무</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <aside class="mobile_right_aside">
+        <div class="profile_modal">
+            <div class="close_content">
+        <span class="e_close_btn" data-type="close">
+          <span class="icon"><i class="fal fa-times"></i></span>
+        </span>
+                <a class="message-icon-cover" href="/messages"> <span class="icon"><i class="fal fa-bell"></i></span>
+                </a>
+            </div>
+            <div class="info_content">
+                <div class="user_content">
+                    <div class="left_content">
+                        <div class="thumbnail">
+                            <img src="https://cdn.inflearn.com/public/main/profile/default_profile.png"
+                                 alt="profile_img"> <a href="/settings/account">설정</a>
+                        </div>
+                    </div>
+                    <div class="right_content">
+                        <a href="/users/601090">
+                            <span class="name"><i class="fad fa-home"></i>[아이디]</span>
+                            <span class="icon"><i class="fas fa-chevron-right"></i></span></a>
+                        <div class="policy"> 학생
+                        </div>
+                    </div>
+                </div>
+                <div class="point_content">
+                    <a href="/coupons" class="coupon point_box"> <span class="title">쿠폰</span>
+                        <span class="content"><span class="value">0</span>개</span> </a>
+                    <a href="/my-points" class="mileage point_box"> <span class="title">포인트</span>
+                        <span class="content"><span class="value">610</span>잎</span> </a>
+                </div>
+            </div>
+            <div class="menu_content">
+                <div class="tab_content">
+
+                    <span class="tab_menu active" data-id="0">학생</span>
+                </div>
+                <div class="list_content">
+
+                    <div class="tab_list active" data-id="0">
+
+                        <div class="list_el ">
+                            <a href="/course/spring_revised_edition/lecture/19744" class="title"> <span class="icon"><i
+                                    class="fal fa-play-circle"></i></span> <span class="name">이어서 학습하기</span> </a>
+                        </div>
+
+                        <div class="list_el ">
+                            <a href="/dashboard" class="title"> <span class="icon"><i
+                                    class="fal fa-chart-pie"></i></span> <span class="name">대시보드</span> </a>
+                        </div>
+
+                        <div class="list_el ">
+                            <a href="/my-courses" class="title"> <span class="icon"><i class="fal fa-books"></i></span>
+                                <span class="name">내 학습</span> </a>
+                        </div>
+
+                        <div class="list_el ">
+                            <a href="/my-notes" class="title"> <span class="icon"><svg height="18"
+                                                                                       xmlns="http://www.w3.org/2000/svg"
+                                                                                       width="26" height="26"
+                                                                                       viewBox="0 0 26 26"><path
+                                    fill="#212529" fill-rule="evenodd"
+                                    d="M4.816 6.2c0-.177.07-.346.196-.471.125-.125.294-.196.471-.196h9.967c.177 0 .347.07.472.196.125.125.195.294.195.471s-.07.346-.195.471-.295.196-.472.196H5.483c-.177 0-.346-.07-.471-.196-.125-.125-.196-.294-.196-.471v0zm.667 5.2h9.967c.177 0 .347-.07.472-.195s.195-.295.195-.472c0-.176-.07-.346-.195-.471s-.295-.195-.472-.195H5.483c-.177 0-.346.07-.471.195s-.196.295-.196.471c0 .177.07.347.196.472.125.125.294.195.471.195v0zm10.186 3.237c-.07-.024-.144-.037-.218-.037H5.483c-.177 0-.347.07-.472.195s-.195.295-.195.472.07.346.195.471.295.195.472.195h9.44l.746-1.296zM5.011 19.328c-.093.094-.157.212-.182.342-.026.129-.013.263.038.385.05.122.136.226.245.3.11.072.239.112.37.112h8.16v-1.334h-8.16c-.176 0-.346.07-.471.195v0zM2.717 25h15.5c.454 0 .89-.182 1.213-.504.322-.322.503-.758.503-1.213v-3.464l-.536.928c-.193.336-.467.62-.797.824v1.712c0 .101-.041.199-.113.27-.072.073-.17.113-.27.114h-15.5c-.101 0-.199-.041-.27-.113-.073-.072-.113-.17-.114-.271V2.717c0-.101.041-.199.113-.27.072-.073.17-.113.271-.114h15.5c.1 0 .198.041.27.113.072.072.113.17.113.271v6.848l1.333-2.309V2.717c0-.455-.181-.891-.503-1.213C19.108 1.182 18.67 1 18.216 1H2.717c-.455 0-.891.182-1.213.504C1.182 1.826 1 2.262 1 2.717v20.566c0 .455.182.891.504 1.213.322.322.758.504 1.213.504v0zm12.972-3.595l2.045-1.18c.115-.067.21-.162.277-.277l6.916-11.979c.072-.125.092-.275.054-.415-.037-.14-.129-.26-.255-.333l-1.72-.992c-.062-.036-.13-.06-.202-.07-.071-.008-.143-.004-.213.015-.07.018-.135.05-.192.094-.057.044-.105.099-.14.161l-6.916 11.978c-.067.115-.101.246-.101.378v2.362c0 .052.014.103.04.149.026.045.064.082.11.109.044.026.096.04.148.04.052 0 .104-.014.149-.04v0z"
+                                    clip-rule="evenodd"/></svg></span> <span class="name">강의노트</span> </a>
+                        </div>
+
+                        <div class="list_el ">
+                            <a href="/my-mentorings" class="title"> <span class="icon"><i
+                                    class="fal fa-lightbulb-on"></i></span> <span class="name">멘토링</span> </a>
+                        </div>
+
+                        <div class="list_el ">
+                            <a href="/my-posts" class="title"> <span class="icon"><i
+                                    class="fal fa-comment-alt-edit"></i></span> <span class="name">작성한 게시글</span> </a>
+                        </div>
+
+                        <div class="list_el dropdown_el">
+                            <div class="title">
+                                <span class="icon"><i class="fal fa-ellipsis-h-alt"></i></span> <span
+                                    class="name">더보기</span> <span class="caret_el">
+            <span class="icon"><i class="fas fa-chevron-down"></i></span>
+            <span class="icon"><i class="fas fa-chevron-up"></i></span>
+          </span>
+                            </div>
+                            <div class="sub_list">
+
+                                <div class="list_el ">
+                                    <a href="/my-inquiries" class="title"> <span class="icon"><i
+                                            class="far fa-comment-alt-edit"></i></span> <span class="name">수강전 문의</span>
+                                    </a>
+                                </div>
+
+                                <div class="list_el ">
+                                    <a href="/orders" class="title"> <span class="icon"><i
+                                            class="fal fa-receipt"></i></span> <span class="name">구매 내역</span> </a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="footer_content">
+        <span class="left_content">
+          <a href="/signout" class="link">로그아웃</a>
+        </span>
+                <span class="right_content">
+
+          <span class="link">
+            <a href="/faq" class="link">고객센터</a><span class="icon"><i class="fal fa-chevron-right"></i></span></span>
+        </span>
+            </div>
+        </div>
+    </aside>
+    <main id="main">
+        <section class="community-post-detail__section community-post-detail__post" data-id="256304">
+            <div class="section__sider">
+                <div class="sider__left">
+                    <button class="ac-button is-md is-outlined is-white button-rounded community-post-detail__move-back e-move-back"
+                            style="min-width: 40px">
+                        <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#1b1c1d" fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M6.94 13.327c-.232.23-.606.23-.837 0l-4.93-4.91c-.23-.23-.23-.604 0-.834l4.93-4.91c.23-.23.605-.23.836 0 .231.23.231.603 0 .833L3.02 7.411h11.39c.326 0 .591.264.591.589 0 .325-.265.59-.591.59H3.018l3.92 3.904c.231.23.231.603 0 .833z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="sider__space"></div>
+                <div class="sider__right">
+                    <div class="post__features">
+
+                        <div class="flex-row feature__status e-status e-hover-toggle" data-status="1">
+
+                            <button class="ac-button is-md is-solid is-primary button-rounded undefined">해결됨</button>
+                        </div>
+
+                        <div class="flex-row feature__recommend e-post-like e-hover-toggle"
+                             data-id="256304" data-status="" data-cnt="0">
+
+                            <button class="ac-button is-md is-outlined is-white button-rounded undefined">
+                                <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill="#1B1C1D" fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M4.49095 2.66666C3.10493 2.66666 1.66663 3.92028 1.66663 5.67567C1.66663 7.74725 3.21569 9.64919 4.90742 11.0894C5.73796 11.7965 6.571 12.3653 7.19759 12.7576C7.51037 12.9534 7.7704 13.1045 7.95123 13.2061C7.96818 13.2156 7.98443 13.2247 7.99996 13.2333C8.01549 13.2247 8.03174 13.2156 8.04869 13.2061C8.22952 13.1045 8.48955 12.9534 8.80233 12.7576C9.42892 12.3653 10.262 11.7965 11.0925 11.0894C12.7842 9.64919 14.3333 7.74725 14.3333 5.67567C14.3333 3.92028 12.895 2.66666 11.509 2.66666C10.1054 2.66666 8.9751 3.59266 8.4743 5.09505C8.40624 5.29922 8.21518 5.43693 7.99996 5.43693C7.78474 5.43693 7.59368 5.29922 7.52562 5.09505C7.02482 3.59266 5.89453 2.66666 4.49095 2.66666ZM7.99996 13.8018L8.22836 14.2466C8.08499 14.3202 7.91493 14.3202 7.77156 14.2466L7.99996 13.8018ZM0.666626 5.67567C0.666626 3.368 2.55265 1.66666 4.49095 1.66666C6.01983 1.66666 7.25381 2.48414 7.99996 3.73655C8.74611 2.48414 9.98009 1.66666 11.509 1.66666C13.4473 1.66666 15.3333 3.368 15.3333 5.67567C15.3333 8.22121 13.4657 10.3823 11.7407 11.8509C10.863 12.5982 9.98767 13.1953 9.33301 13.6052C9.00516 13.8104 8.73133 13.9696 8.53847 14.0779C8.44201 14.1321 8.36571 14.1737 8.31292 14.2019C8.28653 14.2161 8.26601 14.2269 8.25177 14.2344L8.2352 14.2431L8.23054 14.2455L8.22914 14.2462C8.22897 14.2463 8.22836 14.2466 7.99996 13.8018C7.77156 14.2466 7.77173 14.2467 7.77156 14.2466L7.76938 14.2455L7.76472 14.2431L7.74815 14.2344C7.73391 14.2269 7.71339 14.2161 7.687 14.2019C7.63421 14.1737 7.55791 14.1321 7.46145 14.0779C7.26858 13.9696 6.99476 13.8104 6.66691 13.6052C6.01225 13.1953 5.13695 12.5982 4.25917 11.8509C2.53423 10.3823 0.666626 8.22121 0.666626 5.67567Z"/>
+                                </svg>
+                                <div class="text features__text">0</div>
+                            </button>
+                            <div class="message e-target-hover-toggle hide">0명이 이 글을 좋아합니다!</div>
+                        </div>
+
+                        <div class="flex-row e-bookmark e-hover-toggle" data-id="256304" data-status="" data-cnt="0">
+
+                            <button class="ac-button is-md is-outlined is-white button-rounded undefined">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 384 512">
+                                    <path fill="#1B1C1D"
+                                          d="M336 0H48C21.49 0 0 21.49 0 48v464l192-112 192 112V48c0-26.51-21.49-48-48-48zm16 456.287l-160-93.333-160 93.333V48c0-8.822 7.178-16 16-16h288c8.822 0 16 7.178 16 16v408.287z"></path>
+                                </svg>
+                                <div class="text features__text">0</div>
+                            </button>
+                            <div class="message e-target-hover-toggle hide">0명이 이 글을 북마크 했습니다!</div>
+                        </div>
+
+                        <button class="ac-button is-md is-outlined is-white button-rounded flex-row features__share e-share">
+                            <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                <path fill="#1B1C1D" fill-rule="evenodd" clip-rule="evenodd"
+                                      d="M13.3334 3.66666C13.3334 4.95533 12.2887 6 11 6C10.3257 6 9.7181 5.7139 9.29211 5.25646L5.88379 7.27067C5.95923 7.50012 6.00004 7.74529 6.00004 8C6.00004 8.25469 5.95923 8.49986 5.8838 8.72932L9.29224 10.7434C9.71822 10.286 10.3257 10 11 10C12.2887 10 13.3334 11.0447 13.3334 12.3333C13.3334 13.622 12.2887 14.6667 11 14.6667C9.71138 14.6667 8.66671 13.622 8.66671 12.3333C8.66671 12.0786 8.70752 11.8335 8.78296 11.604L5.37452 9.58992C4.94854 10.0473 4.34103 10.3333 3.66671 10.3333C2.37804 10.3333 1.33337 9.28866 1.33337 8C1.33337 6.71133 2.37804 5.66666 3.66671 5.66666C4.34102 5.66666 4.94853 5.9527 5.37452 6.41007L8.78295 4.39599L8.78321 4.39678C8.70761 4.1671 8.66671 3.92166 8.66671 3.66666C8.66671 2.378 9.71138 1.33333 11 1.33333C12.2887 1.33333 13.3334 2.378 13.3334 3.66666ZM12.3334 3.66666C12.3334 4.40304 11.7364 4.99999 11 4.99999C10.2637 4.99999 9.66671 4.40304 9.66671 3.66666C9.66671 2.93028 10.2637 2.33333 11 2.33333C11.7364 2.33333 12.3334 2.93028 12.3334 3.66666ZM3.66671 9.33333C4.40309 9.33333 5.00004 8.73637 5.00004 8C5.00004 7.26362 4.40309 6.66666 3.66671 6.66666C2.93033 6.66666 2.33337 7.26362 2.33337 8C2.33337 8.73637 2.93033 9.33333 3.66671 9.33333ZM12.3334 12.3333C12.3334 13.0697 11.7364 13.6667 11 13.6667C10.2637 13.6667 9.66671 13.0697 9.66671 12.3333C9.66671 11.5969 10.2637 11 11 11C11.7364 11 12.3334 11.5969 12.3334 12.3333Z"/>
+                            </svg>
+                            <div class="text features__text">공유</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="section__content">
+                <div class="community-post-info">
+                    <!-- 제목, 작성자이름, 작성시각, 에디터 -->
+                    <div class="community-post-info__header">
+                        <div class="header__title">
+                            <svg width="26px" height="26px" width="16" height="16" viewBox="0 0 16 16"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path fill="#00C471" fill-rule="evenodd" clip-rule="evenodd"
+                                      d="M 11.742188 12.886719 C 10.707031 13.679688 9.40625 14.152344 8 14.152344 C 4.601562 14.152344 1.847656 11.398438 1.847656 8 C 1.847656 4.601562 4.601562 1.847656 8 1.847656 C 11.398438 1.847656 14.152344 4.601562 14.152344 8 C 14.152344 9.324219 13.734375 10.550781 13.023438 11.554688 L 11.101562 9.632812 C 10.742188 9.273438 10.15625 9.273438 9.796875 9.632812 C 9.433594 9.992188 9.433594 10.578125 9.796875 10.9375 Z M 13.054688 14.199219 C 11.679688 15.324219 9.917969 16 8 16 C 3.582031 16 0 12.417969 0 8 C 0 3.582031 3.582031 0 8 0 C 12.417969 0 16 3.582031 16 8 C 16 9.835938 15.382812 11.527344 14.34375 12.875 L 15.511719 14.042969 C 15.871094 14.402344 15.871094 14.988281 15.511719 15.347656 C 15.148438 15.707031 14.566406 15.707031 14.203125 15.347656 Z M 13.054688 14.199219"/>
+                            </svg>
+                            <h1>제 코드좀 봐주세요..</h1></div>
+                        <div class="header__sub-title">
+                            <h6 class="user-name">[아이디]</h6>
+                            <span class="sub-title__created-at">[날짜]</span>
+
+                            <div class="flex-right">
+
+                                <button class="ac-button is-md is-text post__edit-btn e-edit">수정</button>
+
+                                <button class="ac-button is-md is-text post__remove-btn e-remove">삭제</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="community-post-info__content">
+                        <div class="content__body markdown-body">
+                            <p>제 코드좀 봐주세요..</p>
+                            <div class="content__sub-info">
+                                <!-- 태그들 -->
+                                <div class="sub-info__item sub-info__tags">
+                                    <label class="sub-info-label">연관 태그</label>
+                                    <div class="sub-info__content">
+                                        <button class="ac-button is-sm is-solid is-gray  ac-tag ac-tag--blue "><span
+                                                class="ac-tag__hashtag">#&nbsp;</span><span
+                                                class="ac-tag__name">spring</span></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="post__features">
+
+                                <div class="flex-row feature__status e-status e-hover-toggle" data-status="1">
+
+                                    <button class="ac-button is-md is-solid is-primary button-rounded undefined">해결됨
+                                    </button>
+                                </div>
+
+                                <div class="flex-row feature__recommend e-post-like e-hover-toggle"
+                                     data-id="256304" data-status="" data-cnt="0">
+
+                                    <button class="ac-button is-md is-outlined is-white button-rounded undefined">
+                                        <svg width="16" height="16" viewBox="0 0 16 16"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path fill="#1B1C1D" fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M4.49095 2.66666C3.10493 2.66666 1.66663 3.92028 1.66663 5.67567C1.66663 7.74725 3.21569 9.64919 4.90742 11.0894C5.73796 11.7965 6.571 12.3653 7.19759 12.7576C7.51037 12.9534 7.7704 13.1045 7.95123 13.2061C7.96818 13.2156 7.98443 13.2247 7.99996 13.2333C8.01549 13.2247 8.03174 13.2156 8.04869 13.2061C8.22952 13.1045 8.48955 12.9534 8.80233 12.7576C9.42892 12.3653 10.262 11.7965 11.0925 11.0894C12.7842 9.64919 14.3333 7.74725 14.3333 5.67567C14.3333 3.92028 12.895 2.66666 11.509 2.66666C10.1054 2.66666 8.9751 3.59266 8.4743 5.09505C8.40624 5.29922 8.21518 5.43693 7.99996 5.43693C7.78474 5.43693 7.59368 5.29922 7.52562 5.09505C7.02482 3.59266 5.89453 2.66666 4.49095 2.66666ZM7.99996 13.8018L8.22836 14.2466C8.08499 14.3202 7.91493 14.3202 7.77156 14.2466L7.99996 13.8018ZM0.666626 5.67567C0.666626 3.368 2.55265 1.66666 4.49095 1.66666C6.01983 1.66666 7.25381 2.48414 7.99996 3.73655C8.74611 2.48414 9.98009 1.66666 11.509 1.66666C13.4473 1.66666 15.3333 3.368 15.3333 5.67567C15.3333 8.22121 13.4657 10.3823 11.7407 11.8509C10.863 12.5982 9.98767 13.1953 9.33301 13.6052C9.00516 13.8104 8.73133 13.9696 8.53847 14.0779C8.44201 14.1321 8.36571 14.1737 8.31292 14.2019C8.28653 14.2161 8.26601 14.2269 8.25177 14.2344L8.2352 14.2431L8.23054 14.2455L8.22914 14.2462C8.22897 14.2463 8.22836 14.2466 7.99996 13.8018C7.77156 14.2466 7.77173 14.2467 7.77156 14.2466L7.76938 14.2455L7.76472 14.2431L7.74815 14.2344C7.73391 14.2269 7.71339 14.2161 7.687 14.2019C7.63421 14.1737 7.55791 14.1321 7.46145 14.0779C7.26858 13.9696 6.99476 13.8104 6.66691 13.6052C6.01225 13.1953 5.13695 12.5982 4.25917 11.8509C2.53423 10.3823 0.666626 8.22121 0.666626 5.67567Z"/>
+                                        </svg>
+                                        <div class="text features__text">0</div>
+                                    </button>
+                                    <div class="message e-target-hover-toggle hide">0명이 이 글을 좋아합니다!</div>
+                                </div>
+
+                                <div class="flex-row e-bookmark e-hover-toggle" data-id="256304" data-status=""
+                                     data-cnt="0">
+
+                                    <button class="ac-button is-md is-outlined is-white button-rounded undefined">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             viewBox="0 0 384 512">
+                                            <path fill="#1B1C1D"
+                                                  d="M336 0H48C21.49 0 0 21.49 0 48v464l192-112 192 112V48c0-26.51-21.49-48-48-48zm16 456.287l-160-93.333-160 93.333V48c0-8.822 7.178-16 16-16h288c8.822 0 16 7.178 16 16v408.287z"></path>
+                                        </svg>
+                                        <div class="text features__text">0</div>
+                                    </button>
+                                    <div class="message e-target-hover-toggle hide">0명이 이 글을 북마크 했습니다!</div>
+                                </div>
+
+                                <button class="ac-button is-md is-outlined is-white button-rounded flex-row features__share e-share">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill="#1B1C1D" fill-rule="evenodd" clip-rule="evenodd"
+                                              d="M13.3334 3.66666C13.3334 4.95533 12.2887 6 11 6C10.3257 6 9.7181 5.7139 9.29211 5.25646L5.88379 7.27067C5.95923 7.50012 6.00004 7.74529 6.00004 8C6.00004 8.25469 5.95923 8.49986 5.8838 8.72932L9.29224 10.7434C9.71822 10.286 10.3257 10 11 10C12.2887 10 13.3334 11.0447 13.3334 12.3333C13.3334 13.622 12.2887 14.6667 11 14.6667C9.71138 14.6667 8.66671 13.622 8.66671 12.3333C8.66671 12.0786 8.70752 11.8335 8.78296 11.604L5.37452 9.58992C4.94854 10.0473 4.34103 10.3333 3.66671 10.3333C2.37804 10.3333 1.33337 9.28866 1.33337 8C1.33337 6.71133 2.37804 5.66666 3.66671 5.66666C4.34102 5.66666 4.94853 5.9527 5.37452 6.41007L8.78295 4.39599L8.78321 4.39678C8.70761 4.1671 8.66671 3.92166 8.66671 3.66666C8.66671 2.378 9.71138 1.33333 11 1.33333C12.2887 1.33333 13.3334 2.378 13.3334 3.66666ZM12.3334 3.66666C12.3334 4.40304 11.7364 4.99999 11 4.99999C10.2637 4.99999 9.66671 4.40304 9.66671 3.66666C9.66671 2.93028 10.2637 2.33333 11 2.33333C11.7364 2.33333 12.3334 2.93028 12.3334 3.66666ZM3.66671 9.33333C4.40309 9.33333 5.00004 8.73637 5.00004 8C5.00004 7.26362 4.40309 6.66666 3.66671 6.66666C2.93033 6.66666 2.33337 7.26362 2.33337 8C2.33337 8.73637 2.93033 9.33333 3.66671 9.33333ZM12.3334 12.3333C12.3334 13.0697 11.7364 13.6667 11 13.6667C10.2637 13.6667 9.66671 13.0697 9.66671 12.3333C9.66671 11.5969 10.2637 11 11 11C11.7364 11 12.3334 11.5969 12.3334 12.3333Z"/>
+                                    </svg>
+                                    <div class="text features__text">공유</div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <section class="community-post-detail__section community-post-detail__answer">
+            <div class="section__content">
+
+                <div class="answer-info">
+                    <div class="answer-info__header">
+                        <div class="header__title"><span class="title-icon">A</span> 총 1개의 답변이 달렸습니다</div>
+                    </div>
+                    <div class="community-post-info__content">
+                        <div class="content__body">
+
+                            <div class="answer__comment" data-id="122943">
+                                <div class="comment__index">1</div>
+                                <div class="comment__card">
+                                    <div class="comment__header flex-row">
+                                        <img class="comment__user-profile"
+                                             src="https://cdn.inflearn.com/public/main/profile/default_profile.png"
+                                             alt="[아이디] 프로필">
+                                        <div class="flex-column">
+                                            <div class="flex-row">
+                                                <a href="/users/@deeplyrooted" class="comment__user-name">[아이디]</a>
+                                            </div>
+                                            <span class="comment__updated-at">4달 전</span>
+                                        </div>
+                                    </div>
+                                    <div class="comment__body markdown-body">
+                                        <p>코드를 이렇게 고치는게 좋아보여요.</p>
+                                        <div class="comment__features flex-row">
+
+                                            <div class="comment__like e-comment-like" data-id="122943" data-status="1"
+                                                 data-cnt="1">
+
+                                                <button class="ac-button is-md is-solid is-red button-rounded undefined"
+                                                        style="min-width: 75px">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                         viewBox="0 0 16 16">
+                                                        <path fill="#E5503C"
+                                                              d="M9.333 13.605c-.328.205-.602.365-.795.473-.102.057-.205.113-.308.168h-.002c-.143.074-.313.074-.456 0-.105-.054-.208-.11-.31-.168-.193-.108-.467-.268-.795-.473-.655-.41-1.53-1.007-2.408-1.754C2.534 10.382.667 8.22.667 5.676c0-2.308 1.886-4.01 3.824-4.01 1.529 0 2.763.818 3.509 2.07.746-1.252 1.98-2.07 3.509-2.07 1.938 0 3.824 1.702 3.824 4.01 0 2.545-1.867 4.706-3.592 6.175-.878.747-1.753 1.344-2.408 1.754z"/>
+                                                    </svg>
+                                                    1
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comment__re-comment">
+                                    <div class="re-comment__header flex-row">
+                                        <h4 class="re-comment__title">댓글</h4>
+                                        <button class="ac-button is-md is-text re-comment__fold-button e-fold">접기
+                                            <svg width="16" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 viewBox="0 0 16 16">
+                                                <path fill="#212529" fill-rule="evenodd"
+                                                      d="M3.22 9.78c-.293-.293-.293-.767 0-1.06l4.25-4.25c.293-.293.767-.293 1.06 0l4.25 4.25c.293.293.293.767 0 1.06-.293.293-.767.293-1.06 0L8 6.06 4.28 9.78c-.293.293-.767.293-1.06 0z"
+                                                      clip-rule="evenodd"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="re-comment__body">
+
+                                        <div class="re-comment flex-row" data-id=123033>
+                                            <img class="re-comment__profile"
+                                                 src="https://cdn.inflearn.com/public/main/profile/default_profile.png"
+                                                 alt="">
+                                            <div class="re-comment__content flex-column">
+                                                <div class="re-comment__info flex-row">
+
+                                                    <button class="ac-button is-sm is-solid is-gray re-comment__writer ac-tag  ">
+                                                        <span class="ac-tag__hashtag">#&nbsp;</span><span
+                                                            class="ac-tag__name">질문자</span></button>
+                                                    <h6 class="re-comment__user-name">[아이디]</h6>
+                                                    <span class="re-comment__updated-at">·&nbsp;4달 전</span>
+                                                </div>
+                                                <div class="re-comment__body markdown-body"><p
+                                                        style="box-sizing: border-box; margin: 0px 0px 16px; padding: 0px; line-height: 1.5; font-size: 16px; color: #24292e; font-family: 'Noto Sans KR'; background-color: #ffffff;">
+                                                    <p>댓글1줄</p>
+                                                    <p style="box-sizing: border-box; margin: 0px 0px 16px; padding: 0px; line-height: 1.5; font-size: 16px; color: #24292e; font-family: 'Noto Sans KR'; background-color: #ffffff;">
+                                                        댓글 2번째줄</p></div>
+
+                                                <div class="re-comment__footer flex-row">
+
+                                                    <button class="ac-button is-md is-text comment__edit e-edit-re-comment">
+                                                        수정
+                                                    </button>
+
+                                                    <button class="ac-button is-md is-text comment__remove e-remove-re-comment">
+                                                        삭제
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="re-comment__open-editor-button-container">
+
+                                            <button id="comment-button"
+                                                    class="ac-button is-md is-text re-comment__open-editor-button e-open-re-comment-editor">
+                                                댓글 달기
+                                            </button>
+                                        </div>
+                                        <div id="comment-hidden" class="re-comment__form re-comment__form is-hidden">
+                                            <textarea name="content-comment" class="form-control" id="content-comment">dd</textarea>
+                                            <div class="re-comment__form-footer flex-row">
+                                                <div class="flex-right">
+
+                                                    <button class="ac-button is-md is-solid is-primary e-post-re-comment">
+                                                        답변 등록
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="answer__comment" data-id="new">
+                                <div class="comment__card comment__card--new">
+                                    <div class="comment__header flex-row">
+                                        <img class="comment__user-profile"
+                                             src="https://cdn.inflearn.com/public/main/profile/default_profile.png"
+                                             alt="[아이디] 프로필">
+                                        <div class="flex-column">
+                                            <h5 class="comment__user-name">[아이디]님, 코드리뷰를 작성해주세요!</h5>
+                                            <span class="comment__updated-at">모두에게 도움이 되는 코드리뷰의 주인공이 되어주세요!</span>
+                                        </div>
+                                    </div>
+                                    <div class="comment__body markdown-body">
+                                        <textarea name="content-answer" class="form-control"
+                                                  id="content-answer">dd</textarea>
+                                    </div>
+                                    <div class="comment__footer flex-row">
+                                        <div class="flex-right">
+
+                                            <button class="ac-button is-md is-solid is-primary e-post-comment">답변 등록
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+    <footer class="footer">
+        <div class="wrapper">
+            <div class="footer_bottom">
+                <div class="footer_bottom_left footer_info">
+                    <div class="footer_info_top">
+                        <a href="https://github.com/ShowMe-TheCode/showMeTheCode" target="_blank">깃허브 링크</a>
+                    </div>
+                    <div class="footer_info_bottom">
+                        <div class="is-mobile info_label">
+                            내일배움캠프 |
+                            <span class="is-mobile info_caret"><i class="far fa-angle-up"></i><i
+                                    class="far fa-angle-down"></i></span>
+                        </div>
+                        <div class="info-dropdown">
+                            <span class="is-hidden-mobile">내일배움캠프 1회차 | </span>
+                            <span>팔색조 | </span>
+                            <span>
+                <a href="https://github.com/ShowMe-TheCode/showMeTheCode" target="_blank">깃허브 링크</a>
+              </span>
+                        </div>
+                        ©8Colors-Bird. ALL RIGHTS RESERVED
+                    </div>
+                </div>
+                <div class="footer_bottom_right is-hidden-mobile">
+                    <a href="https://post.naver.com/inflearn" target="_blank"><i class="text">N</i></a>
+                    <a href="https://blog.naver.com/inflearn" target="_blank"><i class="text">B</i></a>
+
+                    <a href="https://www.youtube.com/channel/UC0Y0T9JpgIBbyGDjvy9PbOg" target="_blank"><i
+                            class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <button class="gototop-btn e-gototop" fxd-data='{"left":30,"bottom":70}'><i class="far fa-chevron-up"></i><span
+            class="gototop-text">TOP</span></button>
+
+
+</div>
+
+<script src="https://cdn.inflearn.com/assets/js/jquery-1.12.4.min.js"></script>
+
+
+</body>
+</html>

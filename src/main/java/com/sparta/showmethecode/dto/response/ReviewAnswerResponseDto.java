@@ -18,22 +18,19 @@ public class ReviewAnswerResponseDto {
     private Long reviewRequestId;
 
     private String answerTitle;
-    private String answerCode;
-    private String answerComment;
+    private String answerContent;
 
     private double point;
 
     private LocalDateTime createdAt;
 
     @QueryProjection
-    public ReviewAnswerResponseDto(Long reviewAnswerId, Long reviewRequestId, String answerTitle, String answerCode, String answerComment, double point, LocalDateTime createdAt) {
+    public ReviewAnswerResponseDto(Long reviewAnswerId, Long reviewRequestId, String answerTitle, String answerContent, double point, LocalDateTime createdAt) {
         this.reviewAnswerId = reviewAnswerId;
         this.reviewRequestId = reviewRequestId;
         this.answerTitle = answerTitle;
-        this.answerCode = answerCode;
-        this.answerComment = answerComment;
+        this.answerContent = answerContent;
         this.point = point;
         this.createdAt = createdAt;
     }
-
 }

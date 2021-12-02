@@ -25,9 +25,7 @@ public class ReviewAnswer extends Timestamped {
 
     private String title;
 
-    private String code;
-
-    private String comment;
+    private String content;
 
     private double point;
 
@@ -40,10 +38,9 @@ public class ReviewAnswer extends Timestamped {
     @ManyToOne(fetch = FetchType.LAZY)
     private ReviewRequest reviewRequest;
 
-    public ReviewAnswer(String title, String code, String comment, User answerUser) {
+    public ReviewAnswer(String title, String content, User answerUser) {
         this.title = title;
-        this.code = code;
-        this.comment = comment;
+        this.content = content;
         this.answerUser = answerUser;
     }
 
@@ -53,7 +50,6 @@ public class ReviewAnswer extends Timestamped {
 
     public void update(UpdateAnswerDto dto) {
         this.title = dto.getTitle();
-        this.code = dto.getCode();
-        this.comment = dto.getComment();
+        this.content = dto.getContent();
     }
 }

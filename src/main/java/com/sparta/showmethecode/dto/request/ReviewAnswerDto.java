@@ -7,8 +7,7 @@ import lombok.Data;
 @Data
 public class ReviewAnswerDto {
     private String title;
-    private String code;
-    private String comment;
+    private String content;
     private Long reviewerId;
 
 }

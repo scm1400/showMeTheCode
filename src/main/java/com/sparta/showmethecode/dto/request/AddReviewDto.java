@@ -8,7 +8,6 @@ import lombok.Data;
 public class AddReviewDto {
 
     private String title;
-    private String code;
-    private String comment;
+    private String content;
 
 }

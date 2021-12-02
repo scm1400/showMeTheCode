@@ -35,9 +35,9 @@ public class ReviewRequestServiceTest {
         User reviewer1 = createUser("reviewer1", "reviewer1", UserRole.ROLE_REVIEWER);
         userRepository.saveAll(Arrays.asList(user1, reviewer1));
 
-        ReviewRequest reviewRequest1 = createReviewRequest(user1, reviewer1, "title1", "code1", "comment1", "Java");
-        ReviewRequest reviewRequest2 = createReviewRequest(user1, reviewer1, "title2", "code2", "comment2", "Python");
-        ReviewRequest reviewRequest3 = createReviewRequest(user1, reviewer1, "title3", "code3", "comment3", "Java");
+        ReviewRequest reviewRequest1 = createReviewRequest(user1, reviewer1, "title1", "comment1", "Java");
+        ReviewRequest reviewRequest2 = createReviewRequest(user1, reviewer1, "title2", "comment2", "Python");
+        ReviewRequest reviewRequest3 = createReviewRequest(user1, reviewer1, "title3", "comment3", "Java");
         reviewRequestRepository.saveAll(Arrays.asList(reviewRequest1, reviewRequest2, reviewRequest3));
     }
 
@@ -55,10 +55,10 @@ public class ReviewRequestServiceTest {
 
 
 
-    private ReviewRequest createReviewRequest(User requestUser, User answerUser, String title, String code, String comment, String language) {
+    private ReviewRequest createReviewRequest(User requestUser, User answerUser, String title, String content, String language) {
         return new ReviewRequest(
                 requestUser, answerUser,
-                title, code, comment, ReviewRequestStatus.REQUESTED, language
+                title, content, ReviewRequestStatus.REQUESTED, language
         );
     }
     private User createUser(String username, String password, UserRole userRole) {

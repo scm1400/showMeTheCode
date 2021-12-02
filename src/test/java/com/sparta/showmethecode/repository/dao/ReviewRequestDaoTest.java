@@ -43,11 +43,11 @@ public class ReviewRequestDaoTest {
         User user2 = new User("user2", "pass2", UserRole.ROLE_USER, 0, 0, 0);
         User savedUser2 = userRepository.save(user2);
 
-        ReviewRequest reviewRequest1 = new ReviewRequest(savedUser, "Java가 여려워요.", "code1", "java도 어려운데 jpa는 ㅠ", ReviewRequestStatus.REQUESTED, "JAVA");
-        ReviewRequest reviewRequest2 = new ReviewRequest(savedUser, "spring이 이상해요", "code2", "comment2", ReviewRequestStatus.REQUESTED, "JAVA");
-        ReviewRequest reviewRequest3 = new ReviewRequest(savedUser, "jpa가 이상해요", "code3", "spring에서 jpa가 이상해요", ReviewRequestStatus.REQUESTED, "PYTHON");
+        ReviewRequest reviewRequest1 = new ReviewRequest(savedUser, "Java가 여려워요.", "java도 어려운데 jpa는 ㅠ", ReviewRequestStatus.REQUESTED, "JAVA");
+        ReviewRequest reviewRequest2 = new ReviewRequest(savedUser, "spring이 이상해요", "comment2", ReviewRequestStatus.REQUESTED, "JAVA");
+        ReviewRequest reviewRequest3 = new ReviewRequest(savedUser, "jpa가 이상해요", "spring에서 jpa가 이상해요", ReviewRequestStatus.REQUESTED, "PYTHON");
 
-        ReviewRequest reviewRequest4 = new ReviewRequest(savedUser2, "jpa가 이상해요", "code3", "spring에서 jpa가 이상해요", ReviewRequestStatus.REQUESTED, "PYTHON");
+        ReviewRequest reviewRequest4 = new ReviewRequest(savedUser2, "jpa가 이상해요", "spring에서 jpa가 이상해요", ReviewRequestStatus.REQUESTED, "PYTHON");
 
         reviewRequestRepository.saveAll(Arrays.asList(reviewRequest1, reviewRequest2, reviewRequest3, reviewRequest4));
     }
@@ -63,7 +63,7 @@ public class ReviewRequestDaoTest {
         Page<ReviewRequestResponseDto> results = reviewRequestRepository.findSearchByTitleOrCommentAdvanced(keyword, pageable, false);
         List<ReviewRequestResponseDto> list = results.getContent();
 
-        list.forEach(l -> System.out.println(l.getTitle() + ": " + l.getComment() + ": " + l.getCreatedAt()));
+        list.forEach(l -> System.out.println(l.getTitle() + ": " + l.getContent() + ": " + l.getCreatedAt()));
         System.out.println("totalPage  = " + results.getTotalPages());
         System.out.println("totalElements = " + results.getTotalElements());
         System.out.println("page = " + results.getNumber());
@@ -82,7 +82,7 @@ public class ReviewRequestDaoTest {
         Page<ReviewRequestResponseDto> results = reviewRequestRepository.findSearchByTitleOrCommentAdvanced(keyword, pageable, true);
         List<ReviewRequestResponseDto> list = results.getContent();
 
-        list.forEach(l -> System.out.println(l.getTitle() + ": " + l.getComment() + ": " + l.getCreatedAt()));
+        list.forEach(l -> System.out.println(l.getTitle() + ": " + l.getContent() + ": " + l.getCreatedAt()));
         System.out.println("totalPage  = " + results.getTotalPages());
         System.out.println("totalElements = " + results.getTotalElements());
         System.out.println("page = " + results.getNumber());

@@ -41,7 +41,7 @@ public class CommentServiceTest {
         User reviewer1 = createUser("reviewer1", "reviewer1", UserRole.ROLE_REVIEWER);
         userRepository.saveAll(Arrays.asList(user1, reviewer1));
 
-        ReviewRequest reviewRequest = createReviewRequest(user1, reviewer1, "리뷰제목", "리뷰코드", "리뷰설명", "Java");
+        ReviewRequest reviewRequest = createReviewRequest(user1, reviewer1, "리뷰제목",  "리뷰설명", "Java");
         reviewRequestRepository.save(reviewRequest);
     }
 
@@ -66,10 +66,10 @@ public class CommentServiceTest {
     }
 
 
-    private ReviewRequest createReviewRequest(User requestUser, User answerUser, String title, String code, String comment, String language) {
+    private ReviewRequest createReviewRequest(User requestUser, User answerUser, String title, String content, String language) {
         return new ReviewRequest(
                 requestUser, answerUser,
-                title, code, comment, ReviewRequestStatus.REQUESTED, language
+                title, content, ReviewRequestStatus.REQUESTED, language
         );
     }
     private User createUser(String username, String password, UserRole userRole) {

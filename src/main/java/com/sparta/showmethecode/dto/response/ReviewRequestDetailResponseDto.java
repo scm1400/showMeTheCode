@@ -13,8 +13,7 @@ public class ReviewRequestDetailResponseDto {
     private Long reviewRequestId;
     private String username;
     private String title;
-    private String code;
-    private String comment;
+    private String content;
 
     private String status;
 
@@ -23,12 +22,11 @@ public class ReviewRequestDetailResponseDto {
     private List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
 
     @QueryProjection
-    public ReviewRequestDetailResponseDto(Long reviewRequestId, String username, String title, String code, String comment, String status, LocalDateTime createdAt, List<CommentResponseDto> commentResponseDtoList) {
+    public ReviewRequestDetailResponseDto(Long reviewRequestId, String username, String title, String content, String status, LocalDateTime createdAt, List<CommentResponseDto> commentResponseDtoList) {
         this.reviewRequestId = reviewRequestId;
         this.username = username;
         this.title = title;
-        this.code = code;
-        this.comment = comment;
+        this.content = content;
         this.status = status;
         this.createdAt = createdAt;
         this.commentResponseDtoList = commentResponseDtoList;

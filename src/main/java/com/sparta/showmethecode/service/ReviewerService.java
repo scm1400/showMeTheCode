@@ -40,8 +40,7 @@ public class ReviewerService {
         if (isRequestedToMe(reviewId, reviewer)) {
             ReviewAnswer reviewAnswer = ReviewAnswer.builder()
                     .title(addReviewDto.getTitle())
-                    .code(addReviewDto.getCode())
-                    .comment(addReviewDto.getComment())
+                    .content(addReviewDto.getContent())
                     .answerUser(reviewer)
                     .build();
             ReviewAnswer savedReviewAnswer = reviewAnswerRepository.save(reviewAnswer);

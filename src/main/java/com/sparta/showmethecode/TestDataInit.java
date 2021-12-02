@@ -29,7 +29,7 @@ public class TestDataInit implements ApplicationRunner {
         User answerUser = createdNormalUser("answerUser", "test1");
         User savedUser2 = userRepository.save(answerUser);
 
-        ReviewRequest reviewRequest = createdReviewRequest("title1", "code1", "comment1", "Java", savedQuestionUser1, savedUser2);
+        ReviewRequest reviewRequest = createdReviewRequest("title1", "content1", "Java", savedQuestionUser1, savedUser2);
 
         ReviewRequestComment reviewRequestComment = addRequestComment("content1", savedUser2);
         ReviewRequestComment reviewRequestComment1 = addRequestComment("content2", savedUser2);
@@ -50,8 +50,8 @@ public class TestDataInit implements ApplicationRunner {
         return new User(username, password, UserRole.ROLE_USER, 0, 0,0);
     }
 
-    private ReviewRequest createdReviewRequest(String title, String code, String comment, String language, User requestUser, User answerUser) {
-        return new ReviewRequest(requestUser, title, code, comment, ReviewRequestStatus.REQUESTED, language);
+    private ReviewRequest createdReviewRequest(String title, String content, String language, User requestUser, User answerUser) {
+        return new ReviewRequest(requestUser, title, content, ReviewRequestStatus.REQUESTED, language);
     }
 
     private ReviewRequestComment addRequestComment(String content, User user) {

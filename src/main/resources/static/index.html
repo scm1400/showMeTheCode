@@ -46,13 +46,6 @@
             integrity="sha384-ekOryaXPbeCpWQNxMwSWVvQ0+1VrStoPJq54shlYhR8HzQgig1v5fas6YgOqLoKz"
             crossorigin="anonymous"
     />
-    <!-- Bootstrap CSS -->
-<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"-->
-<!--          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"-->
-<!--          crossorigin="anonymous">-->
-<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"-->
-<!--            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"-->
-<!--            crossorigin="anonymous"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -88,9 +81,6 @@
     $(function () {
 
         CKEDITOR.replace('contents', {
-            // filebrowserUploadUrl: './ckeditor/fileUpload',
-            // //font_names : "맑은 고딕/Malgun Gothic;굴림/Gulim;돋움/Dotum;바탕/Batang;궁서/Gungsuh;Arial/Arial;Comic Sans MS/Comic Sans MS;Courier New/Courier New;Georgia/Georgia;Lucida Sans Unicode/Lucida Sans Unicode;Tahoma/Tahoma;Times New Roman/Times New Roman;MS Mincho/MS Mincho;Trebuchet MS/Trebuchet MS;Verdana/Verdana",
-            // font_defaultLabel : "맑은 고딕/Malgun Gothic",
             fontSize_defaultLabel: "12",
             skin: "minimalist",
             language: "ko"
@@ -203,10 +193,6 @@
                         <a role="button" onclick="show_login_modal()"
                            class="button space-inset-4 text is-5 signin">로그인</a>
                         <a href="signup.html" class="e-signup button space-inset-4 text is-5 is-primary ">회원가입</a></div>
-
-                    <!--                        <a role="button" class="button space-inset-4 text is-5 signin" onclick="openSigninModal()" id="signinBtnMobile">로그인</a>-->
-                    <!--                        <a role="button" class="button space-inset-4 text is-5 signin" onclick="logout()" id="logoutBtnMobile">로그아웃</a>-->
-                    <!--                        <a class="e-signup button space-inset-4 text is-5 is-primary " onclick="openSignupModal()"  id="signupBtnMobile">회원가입</a>-->
                 </div>
 
             </div>
@@ -279,11 +265,6 @@
                                 <a onclick="show_login_modal()" role="button"
                                    class="button space-inset-4 signin">로그인</a>
                                 <a href="signup.html" class="e-signup button space-inset-4 is-primary">회원가입</a>
-
-                                <!--                                <a role="button" class="button space-inset-4 text is-5 signin" onclick="openSigninModal()" id="signinBtn">로그인</a>-->
-                                <!--                                <a role="button" class="button space-inset-4 text is-5 signin" onclick="logout()" id="logoutBtn">로그아웃</a>-->
-                                <!--                                <a class="e-signup button space-inset-4 text is-5 is-primary " onclick="openSignupModal()"  id="signupBtn">회원가입</a>-->
-
                             </div>
                         </div>
                     </div>
@@ -650,30 +631,6 @@
     <section class="modal-card question-modal">
         <div class="question-modal__form e-form-question-modal" onsubmit="return false">
             <div class="modal-card-body">
-                <div class="form__item form__item--type">
-                    <label class="form__label">커뮤니티</label>
-                    <ul class="question-modal__type-list">
-
-                        <li class="question-modal__type question-modal__type--selected" data-type="question">
-
-                            <button class="ac-button is-md is-solid is-primary question-modal__type-button e-type"
-                                    style="min-width: 90px" data-type="question">질문
-                            </button>
-                        </li>
-                        <li class="question-modal__type " data-type="chat">
-
-                            <button class="ac-button is-md is-solid is-primary question-modal__type-button e-type"
-                                    style="min-width: 90px" data-type="chat">자유주제
-                            </button>
-                        </li>
-                        <li class="question-modal__type " data-type="study">
-
-                            <button class="ac-button is-md is-solid is-primary question-modal__type-button e-type"
-                                    style="min-width: 90px" data-type="study">스터디
-                            </button>
-                        </li>
-                    </ul>
-                </div>
                 <div class="form__item">
                     <label class="form__label" for="question-modal-title">제목</label>
 
@@ -687,9 +644,6 @@
                 <div class="form__item">
                     <label class="form__label" for="question-modal-tag">태그</label>
 
-
-<!--                    <div class="ac-input-with-item question-modal__tag e-input-tags ac-input-tags ">-->
-
                         <svg width="16" xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 16 16">
                             <path fill="#3E4042" fill-rule="evenodd"
                                   d="M5.773 1.455c-.283 0-.518.216-.542.498L5 4.727H2.545c-.3 0-.545.244-.545.546 0 .301.244.545.545.545H4.91l-.364 4.364h-2c-.3 0-.545.244-.545.545 0 .301.244.546.545.546h1.91l-.224 2.684c-.027.317.224.588.542.588.282 0 .518-.216.541-.498l.231-2.774H9.91l-.224 2.684c-.026.317.224.588.542.588.283 0 .518-.216.542-.498L11 11.273h2.454c.302 0 .546-.245.546-.546 0-.301-.244-.545-.546-.545h-2.363l.364-4.364h2c.3 0 .545-.244.545-.545 0-.302-.244-.546-.546-.546h-1.909l.224-2.684c.027-.317-.224-.588-.542-.588-.282 0-.518.216-.541.498l-.232 2.774H6.091l.224-2.684c.026-.317-.224-.588-.542-.588zM6 5.818l-.364 4.364H10l.364-4.364H6z"
@@ -698,9 +652,6 @@
 
 
                         <input type="text" value="" id="tags" data-role="tagsinput" placeholder="태그를 설정해주세요." initial-value="">
-
-<!--                    </div>-->
-
 
                     <span class="input-tags__description input-tags__description--default">
                       최대 10개의 태그를 달 수 있어요!

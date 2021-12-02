@@ -1,4 +1,4 @@
-package com.sparta.showmethecode.config.security;
+package com.sparta.showmethecode.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

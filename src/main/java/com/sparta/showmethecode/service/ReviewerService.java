@@ -5,6 +5,7 @@ import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.AddReviewDto;
+import com.sparta.showmethecode.dto.request.EvaluateAnswerDto;
 import com.sparta.showmethecode.dto.request.UpdateAnswerDto;
 import com.sparta.showmethecode.dto.response.*;
 import com.sparta.showmethecode.repository.ReviewAnswerRepository;
@@ -160,5 +161,29 @@ public class ReviewerService {
 
     private boolean isMyAnswer(Long reviewerId, Long answerId) {
         return reviewAnswerRepository.isMyAnswer(reviewerId, answerId);
+    }
+
+    /**
+     * 나에게 요청온 리뷰 조회
+     */
+    public List<ReviewRequestResponseDto> getMyReceivedRequestList(User user) {
+        return reviewRequestRepository.findMyReceivedRequestList(user.getId());
+    }
+
+    /**
+     * 답변에 대한 평가 API
+     *
+     * 평가하고자 하는 답변이 내가 요청한 코드리뷰에 대한 답변인지 확인해야 함
+     */
+    @Transactional
+    public void evaluateAnswer(User user, Long answerId, EvaluateAnswerDto evaluateAnswerDto) {
+        if(reviewRequestRepository.isAnswerToMe(answerId, user)) {
+            ReviewAnswer reviewAnswer = reviewAnswerRepository.findById(answerId).orElseThrow(
+                    () -> new IllegalArgumentException("존재하지 않는 답변입니다.")
+            );
+
+            reviewAnswer.evaluate(evaluateAnswerDto.getPoint());
+            reviewAnswer.getAnswerUser().evaluate(evaluateAnswerDto.getPoint());
+        }
     }
 }

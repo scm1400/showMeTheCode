@@ -1,6 +1,6 @@
 package com.sparta.showmethecode.controller;
 
-import com.sparta.showmethecode.config.security.UserDetailsImpl;
+import com.sparta.showmethecode.security.UserDetailsImpl;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.AddCommentDto;
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;

@@ -74,7 +74,7 @@ public class UserServiceTest {
 
         User user1 = userRepository.findByUsername("user1").get();
         EvaluateAnswerDto evaluateAnswerDto = new EvaluateAnswerDto(4.5);
-        userService.evaluateAnswer(user1, reviewAnswer.getId(), evaluateAnswerDto);
+        reviewerService.evaluateAnswer(user1, reviewAnswer.getId(), evaluateAnswerDto);
 
         System.out.println("==================평가후================");
         System.out.println(reviewAnswer.getTitle());
@@ -88,7 +88,7 @@ public class UserServiceTest {
     @Test
     void 내가받은_요청_조회() {
         User user1 = userRepository.findByUsername("reviewer1").get();
-        List<ReviewRequestResponseDto> result = userService.getMyReceivedRequestList(user1);
+        List<ReviewRequestResponseDto> result = reviewerService.getMyReceivedRequestList(user1);
 
         result.forEach(System.out::println);
 

@@ -1,6 +1,6 @@
 package com.sparta.showmethecode.controller;
 
-import com.sparta.showmethecode.config.security.JwtUtils;
+import com.sparta.showmethecode.security.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;

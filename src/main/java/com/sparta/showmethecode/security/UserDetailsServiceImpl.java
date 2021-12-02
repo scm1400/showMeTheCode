@@ -1,4 +1,4 @@
-package com.sparta.showmethecode.config.security;
+package com.sparta.showmethecode.security;
 
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.repository.UserRepository;

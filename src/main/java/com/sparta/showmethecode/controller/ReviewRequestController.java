@@ -1,13 +1,10 @@
 package com.sparta.showmethecode.controller;
 
-import com.sparta.showmethecode.dto.request.UpdateReviewDto;
-import com.sparta.showmethecode.security.UserDetailsImpl;
 import com.sparta.showmethecode.domain.User;
-import com.sparta.showmethecode.dto.request.AddCommentDto;
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
 import com.sparta.showmethecode.dto.request.ReviewRequestUpdateDto;
 import com.sparta.showmethecode.dto.response.*;
-import com.sparta.showmethecode.service.CommentService;
+import com.sparta.showmethecode.security.UserDetailsImpl;
 import com.sparta.showmethecode.service.ReviewRequestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +21,6 @@ import java.util.Objects;
 public class ReviewRequestController {
 
     private final ReviewRequestService reviewRequestService;
-    private final CommentService commentService;
 
     /**
      * 코드리뷰 요청목록 API
@@ -121,49 +117,5 @@ public class ReviewRequestController {
         PageResponseDto<ReviewRequestResponseDto> result = reviewRequestService.searchRequestByLanguageName(language, page, size, isAsc);
 
         return ResponseEntity.ok(result);
-    }
-
-    /**
-     * 댓글추가 API
-     */
-    @PostMapping("/question/{id}/comment")
-    public ResponseEntity addComment(
-            @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @PathVariable(name = "id") Long reviewId,
-            @RequestBody AddCommentDto addCommentDto
-    ) {
-        User user = userDetails.getUser();
-        commentService.addComment(user, reviewId, addCommentDto);
-
-        return ResponseEntity.ok().body("댓글작성 완료");
-    }
-
-    /**
-     * 댓글삭제 API
-     */
-    @DeleteMapping("/question/{questionId}/comment/{commentId}")
-    public ResponseEntity removeComment(
-            @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @PathVariable Long questionId, @PathVariable Long commentId
-    ) {
-        User user = userDetails.getUser();
-        long row = commentService.removeComment(user, questionId, commentId);
-
-        return ResponseEntity.ok().body(row);
-    }
-
-    /**
-     * 댓글수정 API
-     */
-    @PutMapping("/question/{questionId}/comment/{commentId}")
-    public ResponseEntity updateComment(
-            @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @PathVariable Long questionId, @PathVariable Long commentId,
-            @RequestBody UpdateReviewDto updateReviewDto
-    ) {
-        User user = userDetails.getUser();
-        commentService.updateComment(user, questionId, commentId, updateReviewDto);
-
-        return ResponseEntity.ok("success");
     }
 }

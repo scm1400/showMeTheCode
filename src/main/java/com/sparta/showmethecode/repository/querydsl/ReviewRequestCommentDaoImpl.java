@@ -16,10 +16,9 @@ public class ReviewRequestCommentDaoImpl implements ReviewRequestCommentDao {
 
 
     @Override
-    public long deleteComment(Long userId, Long questionId, Long commentId) {
+    public long deleteComment(Long userId, Long commentId) {
         return query.delete(reviewRequestComment)
                 .where(reviewRequestComment.user.id.eq(userId)
-                        .and(reviewRequestComment.reviewRequest.id.eq(questionId))
                         .and(reviewRequestComment.id.eq(commentId)))
                 .execute();
     }

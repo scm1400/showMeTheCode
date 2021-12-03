@@ -2,6 +2,7 @@ package com.sparta.showmethecode.service;
 
 import com.sparta.showmethecode.domain.*;
 import com.sparta.showmethecode.dto.request.AddCommentDto;
+import com.sparta.showmethecode.dto.request.UpdateCommentDto;
 import com.sparta.showmethecode.dto.request.UpdateReviewDto;
 import com.sparta.showmethecode.dto.response.CommentResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestDetailResponseDto;
@@ -17,13 +18,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.xml.stream.events.Comment;
 import java.util.Arrays;
 import java.util.List;
 
 @Transactional
 @SpringBootTest
-public class CommentServiceTest {
+public class QuestionCommentServiceTest {
 
     @Autowired
     ReviewRequestRepository reviewRequestRepository;
@@ -48,14 +48,14 @@ public class CommentServiceTest {
 
     @Test
     @DisplayName("1. 댓글등록 테스트")
-    void 댓글등록() {
+    void 리뷰요청_댓글등록() {
         User user1 = userRepository.findByUsername("user1").get();
         ReviewRequest reviewRequest = reviewRequestRepository.findByTitle("리뷰제목").get(0);
         em.flush();
         em.clear();
 
         AddCommentDto dto = new AddCommentDto("댓글댓글");
-        commentService.addComment(user1, reviewRequest.getId(), dto);
+        commentService.addComment_Question(user1, reviewRequest.getId(), dto);
 
 
         ReviewRequestDetailResponseDto reviewRequestDetailWithComment = reviewRequestRepository.getReviewRequestDetailWithComment(reviewRequest.getId());
@@ -85,18 +85,18 @@ public class CommentServiceTest {
 
     @Test
     @DisplayName("2. 댓글삭제 테스트")
-    void 댓글삭제() {
+    void 리뷰요청_댓글삭제() {
         User user1 = userRepository.findByUsername("user1").get();
         ReviewRequest reviewRequest = reviewRequestRepository.findByTitle("리뷰제목").get(0);
         AddCommentDto dto = new AddCommentDto("댓글댓글");
-        commentService.addComment(user1, reviewRequest.getId(), dto);
+        commentService.addComment_Question(user1, reviewRequest.getId(), dto);
 
         ReviewRequestComment reviewRequestComment = reviewRequestCommentRepository.findAll().get(0);
 
         em.flush();
         em.clear();
 
-        long row = commentService.removeComment(user1, reviewRequest.getId(), reviewRequestComment.getId());
+        long row = commentService.removeComment_Question(user1, reviewRequestComment.getId());
 
         Assertions.assertEquals(1, row);
         Assertions.assertEquals(0, reviewRequestCommentRepository.findAll().size());
@@ -104,11 +104,11 @@ public class CommentServiceTest {
 
     @Test
     @DisplayName("3. 댓글수정 테스트")
-    void 댓글수정() {
+    void 리뷰요청_댓글수정() {
         User user1 = userRepository.findByUsername("user1").get();
         ReviewRequest reviewRequest = reviewRequestRepository.findByTitle("리뷰제목").get(0);
         AddCommentDto dto = new AddCommentDto("댓글댓글");
-        commentService.addComment(user1, reviewRequest.getId(), dto);
+        commentService.addComment_Question(user1, reviewRequest.getId(), dto);
 
         ReviewRequestComment reviewRequestComment = reviewRequestCommentRepository.findAll().get(0);
 
@@ -116,8 +116,8 @@ public class CommentServiceTest {
         em.clear();
 
         final String updateContent = "댓글수정수정수정";
-        UpdateReviewDto updateReviewDto = new UpdateReviewDto(updateContent);
-        commentService.updateComment(user1, reviewRequest.getId(), reviewRequestComment.getId(), updateReviewDto);
+        UpdateCommentDto updateCommentDto = new UpdateCommentDto(updateContent);
+        commentService.updateComment_Question(user1, reviewRequestComment.getId(), updateCommentDto);
 
         Assertions.assertEquals(updateContent, reviewRequestCommentRepository.findById(reviewRequestComment.getId()).get().getContent());
     }

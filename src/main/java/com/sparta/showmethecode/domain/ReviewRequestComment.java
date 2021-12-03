@@ -1,6 +1,7 @@
 package com.sparta.showmethecode.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sparta.showmethecode.dto.request.UpdateCommentDto;
 import com.sparta.showmethecode.dto.request.UpdateReviewDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,7 +44,7 @@ public class ReviewRequestComment extends Timestamped{
         this.user = user;
     }
 
-    public void update(UpdateReviewDto updateReviewDto) {
-        this.content = updateReviewDto.getContent();
+    public void update(UpdateCommentDto dto) {
+        this.content = dto.getContent();
     }
 }

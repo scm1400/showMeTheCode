@@ -7,7 +7,6 @@ import com.sparta.showmethecode.dto.response.NotificationResponse;
 import com.sparta.showmethecode.dto.response.NotificationsResponse;
 import com.sparta.showmethecode.repository.EmitterRepository;
 import com.sparta.showmethecode.repository.NotificationRepository;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

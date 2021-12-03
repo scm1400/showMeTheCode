@@ -44,13 +44,13 @@ public class CommentController {
         User user = userDetails.getUser();
         long row = commentService.removeComment_Question(user, commentId);
 
-        return ResponseEntity.ok().body(row);
+        return ResponseEntity.ok().body("댓글삭제 완료");
     }
 
     /**
      * 리뷰요청 - 댓글수정 API
      */
-    @PutMapping("/question/{questionId}/comment/{commentId}")
+    @PutMapping("/question/comment/{commentId}")
     public ResponseEntity updateComment_Question(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long commentId,
@@ -59,7 +59,7 @@ public class CommentController {
         User user = userDetails.getUser();
         commentService.updateComment_Question(user, commentId, updateCommentDto);
 
-        return ResponseEntity.ok("success");
+        return ResponseEntity.ok().body("댓글수정 완료");
     }
 
     /**
@@ -80,7 +80,7 @@ public class CommentController {
     /**
      * 리뷰답변 - 댓글수정 API
      */
-    @PutMapping("/answer/{answerId}/comment/{commentId}")
+    @PutMapping("/answer/comment/{commentId}")
     public ResponseEntity updateComment_Answer(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long commentId,
@@ -90,5 +90,19 @@ public class CommentController {
         commentService.updateComment_Answer(user, commentId, updateCommentDto);
 
         return ResponseEntity.ok().body("댓글작성 완료");
+    }
+
+    /**
+     * 리뷰답변 - 댓글삭제 API
+     */
+    @DeleteMapping("/answer/comment/{commentId}")
+    public ResponseEntity removeComment_Answer(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable Long commentId
+    ) {
+        User user = userDetails.getUser();
+        commentService.removeComment_Answer(user, commentId);
+
+        return ResponseEntity.ok().body("댓글삭제 완료");
     }
 }

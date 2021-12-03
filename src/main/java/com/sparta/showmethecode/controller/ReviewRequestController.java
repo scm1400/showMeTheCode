@@ -65,8 +65,9 @@ public class ReviewRequestController {
     /**
      * 코드리뷰 단건조회 API (코드리뷰 요청 상세정보)
      */
-    @GetMapping("/question")
+    @GetMapping("/details")
     public ResponseEntity<ReviewRequestDetailResponseDto> getReviewRequest(@RequestParam Long id) {
+        System.out.println(id);
         ReviewRequestDetailResponseDto reviewRequest = reviewRequestService.getReviewRequest(id);
 
         return ResponseEntity.ok(reviewRequest);

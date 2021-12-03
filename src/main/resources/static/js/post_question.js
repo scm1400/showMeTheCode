@@ -6,11 +6,12 @@ function postQuestion(){
 
     $.ajax({
         type: "POST",
-        url: "/question",
+        url: "/reviewer/request",
         contentType: "application/json;charset-utf-8;",
         data: JSON.stringify(data),
         success: function(res) {
             console.log(res);
         }
     })
+
 }

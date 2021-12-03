@@ -43,7 +43,7 @@ public class ReviewRequestService {
                                 r.getId(),
                                 r.getRequestUser().getUsername(),
                                 r.getTitle(),
-                                r.getComment(),
+                                r.getContent(),
                                 r.getLanguageName(),
                                 r.getStatus().toString(),
                                 r.getCreatedAt()
@@ -59,7 +59,7 @@ public class ReviewRequestService {
     @Transactional
     public void addReviewRequest(ReviewRequestDto requestDto, User user) {
         ReviewRequest reviewRequest
-                = new ReviewRequest(user, requestDto.getTitle(), requestDto.getCode(), requestDto.getComment(), ReviewRequestStatus.REQUESTED, requestDto.getLanguage().toUpperCase());
+                = new ReviewRequest(user, requestDto.getTitle(), requestDto.getContent(), ReviewRequestStatus.REQUESTED, requestDto.getLanguage().toUpperCase());
 
         reviewRequestRepository.save(reviewRequest);
     }
@@ -152,7 +152,7 @@ public class ReviewRequestService {
                         r.getId(),
                         r.getRequestUser().getUsername(),
                         r.getTitle(),
-                        r.getComment(),
+                        r.getContent(),
                         r.getLanguageName(),
                         r.getStatus().toString(),
                         r.getCreatedAt()

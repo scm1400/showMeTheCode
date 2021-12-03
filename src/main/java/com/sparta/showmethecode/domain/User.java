@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 public class User extends Timestamped{
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false, unique = true)

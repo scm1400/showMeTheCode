@@ -1,22 +1,16 @@
-package com.sparta.showmethecode.repository.dao;
+package com.sparta.showmethecode.repository.querydsl;
 
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.showmethecode.domain.*;
-import com.sparta.showmethecode.dto.response.QReviewerInfoDto;
-import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.sparta.showmethecode.domain.QLanguage.language;
-import static com.sparta.showmethecode.domain.QReviewRequest.*;
-import static com.sparta.showmethecode.domain.QUser.*;
 import static com.sparta.showmethecode.domain.QUser.user;
 
 @RequiredArgsConstructor

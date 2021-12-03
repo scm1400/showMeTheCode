@@ -1,18 +1,14 @@
 package com.sparta.showmethecode.controller;
 
-import com.sparta.showmethecode.config.security.UserDetailsImpl;
+import com.sparta.showmethecode.security.UserDetailsImpl;
 import com.sparta.showmethecode.domain.User;
-import com.sparta.showmethecode.dto.request.AddReviewDto;
+import com.sparta.showmethecode.dto.request.AddAnswerDto;
+import com.sparta.showmethecode.dto.request.EvaluateAnswerDto;
 import com.sparta.showmethecode.dto.request.UpdateAnswerDto;
-import com.sparta.showmethecode.dto.response.PageResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewAnswerResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewerInfoDto;
+import com.sparta.showmethecode.dto.response.*;
 import com.sparta.showmethecode.service.ReviewerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -73,10 +69,10 @@ public class ReviewerController {
     public ResponseEntity addReviewAndComment(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestParam Long questionId,
-            @RequestBody AddReviewDto addReviewDto
+            @RequestBody AddAnswerDto addAnswerDto
     ) {
         User reviewer = userDetails.getUser();
-        reviewerService.addReviewAndComment(reviewer, questionId, addReviewDto);
+        reviewerService.addReviewAndComment(reviewer, questionId, addAnswerDto);
         return ResponseEntity.ok("ok");
     }
 
@@ -114,13 +110,33 @@ public class ReviewerController {
 
 
     /**
-     * 나에게 요청된 리뷰요청목록 조회 API
+     * 나에게 요청된 리뷰목록 조회
      */
-    @GetMapping("/reviewer/requests")
-    public ResponseEntity<ReviewRequestListResponseDto> getRequestedReviewList(
-            @AuthenticationPrincipal UserDetailsImpl userDetails
-    ) {
+    @GetMapping("/user/received")
+    public ResponseEntity<List<ReviewRequestResponseDto>> getMyReceivedList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        User user = userDetails.getUser();
 
-        return null;
+        List<ReviewRequestResponseDto> response = reviewerService.getMyReceivedRequestList(user);
+
+        if (response == null) {
+            System.out.println("조회된 목록이 없습니다.");
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * 답변에 대한 평가 API
+     */
+    @PostMapping("/user/question/{answerId}/eval")
+    public ResponseEntity evaluateAnswer(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable Long answerId,
+            @RequestBody EvaluateAnswerDto evaluateAnswerDto
+    ) {
+        User user = userDetails.getUser();
+        reviewerService.evaluateAnswer(user, answerId, evaluateAnswerDto);
+
+        return ResponseEntity.ok("ok");
     }
 }

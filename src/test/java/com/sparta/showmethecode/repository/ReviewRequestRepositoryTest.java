@@ -38,9 +38,9 @@ public class ReviewRequestRepositoryTest {
         User reviewer2 = new User("user3", "pass3", UserRole.ROLE_REVIEWER, 0, 0, 0, Arrays.asList(new Language("JAVA")));
         userRepository.save(reviewer2);
 
-        ReviewRequest reviewRequest1 = new ReviewRequest(user, reviewer1,"Java가 여려워요.", "code1", "java도 어려운데 jpa는 ㅠ", ReviewRequestStatus.REQUESTED, "JAVA");
+        ReviewRequest reviewRequest1 = new ReviewRequest(user, reviewer1,"Java가 여려워요.", "java도 어려운데 jpa는 ㅠ", ReviewRequestStatus.REQUESTED, "JAVA");
         reviewRequestRepository.save(reviewRequest1);
-        ReviewRequest reviewRequest2 = new ReviewRequest(user, reviewer1,"Java가 여려워요!!", "code1", "java도 어려운데 jpa는 ㅠ", ReviewRequestStatus.REQUESTED, "JAVA");
+        ReviewRequest reviewRequest2 = new ReviewRequest(user, reviewer1,"Java가 여려워요!!", "java도 어려운데 jpa는 ㅠ", ReviewRequestStatus.REQUESTED, "JAVA");
         reviewRequestRepository.save(reviewRequest2);
     }
 
@@ -51,19 +51,16 @@ public class ReviewRequestRepositoryTest {
         ReviewRequest reviewRequest = reviewRequestRepository.findByTitle("Java가 여려워요.").get(0);
 
         final String updateTitle = "제목수정";
-        final String updateCode = "코드수정";
-        final String updateComment = "설명수정";
+        final String updateContent = "설명수정";
 
         ReviewRequestUpdateDto reviewRequestUpdateDto = ReviewRequestUpdateDto.builder()
                 .title(updateTitle)
-                .code(updateCode)
-                .comment(updateComment).build();
+                .content(updateContent).build();
 
         reviewRequestService.updateReviewRequest(reviewRequestUpdateDto, reviewRequest.getId(), requestUser);
 
         Assertions.assertEquals(updateTitle, reviewRequest.getTitle());
-        Assertions.assertEquals(updateCode, reviewRequest.getCode());
-        Assertions.assertEquals(updateComment, reviewRequest.getComment());
+        Assertions.assertEquals(updateContent, reviewRequest.getContent());
     }
 
     @DisplayName("리뷰요청 수정 테스트 (리뷰어 수정)")
@@ -77,23 +74,20 @@ public class ReviewRequestRepositoryTest {
         em.clear();
 
         final String updateTitle = "제목수정";
-        final String updateCode = "코드수정";
-        final String updateComment = "설명수정";
+        final String updateContent = "설명수정";
 
         reviewRequest = reviewRequestRepository.findById(reviewRequest.getId()).get();
 
         ReviewRequestUpdateDto reviewRequestUpdateDto = ReviewRequestUpdateDto.builder()
                 .title(updateTitle)
-                .code(updateCode)
-                .comment(updateComment)
+                .content(updateContent)
                 .reviewerId(newReviewer.getId())
                 .build();
 
         reviewRequestService.updateReviewRequest(reviewRequestUpdateDto, reviewRequest.getId(), requestUser);
 
         Assertions.assertEquals(updateTitle, reviewRequest.getTitle());
-        Assertions.assertEquals(updateCode, reviewRequest.getCode());
-        Assertions.assertEquals(updateComment, reviewRequest.getComment());
+        Assertions.assertEquals(updateContent, reviewRequest.getContent());
         Assertions.assertEquals(newReviewer.getId(), reviewRequest.getAnswerUser().getId());
     }
 

@@ -1,4 +1,4 @@
-package com.sparta.showmethecode.config.security;
+package com.sparta.showmethecode.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

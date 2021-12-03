@@ -8,6 +8,5 @@ import lombok.Data;
 public class UpdateAnswerDto {
 
     private String title;
-    private String code;
-    private String comment;
+    private String content;
 }

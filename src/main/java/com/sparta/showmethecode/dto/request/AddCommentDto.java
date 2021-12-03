@@ -2,14 +2,11 @@ package com.sparta.showmethecode.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 
-@AllArgsConstructor
 @Data
-public class ReviewRequestDto {
+@AllArgsConstructor
+public class AddCommentDto {
 
-    private String title;
     private String content;
-
-    private String language;
-    private Long reviewerId;
 }

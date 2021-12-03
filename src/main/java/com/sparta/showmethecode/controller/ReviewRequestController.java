@@ -1,10 +1,10 @@
 package com.sparta.showmethecode.controller;
 
-import com.sparta.showmethecode.config.security.UserDetailsImpl;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
 import com.sparta.showmethecode.dto.request.ReviewRequestUpdateDto;
 import com.sparta.showmethecode.dto.response.*;
+import com.sparta.showmethecode.security.UserDetailsImpl;
 import com.sparta.showmethecode.service.ReviewRequestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,14 +53,17 @@ public class ReviewRequestController {
         User user = userDetails.getUser();
         reviewRequestService.addReviewRequest(requestDto, user);
 
+        log.info("addReviewRequest = {}", requestDto);
+        
         return ResponseEntity.ok("ok");
     }
 
     /**
      * 코드리뷰 단건조회 API (코드리뷰 요청 상세정보)
      */
-    @GetMapping("/question")
+    @GetMapping("/details")
     public ResponseEntity<ReviewRequestDetailResponseDto> getReviewRequest(@RequestParam Long id) {
+        System.out.println(id);
         ReviewRequestDetailResponseDto reviewRequest = reviewRequestService.getReviewRequest(id);
 
         return ResponseEntity.ok(reviewRequest);
@@ -115,5 +118,4 @@ public class ReviewRequestController {
 
         return ResponseEntity.ok(result);
     }
-
 }

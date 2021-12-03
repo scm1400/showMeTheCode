@@ -1,4 +1,4 @@
-package com.sparta.showmethecode.repository.dao;
+package com.sparta.showmethecode.repository.querydsl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

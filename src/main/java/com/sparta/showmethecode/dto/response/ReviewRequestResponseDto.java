@@ -13,7 +13,7 @@ public class ReviewRequestResponseDto {
     private Long reviewRequestId;
     private String username;
     private String title;
-    private String comment;
+    private String content;
 
     private String languageName;
     private String status;
@@ -21,11 +21,11 @@ public class ReviewRequestResponseDto {
     private LocalDateTime createdAt;
 
     @QueryProjection
-    public ReviewRequestResponseDto(Long reviewRequestId, String username, String title, String comment, String languageName, String status, LocalDateTime createdAt) {
+    public ReviewRequestResponseDto(Long reviewRequestId, String username, String title, String content, String languageName, String status, LocalDateTime createdAt) {
         this.reviewRequestId = reviewRequestId;
         this.username = username;
         this.title = title;
-        this.comment = comment;
+        this.content = content;
         this.languageName = languageName;
         this.status = status;
         this.createdAt = createdAt;

@@ -1,4 +1,4 @@
-package com.sparta.showmethecode.repository.querydslutil;
+package com.sparta.showmethecode.repository.querydsl.util;
 
 import com.querydsl.core.types.NullExpression;
 import com.querydsl.core.types.Order;

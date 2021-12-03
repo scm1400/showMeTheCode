@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
 /**
  * 코드리뷰 요청서
  */
@@ -19,7 +20,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Getter
 @Entity
-public class ReviewRequest extends Timestamped{
+public class ReviewRequest extends Timestamped {
 
     @Id @GeneratedValue
     private Long id;
@@ -27,10 +28,9 @@ public class ReviewRequest extends Timestamped{
     @Column(nullable = false)
     private String title;
 
+    @Lob
     @Column(nullable = false)
-    private String code;
-
-    private String comment;
+    private String content;
 
     @Enumerated(EnumType.STRING)
     private ReviewRequestStatus status;
@@ -62,29 +62,26 @@ public class ReviewRequest extends Timestamped{
         comment.setReviewRequest(this);
     }
 
-    public ReviewRequest(User requestUser, String title, String code, String comment, ReviewRequestStatus status, String languageName) {
+    public ReviewRequest(User requestUser, String title, String content, ReviewRequestStatus status, String languageName) {
         this.requestUser = requestUser;
         this.title = title;
-        this.code = code;
-        this.comment = comment;
+        this.content = content;
         this.status = status;
         this.languageName = languageName.toUpperCase();
     }
 
-    public ReviewRequest(User requestUser, User answerUser,String title, String code, String comment, ReviewRequestStatus status, String languageName) {
+    public ReviewRequest(User requestUser, User answerUser,String title, String content, ReviewRequestStatus status, String languageName) {
         this.requestUser = requestUser;
         this.answerUser = answerUser;
         this.title = title;
-        this.code = code;
-        this.comment = comment;
+        this.content = content;
         this.status = status;
         this.languageName = languageName.toUpperCase();
     }
 
     public void update(ReviewRequestUpdateDto dto, User newAnswerUser) {
         this.title = dto.getTitle();
-        this.code = dto.getCode();
-        this.comment = dto.getComment();
+        this.content = dto.getContent();
 
         if (!Objects.isNull(newAnswerUser)) {
             this.answerUser = newAnswerUser;

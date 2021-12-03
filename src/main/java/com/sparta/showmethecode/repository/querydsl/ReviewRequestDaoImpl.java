@@ -1,16 +1,15 @@
-package com.sparta.showmethecode.repository.dao;
+package com.sparta.showmethecode.repository.querydsl;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.showmethecode.domain.ReviewAnswer;
 import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.response.*;
-import com.sparta.showmethecode.repository.querydslutil.OrderByNull;
+import com.sparta.showmethecode.repository.querydsl.util.OrderByNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -48,7 +47,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                         reviewRequest.id,
                         user.username,
                         reviewRequest.title,
-                        reviewRequest.comment,
+                        reviewRequest.content,
                         reviewRequest.languageName,
                         reviewRequest.status.stringValue(),
                         reviewRequest.createdAt)
@@ -66,7 +65,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                         reviewRequest.id,
                         user.username,
                         reviewRequest.title,
-                        reviewRequest.comment,
+                        reviewRequest.content,
                         reviewRequest.languageName,
                         reviewRequest.status.stringValue(),
                         reviewRequest.createdAt)
@@ -79,7 +78,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
     }
 
     private BooleanExpression containingTitleOrComment(String keyword) {
-        return Objects.isNull(keyword) || keyword.isEmpty() ? null : reviewRequest.title.contains(keyword).or(reviewRequest.comment.contains(keyword));
+        return Objects.isNull(keyword) || keyword.isEmpty() ? null : reviewRequest.title.contains(keyword).or(reviewRequest.content.contains(keyword));
     }
 
     @Override
@@ -90,7 +89,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                         reviewRequest.id,
                         user.username,
                         reviewRequest.title,
-                        reviewRequest.comment,
+                        reviewRequest.content,
                         reviewRequest.languageName,
                         reviewRequest.status.stringValue(),
                         reviewRequest.createdAt)
@@ -115,6 +114,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                 .from(reviewRequest)
                 .join(reviewRequest.reviewRequestComments, reviewRequestComment).fetchJoin()
                 .join(reviewRequest.requestUser, user).fetchJoin()
+                .join(reviewRequest.reviewAnswer, reviewAnswer).fetchJoin()
                 .where(reviewRequest.id.eq(id))
                 .fetchFirst();
 
@@ -122,10 +122,28 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                 c -> new CommentResponseDto(c.getId(), c.getUser().getId(), c.getUser().getUsername(), c.getContent(), c.getCreatedAt())
         ).collect(Collectors.toList());
 
-
+        ReviewAnswer reviewAnswer = result.getReviewAnswer();
+        if (!Objects.isNull(reviewAnswer)) {
+            log.info("getReviewRequestDetailWithComment reviewAnswer = {}", reviewAnswer.getTitle());
+            ReviewAnswerResponseDto reviewAnswerResponseDto = new ReviewAnswerResponseDto(
+                    reviewAnswer.getId(),
+                    result.getId(),
+                    reviewAnswer.getTitle(),
+                    reviewAnswer.getContent(),
+                    reviewAnswer.getPoint(),
+                    reviewAnswer.getCreatedAt()
+            );
+            return new ReviewRequestDetailResponseDto(
+                    result.getId(), result.getRequestUser().getUsername(), result.getTitle(), result.getContent(),
+                    result.getStatus().toString(), result.getCreatedAt(),
+                    comments,
+                    reviewAnswerResponseDto
+            );
+        }
         return new ReviewRequestDetailResponseDto(
-                result.getId(), result.getRequestUser().getUsername(), result.getTitle(), result.getCode(), result.getComment(),
-                result.getStatus().toString(), result.getCreatedAt(), comments
+                result.getId(), result.getRequestUser().getUsername(), result.getTitle(), result.getContent(),
+                result.getStatus().toString(), result.getCreatedAt(),
+                comments
         );
     }
 
@@ -154,7 +172,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                         r.getId(),
                         r.getRequestUser().getUsername(),
                         r.getTitle(),
-                        r.getComment(),
+                        r.getContent(),
                         r.getLanguageName(),
                         r.getStatus().toString(),
                         r.getCreatedAt()
@@ -174,7 +192,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                         r.getId(),
                         r.getRequestUser().getUsername(),
                         r.getTitle(),
-                        r.getComment(),
+                        r.getContent(),
                         r.getLanguageName(),
                         r.getStatus().toString(),
                         r.getCreatedAt()
@@ -238,8 +256,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                                 reviewRequest.reviewAnswer.id,
                                 reviewRequest.id,
                                 reviewRequest.reviewAnswer.title,
-                                reviewRequest.reviewAnswer.code,
-                                reviewRequest.reviewAnswer.comment,
+                                reviewRequest.reviewAnswer.content,
                                 reviewRequest.reviewAnswer.point,
                                 reviewRequest.reviewAnswer.createdAt
                         )
@@ -250,5 +267,12 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
         List<ReviewAnswerResponseDto> result = getQuerydsl().applyPagination(pageable, jpaQuery).fetch();
 
         return PageableExecutionUtils.getPage(result, pageable, jpaQuery::fetchCount);
+    }
+
+    @Override
+    public void deleteComment(Long reviewId, Long commentId, Long userId) {
+        query.delete(reviewRequest)
+                .where(reviewRequest.id.eq(reviewId))
+                .where();
     }
 }

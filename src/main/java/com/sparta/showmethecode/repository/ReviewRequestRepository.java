@@ -2,11 +2,10 @@ package com.sparta.showmethecode.repository;
 
 import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.User;
-import com.sparta.showmethecode.repository.dao.ReviewRequestDao;
+import com.sparta.showmethecode.repository.querydsl.ReviewRequestDao;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 

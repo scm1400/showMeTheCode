@@ -2,9 +2,7 @@ package com.sparta.showmethecode.service;
 
 import com.sparta.showmethecode.domain.*;
 import com.sparta.showmethecode.dto.request.AddCommentDto;
-import com.sparta.showmethecode.dto.request.ReviewRequestUpdateDto;
 import com.sparta.showmethecode.dto.request.UpdateCommentDto;
-import com.sparta.showmethecode.dto.request.UpdateReviewDto;
 import com.sparta.showmethecode.repository.ReviewAnswerCommentRepository;
 import com.sparta.showmethecode.repository.ReviewAnswerRepository;
 import com.sparta.showmethecode.repository.ReviewRequestCommentRepository;

@@ -5,7 +5,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class AddReviewDto {
+public class AddAnswerDto {
 
     private String title;
     private String content;

@@ -2,7 +2,7 @@ package com.sparta.showmethecode.controller;
 
 import com.sparta.showmethecode.security.UserDetailsImpl;
 import com.sparta.showmethecode.domain.User;
-import com.sparta.showmethecode.dto.request.AddReviewDto;
+import com.sparta.showmethecode.dto.request.AddAnswerDto;
 import com.sparta.showmethecode.dto.request.EvaluateAnswerDto;
 import com.sparta.showmethecode.dto.request.UpdateAnswerDto;
 import com.sparta.showmethecode.dto.response.*;
@@ -69,10 +69,10 @@ public class ReviewerController {
     public ResponseEntity addReviewAndComment(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestParam Long questionId,
-            @RequestBody AddReviewDto addReviewDto
+            @RequestBody AddAnswerDto addAnswerDto
     ) {
         User reviewer = userDetails.getUser();
-        reviewerService.addReviewAndComment(reviewer, questionId, addReviewDto);
+        reviewerService.addReviewAndComment(reviewer, questionId, addAnswerDto);
         return ResponseEntity.ok("ok");
     }
 

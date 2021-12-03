@@ -1,14 +1,12 @@
 package com.sparta.showmethecode.service;
 
 import com.sparta.showmethecode.domain.*;
-import com.sparta.showmethecode.dto.request.AddReviewDto;
+import com.sparta.showmethecode.dto.request.AddAnswerDto;
 import com.sparta.showmethecode.repository.ReviewAnswerCommentRepository;
 import com.sparta.showmethecode.repository.ReviewRequestCommentRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import com.sparta.showmethecode.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,8 +47,8 @@ public class AnswerCommentServiceTest {
 
 
     private void createReviewAnswer(String title, String content, User answerUser, Long reviewId) {
-        AddReviewDto addReviewDto = new AddReviewDto(title, content);
-        reviewerService.addReviewAndComment(answerUser, reviewId, addReviewDto);
+        AddAnswerDto addAnswerDto = new AddAnswerDto(title, content);
+        reviewerService.addReviewAndComment(answerUser, reviewId, addAnswerDto);
     }
 
     private ReviewRequest createReviewRequest(User requestUser, User answerUser, String title, String content, String language) {

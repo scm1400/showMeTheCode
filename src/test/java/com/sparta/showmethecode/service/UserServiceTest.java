@@ -1,9 +1,8 @@
 package com.sparta.showmethecode.service;
 
 import com.sparta.showmethecode.domain.*;
-import com.sparta.showmethecode.dto.request.AddReviewDto;
+import com.sparta.showmethecode.dto.request.AddAnswerDto;
 import com.sparta.showmethecode.dto.request.EvaluateAnswerDto;
-import com.sparta.showmethecode.dto.response.PageResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
 import com.sparta.showmethecode.repository.ReviewAnswerRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
@@ -54,8 +53,8 @@ public class UserServiceTest {
     void 답변_평가하기() {
         User reviewer1 = userRepository.findByUsername("reviewer1").get();
         ReviewRequest reviewRequest = reviewRequestRepository.findByTitle("title1").get(0);
-        AddReviewDto addReviewDto = new AddReviewDto("답변제목", "답변설명");
-        reviewerService.addReviewAndComment(reviewer1, reviewRequest.getId(), addReviewDto);
+        AddAnswerDto addAnswerDto = new AddAnswerDto("답변제목", "답변설명");
+        reviewerService.addReviewAndComment(reviewer1, reviewRequest.getId(), addAnswerDto);
 
         em.flush();
         em.clear();

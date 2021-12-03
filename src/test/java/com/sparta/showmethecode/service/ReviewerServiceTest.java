@@ -1,7 +1,7 @@
 package com.sparta.showmethecode.service;
 
 import com.sparta.showmethecode.domain.*;
-import com.sparta.showmethecode.dto.request.AddReviewDto;
+import com.sparta.showmethecode.dto.request.AddAnswerDto;
 import com.sparta.showmethecode.dto.request.UpdateAnswerDto;
 import com.sparta.showmethecode.dto.response.PageResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewAnswerResponseDto;
@@ -15,7 +15,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -59,9 +58,9 @@ public class ReviewerServiceTest {
 
         final String title = "답변제목";
         final String content = "답변코멘트";
-        AddReviewDto addReviewDto = new AddReviewDto("답변제목",  "답변코멘트");
+        AddAnswerDto addAnswerDto = new AddAnswerDto("답변제목",  "답변코멘트");
 
-        reviewerService.addReviewAndComment(reviewer, reviewRequest.getId(), addReviewDto);
+        reviewerService.addReviewAndComment(reviewer, reviewRequest.getId(), addAnswerDto);
         ReviewRequest reviewRequest1 = reviewRequestRepository.findByTitle("title1").get(0);
         ReviewAnswer reviewAnswer = reviewRequest1.getReviewAnswer();
 
@@ -153,8 +152,8 @@ public class ReviewerServiceTest {
         em.clear();
 
         for (ReviewRequest request : requests) {
-            AddReviewDto addReviewDto = new AddReviewDto("답변제목", "답변설명");
-            reviewerService.addReviewAndComment(reviewer1, request.getId(), addReviewDto);
+            AddAnswerDto addAnswerDto = new AddAnswerDto("답변제목", "답변설명");
+            reviewerService.addReviewAndComment(reviewer1, request.getId(), addAnswerDto);
         }
         List<ReviewAnswer> answers = reviewAnswerRepository.findAll();
         for (int i=0;i<answers.size();i++) {
@@ -191,8 +190,8 @@ public class ReviewerServiceTest {
         em.flush();
         em.clear();
 
-        AddReviewDto addReviewDto = new AddReviewDto("답변제목",  "답변설명");
-        reviewerService.addReviewAndComment(reviewer1, reviewRequest.getId(), addReviewDto);
+        AddAnswerDto addAnswerDto = new AddAnswerDto("답변제목",  "답변설명");
+        reviewerService.addReviewAndComment(reviewer1, reviewRequest.getId(), addAnswerDto);
 
         List<ReviewAnswerResponseDto> answerList = reviewerService.getMyAnswerList(reviewer1, 0, 10, true, "createdAt").getData();
 

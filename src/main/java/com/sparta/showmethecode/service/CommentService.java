@@ -5,6 +5,7 @@ import com.sparta.showmethecode.domain.ReviewRequestComment;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.AddCommentDto;
 import com.sparta.showmethecode.dto.request.ReviewRequestUpdateDto;
+import com.sparta.showmethecode.dto.request.UpdateReviewDto;
 import com.sparta.showmethecode.repository.ReviewRequestCommentRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,17 @@ public class CommentService {
      */
     @Transactional
     public long removeComment(User user, Long questionId, Long commentId) {
-//        return 1l;
         return reviewRequestCommentRepository.deleteComment(user.getId(), questionId, commentId);
+    }
+
+    /**
+     * 코드리뷰요청 - 댓글수정 API
+     */
+    @Transactional
+    public void updateComment(User user, Long questionId, Long commentId, UpdateReviewDto updateReviewDto) {
+        if (reviewRequestCommentRepository.isMyComment(commentId, user.getId())) {
+            ReviewRequestComment reviewRequestComment = reviewRequestCommentRepository.findByIdAndUser(commentId, user);
+            reviewRequestComment.update(updateReviewDto);
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.sparta.showmethecode.service;
 
 import com.sparta.showmethecode.domain.*;
 import com.sparta.showmethecode.dto.request.AddCommentDto;
+import com.sparta.showmethecode.dto.request.UpdateReviewDto;
 import com.sparta.showmethecode.dto.response.CommentResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestDetailResponseDto;
 import com.sparta.showmethecode.repository.ReviewRequestCommentRepository;
@@ -99,5 +100,25 @@ public class CommentServiceTest {
 
         Assertions.assertEquals(1, row);
         Assertions.assertEquals(0, reviewRequestCommentRepository.findAll().size());
+    }
+
+    @Test
+    @DisplayName("3. 댓글수정 테스트")
+    void 댓글수정() {
+        User user1 = userRepository.findByUsername("user1").get();
+        ReviewRequest reviewRequest = reviewRequestRepository.findByTitle("리뷰제목").get(0);
+        AddCommentDto dto = new AddCommentDto("댓글댓글");
+        commentService.addComment(user1, reviewRequest.getId(), dto);
+
+        ReviewRequestComment reviewRequestComment = reviewRequestCommentRepository.findAll().get(0);
+
+        em.flush();
+        em.clear();
+
+        final String updateContent = "댓글수정수정수정";
+        UpdateReviewDto updateReviewDto = new UpdateReviewDto(updateContent);
+        commentService.updateComment(user1, reviewRequest.getId(), reviewRequestComment.getId(), updateReviewDto);
+
+        Assertions.assertEquals(updateContent, reviewRequestCommentRepository.findById(reviewRequestComment.getId()).get().getContent());
     }
 }

@@ -28,6 +28,7 @@ public class ReviewRequestCommentDaoImpl implements ReviewRequestCommentDao {
     public boolean isMyComment(Long commentId, Long userId) {
 
         Integer exist = query.selectOne()
+                .from(reviewRequestComment)
                 .where(reviewRequestComment.id.eq(commentId)
                         .and(reviewRequestComment.user.id.eq(userId)))
                 .fetchFirst();

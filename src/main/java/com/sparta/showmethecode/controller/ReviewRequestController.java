@@ -1,5 +1,6 @@
 package com.sparta.showmethecode.controller;
 
+import com.sparta.showmethecode.dto.request.UpdateReviewDto;
 import com.sparta.showmethecode.security.UserDetailsImpl;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.AddCommentDto;
@@ -148,5 +149,20 @@ public class ReviewRequestController {
         long row = commentService.removeComment(user, questionId, commentId);
 
         return ResponseEntity.ok().body(row);
+    }
+
+    /**
+     * 댓글수정 API
+     */
+    @PutMapping("/question/{questionId}/comment/{commentId}")
+    public ResponseEntity updateComment(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable Long questionId, @PathVariable Long commentId,
+            @RequestBody UpdateReviewDto updateReviewDto
+    ) {
+        User user = userDetails.getUser();
+        commentService.updateComment(user, questionId, commentId, updateReviewDto);
+
+        return ResponseEntity.ok("success");
     }
 }

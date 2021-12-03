@@ -5,7 +5,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.showmethecode.domain.*;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import com.sparta.showmethecode.repository.UserRepository;
-import com.sparta.showmethecode.repository.querydslutil.OrderByNull;
+import com.sparta.showmethecode.repository.querydsl.util.OrderByNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +32,9 @@ public class GroupbyTest {
         User user = new User("user1", "pass1", UserRole.ROLE_USER, 0, 0, 0);
         userRepository.save(user);
 
-        ReviewRequest reviewRequest1 = new ReviewRequest(user, "Java가 여려워요.", "code1", "java도 어려운데 jpa는 ㅠ", ReviewRequestStatus.REQUESTED, "Java");
-        ReviewRequest reviewRequest2 = new ReviewRequest(user, "spring이 이상해요", "code2", "comment2", ReviewRequestStatus.REQUESTED, "JAVA");
-        ReviewRequest reviewRequest3 = new ReviewRequest(user, "jpa가 이상해요", "code3", "spring에서 jpa가 이상해요", ReviewRequestStatus.REQUESTED, "PYTHON");
+        ReviewRequest reviewRequest1 = new ReviewRequest(user, "Java가 여려워요.",  "java도 어려운데 jpa는 ㅠ", ReviewRequestStatus.REQUESTED, "Java");
+        ReviewRequest reviewRequest2 = new ReviewRequest(user, "spring이 이상해요",  "comment2", ReviewRequestStatus.REQUESTED, "JAVA");
+        ReviewRequest reviewRequest3 = new ReviewRequest(user, "jpa가 이상해요",  "spring에서 jpa가 이상해요", ReviewRequestStatus.REQUESTED, "PYTHON");
 
         reviewRequestRepository.saveAll(Arrays.asList(reviewRequest1, reviewRequest2, reviewRequest3));
     }

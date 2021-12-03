@@ -6,6 +6,7 @@ import com.sparta.showmethecode.dto.request.AddCommentDto;
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
 import com.sparta.showmethecode.dto.request.ReviewRequestUpdateDto;
 import com.sparta.showmethecode.dto.response.*;
+import com.sparta.showmethecode.service.CommentService;
 import com.sparta.showmethecode.service.ReviewRequestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ import java.util.Objects;
 public class ReviewRequestController {
 
     private final ReviewRequestService reviewRequestService;
+    private final CommentService commentService;
 
     /**
      * 코드리뷰 요청목록 API
@@ -51,8 +53,8 @@ public class ReviewRequestController {
     public ResponseEntity<String> addReviewRequest(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody ReviewRequestDto requestDto) {
-//        User user = userDetails.getUser();
-//        reviewRequestService.addReviewRequest(requestDto, user);
+        User user = userDetails.getUser();
+        reviewRequestService.addReviewRequest(requestDto, user);
 
         log.info("addReviewRequest = {}", requestDto);
         
@@ -128,8 +130,23 @@ public class ReviewRequestController {
             @PathVariable(name = "id") Long reviewId,
             @RequestBody AddCommentDto addCommentDto
     ) {
+        User user = userDetails.getUser();
+        commentService.addComment(user, reviewId, addCommentDto);
 
-        return null;
+        return ResponseEntity.ok().body("댓글작성 완료");
     }
 
+    /**
+     * 댓글삭제 API
+     */
+    @DeleteMapping("/question/{questionId}/comment/{commentId}")
+    public ResponseEntity removeComment(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable Long questionId, @PathVariable Long commentId
+    ) {
+        User user = userDetails.getUser();
+        long row = commentService.removeComment(user, questionId, commentId);
+
+        return ResponseEntity.ok().body(row);
+    }
 }

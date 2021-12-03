@@ -1,13 +1,11 @@
-package com.sparta.showmethecode.repository.dao;
+package com.sparta.showmethecode.repository.querydsl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.showmethecode.domain.*;
-import com.sparta.showmethecode.dto.response.QReviewRequestDetailResponseDto;
 import com.sparta.showmethecode.repository.LanguageRepository;
 import com.sparta.showmethecode.repository.ReviewRequestCommentRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import com.sparta.showmethecode.repository.UserRepository;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.sparta.showmethecode.domain.QReviewRequest.*;
 import static com.sparta.showmethecode.domain.QReviewRequest.reviewRequest;
 import static com.sparta.showmethecode.domain.QReviewRequestComment.*;
 

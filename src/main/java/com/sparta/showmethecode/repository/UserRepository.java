@@ -1,8 +1,7 @@
 package com.sparta.showmethecode.repository;
 
 import com.sparta.showmethecode.domain.User;
-import com.sparta.showmethecode.repository.dao.UserDao;
-import org.springframework.data.domain.Page;
+import com.sparta.showmethecode.repository.querydsl.UserDao;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

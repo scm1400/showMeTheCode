@@ -56,7 +56,6 @@ public class CommentServiceTest {
         AddCommentDto dto = new AddCommentDto("댓글댓글");
         commentService.addComment(user1, reviewRequest.getId(), dto);
 
-        System.out.println("==================================");
 
         ReviewRequestDetailResponseDto reviewRequestDetailWithComment = reviewRequestRepository.getReviewRequestDetailWithComment(reviewRequest.getId());
 
@@ -81,5 +80,24 @@ public class CommentServiceTest {
                 .evalTotal(0)
                 .role(userRole)
                 .languages(Arrays.asList(new Language("Java"))).build();
+    }
+
+    @Test
+    @DisplayName("2. 댓글삭제 테스트")
+    void 댓글삭제() {
+        User user1 = userRepository.findByUsername("user1").get();
+        ReviewRequest reviewRequest = reviewRequestRepository.findByTitle("리뷰제목").get(0);
+        AddCommentDto dto = new AddCommentDto("댓글댓글");
+        commentService.addComment(user1, reviewRequest.getId(), dto);
+
+        ReviewRequestComment reviewRequestComment = reviewRequestCommentRepository.findAll().get(0);
+
+        em.flush();
+        em.clear();
+
+        long row = commentService.removeComment(user1, reviewRequest.getId(), reviewRequestComment.getId());
+
+        Assertions.assertEquals(1, row);
+        Assertions.assertEquals(0, reviewRequestCommentRepository.findAll().size());
     }
 }

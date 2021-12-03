@@ -1,8 +1,6 @@
-package com.sparta.showmethecode.repository.dao;
+package com.sparta.showmethecode.repository.querydsl;
 
 import com.sparta.showmethecode.domain.User;
-import com.sparta.showmethecode.dto.response.ReviewRequestListResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -122,7 +122,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
 
 
         return new ReviewRequestDetailResponseDto(
-                result.getId(), result.getRequestUser().getUsername(), result.getTitle(), result.getContent(),
+                result.getId(), result.getRequestUser().getUsername(), result.getTitle(), result.getContent(),result.getLanguageName(),
                 result.getStatus().toString(), result.getCreatedAt(), comments
         );
     }

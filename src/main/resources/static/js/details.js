@@ -10,6 +10,15 @@ $(document).ready(function() {
         contentType: "application/json;charset-utf-8;",
         success: function (res) {
             console.log(res);
+            $("#request-title").html(res.title)
+            $("#user-name").html(res.username)
+            $("#created-at").html(res.createdAt)
+            $("#content").html(res.content)
+            $("#sub-info__content").append(`<button class="ac-button is-sm is-solid is-gray  ac-tag ac-tag--blue "><span
+                                                class="ac-tag__hashtag">#&nbsp;</span><span
+                                                class="ac-tag__name">'${res.language_name}'</span></button>`)
+
+
         }
     })
 })

@@ -19,10 +19,33 @@ public class ReviewRequestDetailResponseDto {
 
     private LocalDateTime createdAt;
 
+    private ReviewAnswerResponseDto reviewAnswerResponseDto;
+
     private List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
 
+
     @QueryProjection
-    public ReviewRequestDetailResponseDto(Long reviewRequestId, String username, String title, String content, String status, LocalDateTime createdAt, List<CommentResponseDto> commentResponseDtoList) {
+    public ReviewRequestDetailResponseDto(
+            Long reviewRequestId,
+            String username, String title, String content, String status, LocalDateTime createdAt,
+            List<CommentResponseDto> commentResponseDtoList,
+            ReviewAnswerResponseDto reviewAnswerResponseDto
+    ) {
+        this.reviewRequestId = reviewRequestId;
+        this.username = username;
+        this.title = title;
+        this.content = content;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.commentResponseDtoList = commentResponseDtoList;
+        this.reviewAnswerResponseDto = reviewAnswerResponseDto;
+    }
+
+    public ReviewRequestDetailResponseDto(
+            Long reviewRequestId,
+            String username, String title, String content, String status, LocalDateTime createdAt,
+            List<CommentResponseDto> commentResponseDtoList
+    ) {
         this.reviewRequestId = reviewRequestId;
         this.username = username;
         this.title = title;

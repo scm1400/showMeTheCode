@@ -5,6 +5,7 @@ import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.sparta.showmethecode.domain.ReviewAnswer;
 import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.response.*;
@@ -113,6 +114,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                 .from(reviewRequest)
                 .join(reviewRequest.reviewRequestComments, reviewRequestComment).fetchJoin()
                 .join(reviewRequest.requestUser, user).fetchJoin()
+                .join(reviewRequest.reviewAnswer, reviewAnswer).fetchJoin()
                 .where(reviewRequest.id.eq(id))
                 .fetchFirst();
 
@@ -120,10 +122,28 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                 c -> new CommentResponseDto(c.getId(), c.getUser().getId(), c.getUser().getUsername(), c.getContent(), c.getCreatedAt())
         ).collect(Collectors.toList());
 
-
+        ReviewAnswer reviewAnswer = result.getReviewAnswer();
+        if (!Objects.isNull(reviewAnswer)) {
+            log.info("getReviewRequestDetailWithComment reviewAnswer = {}", reviewAnswer.getTitle());
+            ReviewAnswerResponseDto reviewAnswerResponseDto = new ReviewAnswerResponseDto(
+                    reviewAnswer.getId(),
+                    result.getId(),
+                    reviewAnswer.getTitle(),
+                    reviewAnswer.getContent(),
+                    reviewAnswer.getPoint(),
+                    reviewAnswer.getCreatedAt()
+            );
+            return new ReviewRequestDetailResponseDto(
+                    result.getId(), result.getRequestUser().getUsername(), result.getTitle(), result.getContent(),
+                    result.getStatus().toString(), result.getCreatedAt(),
+                    comments,
+                    reviewAnswerResponseDto
+            );
+        }
         return new ReviewRequestDetailResponseDto(
                 result.getId(), result.getRequestUser().getUsername(), result.getTitle(), result.getContent(),
-                result.getStatus().toString(), result.getCreatedAt(), comments
+                result.getStatus().toString(), result.getCreatedAt(),
+                comments
         );
     }
 

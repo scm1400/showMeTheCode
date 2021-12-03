@@ -4,7 +4,7 @@ import com.sparta.showmethecode.domain.ReviewAnswer;
 import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.domain.User;
-import com.sparta.showmethecode.dto.request.AddReviewDto;
+import com.sparta.showmethecode.dto.request.AddAnswerDto;
 import com.sparta.showmethecode.dto.request.EvaluateAnswerDto;
 import com.sparta.showmethecode.dto.request.UpdateAnswerDto;
 import com.sparta.showmethecode.dto.response.*;
@@ -37,11 +37,11 @@ public class ReviewerService {
      * 자신에게 요청된 리뷰가 아닌 경우에 대한 처리 필요
      */
     @Transactional
-    public void addReviewAndComment(User reviewer, Long reviewId, AddReviewDto addReviewDto) {
+    public void addReviewAndComment(User reviewer, Long reviewId, AddAnswerDto addAnswerDto) {
         if (isRequestedToMe(reviewId, reviewer)) {
             ReviewAnswer reviewAnswer = ReviewAnswer.builder()
-                    .title(addReviewDto.getTitle())
-                    .content(addReviewDto.getContent())
+                    .title(addAnswerDto.getTitle())
+                    .content(addAnswerDto.getContent())
                     .answerUser(reviewer)
                     .build();
             ReviewAnswer savedReviewAnswer = reviewAnswerRepository.save(reviewAnswer);

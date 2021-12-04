@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -98,7 +99,7 @@ public class UserService {
 
 
     public List<ReviewerInfoDto> findReviewerByLanguage(String languageName) {
-        List<User> reviewers = userRepository.findReviewerByLanguage(languageName);
+        List<User> reviewers = userRepository.findReviewerByLanguage(languageName.toUpperCase());
 
         return reviewers.stream().map(
                 r -> new ReviewerInfoDto(

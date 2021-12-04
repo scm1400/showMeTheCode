@@ -73,6 +73,7 @@
     </script>
     <script src="./js/ckeditor/ckeditor.js"></script>
     <script src="js/index.js"></script>
+    <script src="js/post_question.js"></script>
 
 </head>
 
@@ -632,51 +633,45 @@
     <section class="modal-card question-modal">
         <div class="question-modal__form e-form-question-modal" onsubmit="return false">
             <div class="modal-card-body">
+
                 <div class="form__item">
                     <label class="form__label" for="question-modal-title">제목</label>
-
                     <div class="ac-input-with-item--large question-modal__title ">
-
                         <input value="" data-kv="title" type="text" placeholder="제목을 입력해주세요.">
-
                     </div>
-
-                </div>
-                <div class="form__item">
-                    <label class="form__label" for="question-modal-tag">태그</label>
-
-                        <svg width="16" xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 16 16">
-                            <path fill="#3E4042" fill-rule="evenodd"
-                                  d="M5.773 1.455c-.283 0-.518.216-.542.498L5 4.727H2.545c-.3 0-.545.244-.545.546 0 .301.244.545.545.545H4.91l-.364 4.364h-2c-.3 0-.545.244-.545.545 0 .301.244.546.545.546h1.91l-.224 2.684c-.027.317.224.588.542.588.282 0 .518-.216.541-.498l.231-2.774H9.91l-.224 2.684c-.026.317.224.588.542.588.283 0 .518-.216.542-.498L11 11.273h2.454c.302 0 .546-.245.546-.546 0-.301-.244-.545-.546-.545h-2.363l.364-4.364h2c.3 0 .545-.244.545-.545 0-.302-.244-.546-.546-.546h-1.909l.224-2.684c.027-.317-.224-.588-.542-.588-.282 0-.518.216-.541.498l-.232 2.774H6.091l.224-2.684c.026-.317-.224-.588-.542-.588zM6 5.818l-.364 4.364H10l.364-4.364H6z"
-                                  clip-rule="evenodd"></path>
-                        </svg>
-
-
-                        <input type="text" value="" id="tags" data-role="tagsinput" placeholder="태그를 설정해주세요." initial-value="">
-
-                    <span class="input-tags__description input-tags__description--default">
-                      최대 10개의 태그를 달 수 있어요!
-                    </span>
-
                 </div>
 
+                <!--                <div class="form__item">-->
+                <!--                    <label class="form__label" for="question-modal-tag">태그</label>-->
+                <!--                    <svg width="16" xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 16 16">-->
+                <!--                        <path fill="#3E4042" fill-rule="evenodd"-->
+                <!--                              d="M5.773 1.455c-.283 0-.518.216-.542.498L5 4.727H2.545c-.3 0-.545.244-.545.546 0 .301.244.545.545.545H4.91l-.364 4.364h-2c-.3 0-.545.244-.545.545 0 .301.244.546.545.546h1.91l-.224 2.684c-.027.317.224.588.542.588.282 0 .518-.216.541-.498l.231-2.774H9.91l-.224 2.684c-.026.317.224.588.542.588.283 0 .518-.216.542-.498L11 11.273h2.454c.302 0 .546-.245.546-.546 0-.301-.244-.545-.546-.545h-2.363l.364-4.364h2c.3 0 .545-.244.545-.545 0-.302-.244-.546-.546-.546h-1.909l.224-2.684c.027-.317-.224-.588-.542-.588-.282 0-.518.216-.541.498l-.232 2.774H6.091l.224-2.684c.026-.317-.224-.588-.542-.588zM6 5.818l-.364 4.364H10l.364-4.364H6z"-->
+                <!--                              clip-rule="evenodd"></path>-->
+                <!--                    </svg>-->
+                <!--                    <input type="text" value="" id="tags" data-role="tagsinput" placeholder="태그를 설정해주세요."-->
+                <!--                           initial-value="">-->
+                <!--                    <span class="input-tags__description input-tags__description&#45;&#45;default">-->
+                <!--                      최대 10개의 태그를 달 수 있어요!-->
+                <!--                    </span>-->
+                <!--                </div>-->
+
                 <div class="form__item">
-
-                    <label class="form__label" for="select-language">언어 선택</label>
-                    <div class="select is-fullwidth">
-                        <select id="select-language">
-                            <option>Java</option>
-                            <option>Python</option>
-                        </select>
+                    <label class="form__label" for="language-input">프로그래밍 언어이름으로 리뷰어 검색</label>
+                    <div class="ac-input-with-item--large question-modal__language ">
+                        <input id="language-input" value="" data-kv="language" type="text" placeholder="언어를 입력해주세요.">
+                        <button class="button is-primary" onclick="findReviewer()">확인</button>
                     </div>
+                </div>
 
-                    <br/>
 
+                <div id="select-reviewer-box" class="form__item is-hidden">
                     <label class="form__label" for="select-reviewer">리뷰어 지정</label>
                     <div class="select is-fullwidth">
                         <select id="select-reviewer">
                             <option>
-                                <span>리뷰어이름</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>리뷰어랭킹</span>
+                                <span>JavaGod</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                                <span>답변수: 50</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                                <span>평균점수: 4.45</span>
                             </option>
                         </select>
                     </div>
@@ -690,6 +685,7 @@
 
                 </div>
             </div>
+
             <footer class="modal-card-foot">
 
                 <button id="close_modal"
@@ -697,7 +693,9 @@
                     취소
                 </button>
 
-                <button id="send" class="ac-button is-lg is-solid is-primary question-modal__button--cancel e-submit-question-modal" onclick="postQuestion()">
+                <button id="send"
+                        class="ac-button is-lg is-solid is-primary question-modal__button--cancel e-submit-question-modal"
+                        onclick="postQuestion()">
                     저장
                 </button>
             </footer>

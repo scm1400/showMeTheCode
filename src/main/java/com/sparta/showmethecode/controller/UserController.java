@@ -8,6 +8,7 @@ import com.sparta.showmethecode.dto.response.*;
 import com.sparta.showmethecode.service.ReviewerService;
 import com.sparta.showmethecode.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 public class UserController {
@@ -70,9 +72,10 @@ public class UserController {
      * 해당 언어의 리뷰어 조회 API
      */
     @GetMapping("/user/language")
-    public ResponseEntity<List<ReviewerInfoDto>> findReviewerByLanguage(@RequestParam String language) {
+    public ResponseEntity findReviewerByLanguage(@RequestParam String language) {
+        log.info("findReviewerByLanguage language = {}", language);
         List<ReviewerInfoDto> reviewerInfoList = userService.findReviewerByLanguage(language);
-        return ResponseEntity.ok(reviewerInfoList);
+        return ResponseEntity.ok().body(reviewerInfoList);
     }
 
 

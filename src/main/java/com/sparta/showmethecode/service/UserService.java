@@ -25,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -48,8 +49,6 @@ public class UserService {
     @Transactional
     public User saveUser(SignupRequestDto requestDto) {
         UserRole userRole = requestDto.isReviewer() ? UserRole.ROLE_REVIEWER : UserRole.ROLE_USER;
-
-        log.info("saveUser role = {}", userRole);
 
         User user = User.builder()
                 .username(requestDto.getUsername())
@@ -98,16 +97,19 @@ public class UserService {
     }
 
 
+    /**
+     * 언어이름으로 리뷰어 조회 API
+     */
     public List<ReviewerInfoDto> findReviewerByLanguage(String languageName) {
         List<User> reviewers = userRepository.findReviewerByLanguage(languageName.toUpperCase());
-
+        DecimalFormat decimalFormat = new DecimalFormat("#.00");
         return reviewers.stream().map(
                 r -> new ReviewerInfoDto(
                         r.getId(),
                         r.getUsername(),
                         r.getLanguages().stream().map(l -> new String(l.getName())).collect(Collectors.toList()),
                         r.getAnswerCount(),
-                        r.getEvalTotal() / r.getEvalCount())
+                        r.getEvalCount() == 0 ? 0 : Double.valueOf(decimalFormat.format(r.getEvalTotal() / r.getEvalCount())))
         ).collect(Collectors.toList());
     }
 

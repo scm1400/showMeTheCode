@@ -58,8 +58,12 @@ public class ReviewRequestService {
      */
     @Transactional
     public void addReviewRequest(ReviewRequestDto requestDto, User user) {
+        User reviewer = userRepository.findById(requestDto.getReviewerId()).orElseThrow(
+                () -> new IllegalArgumentException("존재하지 않는 리뷰어입니다.")
+        );
+
         ReviewRequest reviewRequest
-                = new ReviewRequest(user, requestDto.getTitle(), requestDto.getContent(), ReviewRequestStatus.REQUESTED, requestDto.getLanguage().toUpperCase());
+                = new ReviewRequest(user, reviewer, requestDto.getTitle(), requestDto.getContent(), ReviewRequestStatus.REQUESTED, requestDto.getLanguage().toUpperCase());
 
         reviewRequestRepository.save(reviewRequest);
     }

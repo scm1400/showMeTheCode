@@ -51,8 +51,6 @@ public class ReviewRequestController {
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody ReviewRequestDto requestDto) {
 
-        System.out.println(requestDto);
-
         User user = userDetails.getUser();
         reviewRequestService.addReviewRequest(requestDto, user);
 

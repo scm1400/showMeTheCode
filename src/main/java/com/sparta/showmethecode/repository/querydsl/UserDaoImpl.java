@@ -18,6 +18,9 @@ public class UserDaoImpl implements UserDao {
 
     private final JPAQueryFactory query;
 
+    /**
+     * 언어이름으로 리뷰어 조회
+     */
     @Override
     public List<User> findReviewerByLanguage(String languageName) {
 

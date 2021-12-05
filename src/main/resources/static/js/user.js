@@ -60,8 +60,7 @@ function signin() {
             sessionStorage.setItem("mytoken", res['token'])
             sessionStorage.setItem("myAuthority", res['authority'])
             alert('로그인에 성공했습니다.')
-            window.location.reload()
-            alert('로그인에 성공했습니다.')
+            location.href = "index.html";
         }, error: function(err) {
             alert('로그인에 실패했습니다.')
         }
@@ -109,11 +108,12 @@ function signup() {
         success: function (res) {
             // console.log(res)
             alert('회원가입에 성공했습니다.')
-            window.location.reload()
+            location.href = "index.html";
         }, error: function(err) {
             // console.log(err)
             // console.log(err.responseJSON.message)
-            alert(err.responseJSON.message)
+            console.log(err);
+            alert("회원가입에 실패했습니다.");
         }
     })
 }

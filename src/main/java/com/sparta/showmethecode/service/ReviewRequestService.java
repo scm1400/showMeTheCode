@@ -34,7 +34,7 @@ public class ReviewRequestService {
      * 코드리뷰 요청목록 API
      */
     @Transactional(readOnly = true)
-    public ReviewRequestListResponseDto getReviewRequestList(int page, int size, String sortBy, boolean isAsc) {
+    public PageResponseDto getReviewRequestList(int page, int size, String sortBy, boolean isAsc) {
         Pageable pageable = makePageable(page, size, sortBy, isAsc);
 
         Page<ReviewRequest> reviewRequests = reviewRequestRepository.findAll(pageable);
@@ -45,12 +45,34 @@ public class ReviewRequestService {
                                 r.getTitle(),
                                 r.getContent(),
                                 r.getLanguageName(),
-                                r.getStatus().toString(),
+                                r.getStatus().getDescription(),
                                 r.getCreatedAt()
                         )
                 ).collect(Collectors.toList());
 
-        return new ReviewRequestListResponseDto(reviewRequestResponseDtos, reviewRequests.getTotalPages(), (int) reviewRequests.getTotalElements(), page, size);
+        return new PageResponseDto<ReviewRequestResponseDto>(
+                reviewRequestResponseDtos,
+                reviewRequests.getTotalPages(),
+                reviewRequests.getTotalElements(),
+                page, size
+        );
+    }
+
+    /**
+     * 코드리뷰 검색 API
+     */
+    @Transactional(readOnly = true)
+    public PageResponseDto<ReviewRequestResponseDto> searchByTitleOrComment(
+            String keyword,
+            int page, int size, String sortBy, boolean isAsc
+    ) {
+        Pageable pageable = makePageable(page, size, sortBy, isAsc);
+        Page<ReviewRequestResponseDto> results = reviewRequestRepository.findSearchByTitleOrCommentAdvanced(keyword, pageable, isAsc);
+
+        return new PageResponseDto<ReviewRequestResponseDto>(
+                results.getContent(),
+                results.getTotalPages(), results.getTotalElements(), page, size
+        );
     }
 
     /**
@@ -99,21 +121,6 @@ public class ReviewRequestService {
             reviewRequestRepository.deleteById(reviewId);
         }
     }
-
-    /**
-     * 코드리뷰 검색 API
-     */
-    @Transactional(readOnly = true)
-    public ReviewRequestListResponseDto searchByTitleOrComment(
-            String keyword,
-            int page, int size, String sortBy, boolean isAsc
-    ) {
-        Pageable pageable = makePageable(page, size, sortBy, isAsc);
-        Page<ReviewRequestResponseDto> results = reviewRequestRepository.findSearchByTitleOrCommentAdvanced(keyword, pageable, isAsc);
-
-        return new ReviewRequestListResponseDto(results.getContent(), results.getTotalPages(), (int) results.getTotalElements(), page, size);
-    }
-
 
     private Pageable makePageable(int page, int size, String sortBy, boolean isAsc) {
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;

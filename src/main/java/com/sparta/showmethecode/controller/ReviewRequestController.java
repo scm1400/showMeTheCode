@@ -26,7 +26,7 @@ public class ReviewRequestController {
      * 코드리뷰 요청목록 API
      */
     @GetMapping("/questions")
-    public ResponseEntity<ReviewRequestListResponseDto> getReviewRequestList(
+    public ResponseEntity<PageResponseDto> getReviewRequestList(
             @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "createdAt") String sortBy, @RequestParam(defaultValue = "true") Boolean isAsc,
             @RequestParam(required = false) String query
@@ -38,9 +38,9 @@ public class ReviewRequestController {
             return ResponseEntity.ok(reviewRequestService.searchByTitleOrComment(query, page, size, sortBy, isAsc));
         }
 
-        ReviewRequestListResponseDto reviewRequestList = reviewRequestService.getReviewRequestList(page, size, sortBy, isAsc);
+        PageResponseDto result = reviewRequestService.getReviewRequestList(page, size, sortBy, isAsc);
 
-        return ResponseEntity.ok(reviewRequestList);
+        return ResponseEntity.ok(result);
     }
 
     /**

@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ReviewRequestListResponseDto {
 
-    private List<ReviewRequestResponseDto> list = new ArrayList<>();
+    private List<ReviewRequestResponseDto> data = new ArrayList<>();
 
     private int totalPage;
     private int totalElements;

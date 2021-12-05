@@ -18,7 +18,7 @@ insert into language(id, created_at, updated_at, name, user_id)
 values(2, current_timestamp, current_timestamp, 'PYTHON', 4);
 
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)
-values (1, current_timestamp, current_timestamp, '테스트내용', 'java', 'REQUESTED', '<h1>테스트제목</h1>', 2, 1);
+values (1, current_timestamp, current_timestamp, '테스트내용', 'java', 'REQUESTED', '테스트제목', 2, 1);
 
 insert into review_answer(id, created_at, updated_at, content, point, title, answer_user_id, review_request_id)
 values (1, current_timestamp, current_timestamp, '테스트내용', 5, '테스트답변제목', 2, 1);

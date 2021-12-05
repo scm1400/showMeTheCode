@@ -1,3 +1,11 @@
+let reviewerId;
+
+$('document').ready(function() {
+   $('select-reviewer').on("change", () => {
+       reviewerId = $(this).val()
+   })
+})
+
 function findReviewer() {
     $('#select-reviewer').empty();
     let query = $('#language-input').val()
@@ -6,16 +14,14 @@ function findReviewer() {
         type: "GET",
         url: `/user/language?language=${query}`,
         success: function(res) {
-            console.log(res);
             for (let i=0;i<res.length;i++) {
                 let id = res[i]['id'];
                 let username = res[i]['username'];
                 let answerCount = res[i]['answerCount']; // 답변수
                 let point = res[i]['point']
 
-                console.log(id, username, answerCount, point);
 
-                let option_html = `<option>
+                let option_html = `<option value=${id}>
                                     <span>${username}</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                                     <span>답변수: ${answerCount}</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                                     <span>평균점수: ${point}</span>
@@ -29,14 +35,20 @@ function findReviewer() {
 }
 
 function postQuestion(){
-    let value = CKEDITOR.instances['contents'].getData()
-    console.log(value);
+    let content = CKEDITOR.instances['contents'].getData()
+    let title = $('#title-input').val()
+    let language = $('#language-input').val()
 
-    let data = {"code": value};
+    let data = {
+        title: title,
+        content: content,
+        language: language,
+        reviewerId: reviewerId,
+    };
 
     $.ajax({
         type: "POST",
-        url: "/reviewer/request",
+        url: "/question",
         contentType: "application/json;charset-utf-8;",
         data: JSON.stringify(data),
         success: function(res) {

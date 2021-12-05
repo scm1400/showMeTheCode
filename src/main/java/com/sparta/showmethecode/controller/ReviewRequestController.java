@@ -50,11 +50,12 @@ public class ReviewRequestController {
     public ResponseEntity<String> addReviewRequest(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody ReviewRequestDto requestDto) {
+
+        System.out.println(requestDto);
+
         User user = userDetails.getUser();
         reviewRequestService.addReviewRequest(requestDto, user);
 
-        log.info("addReviewRequest = {}", requestDto);
-        
         return ResponseEntity.ok("ok");
     }
 

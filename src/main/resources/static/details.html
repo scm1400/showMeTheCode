@@ -2555,7 +2555,7 @@
 
                                 <div class="flex-row feature__status e-status e-hover-toggle" data-status="1">
 
-                                    <button class="ac-button is-md is-solid is-primary button-rounded undefined">해결됨
+                                    <button id="request-status" class="ac-button is-md is-solid is-primary button-rounded undefined">해결됨
                                     </button>
                                 </div>
 
@@ -2598,18 +2598,21 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </section>
-        <section class="community-post-detail__section community-post-detail__answer">
-            <div class="section__content">
 
+        <section class="community-post-detail__section community-post-detail__answer">
+
+            <div class="section__content">
                 <div class="answer-info">
                     <div class="answer-info__header">
-                        <div class="header__title"><span class="title-icon">A</span> 총 1개의 답변이 달렸습니다</div>
+                        <div class="header__title" id="question-comment-qty">총 0개의 댓글이 달렸습니다</div>
                     </div>
+
                     <div class="community-post-info__content">
                         <div class="content__body">
 
-                            <div class="answer__comment" data-id="122943">
+                            <div id="question-comment-content-box" class="answer__comment" data-id="122943">
                                 <div class="comment__index">1</div>
                                 <div class="comment__card">
                                     <div class="comment__header flex-row">
@@ -2617,14 +2620,14 @@
                                              src="https://cdn.inflearn.com/public/main/profile/default_profile.png"
                                              alt="[아이디] 프로필">
                                         <div class="flex-column">
-                                            <div class="flex-row">
+                                            <div class="flex-row" id="question-comment-username">
                                                 <a href="/users/@deeplyrooted" class="comment__user-name">[아이디]</a>
                                             </div>
                                             <span class="comment__updated-at">4달 전</span>
                                         </div>
                                     </div>
                                     <div class="comment__body markdown-body">
-                                        <p>코드를 이렇게 고치는게 좋아보여요.</p>
+                                        <p id="question-comment-content">코드를 이렇게 고치는게 좋아보여요.</p>
                                         <div class="comment__features flex-row">
 
                                             <div class="comment__like e-comment-like" data-id="122943" data-status="1"
@@ -2644,92 +2647,27 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="comment__re-comment">
-                                    <div class="re-comment__header flex-row">
-                                        <h4 class="re-comment__title">댓글</h4>
-                                        <button class="ac-button is-md is-text re-comment__fold-button e-fold">접기
-                                            <svg width="16" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 viewBox="0 0 16 16">
-                                                <path fill="#212529" fill-rule="evenodd"
-                                                      d="M3.22 9.78c-.293-.293-.293-.767 0-1.06l4.25-4.25c.293-.293.767-.293 1.06 0l4.25 4.25c.293.293.293.767 0 1.06-.293.293-.767.293-1.06 0L8 6.06 4.28 9.78c-.293.293-.767.293-1.06 0z"
-                                                      clip-rule="evenodd"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                    <div class="re-comment__body">
 
-                                        <div class="re-comment flex-row" data-id=123033>
-                                            <img class="re-comment__profile"
-                                                 src="https://cdn.inflearn.com/public/main/profile/default_profile.png"
-                                                 alt="">
-                                            <div class="re-comment__content flex-column">
-                                                <div class="re-comment__info flex-row">
-
-                                                    <button class="ac-button is-sm is-solid is-gray re-comment__writer ac-tag  ">
-                                                        <span class="ac-tag__hashtag">#&nbsp;</span><span
-                                                            class="ac-tag__name">질문자</span></button>
-                                                    <h6 class="re-comment__user-name">[아이디]</h6>
-                                                    <span class="re-comment__updated-at">·&nbsp;4달 전</span>
-                                                </div>
-                                                <div class="re-comment__body markdown-body"><p
-                                                        style="box-sizing: border-box; margin: 0px 0px 16px; padding: 0px; line-height: 1.5; font-size: 16px; color: #24292e; font-family: 'Noto Sans KR'; background-color: #ffffff;">
-                                                    <p>댓글1줄</p>
-                                                    <p style="box-sizing: border-box; margin: 0px 0px 16px; padding: 0px; line-height: 1.5; font-size: 16px; color: #24292e; font-family: 'Noto Sans KR'; background-color: #ffffff;">
-                                                        댓글 2번째줄</p></div>
-
-                                                <div class="re-comment__footer flex-row">
-
-                                                    <button class="ac-button is-md is-text comment__edit e-edit-re-comment">
-                                                        수정
-                                                    </button>
-
-                                                    <button class="ac-button is-md is-text comment__remove e-remove-re-comment">
-                                                        삭제
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="re-comment__open-editor-button-container">
-
-                                            <button id="comment-button"
-                                                    class="ac-button is-md is-text re-comment__open-editor-button e-open-re-comment-editor">
-                                                댓글 달기
-                                            </button>
-                                        </div>
-                                        <div id="comment-hidden" class="re-comment__form re-comment__form is-hidden">
-                                            <textarea name="content-comment" class="form-control" id="content-comment">dd</textarea>
-                                            <div class="re-comment__form-footer flex-row">
-                                                <div class="flex-right">
-
-                                                    <button class="ac-button is-md is-solid is-primary e-post-re-comment">
-                                                        답변 등록
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-                            <div class="answer__comment" data-id="new">
+
+                            <div id="question-comment-form-box" class="answer__comment" data-id="new">
                                 <div class="comment__card comment__card--new">
                                     <div class="comment__header flex-row">
                                         <img class="comment__user-profile"
-                                             src="https://cdn.inflearn.com/public/main/profile/default_profile.png"
-                                             alt="[아이디] 프로필">
+                                             src="https://cdn.inflearn.com/public/main/profile/default_profile.png" alt="[아이디] 프로필">
                                         <div class="flex-column">
-                                            <h5 class="comment__user-name">[아이디]님, 코드리뷰를 작성해주세요!</h5>
-                                            <span class="comment__updated-at">모두에게 도움이 되는 코드리뷰의 주인공이 되어주세요!</span>
+                                            <h5 class="comment__user-name">댓글을 작성해주세요.</h5>
                                         </div>
                                     </div>
                                     <div class="comment__body markdown-body">
-                                        <textarea name="content-answer" class="form-control"
-                                                  id="content-answer">dd</textarea>
+                                        <textarea name="content-comment" class="form-control" id="content-comment">
+
+                                        </textarea>
                                     </div>
                                     <div class="comment__footer flex-row">
                                         <div class="flex-right">
 
-                                            <button class="ac-button is-md is-solid is-primary e-post-comment">답변 등록
-                                            </button>
+                                            <button onclick="addComment()" class="ac-button is-md is-solid is-primary e-post-comment">댓글등록</button>
                                         </div>
                                     </div>
                                 </div>
@@ -2738,6 +2676,7 @@
                     </div>
                 </div>
             </div>
+
         </section>
 
     </main>

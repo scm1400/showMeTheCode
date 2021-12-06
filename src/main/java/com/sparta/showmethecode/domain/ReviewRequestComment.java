@@ -25,6 +25,8 @@ public class ReviewRequestComment extends Timestamped{
     @GeneratedValue
     private Long id;
 
+    @Lob
+    @Column(nullable = false)
     private String content;
 
     @JoinColumn(name = "user_id")

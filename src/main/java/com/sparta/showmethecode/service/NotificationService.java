@@ -92,7 +92,7 @@ public class NotificationService {
                 .receiver(receiver)
                 .content(content)
                 .review(review)
-                .url("/reviews/" + review.getId())
+                .url("/reviewer/" + review.getId())
                 .isRead(false)
                 .build();
     }

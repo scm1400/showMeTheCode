@@ -14,10 +14,13 @@ function getDetails(id) {
         url: `/details?id=${id}`,
         contentType: "application/json;charset-utf-8;",
         success: function (res) {
-            console.log(res);
-            $("#request-title").html(res.title)
+            let date = new Date(res.createdAt)
+            let title = `<h1>`
+            title = title + res.title + `</h1>`
+            date = dateFormat(date)
+            $("#request-title").append(title)
             $("#user-name").html(res.username)
-            $("#created-at").html(res.createdAt)
+            $("#created-at").html(`&nbsp;· `+ date)
             $("#content").html(res.content)
             $("#request-status").html(res.status)
             $("#sub-info__content").append(`<button class="ac-button is-sm is-solid is-gray  ac-tag ac-tag--blue "><span
@@ -25,7 +28,6 @@ function getDetails(id) {
                                                 class="ac-tag__name">'${res.languageName}'</span></button>`)
 
             let reviewAnswer = res['reviewAnswer'];
-
 
             $('#question-comment-content-box').empty()
             let comments = res['comments'];
@@ -120,4 +122,14 @@ function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function dateFormat(date) {
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    month = month >= 10 ? month : '0' + month;
+    day = day >= 10 ? day : '0' + day;
+
+    return date.getFullYear() + '.' + month + '.' + day;
 }

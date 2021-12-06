@@ -27,6 +27,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.querydsl.core.types.ExpressionUtils.count;
+import static com.querydsl.core.types.ExpressionUtils.path;
 import static com.sparta.showmethecode.domain.QReviewAnswer.reviewAnswer;
 import static com.sparta.showmethecode.domain.QReviewRequest.reviewRequest;
 import static com.sparta.showmethecode.domain.QReviewRequestComment.reviewRequestComment;
@@ -205,8 +206,9 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
     }
 
     @Override
-    public List<ReviewRequestResponseDto> findMyReviewRequestList(Long id) {
-        List<ReviewRequestResponseDto> results = query
+    public Page<ReviewRequestResponseDto> findMyReviewRequestList(Long id, Pageable pageable) {
+
+        JPAQuery<ReviewRequestResponseDto> jpaQuery = query
                 .select(new QReviewRequestResponseDto(
                                 reviewRequest.id,
                                 user.username,
@@ -221,16 +223,20 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                         )
                 )
                 .from(reviewRequest)
-                .join(reviewRequest.requestUser, user).fetchJoin()
+                .join(reviewRequest.requestUser, user)
                 .where(user.id.eq(id))
-                .fetch();
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize());
 
-        return results;
+        JPQLQuery<ReviewRequestResponseDto> pagination = getQuerydsl().applyPagination(pageable, jpaQuery);
+
+        long totalCount = pagination.fetchCount();
+        return new PageImpl<>(pagination.fetch(), pageable, totalCount);
     }
 
     @Override
-    public List<ReviewRequestResponseDto> findMyReceivedRequestList(Long id) {
-        List<ReviewRequestResponseDto> result = query
+    public Page<ReviewRequestResponseDto> findMyReceivedRequestList(Long id, Pageable pageable) {
+        JPAQuery<ReviewRequestResponseDto> jpaQuery = query
                 .select(new QReviewRequestResponseDto(
                                 reviewRequest.id,
                                 user.username,
@@ -245,11 +251,13 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                         )
                 )
                 .from(reviewRequest)
-                .join(reviewRequest.answerUser, user).fetchJoin()
-                .where(user.id.eq(id))
-                .fetch();
+                .join(reviewRequest.answerUser, user)
+                .where(user.id.eq(id));
 
-        return result;
+        JPQLQuery<ReviewRequestResponseDto> pagination = getQuerydsl().applyPagination(pageable, jpaQuery);
+        long totalCount = pagination.fetchCount();
+
+        return new PageImpl<>(pagination.fetch(), pageable, totalCount);
     }
 
     @Override

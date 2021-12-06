@@ -1,5 +1,6 @@
 package com.sparta.showmethecode.service;
 
+import com.sparta.showmethecode.dto.response.PageResponseDto;
 import com.sparta.showmethecode.security.JwtUtils;
 import com.sparta.showmethecode.security.UserDetailsServiceImpl;
 import com.sparta.showmethecode.domain.Language;
@@ -16,6 +17,10 @@ import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import com.sparta.showmethecode.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -113,7 +118,26 @@ public class UserService {
         ).collect(Collectors.toList());
     }
 
-    public List<ReviewRequestResponseDto> getMyReviewRequestList(User user) {
-        return reviewRequestRepository.findMyReviewRequestList(user.getId());
+    /**
+     * 내가 등록한 리뷰요청목록 조회 API
+     */
+    public PageResponseDto getMyReviewRequestList(User user, int page, int size, String sortBy, boolean isAsc) {
+        Pageable pageable = makePageable(page, size, sortBy, isAsc);
+
+        Page<ReviewRequestResponseDto> reviewRequests = reviewRequestRepository.findMyReviewRequestList(user.getId(), pageable);
+
+        return new PageResponseDto<ReviewRequestResponseDto>(
+                reviewRequests.getContent(),
+                reviewRequests.getTotalPages(),
+                reviewRequests.getTotalElements(),
+                page, size
+        );
+    }
+
+    private Pageable makePageable(int page, int size, String sortBy, boolean isAsc) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+
+        return PageRequest.of(page, size, sort);
     }
 }

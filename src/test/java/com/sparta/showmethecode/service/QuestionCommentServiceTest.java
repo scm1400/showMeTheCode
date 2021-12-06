@@ -60,7 +60,7 @@ public class QuestionCommentServiceTest {
 
         ReviewRequestDetailResponseDto reviewRequestDetailWithComment = reviewRequestRepository.getReviewRequestDetailWithComment(reviewRequest.getId());
 
-        List<CommentResponseDto> commentResponseDtoList = reviewRequestDetailWithComment.getCommentResponseDtoList();
+        List<CommentResponseDto> commentResponseDtoList = reviewRequestDetailWithComment.getComments();
 
         Assertions.assertEquals("댓글댓글", commentResponseDtoList.get(0).getContent());
     }

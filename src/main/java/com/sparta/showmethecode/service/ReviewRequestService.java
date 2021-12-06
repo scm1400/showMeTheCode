@@ -114,13 +114,6 @@ public class ReviewRequestService {
         }
     }
 
-    private Pageable makePageable(int page, int size, String sortBy, boolean isAsc) {
-        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Sort sort = Sort.by(direction, sortBy);
-
-        return PageRequest.of(page, size, sort);
-    }
-
     /**
      * 코드리뷰 단건조회 API (코드리뷰 요청 상세정보)
      */
@@ -156,6 +149,13 @@ public class ReviewRequestService {
                 reviewRequests.getTotalElements(),
                 page, size
         );
+    }
+
+    private Pageable makePageable(int page, int size, String sortBy, boolean isAsc) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+
+        return PageRequest.of(page, size, sort);
     }
 
 }

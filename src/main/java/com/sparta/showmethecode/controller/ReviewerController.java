@@ -113,14 +113,14 @@ public class ReviewerController {
      * 나에게 요청된 리뷰목록 조회
      */
     @GetMapping("/user/received")
-    public ResponseEntity<List<ReviewRequestResponseDto>> getMyReceivedList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<PageResponseDto> getMyReceivedList(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "createdAt") String sortBy, @RequestParam(defaultValue = "true") Boolean isAsc
+    ) {
         User user = userDetails.getUser();
 
-        List<ReviewRequestResponseDto> response = reviewerService.getMyReceivedRequestList(user);
-
-        if (response == null) {
-            System.out.println("조회된 목록이 없습니다.");
-        }
+        PageResponseDto response = reviewerService.getMyReceivedRequestList(user, page, size, sortBy, isAsc);
 
         return ResponseEntity.ok(response);
     }

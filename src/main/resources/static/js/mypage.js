@@ -1,30 +1,90 @@
+
+$(document).ready(function () {
+    let mytoken = sessionStorage.getItem("mytoken");
+    let myAuthority = sessionStorage.getItem("myAuthority")
+
+    console.log(mytoken, myAuthority)
+
+
+    $('#mypage-menu-list').empty()
+    if (mytoken != null && myAuthority != null) {
+        if (myAuthority === "ROLE_USER") {
+            let tmp_html1 = `<li id="menu-received">
+                                    <a class="btn_wrap is_active " onclick="myReceivedQuestionList()">
+                                        <span>나에게 요청된 코드리뷰 목록</span>
+                                    </a>
+                                </li>`
+            $('#mypage-menu-list').append(tmp_html1)
+
+        } else if (myAuthority === "ROLE_REVIEWER") {
+            $('#mypage-menu-list').append(`<li id="menu-received">
+                                    <a class="btn_wrap is_active " onclick="myReceivedQuestionList()">
+                                        <span>나에게 요청된 코드리뷰 목록</span>
+                                    </a>
+                                </li>
+                                <li id="menu-request">
+                                    <a class="btn_wrap  " onclick="myRequestQuestionList()">
+                                        <span>내가 요청한 코드리뷰 목록</span>
+                                    </a>
+                                </li>`)
+        }
+    }
+})
+
+
 // ========================================
 // 요청받은 코드리뷰 목록 조회
 // ========================================
-function ReceivedRequestList() {
+function myReceivedQuestionList() {
 
     $.ajax({
         type: "GET",
         url: `/uesr/received`,
         success: function (res) {
+            $('#question-list').empty()
+            console.log(res);
+
             let reviews = res['reviews']
-            if (reviews.length > 0) {
-                for (let i = 0; i < reviews.length; i++) {
-                    let tmp_html = `<li class="question-container">
-                                    <a href="/questions/4">
+            addReviewList(reviews);
+        }
+    })
+}
+
+// ========================================
+// 내가 요청한 코드리뷰 목록
+// ========================================
+function myRequestQuestionList() {
+
+    $.ajax({
+        type: "GET",
+        url: "/user/requests",
+        success: function (res) {
+            $('#question-list').empty()
+            console.log(res);
+
+            let reviews = res['reviews']
+            addReviewList(reviews);
+        }
+    })
+}
+
+function addReviewList(reviews) {
+    if (reviews.length > 0) {
+        for (let i = 0; i < reviews.length; i++) {
+            let tmp_html = `<li class="question-container">
+                                    <a onclick="showQuestionDetails('${reviews[i].reviewRequestId}')">
                                         <div class="question-list__question  e-detail">
                                             <div class="question__info">
                                                 <div class="question__info-cover">
                                                     <div class="question__info--main">
                                                         <div class="question__title">
                                                             <h3 class="title__text">
-                                                                <span>코드리뷰 부탁드립니다.</span>
+                                                                <span>${reviews[i].title}</span>
                                                                 <span class="infd-icon icon-box-24"><svg width="24" height="24"  width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path fill="#00C471" clip-rule="evenodd" d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm16 336c0 8.822-7.178 16-16 16H48c-8.822 0-16-7.178-16-16V112c0-8.822 7.178-16 16-16h416c8.822 0 16 7.178 16 16v288zM112 232c30.928 0 56-25.072 56-56s-25.072-56-56-56-56 25.072-56 56 25.072 56 56 56zm0-80c13.234 0 24 10.766 24 24s-10.766 24-24 24-24-10.766-24-24 10.766-24 24-24zm207.029 23.029L224 270.059l-31.029-31.029c-9.373-9.373-24.569-9.373-33.941 0l-88 88A23.998 23.998 0 0 0 64 344v28c0 6.627 5.373 12 12 12h360c6.627 0 12-5.373 12-12v-92c0-6.365-2.529-12.47-7.029-16.971l-88-88c-9.373-9.372-24.569-9.372-33.942 0zM416 352H96v-4.686l80-80 48 48 112-112 80 80V352z"  fill-rule="evenodd"/></svg></span>
                                                             </h3>
                                                         </div>
                                                         <p class="question__body">
-                                                            제가 작성한 코드가 어떤지 봐주세요.
-
+                                                           ${reviews[i].content}
                                                         </p>
 
                                                         <div class="question__tags question__tags--exist">
@@ -35,9 +95,9 @@ function ReceivedRequestList() {
                                                     </div>
                                                     <div class="question__info-footer">
                                                         <div class="footer__cover">
-                                                            <span class="footer__name">아이디</span>
+                                                            <span class="footer__name">${reviews[i].username}</span>
                                                             <span class="footer__dot"> ·</span>
-                                                            <span class="footer__info">1시간 전 · #Java</span>
+                                                            <span class="footer__info">${reviews[i].createdAt} · ${reviews[i].language}</span>
                                                         </div>
 
                                                         <div class="footer__additional-info">
@@ -54,7 +114,7 @@ function ReceivedRequestList() {
 
                                                             <div class="additional-info ">
                                                                 <span class="additional-info__icon"><span class="infd-icon icon-box-16"><svg width="16" xmlns="http://www.w3.org/2000/svg" width="16" height="16"  viewBox="0 0 384 512"><path fill="#616568"  d="M336 0H48C21.49 0 0 21.49 0 48v464l192-112 192 112V48c0-26.51-21.49-48-48-48zm16 456.287l-160-93.333-160 93.333V48c0-8.822 7.178-16 16-16h288c8.822 0 16 7.178 16 16v408.287z"></path></svg></span></span>
-                                                                <span class="additional-info__count ">0</span>
+                                                                <span class="additional-info__count ">${reviews[i].commentCount}/span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -64,12 +124,23 @@ function ReceivedRequestList() {
                                         </div>
                                     </a>
                                 </li>`
-                    $('#received-list').append(tmp_html);
-                }
-            } else {
-                let tmp_html = `<p>조회된 결과가 없습니다.</p>`
-                $('#received-list').append(tmp_html);
-            }
+            $('#question-list').append(tmp_html);
         }
-    })
+    } else {
+        let tmp_html = `<p>조회된 결과가 없습니다.</p>`
+        $('#received-list').append(tmp_html);
+    }
+}
+
+
+
+
+function showQuestionDetails(id) {
+    location.href = `details.html?id=${id}`
+}
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }

@@ -1,57 +1,59 @@
-$(document).ready(function() {
+$(document).ready(function () {
+	let id = getParameterByName("id");
 
-    let id = getParameterByName('id');
-
-    getDetails(id)
-})
+	getDetails(id);
+});
 
 // ========================================
 // 상세내용 랜더링
 // ========================================
 function getDetails(id) {
-    $.ajax({
-        type: "GET",
-        url: `/details?id=${id}`,
-        contentType: "application/json;charset-utf-8;",
-        success: function (res) {
-            console.log(res);
-            $("#request-title").html(res.title)
-            $("#user-name").html(res.username)
-            $("#created-at").html(res.createdAt)
-            $("#content").html(res.content)
-            $("#request-status").html(res.status)
-            $("#sub-info__content").append(`<button class="ac-button is-sm is-solid is-gray  ac-tag ac-tag--blue "><span
+	$.ajax({
+		type: "GET",
+		url: `/details?id=${id}`,
+		contentType: "application/json;charset-utf-8;",
+		success: function (res) {
+			let date = new Date(res.createdAt);
+			let title = `<h1>`;
+			title = title + res.title + `</h1>`;
+			date = dateFormat(date);
+			$("#request-title").append(title);
+			$("#user-name").html(res.username);
+			$("#created-at").html(`&nbsp;· ` + date);
+			$("#content").html(res.content);
+			$("#request-status").html(res.status);
+			$("#sub-info__content")
+				.append(`<button class="ac-button is-sm is-solid is-gray  ac-tag ac-tag--blue "><span
                                                 class="ac-tag__hashtag">#&nbsp;</span><span
-                                                class="ac-tag__name">'${res.languageName}'</span></button>`)
+                                                class="ac-tag__name">'${res.languageName}'</span></button>`);
 
-            let reviewAnswer = res['reviewAnswer'];
+			let reviewAnswer = res["reviewAnswer"];
 
-
-            $('#question-comment-content-box').empty()
-            let comments = res['comments'];
-            if (comments.length > 0) {
-                getComments(comments)
-            }
-        }
-    })
+			$("#question-comment-content-box").empty();
+			let comments = res["comments"];
+			if (comments.length > 0) {
+				getComments(comments);
+			}
+		},
+	});
 }
 
 // ========================================
 // 댓글 랜더링
 // ========================================
 function getComments(comments) {
-    let size = comments.length
+	let size = comments.length;
 
-    $('#question-comment-qty').html(`총 ${size}개 댓글이 달렸습니다.`);
+	$("#question-comment-qty").html(`총 ${size}개 댓글이 달렸습니다.`);
 
-    for (let i=0; i<size; i++) {
-        let commentId = comments[i]['commentId'];
-        let userId = comments[i]['userId'];
-        let username = comments[i]['username'];
-        let content = comments[i]['content'];
-        let createdAt = comments[i]['createdAt'];
+	for (let i = 0; i < size; i++) {
+		let commentId = comments[i]["commentId"];
+		let userId = comments[i]["userId"];
+		let username = comments[i]["username"];
+		let content = comments[i]["content"];
+		let createdAt = comments[i]["createdAt"];
 
-        let tmp_html = `<div class="comment__index">${i+1}</div>
+		let tmp_html = `<div class="comment__index">${i + 1}</div>
                     <div class="comment__card">
                         <div class="comment__header flex-row">
                             <img class="comment__user-profile"
@@ -83,41 +85,53 @@ function getComments(comments) {
 
                             </div>
                         </div>
-                    </div>`
-        $('#question-comment-content-box').append(tmp_html);
-    }
+                    </div>`;
+		$("#question-comment-content-box").append(tmp_html);
+	}
 }
 
 // ========================================
 // 댓글등록
 // ========================================
 function addComment() {
-    let questionId = getParameterByName('id')
-    let content = CKEDITOR.instances['content-comment'].getData()
+	let questionId = getParameterByName("id");
+	let content = CKEDITOR.instances["content-comment"].getData();
 
-    let data = {content: content};
+	let data = { content: content };
 
-    console.log(data);
+	console.log(data);
 
-    $.ajax({
-        type: "POST",
-        url: `/question/${questionId}/comment`,
-        contentType: "application/json;charset=utf-8;",
-        data: JSON.stringify(data),
-        success: function (res) {
-            console.log(res);
-            alert('댓글작성 완료');
-            window.location.reload();
-
-        }
-    })
+	$.ajax({
+		type: "POST",
+		url: `/question/${questionId}/comment`,
+		contentType: "application/json;charset=utf-8;",
+		data: JSON.stringify(data),
+		success: function (res) {
+			console.log(res);
+			alert("댓글작성 완료");
+			window.location.reload();
+		},
+	});
 }
 
 // ========================================
 // 쿼리 파라미터 받아오기
 // ========================================
 function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
-    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		results = regex.exec(location.search);
+	return results == null
+		? ""
+		: decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function dateFormat(date) {
+	let month = date.getMonth() + 1;
+	let day = date.getDate();
+
+	month = month >= 10 ? month : "0" + month;
+	day = day >= 10 ? day : "0" + day;
+
+	return date.getFullYear() + "." + month + "." + day;
 }

@@ -8,8 +8,7 @@ import lombok.Data;
 public class ReviewRequestDto {
 
     private String title;
-    private String code;
-    private String comment;
+    private String content;
 
     private String language;
     private Long reviewerId;

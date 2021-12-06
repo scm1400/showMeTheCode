@@ -15,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
-public class Language {
+public class Language extends Timestamped{
 
     @Id
     @GeneratedValue

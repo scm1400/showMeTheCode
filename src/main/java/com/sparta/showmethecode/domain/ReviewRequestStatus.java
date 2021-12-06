@@ -1,5 +1,8 @@
 package com.sparta.showmethecode.domain;
 
+import lombok.Getter;
+
+@Getter
 public enum ReviewRequestStatus {
 
     REQUESTED("미해결"),

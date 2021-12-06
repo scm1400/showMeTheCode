@@ -5,10 +5,40 @@ spring:
       enabled: true
   datasource:
     url: jdbc:h2:mem:smtc
+    username: sa
+    password:
   jpa:
     hibernate:
       ddl-auto: create
     properties:
       hibernate:
+        default_batch_fetch_size: 100
         format_sql: true
     show-sql: true
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database: h2
+    generate-ddl: off
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb;
+    username: SA
+    password:
+    initialization-mode: always
+    schema: classpath:schema-h2.sql
+    data: classpath:data-h2.sql
+
+
+
+
+
+

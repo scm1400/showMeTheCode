@@ -1,5 +1,13 @@
 $(document).ready(function() {
 
+    $("#signup-isReviewer").change(function () {
+        if ($("#signup-isReviewer").is(":checked")) {
+            $('#language-check-box').show()
+        } else {
+            $('#language-check-box').hide()
+        }
+    })
+
     $("#signup-id").keyup(function(){
 
         var email = $("#signup-id").val();

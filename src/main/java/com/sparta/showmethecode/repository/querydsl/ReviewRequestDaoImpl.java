@@ -2,7 +2,10 @@ package com.sparta.showmethecode.repository.querydsl;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.showmethecode.domain.ReviewAnswer;
@@ -23,10 +26,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.querydsl.core.types.ExpressionUtils.count;
 import static com.sparta.showmethecode.domain.QReviewAnswer.reviewAnswer;
 import static com.sparta.showmethecode.domain.QReviewRequest.reviewRequest;
 import static com.sparta.showmethecode.domain.QReviewRequestComment.reviewRequestComment;
 import static com.sparta.showmethecode.domain.QUser.user;
+
 
 @Slf4j
 public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements ReviewRequestDao {
@@ -41,6 +46,30 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
     }
 
     @Override
+    public Page<ReviewRequestResponseDto> findReviewRequestList(Pageable pageable, boolean isAsc) {
+
+        JPAQuery<ReviewRequestResponseDto> jpaQuery = query.select(new QReviewRequestResponseDto(
+                        reviewRequest.id,
+                        reviewRequest.requestUser.username,
+                        reviewRequest.title,
+                        reviewRequest.content,
+                        reviewRequest.languageName,
+                        reviewRequest.status,
+                        reviewRequest.createdAt,
+                        ExpressionUtils.as(
+                                JPAExpressions.select(reviewRequestComment.id.count())
+                                        .from(reviewRequestComment)
+                                        .where(reviewRequestComment.reviewRequest.eq(reviewRequest)), "commentCount")
+                ))
+                .from(reviewRequest);
+
+        JPQLQuery<ReviewRequestResponseDto> pagination = getQuerydsl().applyPagination(pageable, jpaQuery);
+
+        long totalCount = pagination.fetchCount();
+        return new PageImpl<>(pagination.fetch(), pageable, totalCount);
+    }
+
+    @Override
     public Page<ReviewRequestResponseDto> findSearchByTitleOrCommentAdvanced(String keyword, Pageable pageable, boolean isAsc) {
 
         List<ReviewRequestResponseDto> results = query
@@ -50,11 +79,15 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                         reviewRequest.title,
                         reviewRequest.content,
                         reviewRequest.languageName,
-                        reviewRequest.status.stringValue(),
-                        reviewRequest.createdAt)
+                        reviewRequest.status,
+                        reviewRequest.createdAt,
+                        ExpressionUtils.as(JPAExpressions.select(count(reviewRequestComment.id))
+                                .from(reviewRequestComment)
+                                .where(reviewRequestComment.reviewRequest.eq(reviewRequest)), "commentCount")
+                        )
                 )
                 .from(reviewRequest)
-                .join(reviewRequest.requestUser, user)
+                .join(reviewRequest.requestUser, user).fetchJoin()
                 .where(containingTitleOrComment(keyword))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -68,11 +101,15 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                         reviewRequest.title,
                         reviewRequest.content,
                         reviewRequest.languageName,
-                        reviewRequest.status.stringValue(),
-                        reviewRequest.createdAt)
+                        reviewRequest.status,
+                        reviewRequest.createdAt,
+                        ExpressionUtils.as(JPAExpressions.select(count(reviewRequestComment.id))
+                                .from(reviewRequestComment)
+                                .where(reviewRequestComment.reviewRequest.eq(reviewRequest)), "commentCount")
+                        )
                 )
                 .from(reviewRequest)
-                .join(reviewRequest.requestUser, user)
+                .join(reviewRequest.requestUser, user).fetchJoin()
                 .where(containingTitleOrComment(keyword));
 
         return PageableExecutionUtils.getPage(results, pageable, jpaQuery::fetchCount);
@@ -92,11 +129,14 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                         reviewRequest.title,
                         reviewRequest.content,
                         reviewRequest.languageName,
-                        reviewRequest.status.stringValue(),
-                        reviewRequest.createdAt)
-                )
+                        reviewRequest.status,
+                        reviewRequest.createdAt,
+                        ExpressionUtils.as(JPAExpressions.select(count(reviewRequestComment.id))
+                        .from(reviewRequestComment)
+                        .where(reviewRequestComment.reviewRequest.eq(reviewRequest)), "commentCount")
+                 ))
                 .from(reviewRequest)
-                .join(reviewRequest.requestUser, user)
+                .join(reviewRequest.requestUser, user).fetchJoin()
                 .where(containingTitleOrComment(keyword))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -166,42 +206,50 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
 
     @Override
     public List<ReviewRequestResponseDto> findMyReviewRequestList(Long id) {
-        List<ReviewRequest> result = query.select(reviewRequest)
+        List<ReviewRequestResponseDto> results = query
+                .select(new QReviewRequestResponseDto(
+                                reviewRequest.id,
+                                user.username,
+                                reviewRequest.title,
+                                reviewRequest.content,
+                                reviewRequest.languageName,
+                                reviewRequest.status,
+                                reviewRequest.createdAt,
+                                ExpressionUtils.as(JPAExpressions.select(count(reviewRequestComment.id))
+                                        .from(reviewRequestComment)
+                                        .where(reviewRequestComment.reviewRequest.eq(reviewRequest)), "commentCount")
+                        )
+                )
                 .from(reviewRequest)
                 .join(reviewRequest.requestUser, user).fetchJoin()
                 .where(user.id.eq(id))
                 .fetch();
-        return result.stream().map(
-                r -> new ReviewRequestResponseDto(
-                        r.getId(),
-                        r.getRequestUser().getUsername(),
-                        r.getTitle(),
-                        r.getContent(),
-                        r.getLanguageName(),
-                        r.getStatus().toString(),
-                        r.getCreatedAt()
-                )
-        ).collect(Collectors.toList());
+
+        return results;
     }
 
     @Override
     public List<ReviewRequestResponseDto> findMyReceivedRequestList(Long id) {
-        List<ReviewRequest> result = query.select(reviewRequest)
+        List<ReviewRequestResponseDto> result = query
+                .select(new QReviewRequestResponseDto(
+                                reviewRequest.id,
+                                user.username,
+                                reviewRequest.title,
+                                reviewRequest.content,
+                                reviewRequest.languageName,
+                                reviewRequest.status,
+                                reviewRequest.createdAt,
+                                ExpressionUtils.as(JPAExpressions.select(count(reviewRequestComment.id))
+                                        .from(reviewRequestComment)
+                                        .where(reviewRequestComment.reviewRequest.eq(reviewRequest)), "commentCount")
+                        )
+                )
                 .from(reviewRequest)
                 .join(reviewRequest.answerUser, user).fetchJoin()
                 .where(user.id.eq(id))
                 .fetch();
-        return result.stream().map(
-                r -> new ReviewRequestResponseDto(
-                        r.getId(),
-                        r.getRequestUser().getUsername(),
-                        r.getTitle(),
-                        r.getContent(),
-                        r.getLanguageName(),
-                        r.getStatus().toString(),
-                        r.getCreatedAt()
-                )
-        ).collect(Collectors.toList());
+
+        return result;
     }
 
     @Override
@@ -235,20 +283,27 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
     }
 
     @Override
-    public Page<ReviewRequest> searchRequestByLanguageName(String languageName, Pageable pageable, boolean isAsc) {
+    public Page<ReviewRequestResponseDto> searchRequestByLanguageName(String languageName, Pageable pageable, boolean isAsc) {
 
-        List<ReviewRequest> result = query.select(reviewRequest)
+        JPAQuery<ReviewRequestResponseDto> jpaQuery = query
+                .select(new QReviewRequestResponseDto(
+                                reviewRequest.id,
+                                user.username,
+                                reviewRequest.title,
+                                reviewRequest.content,
+                                reviewRequest.languageName,
+                                reviewRequest.status,
+                                reviewRequest.createdAt,
+                                ExpressionUtils.as(JPAExpressions.select(count(reviewRequestComment.id))
+                                        .from(reviewRequestComment)
+                                        .where(reviewRequestComment.reviewRequest.eq(reviewRequest)), "commentCount")
+                        )
+                )
                 .from(reviewRequest)
                 .join(reviewRequest.requestUser, user).fetchJoin()
-                .where(reviewRequest.languageName.eq(languageName))
-                .limit(pageable.getPageSize())
-                .offset(pageable.getOffset())
-                .orderBy(isAsc ? reviewRequest.createdAt.asc() : reviewRequest.createdAt.desc())
-                .fetch();
-
-        JPAQuery<ReviewRequest> jpaQuery = query.select(reviewRequest)
-                .from(reviewRequest)
                 .where(reviewRequest.languageName.eq(languageName));
+
+        List<ReviewRequestResponseDto> result = getQuerydsl().applyPagination(pageable, jpaQuery).fetch();
 
         return PageableExecutionUtils.getPage(result, pageable, jpaQuery::fetchCount);
     }

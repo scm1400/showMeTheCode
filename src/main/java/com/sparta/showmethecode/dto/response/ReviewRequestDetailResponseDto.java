@@ -19,7 +19,7 @@ public class ReviewRequestDetailResponseDto {
 
     private LocalDateTime createdAt;
 
-    private ReviewAnswerResponseDto reviewAnswerResponseDto;
+    private ReviewAnswerResponseDto reviewAnswer;
 
     private List<CommentResponseDto> comments = new ArrayList<>();
 
@@ -29,7 +29,7 @@ public class ReviewRequestDetailResponseDto {
             Long reviewRequestId,
             String username, String title, String content, String status, LocalDateTime createdAt,
             List<CommentResponseDto> comments,
-            ReviewAnswerResponseDto reviewAnswerResponseDto
+            ReviewAnswerResponseDto reviewAnswer
     ) {
         this.reviewRequestId = reviewRequestId;
         this.username = username;
@@ -38,7 +38,7 @@ public class ReviewRequestDetailResponseDto {
         this.status = status;
         this.createdAt = createdAt;
         this.comments = comments;
-        this.reviewAnswerResponseDto = reviewAnswerResponseDto;
+        this.reviewAnswer = reviewAnswer;
     }
 
     public ReviewRequestDetailResponseDto(

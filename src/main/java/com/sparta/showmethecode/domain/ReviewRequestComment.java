@@ -1,5 +1,8 @@
 package com.sparta.showmethecode.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sparta.showmethecode.dto.request.UpdateCommentDto;
+import com.sparta.showmethecode.dto.request.UpdateReviewDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,6 +25,8 @@ public class ReviewRequestComment extends Timestamped{
     @GeneratedValue
     private Long id;
 
+    @Lob
+    @Column(nullable = false)
     private String content;
 
     @JoinColumn(name = "user_id")
@@ -31,4 +36,17 @@ public class ReviewRequestComment extends Timestamped{
     @JoinColumn(name = "review_request_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private ReviewRequest reviewRequest;
+
+    public void setReviewRequest(ReviewRequest reviewRequest) {
+        this.reviewRequest = reviewRequest;
+    }
+
+    public ReviewRequestComment(String content, User user) {
+        this.content = content;
+        this.user = user;
+    }
+
+    public void update(UpdateCommentDto dto) {
+        this.content = dto.getContent();
+    }
 }

@@ -26,8 +26,8 @@
     <!-- og tag END -->
 
     <link rel="stylesheet" href="./css/question_list.css"/>
-    <link rel="stylesheet" href="./css/tinymce.css"/>
     <link rel="stylesheet" href="./css/main.css"/>
+    <link rel="stylesheet" href="./css/bootstrap-tagsinput.css"/>
     <link
             rel="stylesheet"
             href="https://cdn.inflearn.com/dist/vendor/bulma-accordion.min.css"
@@ -46,9 +46,63 @@
             integrity="sha384-ekOryaXPbeCpWQNxMwSWVvQ0+1VrStoPJq54shlYhR8HzQgig1v5fas6YgOqLoKz"
             crossorigin="anonymous"
     />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <script src="./js/index.js"></script>
+    <script src="./js/login.js"></script>
+    <script src="./js/user.js"></script>
+    <script src="./js/post_question.js"></script>
+    <script src="./js/bootstrap-tagsinput.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $("#write").click(function () {
+                $("#write_modal").removeClass("is-hidden");
+            });
+
+            $("#close_modal").click(function () {
+                $("#write_modal").addClass("is-hidden");
+            });
+        });
+    </script>
+    <script src="./js/ckeditor/ckeditor.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/post_question.js"></script>
 
 </head>
+
+
 <body id="inflearn" class="community all_questions_list posts-by-type is_logged_out is-student-user">
+<script>
+    $(function () {
+
+        CKEDITOR.replace('contents', {
+            fontSize_defaultLabel: "12",
+            skin: "minimalist",
+            language: "ko"
+        });
+
+        $("#files").on("change", function (e) {
+            inputFile(e);
+        });
+
+        $("#btnSave").on("click", function () {
+            saveGallery();
+        });
+
+        $("#btnCancel").on("click", function () {
+            window.history.back();
+        });
+    });
+
+</script>
+
 
 <div id="root">
     <!--    모바일 하위 Nav바 -->
@@ -132,21 +186,25 @@
                     </div>
                     <div class="brand_header">
                         <a href="/" class="brand_logo"><span class="visually_hidden">쇼미 더 코드</span>
-
+                            <img src="images/logo.png">
                             [ 모바일 로고 넣는 곳 ]
                         </a>
                     </div>
                     <div class="mobile_right">
-                        <a role="button" class="button space-inset-4 text is-5 signin">로그인</a>
-                        <a class="e-signup button space-inset-4 text is-5 is-primary ">회원가입</a></div>
+
+                        <a role="button" onclick="show_login_modal()"
+                           class="button space-inset-4 text is-5 signin">로그인</a>
+                        <a href="signup.html" class="e-signup button space-inset-4 text is-5 is-primary ">회원가입</a></div>
                 </div>
+
             </div>
+
 
             <div class="container desktop_container">
                 <div class="content">
                     <div class="brand_header">
                         <a href="/" class="brand_logo"> <span class="visually_hidden">쇼미 더 코드</span>
-                            [ 로고 넣는 곳 ]
+                            <img src="images/logo.png">
                         </a>
                     </div>
                     <!--상단 Nav바 펼쳐지는 부분-->
@@ -205,8 +263,10 @@
                             </div>
 
                             <div class="navbar-item buttons">
-                                <a role="button" class="button space-inset-4 signin">로그인</a>
-                                <a class="e-signup button space-inset-4 is-primary">회원가입</a>
+
+                                <a onclick="show_login_modal()" role="button"
+                                   class="button space-inset-4 signin">로그인</a>
+                                <a href="signup.html" class="e-signup button space-inset-4 is-primary">회원가입</a>
                             </div>
                         </div>
                     </div>
@@ -242,7 +302,7 @@
                     </li>
                 </ul>
             </nav>
-            <div class="community-body__content">
+            <div id="community-body" class="community-body__content">
                 <div class="search-filter">
                     <ul class="status">
                         <li class="e-status active" data-status="">
@@ -399,9 +459,9 @@
                                                                                                fill-rule="evenodd"
                                                                                                d="M11.508 1.451c.456-.455 1.195-.455 1.65 0l1.724 1.724c.456.456.456 1.194 0 1.65L13.02 6.687l-.008.008-7.219 6.89c-.132.126-.291.22-.466.273l-3.681 1.12c-.177.054-.369.006-.5-.124-.13-.131-.178-.323-.124-.5l1.115-3.666c.059-.192.166-.365.311-.504L9.651 3.31l1.857-1.858zM9.992 4.366l-6.854 6.542c-.02.02-.036.044-.044.072l-.843 2.769 2.785-.848c.025-.007.048-.02.067-.039l6.848-6.537-1.96-1.96zm2.675 1.26l1.508-1.508c.065-.065.065-.17 0-.236l-1.724-1.724c-.065-.065-.17-.065-.236 0l-1.508 1.509 1.96 1.96z"
                                                                                                clip-rule="evenodd"/></svg></span>
-                            <span class="posts-container-header__button-text">글쓰기</span></button>
+                            <span id="write" class="posts-container-header__button-text">글쓰기</span></button>
                     </div>
-                    <ul class="question-list">
+                    <ul class="question-list" id="reviewQuestionList">
                         <li class="question-container"><a href="/questions/353805">
                             <div class="question">
                                 <div class="question__info">
@@ -480,28 +540,17 @@
                     </ul>
                 </div>
 
-                <nav class="pagination is-centered is-small" role="navagation" aria-label="pagination">
+<!--                <nav class="pagination is-centered is-small" role="navagation" aria-label="pagination">-->
 
-                    <a class="pagination-next" href="?page=2">다음 페이지</a>
-                    <ul class="pagination-list">
-
-
-                        <li>
-                            <a class="pagination-link is-current" href="?page=1" aria-label="1 페이지로 이동">
-                                1
-                            </a>
-                        </li>
-
-
-                        <li>
-                            <a class="pagination-link " href="?page=2" aria-label="2 페이지로 이동">
-                                2
-                            </a>
-                        </li>
-
-
-                    </ul>
-                </nav>
+<!--                    <a class="pagination-next" href="?page=2">다음 페이지</a>-->
+<!--                    <ul class="pagination-list" id="pagingList">-->
+<!--                        <li>-->
+<!--                            <a class="pagination-link is-current" href="?page=1" aria-label="1 페이지로 이동">-->
+<!--                                1-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </nav>-->
 
             </div>
             <div class="posts-pop-tags">
@@ -579,5 +628,67 @@
 
 </div>
 
+<div id="write_modal" class="modal is-hidden">
+    <div class="dimmed"></div>
+    <section class="modal-card question-modal">
+        <div class="question-modal__form e-form-question-modal" onsubmit="return false">
+            <div class="modal-card-body">
+
+                <div class="form__item">
+                    <label class="form__label" for="title-input">제목</label>
+                    <div class="ac-input-with-item--large question-modal__title ">
+                        <input id="title-input" value="" data-kv="title" type="text" placeholder="제목을 입력해주세요.">
+                    </div>
+                </div>
+
+                <div class="form__item">
+                    <label class="form__label" for="language-input">프로그래밍 언어이름으로 리뷰어 검색</label>
+                    <div class="ac-input-with-item--large question-modal__language ">
+                        <input id="language-input" value="" data-kv="language" type="text" placeholder="언어를 입력해주세요.">
+                        <button class="button is-primary" onclick="findReviewer()">확인</button>
+                    </div>
+                </div>
+
+
+                <div id="select-reviewer-box" class="form__item is-hidden">
+                    <label class="form__label" for="select-reviewer">리뷰어 지정</label>
+                    <div class="select is-fullwidth">
+                        <select id="select-reviewer">
+                            <option>
+                                <span>JavaGod</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                                <span>답변수: 50</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                                <span>평균점수: 4.45</span>
+                            </option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="form__item">
+                    <label class="form__label">내용</label>
+
+                    <textarea name="contents" class="form-control" id="contents">
+
+                    </textarea>
+
+                </div>
+            </div>
+
+            <footer class="modal-card-foot">
+
+                <button id="close_modal"
+                        class="ac-button is-lg is-outlined is-gray question-modal__button--cancel e-cancel-question-modal">
+                    취소
+                </button>
+
+                <button id="send"
+                        class="ac-button is-lg is-solid is-primary question-modal__button--cancel e-submit-question-modal"
+                        onclick="postQuestion()">
+                    저장
+                </button>
+            </footer>
+        </div>
+    </section>
+</div>
 </body>
 </html>

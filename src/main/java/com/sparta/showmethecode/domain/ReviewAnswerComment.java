@@ -1,5 +1,7 @@
 package com.sparta.showmethecode.domain;
 
+import com.sparta.showmethecode.dto.request.UpdateCommentDto;
+import com.sparta.showmethecode.dto.request.UpdateReviewDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,4 +32,18 @@ public class ReviewAnswerComment extends Timestamped {
     @JoinColumn(name = "review_answer_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private ReviewAnswer reviewAnswer;
+
+    public ReviewAnswerComment(String content, User user, ReviewAnswer reviewAnswer) {
+        this.content = content;
+        this.user = user;
+        this.reviewAnswer = reviewAnswer;
+    }
+
+    public void setReviewAnswer(ReviewAnswer reviewAnswer) {
+        this.reviewAnswer = reviewAnswer;
+    }
+
+    public void update(UpdateCommentDto dto) {
+        this.content = dto.getContent();
+    }
 }

@@ -3,6 +3,7 @@ package com.sparta.showmethecode.service;
 import com.sparta.showmethecode.domain.*;
 import com.sparta.showmethecode.dto.request.AddAnswerDto;
 import com.sparta.showmethecode.dto.request.EvaluateAnswerDto;
+import com.sparta.showmethecode.dto.response.PageResponseDto;
 import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
 import com.sparta.showmethecode.repository.ReviewAnswerRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
@@ -13,6 +14,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -87,10 +91,18 @@ public class UserServiceTest {
     @Test
     void 내가받은_요청_조회() {
         User user1 = userRepository.findByUsername("reviewer1").get();
-        List<ReviewRequestResponseDto> result = reviewerService.getMyReceivedRequestList(user1);
+        Pageable pageable = makePageable(1, 10, "createdAt", true);
+        PageResponseDto result = reviewerService.getMyReceivedRequestList(user1, 1, 10, "createdAt", true);
 
-        result.forEach(System.out::println);
+        result.getData().forEach(System.out::println);
 
-        Assertions.assertEquals(1, result.size());
+        Assertions.assertEquals(1, result.getData().size());
+    }
+
+    private Pageable makePageable(int page, int size, String sortBy, boolean isAsc) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+
+        return PageRequest.of(page, size, sort);
     }
 }

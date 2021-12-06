@@ -95,22 +95,24 @@ public class ReviewRequestDaoTest {
         result.forEach(System.out::println);
     }
 
-    private Pageable makePageable(int page, int size, String sortBy, boolean isAsc) {
-        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Sort sort = Sort.by(direction, sortBy);
-
-        return PageRequest.of(page, size, sort);
-    }
-
     @Test
     void 자신이_요청한_리뷰목록_조회() {
         User user = userRepository.findByUsername("user1").get();
         List<ReviewRequest> all = reviewRequestRepository.findAll();
 
-        List<ReviewRequestResponseDto> result = reviewRequestRepository.findMyReviewRequestList(user.getId());
 
-        result.forEach(System.out::println);
+        Pageable pageable = makePageable(1, 10, "createdAt", true);
+        Page<ReviewRequestResponseDto> result = reviewRequestRepository.findMyReviewRequestList(user.getId(), pageable);
 
-        assertEquals(all.size()-1, result.size());
+        result.getContent().forEach(System.out::println);
+
+        assertEquals(all.size()-1, result.getContent().size());
+    }
+
+    private Pageable makePageable(int page, int size, String sortBy, boolean isAsc) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+
+        return PageRequest.of(page, size, sort);
     }
 }

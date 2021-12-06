@@ -171,8 +171,16 @@ public class ReviewerService {
     /**
      * 나에게 요청온 리뷰 조회
      */
-    public List<ReviewRequestResponseDto> getMyReceivedRequestList(User user) {
-        return reviewRequestRepository.findMyReceivedRequestList(user.getId());
+    public PageResponseDto getMyReceivedRequestList(User user, int page, int size, String sortBy, boolean isAsc) {
+        Pageable pageable = makePageable(page, size, sortBy, isAsc);
+        Page<ReviewRequestResponseDto> reviewRequests = reviewRequestRepository.findMyReceivedRequestList(user.getId(), pageable);
+
+        return new PageResponseDto<ReviewRequestResponseDto>(
+                reviewRequests.getContent(),
+                reviewRequests.getTotalPages(),
+                reviewRequests.getTotalElements(),
+                page, size
+        );
     }
 
     /**
@@ -190,5 +198,12 @@ public class ReviewerService {
             reviewAnswer.evaluate(evaluateAnswerDto.getPoint());
             reviewAnswer.getAnswerUser().evaluate(evaluateAnswerDto.getPoint());
         }
+    }
+
+    private Pageable makePageable(int page, int size, String sortBy, boolean isAsc) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+
+        return PageRequest.of(page, size, sort);
     }
 }

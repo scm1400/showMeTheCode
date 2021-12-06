@@ -29,9 +29,11 @@ $(document).ready(function () {
 function getQuestionList() {
     $('#reviewQuestionList').empty();
     let currentPage = getParameterByName('page');
-    if (currentPage == null) {
+    console.log(currentPage)
+    if (!currentPage) {
         currentPage = 1
     }
+    nextPage = parseInt(currentPage) + 1;
     $.ajax({
         type: "GET",
         url: "/questions",
@@ -56,11 +58,20 @@ function getQuestionList() {
                                 </nav>
                             `
             } else {
-                pagination += `<a class="pagination-next" href="?page=${currentPage + 1}">다음 페이지</a>
+                pagination += `<a class="pagination-next" href="?page=${nextPage}">다음 페이지</a>
                                 <ul class="pagination-list" id="pagingList">`
 
                 for (let i = 1; i <= totalpage; i++) {
-                    if (totalpage == 11) break;
+                    if (totalpage == 11) {
+                        pagination += `<li>
+                            <a className="pagination-link" href="?page=${i}" aria-label="${i} 페이지로 이동">
+                                ...
+                            </a>
+                        </li>`
+
+
+                        break;
+                    }
                     if (currentPage == i) {
                         pagination += `
                                 <li>
@@ -83,7 +94,9 @@ function getQuestionList() {
                 pagination += `</ul></nav>`
             }
             $('#community-body').append(pagination)
-            for (let i=0; i<data.length; i++) {
+            for (let i = 0; i < data.length; i++) {
+                let date = new Date(data[i].createdAt)
+                date = dateFormat(date)
                 let li = `<li class="question-container">
                                 <a onclick="showQuestionDetails(${data[i].reviewRequestId})">
                                 <div class="question">
@@ -103,7 +116,7 @@ function getQuestionList() {
     
                                         </div>
                                         <div class="question__info-footer">
-                                            ${data[i].languageName} · ${data[i].createdAt}  · ${data[i].status} 
+                                            ${data[i].languageName} · ${date}  · ${data[i].status} 
                                         </div>
                                     </div>
                                     <div class="question__additional-info">
@@ -154,4 +167,14 @@ function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function dateFormat(date) {
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    month = month >= 10 ? month : '0' + month;
+    day = day >= 10 ? day : '0' + day;
+
+    return date.getFullYear() + '.' + month + '.' + day;
 }

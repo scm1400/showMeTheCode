@@ -29,6 +29,7 @@ public class ReviewRequestService {
 
     private final ReviewRequestRepository reviewRequestRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
     /**
      * 코드리뷰 요청목록 API
@@ -88,6 +89,8 @@ public class ReviewRequestService {
                 = new ReviewRequest(user, reviewer, requestDto.getTitle(), requestDto.getContent(), ReviewRequestStatus.REQUESTED, requestDto.getLanguage().toUpperCase());
 
         reviewRequestRepository.save(reviewRequest);
+        notificationService.send(reviewRequest.getAnswerUser(), reviewRequest, "새로운 리뷰 요청이 도착했습니다!");
+
     }
 
     /**

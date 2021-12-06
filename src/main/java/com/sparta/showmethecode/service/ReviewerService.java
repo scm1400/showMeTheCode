@@ -32,7 +32,6 @@ public class ReviewerService {
     private final ReviewRequestRepository reviewRequestRepository;
     private final UserRepository userRepository;
     private final NotificationService notificationService;
-//    private final ReviewRequest reviewRequest;
 
     /**
      * 리뷰요청에 대한 리뷰등록 API
@@ -54,8 +53,9 @@ public class ReviewerService {
 
             reviewRequest.setStatus(ReviewRequestStatus.COMPLETED);
             reviewRequest.setReviewAnswer(savedReviewAnswer);
+            notificationService.send(reviewRequest.getRequestUser(), reviewRequest, "리뷰 등록이 완료되었습니다.");
+
         }
-//        notificationService.send(reviewRequest.getRequestUser(),reviewRequest,"리뷰가 완료되었습니다.");
     }
 
     /**
@@ -70,9 +70,10 @@ public class ReviewerService {
             );
 
             reviewRequest.setStatus(ReviewRequestStatus.REJECTED);
+            notificationService.send(reviewRequest.getRequestUser(),reviewRequest,"리뷰 요청이 거절되었습니다.");
+
         }
-//        notificationService.send(reviewRequest.getRequestUser(),reviewRequest,"리뷰 요청이 거절되었습니다.");
-    }
+   }
 
     /**
      * 나에게 요청된 리뷰인지 확인

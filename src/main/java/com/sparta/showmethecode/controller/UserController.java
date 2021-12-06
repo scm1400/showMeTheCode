@@ -1,5 +1,6 @@
 package com.sparta.showmethecode.controller;
 
+import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.security.UserDetailsImpl;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.SigninRequestDto;
@@ -95,14 +96,17 @@ public class UserController {
      */
     @GetMapping("/user/requests")
     public ResponseEntity<PageResponseDto> getMyRequestList(
+            @RequestParam ReviewRequestStatus status,
             @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "createdAt") String sortBy, @RequestParam(defaultValue = "true") Boolean isAsc,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         --page;
 
+        log.info("getMyRequestList status = {}", status);
+
         User user = userDetails.getUser();
-        PageResponseDto response = userService.getMyReviewRequestList(user, page, size, sortBy, isAsc);
+        PageResponseDto response = userService.getMyReviewRequestList(user, page, size, sortBy, isAsc, status);
 
         return ResponseEntity.ok(response);
     }

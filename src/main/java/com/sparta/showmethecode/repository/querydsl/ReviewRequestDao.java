@@ -1,6 +1,7 @@
 package com.sparta.showmethecode.repository.querydsl;
 
 import com.sparta.showmethecode.domain.ReviewRequest;
+import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.response.*;
 import org.springframework.data.domain.Page;
@@ -21,9 +22,9 @@ public interface ReviewRequestDao {
     // 언어별 코드리뷰요청 카운팅
     List<ReviewRequestLanguageCount> getReviewRequestLanguageCountGroupByLanguage();
     // 자신이 요청한 리뷰 조회
-    Page<ReviewRequestResponseDto> findMyReviewRequestList(Long userId, Pageable pageable);
+    Page<ReviewRequestResponseDto> findMyReviewRequestList(Long userId, Pageable pageable, ReviewRequestStatus status);
     // 자신에게 요청된 리뷰 조회
-    Page<ReviewRequestResponseDto> findMyReceivedRequestList(Long userId, Pageable pageable);
+    Page<ReviewRequestResponseDto> findMyReceivedRequestList(Long userId, Pageable pageable, ReviewRequestStatus status);
 
     // 내가 요청한 리뷰가 맞는지 체크
     boolean isMyReviewRequest(Long reviewId, User user);

@@ -1,5 +1,6 @@
 package com.sparta.showmethecode.service;
 
+import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.dto.response.PageResponseDto;
 import com.sparta.showmethecode.security.JwtUtils;
 import com.sparta.showmethecode.security.UserDetailsServiceImpl;
@@ -121,10 +122,12 @@ public class UserService {
     /**
      * 내가 등록한 리뷰요청목록 조회 API
      */
-    public PageResponseDto getMyReviewRequestList(User user, int page, int size, String sortBy, boolean isAsc) {
+    public PageResponseDto<ReviewRequestResponseDto> getMyReviewRequestList(User user, int page, int size, String sortBy, boolean isAsc, ReviewRequestStatus status) {
         Pageable pageable = makePageable(page, size, sortBy, isAsc);
 
-        Page<ReviewRequestResponseDto> reviewRequests = reviewRequestRepository.findMyReviewRequestList(user.getId(), pageable);
+        Page<ReviewRequestResponseDto> reviewRequests = reviewRequestRepository.findMyReviewRequestList(user.getId(), pageable, status);
+
+        log.info("getMyReviewRequestList = {}", reviewRequests.getContent());
 
         return new PageResponseDto<ReviewRequestResponseDto>(
                 reviewRequests.getContent(),

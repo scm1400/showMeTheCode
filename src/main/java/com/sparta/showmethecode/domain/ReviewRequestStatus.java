@@ -1,14 +1,17 @@
 package com.sparta.showmethecode.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 
 @Getter
 public enum ReviewRequestStatus {
 
-    REQUESTED("미해결"),
+    UNSOLVE("미해결"),
     CHECKED("확인됨"),
     REJECTED("거절됨"),
-    COMPLETED("완료됨");
+    SOLVE("해결됨"),
+
+    ALL("ALL");
 
     private final String description;
 

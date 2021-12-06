@@ -10,6 +10,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.showmethecode.domain.ReviewAnswer;
 import com.sparta.showmethecode.domain.ReviewRequest;
+import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.response.*;
 import com.sparta.showmethecode.repository.querydsl.util.OrderByNull;
@@ -206,7 +207,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
     }
 
     @Override
-    public Page<ReviewRequestResponseDto> findMyReviewRequestList(Long id, Pageable pageable) {
+    public Page<ReviewRequestResponseDto> findMyReviewRequestList(Long id, Pageable pageable, ReviewRequestStatus status) {
 
         JPAQuery<ReviewRequestResponseDto> jpaQuery = query
                 .select(new QReviewRequestResponseDto(
@@ -225,6 +226,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                 .from(reviewRequest)
                 .join(reviewRequest.requestUser, user)
                 .where(user.id.eq(id))
+                .where(statusEqual(status))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize());
 
@@ -235,7 +237,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
     }
 
     @Override
-    public Page<ReviewRequestResponseDto> findMyReceivedRequestList(Long id, Pageable pageable) {
+    public Page<ReviewRequestResponseDto> findMyReceivedRequestList(Long id, Pageable pageable, ReviewRequestStatus status) {
         JPAQuery<ReviewRequestResponseDto> jpaQuery = query
                 .select(new QReviewRequestResponseDto(
                                 reviewRequest.id,
@@ -252,7 +254,11 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                 )
                 .from(reviewRequest)
                 .join(reviewRequest.answerUser, user)
-                .where(user.id.eq(id));
+                .where(user.id.eq(id))
+                .where(statusEqual(status))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize());
+
 
         JPQLQuery<ReviewRequestResponseDto> pagination = getQuerydsl().applyPagination(pageable, jpaQuery);
         long totalCount = pagination.fetchCount();
@@ -339,7 +345,10 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
     @Override
     public void deleteComment(Long reviewId, Long commentId, Long userId) {
         query.delete(reviewRequest)
-                .where(reviewRequest.id.eq(reviewId))
-                .where();
+                .where(reviewRequest.id.eq(reviewId));
+    }
+
+    private BooleanExpression statusEqual(ReviewRequestStatus status) {
+        return !Objects.isNull(status) && !status.equals(ReviewRequestStatus.ALL) ? reviewRequest.status.eq(status) : null;
     }
 }

@@ -34,7 +34,7 @@ public class ReviewerService {
     private final NotificationService notificationService;
 
     /**
-     * 리뷰요청에 대한 리뷰등록 API
+     * 리뷰요청에 대한 답변등록 API
      * 자신에게 요청된 리뷰가 아닌 경우에 대한 처리 필요
      */
     @Transactional
@@ -51,7 +51,7 @@ public class ReviewerService {
                     () -> new IllegalArgumentException("존재하지 않는 리뷰요청입니다.")
             );
 
-            reviewRequest.setStatus(ReviewRequestStatus.COMPLETED);
+            reviewRequest.setStatus(ReviewRequestStatus.SOLVE);
             reviewRequest.setReviewAnswer(savedReviewAnswer);
             notificationService.send(reviewRequest.getRequestUser(), reviewRequest, "리뷰 등록이 완료되었습니다.");
 
@@ -171,9 +171,9 @@ public class ReviewerService {
     /**
      * 나에게 요청온 리뷰 조회
      */
-    public PageResponseDto getMyReceivedRequestList(User user, int page, int size, String sortBy, boolean isAsc) {
+    public PageResponseDto getMyReceivedRequestList(User user, int page, int size, String sortBy, boolean isAsc, ReviewRequestStatus status) {
         Pageable pageable = makePageable(page, size, sortBy, isAsc);
-        Page<ReviewRequestResponseDto> reviewRequests = reviewRequestRepository.findMyReceivedRequestList(user.getId(), pageable);
+        Page<ReviewRequestResponseDto> reviewRequests = reviewRequestRepository.findMyReceivedRequestList(user.getId(), pageable, status);
 
         return new PageResponseDto<ReviewRequestResponseDto>(
                 reviewRequests.getContent(),

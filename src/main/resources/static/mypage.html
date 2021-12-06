@@ -119,43 +119,10 @@
                             </ul>
                         </div>
                         <div class="my-posts__post-list-cover">
-                            <div class="post-list__select-status">
-                                <div class="select-status is-active" data-status="">
-
-                                    <button class="ac-button is-md is-text status-button e-status is-active"><span
-                                            class="infd-icon icon-box-16"><svg width="16"
-                                                                               xmlns="http://www.w3.org/2000/svg"
-                                                                               width="16" height="16"
-                                                                               viewBox="0 0 16 16"><path fill="#212529"
-                                                                                                         d="M8 10c-1.105 0-2-.895-2-2s.895-2 2-2 2 .895 2 2-.895 2-2 2z"
-                                                                                                         clip-rule="evenodd"/></svg></span>
-                                        전체
-                                    </button>
-                                </div>
-                                <div class="select-status " data-status="resolved">
-
-                                    <button class="ac-button is-md is-text status-button e-status "><span
-                                            class="infd-icon icon-box-16"><svg width="16"
-                                                                               xmlns="http://www.w3.org/2000/svg"
-                                                                               width="16" height="16"
-                                                                               viewBox="0 0 16 16"><path fill="#212529"
-                                                                                                         d="M8 10c-1.105 0-2-.895-2-2s.895-2 2-2 2 .895 2 2-.895 2-2 2z"
-                                                                                                         clip-rule="evenodd"/></svg></span>
-                                        해결
-                                    </button>
-                                </div>
-                                <div class="select-status " data-status="unresolved">
-
-                                    <button class="ac-button is-md is-text status-button e-status "><span
-                                            class="infd-icon icon-box-16"><svg width="16"
-                                                                               xmlns="http://www.w3.org/2000/svg"
-                                                                               width="16" height="16"
-                                                                               viewBox="0 0 16 16"><path fill="#212529"
-                                                                                                         d="M8 10c-1.105 0-2-.895-2-2s.895-2 2-2 2 .895 2 2-.895 2-2 2z"
-                                                                                                         clip-rule="evenodd"/></svg></span>
-                                        미해결
-                                    </button>
-                                </div>
+                            <div id="condition-box" class="post-list__select-status">
+                                <button onclick="myRequestQuestionList('ALL')" class="button is-link is-rounded">전체보기</button>&nbsp;&nbsp;
+                                <button onclick="myRequestQuestionList('SOLVE')" class="button is-link is-rounded">해결됨</button>&nbsp;&nbsp;
+                                <button onclick="myRequestQuestionList('UNSOLVE')" class="button is-link is-rounded">미해결</button>
                             </div>
 
                             <ul id="question-list" class="post-list__content">

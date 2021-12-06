@@ -75,11 +75,11 @@ public class ReviewRequestService {
         );
 
         ReviewRequest reviewRequest
-                = new ReviewRequest(user, reviewer, requestDto.getTitle(), requestDto.getContent(), ReviewRequestStatus.REQUESTED, requestDto.getLanguage().toUpperCase());
+                = new ReviewRequest(user, reviewer, requestDto.getTitle(), requestDto.getContent(), ReviewRequestStatus.UNSOLVE, requestDto.getLanguage().toUpperCase());
 
         reviewRequestRepository.save(reviewRequest);
-        notificationService.send(reviewRequest.getAnswerUser(), reviewRequest, "새로운 리뷰 요청이 도착했습니다!");
 
+        notificationService.send(reviewRequest.getAnswerUser(), reviewRequest, "새로운 리뷰 요청이 도착했습니다!");
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.sparta.showmethecode.controller;
 
+import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.security.UserDetailsImpl;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.AddAnswerDto;
@@ -114,13 +115,16 @@ public class ReviewerController {
      */
     @GetMapping("/user/received")
     public ResponseEntity<PageResponseDto> getMyReceivedList(
+            @RequestParam ReviewRequestStatus status,
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "createdAt") String sortBy, @RequestParam(defaultValue = "true") Boolean isAsc
     ) {
+        log.info("getMyReceivedList status = {}", status.toString());
+        --page;
         User user = userDetails.getUser();
 
-        PageResponseDto response = reviewerService.getMyReceivedRequestList(user, page, size, sortBy, isAsc);
+        PageResponseDto response = reviewerService.getMyReceivedRequestList(user, page, size, sortBy, isAsc, status);
 
         return ResponseEntity.ok(response);
     }

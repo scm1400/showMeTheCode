@@ -65,7 +65,7 @@ public class UserService {
         if (requestDto.getLanguages().size() > 0) {
             Set<String> languages = requestDto.getLanguages();
             for (String l : languages) {
-                Language language = new Language(l);
+                Language language = new Language(l.toUpperCase());
                 language.setUser(savedUser);
                 languageRepository.save(language);
             }

@@ -5,6 +5,7 @@ function go_back() {
 
 $(document).ready(function () {
 
+    loginCheck()
     getQuestionList();
 
     if (sessionStorage.getItem("mytoken") != null) {
@@ -173,4 +174,25 @@ function dateFormat(date) {
     day = day >= 10 ? day : '0' + day;
 
     return date.getFullYear() + '.' + month + '.' + day;
+}
+
+function loginCheck() {
+    // 인증이 된 경우
+    if (sessionStorage.getItem("mytoken") != null) {
+        $('#signinBtn').hide()
+        $('#signupBtn').hide()
+        $('#logoutBtn').show()
+        $('#signinBtnMobile').hide()
+        $('#signupBtnMobile').hide()
+        $('#logoutBtnMobile').show()
+
+    } else { // 인증이 되지 않은 경우
+        $('#signinBtn').show()
+        $('#signupBtn').show()
+        $('#logoutBtn').hide()
+        $('#signinBtnMobile').show()
+        $('#signupBtnMobile').show()
+        $('#logoutBtnMobile').hide()
+
+    }
 }

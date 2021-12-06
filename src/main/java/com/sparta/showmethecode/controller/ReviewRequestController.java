@@ -32,6 +32,8 @@ public class ReviewRequestController {
             @RequestParam(required = false) String query
     ) {
 
+        log.info("getReviewRequestList 호출");
+
         --page;
 
         if (!Objects.isNull(query)) {

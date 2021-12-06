@@ -38,23 +38,12 @@ public class ReviewRequestService {
     public PageResponseDto getReviewRequestList(int page, int size, String sortBy, boolean isAsc) {
         Pageable pageable = makePageable(page, size, sortBy, isAsc);
 
-        Page<ReviewRequest> reviewRequests = reviewRequestRepository.findAll(pageable);
-        List<ReviewRequestResponseDto> reviewRequestResponseDtos = reviewRequests.getContent().stream()
-                .map(r -> new ReviewRequestResponseDto(
-                                r.getId(),
-                                r.getRequestUser().getUsername(),
-                                r.getTitle(),
-                                r.getContent(),
-                                r.getLanguageName(),
-                                r.getStatus().getDescription(),
-                                r.getCreatedAt()
-                        )
-                ).collect(Collectors.toList());
+        Page<ReviewRequestResponseDto> reviewRequestList = reviewRequestRepository.findReviewRequestList(pageable, isAsc);
 
         return new PageResponseDto<ReviewRequestResponseDto>(
-                reviewRequestResponseDtos,
-                reviewRequests.getTotalPages(),
-                reviewRequests.getTotalElements(),
+                reviewRequestList.getContent(),
+                reviewRequestList.getTotalPages(),
+                reviewRequestList.getTotalElements(),
                 page, size
         );
     }
@@ -159,22 +148,10 @@ public class ReviewRequestService {
 
         language = language.toUpperCase();
 
-        Page<ReviewRequest> reviewRequests = reviewRequestRepository.searchRequestByLanguageName(language, pageable, isAsc);
-
-        List<ReviewRequestResponseDto> collect = reviewRequests.stream().map(
-                r -> new ReviewRequestResponseDto(
-                        r.getId(),
-                        r.getRequestUser().getUsername(),
-                        r.getTitle(),
-                        r.getContent(),
-                        r.getLanguageName(),
-                        r.getStatus().toString(),
-                        r.getCreatedAt()
-                )
-        ).collect(Collectors.toList());
+        Page<ReviewRequestResponseDto> reviewRequests = reviewRequestRepository.searchRequestByLanguageName(language, pageable, isAsc);
 
         return new PageResponseDto<ReviewRequestResponseDto>(
-                collect,
+                reviewRequests.getContent(),
                 reviewRequests.getTotalPages(),
                 reviewRequests.getTotalElements(),
                 page, size

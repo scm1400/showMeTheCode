@@ -42,9 +42,7 @@ function getQuestionList() {
         success: function (res) {
             let data = res['data']
             let pagination = `<nav class="pagination is-centered is-small" role="navagation" aria-label="pagination">`
-            console.log(res)
             let totalpage = res.totalPage
-            console.log(totalpage)
             if (totalpage == 1) {
                 pagination += `
                                     <ul class="pagination-list" id="pagingList">
@@ -120,8 +118,8 @@ function getQuestionList() {
                                     </div>
                                     <div class="question__additional-info">
                                         <div class="question__comment">
-                                            <span class="comment__count">0</span>
-                                            <span class="comment__description">답변</span>
+                                            <span class="comment__count">${data[i].commentCount}</span>
+                                            <span class="comment__description">댓글수</span>
                                         </div>
     
                                         <button class="ac-button is-md is-text question__like e-like">

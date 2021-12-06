@@ -95,4 +95,8 @@ public class ReviewRequest extends Timestamped {
     public void setStatus(ReviewRequestStatus status) {
         this.status = status;
     }
+
+    public boolean hasComments() {
+        return this.reviewRequestComments.size() > 0 ? true : false;
+    }
 }

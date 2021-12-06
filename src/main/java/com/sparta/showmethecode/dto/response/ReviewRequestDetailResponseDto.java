@@ -14,21 +14,21 @@ public class ReviewRequestDetailResponseDto {
     private String username;
     private String title;
     private String content;
-    private String language_name;
+    private String languageName;
     private String status;
 
     private LocalDateTime createdAt;
 
     private ReviewAnswerResponseDto reviewAnswerResponseDto;
 
-    private List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+    private List<CommentResponseDto> comments = new ArrayList<>();
 
 
     @QueryProjection
     public ReviewRequestDetailResponseDto(
             Long reviewRequestId,
             String username, String title, String content, String status, LocalDateTime createdAt,
-            List<CommentResponseDto> commentResponseDtoList,
+            List<CommentResponseDto> comments,
             ReviewAnswerResponseDto reviewAnswerResponseDto
     ) {
         this.reviewRequestId = reviewRequestId;
@@ -37,22 +37,22 @@ public class ReviewRequestDetailResponseDto {
         this.content = content;
         this.status = status;
         this.createdAt = createdAt;
-        this.commentResponseDtoList = commentResponseDtoList;
+        this.comments = comments;
         this.reviewAnswerResponseDto = reviewAnswerResponseDto;
     }
 
     public ReviewRequestDetailResponseDto(
             Long reviewRequestId,
             String username, String title, String content, String status, LocalDateTime createdAt,
-            List<CommentResponseDto> commentResponseDtoList
+            List<CommentResponseDto> comments
     ) {
         this.reviewRequestId = reviewRequestId;
         this.username = username;
         this.title = title;
         this.content = content;
-        this.language_name = language_name;
+        this.languageName = languageName;
         this.status = status;
         this.createdAt = createdAt;
-        this.commentResponseDtoList = commentResponseDtoList;
+        this.comments = comments;
     }
 }

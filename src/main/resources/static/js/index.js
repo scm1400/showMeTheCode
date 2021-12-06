@@ -23,6 +23,9 @@ $(document).ready(function () {
     }
 })
 
+// ========================================
+// 코드리뷰 요청 목록보기
+// ========================================
 function getQuestionList() {
     $('#reviewQuestionList').empty();
     let currentPage = getParameterByName('page');
@@ -80,8 +83,9 @@ function getQuestionList() {
                 pagination += `</ul></nav>`
             }
             $('#community-body').append(pagination)
-            for (let i = 0; i < data.length; i++) {
-                let li = `<li class="question-container"><a href="/details.html?id=${data[i].reviewRequestId}">
+            for (let i=0; i<data.length; i++) {
+                let li = `<li class="question-container">
+                                <a onclick="showQuestionDetails(${data[i].reviewRequestId})">
                                 <div class="question">
                                     <div class="question__info">
                                         <div class="question__title">
@@ -125,6 +129,18 @@ function getQuestionList() {
     })
 }
 
+function makePageButton(totalPages, totalElements, size, page) {
+
+}
+
+function showQuestionDetails(id) {
+    location.href = `details.html?id=${id}`
+}
+
+
+/**
+ * 설정
+ */
 // ========================================
 // ajax 요청시 token이 있다면 헤더에 추가하도록 설정
 // ========================================

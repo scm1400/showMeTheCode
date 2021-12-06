@@ -28,7 +28,6 @@ $(document).ready(function () {
 function getQuestionList() {
     $('#reviewQuestionList').empty();
     let currentPage = getParameterByName('page');
-    console.log(currentPage)
     if (!currentPage) {
         currentPage = 1
     }

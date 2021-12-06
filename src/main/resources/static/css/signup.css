@@ -23,6 +23,11 @@
     src: local("D2Coding"), url(https://cdn.inflearn.com/font/D2Coding.woff2) format("woff2"), url(https://cdn.inflearn.com/font/D2Coding.woff) format("woff"), url(https://cdn.inflearn.com/font/D2Coding.ttf) format("truetype")
 }
 
+#language-select{
+    width: 100%;
+    padding: .8em .5em;
+}
+
 .fw-bold {
     font-weight: 600
 }

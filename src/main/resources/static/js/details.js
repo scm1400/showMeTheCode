@@ -5,7 +5,7 @@ $(document).ready(function() {
         type: "GET",
         url: "/details",
         data: {
-            id: id,
+            id: id
         },
         contentType: "application/json;charset-utf-8;",
         success: function (res) {

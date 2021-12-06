@@ -1,4 +1,4 @@
-function go_back(){
+function go_back() {
     history.go(-1);
 }
 
@@ -12,12 +12,12 @@ $(document).ready(function () {
         let token = sessionStorage.getItem("mytoken");
         let eventSource = new EventSource(subscribeUrl + "?token=" + token);
 
-        eventSource.addEventListener("addComment", function(event) {
+        eventSource.addEventListener("addComment", function (event) {
             let message = event.data;
             alert(message);
         })
 
-        eventSource.addEventListener("error", function(event) {
+        eventSource.addEventListener("error", function (event) {
             eventSource.close()
         })
     }
@@ -25,14 +25,63 @@ $(document).ready(function () {
 
 function getQuestionList() {
     $('#reviewQuestionList').empty();
-
+    let currentPage = getParameterByName('page');
+    if (currentPage == null) {
+        currentPage = 1
+    }
     $.ajax({
         type: "GET",
         url: "/questions",
-        success: function(res) {
+        data: {
+            page: currentPage
+        },
+        success: function (res) {
             let data = res['data']
-            for (let i=0; i<data.length; i++) {
-                let li = `<li class="question-container"><a href="/questions/353805">
+            let pagination = `<nav class="pagination is-centered is-small" role="navagation" aria-label="pagination">`
+            console.log(res)
+            let totalpage = res.totalPage
+            console.log(totalpage)
+            if (totalpage == 1) {
+                pagination += `
+                                    <ul class="pagination-list" id="pagingList">
+                                        <li>
+                                            <a class="pagination-link is-current" href="?page=1" aria-label="1 페이지로 이동">
+                                                1
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            `
+            } else {
+                pagination += `<a class="pagination-next" href="?page=${currentPage + 1}">다음 페이지</a>
+                                <ul class="pagination-list" id="pagingList">`
+
+                for (let i = 1; i <= totalpage; i++) {
+                    if (totalpage == 11) break;
+                    if (currentPage == i) {
+                        pagination += `
+                                <li>
+                                    <a class="pagination-link is-current" href="?page=${i}" aria-label="${i} 페이지로 이동">
+                                        ${i}
+                                    </a>
+                                </li>
+                                `
+                    } else {
+                        pagination += `
+                                <li>
+                                    <a class="pagination-link" href="?page=${i}" aria-label="${i} 페이지로 이동">
+                                        ${i}
+                                    </a>
+                                </li>
+                                `
+                    }
+
+                }
+                pagination += `</ul></nav>`
+            }
+            $('#community-body').append(pagination)
+            for (let i = 0; i < data.length; i++) {
+                let li = `<li class="question-container"><a href="/details.html?id=${data[i].reviewRequestId}">
                                 <div class="question">
                                     <div class="question__info">
                                         <div class="question__title">
@@ -84,3 +133,9 @@ $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
         jqXHR.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem('mytoken'));
     }
 });
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}

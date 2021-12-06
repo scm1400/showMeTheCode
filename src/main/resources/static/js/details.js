@@ -1,12 +1,9 @@
 $(document).ready(function() {
     let id = getParameterByName('id');
-    console.log(id)
+
     $.ajax({
         type: "GET",
-        url: "/details",
-        data: {
-            id: id,
-        },
+        url: `/details?id=${id}`,
         contentType: "application/json;charset-utf-8;",
         success: function (res) {
             console.log(res);
@@ -16,13 +13,16 @@ $(document).ready(function() {
             $("#content").html(res.content)
             $("#sub-info__content").append(`<button class="ac-button is-sm is-solid is-gray  ac-tag ac-tag--blue "><span
                                                 class="ac-tag__hashtag">#&nbsp;</span><span
-                                                class="ac-tag__name">'${res.language_name}'</span></button>`)
+                                                class="ac-tag__name">'${res.languageName}'</span></button>`)
 
-
+            let comments = res['comments'];
         }
     })
 })
 
+// ========================================
+// 쿼리 파라미터 받아오기
+// ========================================
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);

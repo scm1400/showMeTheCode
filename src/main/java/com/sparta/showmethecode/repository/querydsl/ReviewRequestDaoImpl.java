@@ -18,6 +18,7 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.data.support.PageableExecutionUtils;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -112,19 +113,22 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
 
         ReviewRequest result = query.select(reviewRequest).distinct()
                 .from(reviewRequest)
-                .join(reviewRequest.reviewRequestComments, reviewRequestComment).fetchJoin()
                 .join(reviewRequest.requestUser, user).fetchJoin()
-                .join(reviewRequest.reviewAnswer, reviewAnswer).fetchJoin()
+                .leftJoin(reviewRequest.reviewAnswer, reviewAnswer).fetchJoin()
+                .leftJoin(reviewRequest.reviewRequestComments, reviewRequestComment).fetchJoin()
                 .where(reviewRequest.id.eq(id))
                 .fetchFirst();
 
-        List<CommentResponseDto> comments = result.getReviewRequestComments().stream().map(
-                c -> new CommentResponseDto(c.getId(), c.getUser().getId(), c.getUser().getUsername(), c.getContent(), c.getCreatedAt())
-        ).collect(Collectors.toList());
+        List<CommentResponseDto> comments = new ArrayList<>();
+
+        if (result.hasComments()) {
+            comments = result.getReviewRequestComments().stream().map(
+                    c -> new CommentResponseDto(c.getId(), c.getUser().getId(), c.getUser().getUsername(), c.getContent(), c.getCreatedAt())
+            ).collect(Collectors.toList());
+        }
 
         ReviewAnswer reviewAnswer = result.getReviewAnswer();
         if (!Objects.isNull(reviewAnswer)) {
-            log.info("getReviewRequestDetailWithComment reviewAnswer = {}", reviewAnswer.getTitle());
             ReviewAnswerResponseDto reviewAnswerResponseDto = new ReviewAnswerResponseDto(
                     reviewAnswer.getId(),
                     result.getId(),

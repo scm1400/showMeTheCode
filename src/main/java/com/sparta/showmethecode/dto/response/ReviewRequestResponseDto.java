@@ -1,6 +1,7 @@
 package com.sparta.showmethecode.dto.response;
 
 import com.querydsl.core.annotations.QueryProjection;
+import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import lombok.Data;
 import lombok.ToString;
 
@@ -16,12 +17,14 @@ public class ReviewRequestResponseDto {
     private String content;
 
     private String languageName;
-    private String status;
+    private ReviewRequestStatus status;
 
     private LocalDateTime createdAt;
 
+    private long commentCount;
+
     @QueryProjection
-    public ReviewRequestResponseDto(Long reviewRequestId, String username, String title, String content, String languageName, String status, LocalDateTime createdAt) {
+    public ReviewRequestResponseDto(Long reviewRequestId, String username, String title, String content, String languageName, ReviewRequestStatus status, LocalDateTime createdAt, long commentCount) {
         this.reviewRequestId = reviewRequestId;
         this.username = username;
         this.title = title;
@@ -29,5 +32,6 @@ public class ReviewRequestResponseDto {
         this.languageName = languageName;
         this.status = status;
         this.createdAt = createdAt;
+        this.commentCount = commentCount;
     }
 }

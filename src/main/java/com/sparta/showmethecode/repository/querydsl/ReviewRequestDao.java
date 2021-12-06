@@ -2,16 +2,16 @@ package com.sparta.showmethecode.repository.querydsl;
 
 import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.User;
-import com.sparta.showmethecode.dto.response.ReviewAnswerResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewRequestDetailResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewRequestLanguageCount;
-import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
+import com.sparta.showmethecode.dto.response.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface ReviewRequestDao {
+
+    // 코드리뷰 목록 조회
+    Page<ReviewRequestResponseDto> findReviewRequestList(Pageable pageable, boolean isAsc);
 
     Page<ReviewRequestResponseDto> findSearchByTitleOrComment(String keyword, Pageable pageable);
     // 코드리뷰요청 목록 제목+내용 검색쿼리
@@ -33,7 +33,7 @@ public interface ReviewRequestDao {
     boolean isAnswerToMe(Long answerId, User user);
 
     // 언어이름으로 코드리뷰요청 조회
-    Page<ReviewRequest> searchRequestByLanguageName(String languageName, Pageable pageable, boolean isAsc);
+    Page<ReviewRequestResponseDto> searchRequestByLanguageName(String languageName, Pageable pageable, boolean isAsc);
 
     // 내가 답변한 리뷰목록 조회
     Page<ReviewAnswerResponseDto> findMyAnswer(Long userId, Pageable pageable);

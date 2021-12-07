@@ -131,7 +131,7 @@ function addReviewList(reviews) {
 
 
 function showQuestionDetails(id) {
-    location.href = `details.html?id=${id}`
+    location.href = `answer.html?id=${id}`
 }
 
 function getParameterByName(name) {

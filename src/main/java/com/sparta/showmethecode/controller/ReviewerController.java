@@ -11,6 +11,7 @@ import com.sparta.showmethecode.service.ReviewerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,14 +67,15 @@ public class ReviewerController {
     /**
      * 리뷰요청에 대한 리뷰등록 API
      */
-    @PostMapping("/reviewer/request")
+    @Secured("ROLE_REVIEWER")
+    @PostMapping("/reviewer/request/{questionId}")
     public ResponseEntity addReviewAndComment(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestParam Long questionId,
+            @PathVariable Long questionId,
             @RequestBody AddAnswerDto addAnswerDto
     ) {
         User reviewer = userDetails.getUser();
-        reviewerService.addReviewAndComment(reviewer, questionId, addAnswerDto);
+        reviewerService.addAnswer(reviewer, questionId, addAnswerDto);
         return ResponseEntity.ok("ok");
     }
 
@@ -143,4 +145,6 @@ public class ReviewerController {
 
         return ResponseEntity.ok("ok");
     }
+
+
 }

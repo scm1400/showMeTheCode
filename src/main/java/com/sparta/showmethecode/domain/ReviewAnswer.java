@@ -26,8 +26,8 @@ public class ReviewAnswer extends Timestamped {
     @Id @GeneratedValue
     private Long id;
 
-    private String title;
-
+    @Lob
+    @Column(nullable = false)
     private String content;
 
     private double point;
@@ -44,8 +44,7 @@ public class ReviewAnswer extends Timestamped {
     @OneToMany(mappedBy = "reviewAnswer", cascade = CascadeType.ALL)
     private List<ReviewAnswerComment> comments = new ArrayList<>();
 
-    public ReviewAnswer(String title, String content, User answerUser) {
-        this.title = title;
+    public ReviewAnswer(String content, User answerUser) {
         this.content = content;
         this.answerUser = answerUser;
     }
@@ -55,7 +54,6 @@ public class ReviewAnswer extends Timestamped {
     }
 
     public void update(UpdateAnswerDto dto) {
-        this.title = dto.getTitle();
         this.content = dto.getContent();
     }
 

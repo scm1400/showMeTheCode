@@ -109,8 +109,8 @@ function makeQuestionList(res, currentPage) {
         date = dateFormat(date)
         let li = `<li class="question-container">
                                 <a onclick="showQuestionDetails(${data[i].reviewRequestId})">
-                                <div class="question">
-                                    <div class="question__info">
+                        <div class="question">
+                            <div class="question__info">
                                         <div class="question__title">
                                             <h3 class="title__text">
                                                 ${data[i].title}

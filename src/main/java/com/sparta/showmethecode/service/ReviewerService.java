@@ -54,6 +54,7 @@ public class ReviewerService {
 
             reviewRequest.setStatus(ReviewRequestStatus.SOLVE);
             reviewRequest.setReviewAnswer(savedReviewAnswer);
+
             notificationService.send(reviewRequest.getRequestUser(), reviewRequest, "리뷰 등록이 완료되었습니다.");
         }
     }

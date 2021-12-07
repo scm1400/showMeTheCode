@@ -30,11 +30,19 @@ function getDetails() {
             $('#user-name').html(username);
             $('#created-at').html(date);
 
-            $('#content').html(content);
             $('#question-status').text(status)
 
+            // 답변이 있는 경우 편집이 불가능하도록 <p> 태그 내에 답변 내용을 랜더링
             if (answerContent) {
-                $('#content-answer').html(answerContent);
+                $('#content-answer-markdown-box').hide()
+                $('#addAnswerBtn').hide()
+                $('#content-answer-text').show()
+                $('#content-answer-text').html(content)
+            // 답변이 없는 경우 답변이 가능하도록 textarea (markdown폼)을 랜더링
+            } else {
+                $('#addAnswerBtn').show()
+                $('#content-answer-markdown-box').show()
+                $('#content-answer-text').hide()
             }
         }
     })

@@ -1,10 +1,12 @@
 package com.sparta.showmethecode;
 
 import com.sparta.showmethecode.domain.*;
-import com.sparta.showmethecode.dto.response.PageResponseDto;
-import com.sparta.showmethecode.dto.response.ReviewRequestResponseDto;
+import com.sparta.showmethecode.dto.request.AddAnswerDto;
+import com.sparta.showmethecode.dto.response.RequestAndAnswerResponseDto;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import com.sparta.showmethecode.repository.UserRepository;
+import com.sparta.showmethecode.service.ReviewRequestService;
+import com.sparta.showmethecode.service.ReviewerService;
 import com.sparta.showmethecode.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
-import java.util.List;
 
 @Transactional
 @SpringBootTest
@@ -25,6 +26,10 @@ public class MypageTest {
     ReviewRequestRepository reviewRequestRepository;
     @Autowired
     UserService userService;
+    @Autowired
+    ReviewerService reviewerService;
+    @Autowired
+    ReviewRequestService reviewRequestService;
 
     @BeforeEach
     void init() {
@@ -39,19 +44,13 @@ public class MypageTest {
     @Test
     void test() {
         User user1 = userRepository.findByUsername("user").get();
+        User reviewer1 = userRepository.findByUsername("reviewer1").get();
 
-        List<ReviewRequest> all = reviewRequestRepository.findAll();
-        for (ReviewRequest reviewRequest : all) {
-            System.out.println(reviewRequest.getTitle());
-            System.out.println(reviewRequest.getStatus().toString());
-        }
+        ReviewRequest reviewRequest = reviewRequestRepository.findByTitle("title").get(0);
+        reviewerService.addAnswer(reviewer1, reviewRequest.getId(), new AddAnswerDto("답변입니다."));
 
-        PageResponseDto<ReviewRequestResponseDto> result = userService.getMyReviewRequestList(user1, 0, 10, "createdAt", true, null);
-        List<ReviewRequestResponseDto> data = result.getData();
+        RequestAndAnswerResponseDto result = reviewRequestService.getReviewRequestWithAnswer(reviewRequest.getId());
 
-        for (ReviewRequestResponseDto d : data) {
-            System.out.println(d);
-        }
-
+        System.out.println(result);
     }
 }

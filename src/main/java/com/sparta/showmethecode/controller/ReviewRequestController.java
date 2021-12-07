@@ -116,4 +116,16 @@ public class ReviewRequestController {
 
         return ResponseEntity.ok(result);
     }
+
+    /**
+     * 답변을 위한 상세정보 조회 (댓글 X, 답변 O)
+     */
+    @GetMapping("/details/{id}/answer")
+    public ResponseEntity getReviewRequestDetailsWithoutComments(
+            @PathVariable Long id
+    ) {
+        RequestAndAnswerResponseDto response = reviewRequestService.getReviewRequestWithAnswer(id);
+
+        return ResponseEntity.ok(response);
+    }
 }

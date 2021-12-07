@@ -50,7 +50,7 @@ function myReceivedQuestionList(condition) {
             console.log(res);
             $('#question-list').empty()
             let reviews = res['data']
-            addReviewList(reviews);
+            addReceivedReviewList(reviews);
         }
     })
 }
@@ -72,23 +72,26 @@ function myRequestQuestionList(condition) {
         success: function (res) {
             $('#question-list').empty()
             let reviews = res['data']
-            addReviewList(reviews);
+            addRequestReviewList(reviews);
         }
     })
 }
 
-function addReviewList(reviews) {
+//==========================//
+// 나에게 요청된 리뷰목록 랜더링
+//==========================//
+function addReceivedReviewList(reviews) {
     if (reviews.length > 0) {
         for (let i = 0; i < reviews.length; i++) {
             let tmp_html = `<li class="question-container">
-                                    <a onclick="showQuestionDetails('${reviews[i].reviewRequestId}')">
+                                    <a onclick="showQuestionDetailsForReview('${reviews[i].reviewRequestId}')">
                                         <div class="question-list__question  e-detail">
                                             <div class="question__info">
                                                 <div class="question__info-cover">
                                                     <div class="question__info--main">
                                                         <div class="question__title">
                                                             <h3 class="title__text">
-                                                                <span>${reviews[i].title}</span>
+                                                                <span>${reviews[i].title}</span> <span id="question-status" class="tag is-dark">${reviews[i].status}</span>
                                                             </h3>
                                                         </div>
                                                         <p class="question__body">
@@ -109,7 +112,7 @@ function addReviewList(reviews) {
                                                         <div class="footer__additional-info">
                                                             <div class="additional-info ">
                                                                 <span class="additional-info__icon"><span class="infd-icon icon-box-16"><svg width="16" xmlns="http://www.w3.org/2000/svg" width="16" height="16"  viewBox="0 0 384 512"><path fill="#616568"  d="M336 0H48C21.49 0 0 21.49 0 48v464l192-112 192 112V48c0-26.51-21.49-48-48-48zm16 456.287l-160-93.333-160 93.333V48c0-8.822 7.178-16 16-16h288c8.822 0 16 7.178 16 16v408.287z"></path></svg></span></span>
-                                                                <span class="additional-info__count ">${reviews[i].commentCount}/span>
+                                                                <span class="additional-info__count ">${reviews[i].commentCount}</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -123,14 +126,68 @@ function addReviewList(reviews) {
         }
     } else {
         let tmp_html = `<p>조회된 결과가 없습니다.</p>`
-        $('#received-list').append(tmp_html);
+        $('#question-list').append(tmp_html);
     }
 }
 
+//==========================//
+// 내가 요청한 리뷰목록 랜더링
+//==========================//
+function addRequestReviewList(reviews) {
+    if (reviews.length > 0) {
+        for (let i = 0; i < reviews.length; i++) {
+            let tmp_html = `<li class="question-container">
+                                    <a onclick="showQuestionDetails('${reviews[i].reviewRequestId}')">
+                                        <div class="question-list__question  e-detail">
+                                            <div class="question__info">
+                                                <div class="question__info-cover">
+                                                    <div class="question__info--main">
+                                                        <div class="question__title">
+                                                            <h3 class="title__text">
+                                                                <span>${reviews[i].title}</span> <span id="question-status" class="tag is-dark">${reviews[i].status}</span>
+                                                            </h3>
+                                                        </div>
+                                                        <p class="question__body">
+                                                           ${reviews[i].content}
+                                                        </p>
 
 
+                                                    </div>
+                                                    <div class="question__info-footer">
+                                                        <div class="footer__cover">
+                                                            <span class="footer__name">${reviews[i].username}</span>
+                                                            <span class="footer__dot"> ·</span>
+                                                            <span class="footer__info">${reviews[i].createdAt}</span>
+                                                            <span class="footer__dot"> ·</span>
+                                                            <span class="footer__info">${reviews[i].languageName}</span>
+                                                        </div>
+
+                                                        <div class="footer__additional-info">
+                                                            <div class="additional-info ">
+                                                                <span class="additional-info__icon"><span class="infd-icon icon-box-16"><svg width="16" xmlns="http://www.w3.org/2000/svg" width="16" height="16"  viewBox="0 0 384 512"><path fill="#616568"  d="M336 0H48C21.49 0 0 21.49 0 48v464l192-112 192 112V48c0-26.51-21.49-48-48-48zm16 456.287l-160-93.333-160 93.333V48c0-8.822 7.178-16 16-16h288c8.822 0 16 7.178 16 16v408.287z"></path></svg></span></span>
+                                                                <span class="additional-info__count ">${reviews[i].commentCount}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>`
+            $('#question-list').append(tmp_html);
+        }
+    } else {
+        let tmp_html = `<p>조회된 결과가 없습니다.</p>`
+        $('#question-list').append(tmp_html);
+    }
+}
 
 function showQuestionDetails(id) {
+    location.href = `details.html?id=${id}`
+}
+
+function showQuestionDetailsForReview(id) {
     location.href = `answer.html?id=${id}`
 }
 

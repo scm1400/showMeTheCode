@@ -17,7 +17,7 @@ public class ReviewRequestResponseDto {
     private String content;
 
     private String languageName;
-    private ReviewRequestStatus status;
+    private String status;
 
     private LocalDateTime createdAt;
 
@@ -30,7 +30,7 @@ public class ReviewRequestResponseDto {
         this.title = title;
         this.content = content;
         this.languageName = languageName;
-        this.status = status;
+        this.status = status.getDescription();
         this.createdAt = createdAt;
         this.commentCount = commentCount;
     }

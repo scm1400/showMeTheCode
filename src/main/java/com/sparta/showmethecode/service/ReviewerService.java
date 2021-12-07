@@ -70,9 +70,13 @@ public class ReviewerService {
                     () -> new IllegalArgumentException("존재하지 않는 리뷰요청입니다.")
             );
 
-            reviewRequest.setStatus(ReviewRequestStatus.REJECTED);
-            notificationService.send(reviewRequest.getRequestUser(),reviewRequest,"리뷰 요청이 거절되었습니다.");
-
+            // SOLVE(해결됨)이 아닌 경우에만 거절이 가능하도록
+            if (!reviewRequest.getStatus().equals(ReviewRequestStatus.SOLVE)) {
+                reviewRequest.setStatus(ReviewRequestStatus.REJECTED);
+                notificationService.send(reviewRequest.getRequestUser(), reviewRequest, "리뷰 요청이 거절되었습니다.");
+            } else {
+                throw new IllegalArgumentException("해결되지 않은 리뷰요청에 대해서만 거절이 가능합니다.");
+            }
         }
    }
 

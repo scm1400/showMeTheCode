@@ -7,6 +7,7 @@ $(document).ready(function () {
 
     loginCheck()
     getQuestionList();
+    getRanking();
 
     if (sessionStorage.getItem("mytoken") != null) {
         let token = sessionStorage.getItem("mytoken");
@@ -145,6 +146,42 @@ function makePageButton(totalPages, totalElements, size, page) {
 
 function showQuestionDetails(id) {
     location.href = `details.html?id=${id}`
+}
+
+
+// ========================================
+// 리뷰어 랭킹 - 상위 5위 목록보기
+// ========================================
+function getRanking(){
+    $.ajax({
+        type: "GET",
+        url: "/reviewer/top",
+        data: {},
+        success: function (res) {
+            for (let i = 0; i < res.length; i++){
+                let ranking = i + 1
+                let username = res[i]["username"];
+                let languages = res[i]["languages"];
+                let answerCount = res[i]["answerCount"];
+                let point = res[i]["point"];
+
+                let tmp_html = `<li class="">
+                                    <div>
+                                        <span>${ranking}위</span>
+                                        <span>${username} 님</span>
+                                        <span id="ranking-language">${languages}</span>
+                                    </div>
+                                    <div>
+                                        <span id="ranking-answer">답변수 ${answerCount}</span>
+                                        <span id="ranking-point">포인트 ${point}</span>
+                                    </div>
+                                </li>`;
+                $("#top-ranking").append(tmp_html);
+
+            }
+
+        }
+    })
 }
 
 

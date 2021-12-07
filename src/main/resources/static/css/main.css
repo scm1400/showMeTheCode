@@ -10,6 +10,33 @@
     margin-top: 30px;
 }
 
+#ranking-language, #ranking-all{
+    font-size: 10px;
+    color: grey;
+}
+
+#ranking-answer{
+    font-size: 10px;
+    color: #0e9c46;
+}
+
+#ranking-point{
+    font-size: 10px;
+}
+
+
+#ranking-title{
+    line-height: 1.43;
+    font-size: 14px;
+    font-weight: 500;
+    color: #616568;
+    letter-spacing: -.3px;
+}
+
+#top-ranking{
+    margin-top: 10px;
+}
+
 #chooseReviewer{
     margin-bottom: 10px;
 }

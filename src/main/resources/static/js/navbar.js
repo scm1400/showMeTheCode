@@ -163,7 +163,6 @@ $(document).ready(function () {
                                 <a onclick="show_login_modal()" role="button"
                                    class="button space-inset-4 signin" id="signinBtn">로그인</a>
                                 <a role="button" class="button space-inset-4 text is-5 signin" onclick="logout()" id="logoutBtn">로그아웃</a>
-                                <a role="button" class="button space-inset-4 text is-5 signin" href="mypage.html" id="mypageBtn">마이페이지</a>
                                 <a href="signup.html" class="e-signup button space-inset-4 is-primary" id="signupBtn">회원가입</a>
                                 <a href="mypage.html" class="e-signup button space-inset-4 is-primary" id="mypageBtn">마이페이지</a>
                             </div>

@@ -57,7 +57,7 @@ function getComments(comments) {
                     <div class="comment__card">
                         <div class="comment__header flex-row">
                             <img class="comment__user-profile"
-                                 src="https://cdn.inflearn.com/public/main/profile/default_profile.png"
+                                 src="./images/default_profile.png"
                                  alt="[아이디] 프로필">
                             <div class="flex-column">
                                 <div class="flex-row" id="question-comment-username">

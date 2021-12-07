@@ -5,6 +5,7 @@ import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.AddAnswerDto;
+import com.sparta.showmethecode.dto.request.ChangeReviewerDto;
 import com.sparta.showmethecode.dto.request.EvaluateAnswerDto;
 import com.sparta.showmethecode.dto.request.UpdateAnswerDto;
 import com.sparta.showmethecode.dto.response.*;
@@ -203,6 +204,24 @@ public class ReviewerService {
             reviewAnswer.evaluate(evaluateAnswerDto.getPoint());
             reviewAnswer.getAnswerUser().evaluate(evaluateAnswerDto.getPoint());
         }
+    }
+
+    /**
+     * 리뷰어 변경하기 API
+     */
+    @Transactional
+    public void changeReviewer(ChangeReviewerDto changeReviewerDto, Long questionId, Long reviewerId) {
+        ReviewRequest reviewRequest = reviewRequestRepository.findById(questionId).orElseThrow(
+                () -> new IllegalArgumentException("존재하지 않는 리뷰요청입니다.")
+        );
+
+        Long newReviewerId = changeReviewerDto.getNewReviewerId();
+        User newReviewer = userRepository.findById(newReviewerId).orElseThrow(
+                () -> new IllegalArgumentException("존재하지 않는 리뷰어입니다.")
+        );
+
+        reviewRequest.updateReviewer(newReviewer);
+
     }
 
     private Pageable makePageable(int page, int size, String sortBy, boolean isAsc) {

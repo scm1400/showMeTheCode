@@ -31,9 +31,6 @@ public class ReviewRequestController {
             @RequestParam(defaultValue = "createdAt") String sortBy, @RequestParam(defaultValue = "true") Boolean isAsc,
             @RequestParam(required = false) String query
     ) {
-
-        log.info("getReviewRequestList 호출");
-
         --page;
 
         if (!Objects.isNull(query)) {

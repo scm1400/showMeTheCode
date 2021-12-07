@@ -116,16 +116,10 @@
             <nav class="community-body__navigation">
                 <ul class="navigation">
                     <li class="navigation__group">
-                        <h6 class="navigation__group-name">함께 공부해요</h6>
+                        <h6 class="navigation__group-name">MENU</h6>
                         <ul class="navigation__menu-list">
                             <li class="navigation__menu navigation__menu--selected">
                                 <a href="/community/questions"><span>코드리뷰</span> </a>
-                            </li>
-                            <li class="navigation__menu ">
-                                <a href="/community/chats"><span>자유주제</span> </a>
-                            </li>
-                            <li class="navigation__menu ">
-                                <a href="/community/studies"><span>스터디</span> </a>
                             </li>
                         </ul>
                     </li>
@@ -150,69 +144,15 @@
 
                     <form class="search e-search">
                         <div class="search-item">
-
                             <div class="ac-input-with-item search-by-text ">
                                 <svg width="16" width="16" height="16" viewBox="0 0 16 16"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path fill="#212529" fill-rule="evenodd" clip-rule="evenodd"
                                           d="M11.5 7c0 .59-.116 1.176-.343 1.722-.226.546-.557 1.042-.975 1.46-.418.418-.914.75-1.46.975-.546.226-1.131.343-1.722.343-.59 0-1.176-.117-1.722-.343-.546-.226-1.042-.557-1.46-.975-.418-.418-.75-.914-.975-1.46C2.616 8.176 2.5 7.591 2.5 7c0-1.194.474-2.338 1.318-3.182C4.662 2.974 5.807 2.5 7 2.5c1.193 0 2.338.474 3.182 1.318C11.026 4.662 11.5 5.806 11.5 7zm-.82 4.74c-1.206.936-2.723 1.377-4.242 1.234-1.52-.143-2.928-.86-3.937-2.005C1.49 9.825.956 8.34 1.004 6.813c.047-1.526.675-2.976 1.754-4.055 1.08-1.08 2.53-1.707 4.055-1.755 1.525-.047 3.012.488 4.156 1.498 1.145 1.01 1.862 2.417 2.005 3.937.143 1.52-.298 3.036-1.234 4.242l3.04 3.04c.074.069.133.151.174.243.04.092.063.192.065.292.001.101-.017.201-.055.294-.038.094-.094.179-.165.25-.071.071-.156.127-.25.165-.093.038-.193.056-.293.054-.101-.001-.2-.023-.293-.064-.091-.041-.174-.1-.243-.174l-3.04-3.04z"/>
                                 </svg>
-                                <input
-
-                                        value=""
-                                        data-kv="s"
-
-
-                                        type="text" placeholder="궁금한 질문을 검색해보세요!"
-                                />
-
+                                <input id="review-search-input" placeholder="리뷰 내용 및 제목 검색"/>
                             </div>
-
-
-                            <button class="ac-button is-md is-solid is-primary search-form__search e-search-posts"
-                                    style="min-width: 96px">검색
-                            </button>
-                        </div>
-                        <div class="search-item">
-                            <div class="search-by-tag-box">
-
-
-                                <div class="ac-input-with-item e-input-tags ac-input-tags ac-input-tags--blue ">
-
-                                    <svg width="16" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                         viewBox="0 0 16 16">
-                                        <path fill="#3E4042" fill-rule="evenodd"
-                                              d="M5.773 1.455c-.283 0-.518.216-.542.498L5 4.727H2.545c-.3 0-.545.244-.545.546 0 .301.244.545.545.545H4.91l-.364 4.364h-2c-.3 0-.545.244-.545.545 0 .301.244.546.545.546h1.91l-.224 2.684c-.027.317.224.588.542.588.282 0 .518-.216.541-.498l.231-2.774H9.91l-.224 2.684c-.026.317.224.588.542.588.283 0 .518-.216.542-.498L11 11.273h2.454c.302 0 .546-.245.546-.546 0-.301-.244-.545-.546-.545h-2.363l.364-4.364h2c.3 0 .545-.244.545-.545 0-.302-.244-.546-.546-.546h-1.909l.224-2.684c.027-.317-.224-.588-.542-.588-.282 0-.518.216-.541.498l-.232 2.774H6.091l.224-2.684c.026-.317-.224-.588-.542-.588zM6 5.818l-.364 4.364H10l.364-4.364H6z"
-                                              clip-rule="evenodd"/>
-                                    </svg>
-
-
-                                    <input
-
-                                            value=""
-
-
-                                            type="text" theme="blue" placeholder="태그로 검색해보세요!" initial-value=""
-                                    />
-
-                                </div>
-
-
-                                <span class="input-tags__description input-tags__description--default">
-                                  최대 10개의 태그를 달 수 있어요!
-                                </span>
-
-                            </div>
-
-                            <button class="ac-button is-md is-text search-form__reset e-init-search"
-                                    style="min-width: 96px">
-                                <svg width="16" width="16" height="16" viewBox="0 0 16 16"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="#212529" fill-rule="evenodd" clip-rule="evenodd"
-                                          d="M2.254 5.333C3.26 3.167 5.456 1.667 8 1.667c2.964 0 5.454 2.037 6.144 4.788.067.268.338.43.606.363.268-.067.43-.338.364-.606C14.315 3.026 11.434.667 8 .667c-2.702 0-5.061 1.46-6.333 3.634V3.167c0-.276-.224-.5-.5-.5s-.5.224-.5.5v2.5c0 .368.298.666.666.666h2.5c.276 0 .5-.223.5-.5 0-.276-.224-.5-.5-.5h-1.58zM1.856 9.545c-.067-.268-.338-.43-.606-.363-.268.067-.43.338-.364.606.799 3.186 3.68 5.545 7.114 5.545 2.702 0 5.061-1.46 6.333-3.634v1.134c0 .277.224.5.5.5.277 0 .5-.223.5-.5v-2.5c0-.368-.298-.666-.666-.666h-2.5c-.277 0-.5.224-.5.5s.223.5.5.5h1.58c-1.008 2.166-3.203 3.666-5.747 3.666-2.964 0-5.454-2.037-6.144-4.788z"/>
-                                </svg>
-                                초기화
-                            </button>
+                            <button onclick="reviewSearch()" class="ac-button is-md is-solid is-primary search-form__search e-search-posts" style="min-width: 96px">검색</button>
                         </div>
                     </form>
                 </div>
@@ -290,129 +230,27 @@
                                                                                                clip-rule="evenodd"/></svg></span>
                             <span id="write" class="posts-container-header__button-text">글쓰기</span></button>
                     </div>
+
                     <ul class="question-list" id="reviewQuestionList">
-                        <li class="question-container"><a href="/questions/353805">
-                            <div class="question">
-                                <div class="question__info">
-                                    <div class="question__title">
 
-                                        <h3 class="title__text">
-                                            스크립트 다운로드 문의
-                                            <span class="infd-icon title__icon">
-                                            </span>
-                                        </h3>
-                                    </div>
-                                    <p class="question__body">
-                                        &nbsp;
-                                        안녕하세요 명강의 정말 잘 듣고 있습니다. 감사합니다 : )
-                                        &nbsp;
-                                        애니메이션까지 들어가는 중인데
-                                        &nbsp;
-                                        플레이어 컨트롤 하는 스크립트를 잘못 짠것 같아서 ...
-                                    </p>
-                                    <div class="question__tags">
-
-                                    </div>
-                                    <div class="question__info-footer">
-                                        C Glen · 5분 전 · [C#과 유니티로 만드는 MMORPG 게임 개발 시리즈] Part3: 유니티 엔진
-                                    </div>
-                                </div>
-                                <div class="question__additional-info">
-                                    <div class="question__comment">
-                                        <span class="comment__count">0</span>
-                                        <span class="comment__description">답변</span>
-                                    </div>
-
-                                    <button class="ac-button is-md is-text question__like e-like">
-                                        <svg width="16" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                             viewBox="0 0 16 16">
-                                            <path fill="#616568"
-                                                  d="M9.333 13.605c-.328.205-.602.365-.795.473-.102.057-.205.113-.308.168h-.002c-.143.074-.313.074-.456 0-.105-.054-.208-.11-.31-.168-.193-.108-.467-.268-.795-.473-.655-.41-1.53-1.007-2.408-1.754C2.534 10.382.667 8.22.667 5.676c0-2.308 1.886-4.01 3.824-4.01 1.529 0 2.763.818 3.509 2.07.746-1.252 1.98-2.07 3.509-2.07 1.938 0 3.824 1.702 3.824 4.01 0 2.545-1.867 4.706-3.592 6.175-.878.747-1.753 1.344-2.408 1.754z"/>
-                                        </svg>
-                                        0
-                                    </button>
-                                </div>
-                            </div>
-                        </a></li>
-                        <li class="question-container"><a href="/questions/353802">
-                            <div class="question">
-                                <div class="question__info">
-                                    <div class="question__title">
-
-                                        <h3 class="title__text">
-                                            applicative programming
-                                            <span class="infd-icon title__icon">
-                                            </span>
-                                        </h3>
-                                    </div>
-                                    <p class="question__body">
-                                        응용형 프로그래밍 설명에서 궁금한게 있습니다.
-                                        예를 들어
-                                        const times = (fun)&nbsp; =&gt;&nbsp;return fun(10);
-                                        function을 인자로 받...
-                                    </p>
-                                    <div class="question__tags">
-
-                                    </div>
-                                    <div class="question__info-footer">
-                                        dongwoo kim · 8분 전 · 함수형 프로그래밍과 JavaScript ES6+
-                                    </div>
-                                </div>
-                                <div class="question__additional-info">
-                                    <div class="question__comment">
-                                        <span class="comment__count">0</span>
-                                        <span class="comment__description">답변</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a></li>
                     </ul>
+
                 </div>
-
-<!--                <nav class="pagination is-centered is-small" role="navagation" aria-label="pagination">-->
-
-<!--                    <a class="pagination-next" href="?page=2">다음 페이지</a>-->
-<!--                    <ul class="pagination-list" id="pagingList">-->
-<!--                        <li>-->
-<!--                            <a class="pagination-link is-current" href="?page=1" aria-label="1 페이지로 이동">-->
-<!--                                1-->
-<!--                            </a>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </nav>-->
 
             </div>
             <div class="posts-pop-tags">
                 <div class="popular-tags">
+
                     <h5 class="popular-tags__title">인기 태그</h5>
+
                     <ul class="popular-tags__tag-list">
                         <li class="popular-tags__tag ">
 
                             <button class="ac-button is-sm is-solid is-gray e-popular-tag ac-tag ac-tag--blue "><span
                                     class="ac-tag__hashtag">#&nbsp;</span><span class="ac-tag__name">질문</span></button>
                         </li>
-                        <li class="popular-tags__tag ">
-
-                            <button class="ac-button is-sm is-solid is-gray e-popular-tag ac-tag ac-tag--blue "><span
-                                    class="ac-tag__hashtag">#&nbsp;</span><span class="ac-tag__name">오류</span></button>
-                        </li>
-                        <li class="popular-tags__tag ">
-
-                            <button class="ac-button is-sm is-solid is-gray e-popular-tag ac-tag ac-tag--blue "><span
-                                    class="ac-tag__hashtag">#&nbsp;</span><span class="ac-tag__name">react</span>
-                            </button>
-                        </li>
-                        <li class="popular-tags__tag ">
-
-                            <button class="ac-button is-sm is-solid is-gray e-popular-tag ac-tag ac-tag--blue "><span
-                                    class="ac-tag__hashtag">#&nbsp;</span><span class="ac-tag__name">에러</span></button>
-                        </li>
-                        <li class="popular-tags__tag ">
-
-                            <button class="ac-button is-sm is-solid is-gray e-popular-tag ac-tag ac-tag--blue "><span
-                                    class="ac-tag__hashtag">#&nbsp;</span><span class="ac-tag__name">JPA</span></button>
-                        </li>
                     </ul>
+
                 </div>
                 <div class="popular-tags">
                     <div id="ranking-title-div">
@@ -467,11 +305,7 @@
                     <label class="form__label" for="select-reviewer">리뷰어 지정</label>
                     <div class="select is-fullwidth">
                         <select id="select-reviewer">
-                            <option>
-                                <span>JavaGod</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-                                <span>답변수: 50</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-                                <span>평균점수: 4.45</span>
-                            </option>
+
                         </select>
                     </div>
 

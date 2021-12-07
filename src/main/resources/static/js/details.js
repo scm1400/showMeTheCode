@@ -1,18 +1,8 @@
 $(document).ready(function () {
     let id = getParameterByName("id");
 
-    let tmp_html = `<div class="flex-row feature__status e-status e-hover-toggle" data-status="1">
-									<button onclick="showEvaluateForm()" class="ac-button is-md is-solid is-primary button-rounded undefined">평가하기</button>
-								</div>`
-    $('#request-status-box').append(tmp_html)
-
     getDetails(id);
 
-    $('input[name="star-input"]:radio').on("change", function () {
-        //라디오 버튼 값을 가져온다.
-        console.log($(this).val());
-
-    });
 });
 
 // ========================================
@@ -42,8 +32,11 @@ function getDetails(id) {
                                                 class="ac-tag__name">'${res.languageName}'</span></button>`);
 
             let reviewAnswer = res["reviewAnswer"];
-            if (reviewAnswer) {
+            if (JSON.stringify(reviewAnswer) === '{}') {
+                $('#answer-section').hide();
+            } else {
                 addAnswerHtml(reviewAnswer)
+                $('#answer-section').show()
             }
 
             let status = res.status
@@ -58,10 +51,8 @@ function getDetails(id) {
             $("#question-comment-content-box").empty();
             let comments = res["comments"];
             if (comments.length > 0) {
-                $('#answer-section').show();
+                $('#comment-section').show();
                 addCommentHtml(comments);
-            } else {
-                $('#answer-section').hide();
             }
         },
     });

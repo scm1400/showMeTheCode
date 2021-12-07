@@ -119,8 +119,8 @@ public class ReviewRequestService {
      */
     @Transactional(readOnly = true)
     public ReviewRequestDetailResponseDto getReviewRequest(Long id) {
-        ReviewRequestDetailResponseDto reviewRequestDetailWithComment = reviewRequestRepository.getReviewRequestDetails(id);
-        return reviewRequestDetailWithComment;
+        ReviewRequestDetailResponseDto result = reviewRequestRepository.getReviewRequestDetails(id);
+        return result;
     }
 
     /**

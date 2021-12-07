@@ -54,10 +54,10 @@ public class ReviewerController {
      * 리뷰요청 거절 API
      */
     @Secured({"ROLE_REVIEWER"})
-    @GetMapping("/reviewer/request/reject")
+    @PostMapping("/reviewer/reject/{questionId}")
     public ResponseEntity rejectRequestedReview(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestParam Long questionId
+            @PathVariable Long questionId
     ) {
         User user = userDetails.getUser();
         reviewerService.rejectRequestedReview(user, questionId);

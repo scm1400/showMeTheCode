@@ -32,6 +32,14 @@ function getDetails() {
 
             $('#question-status').text(status)
 
+            // 리뷰요청의 상태가 [해결됨] 인 경우에만 거절하기 버튼을 활성화
+            if (status === "해결됨") {
+                $('#rejectBtn').show()
+            } else {
+                $('#rejectBtn').hide()
+            }
+
+
             // 답변이 있는 경우 편집이 불가능하도록 <p> 태그 내에 답변 내용을 랜더링
             if (answerContent) {
                 $('#content-answer-markdown-box').hide()
@@ -68,6 +76,23 @@ function addAnswer() {
         success: function (res) {
             alert('리뷰 작성을 완료했습니다.')
             window.location.reload();
+        }
+    })
+}
+
+/**
+ * 거절하기
+ */
+function reject() {
+    let id = getParameterByName('id');
+
+    $.ajax({
+        type: "POST",
+        url: `/reviewer/reject/${id}`,
+        success: function (res) {
+            console.log(res);
+            alert('리뷰요청을 거절했습니다.');
+            location.href = 'mypage.html';
         }
     })
 }

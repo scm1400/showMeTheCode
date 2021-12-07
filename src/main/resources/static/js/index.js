@@ -271,6 +271,7 @@ function loginCheck() {
         $('#logoutBtnMobile').show()
         $('#myPageBtnMobile').show()
 
+        $('#writeBtn').show()
     } else { // 인증이 되지 않은 경우
         $('#signinBtn').show()
         $('#signupBtn').show()
@@ -281,6 +282,8 @@ function loginCheck() {
         $('#signupBtnMobile').show()
         $('#logoutBtnMobile').hide()
         $('#myPageBtnMobile').hide()
+
+        $('#writeBtn').hide()
 
     }
 }

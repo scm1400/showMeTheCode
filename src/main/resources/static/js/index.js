@@ -40,11 +40,19 @@ function getQuestionList() {
             page: currentPage
         },
         success: function (res) {
-            let data = res['data']
-            let pagination = `<nav class="pagination is-centered is-small" role="navagation" aria-label="pagination">`
-            let totalpage = res.totalPage
-            if (totalpage == 1) {
-                pagination += `
+            makeQuestionList(res, currentPage);
+        }
+    })
+}
+
+function makeQuestionList(res, currentPage) {
+    let data = res['data']
+    let pagination = `<nav class="pagination is-centered is-small" role="navagation" aria-label="pagination">`
+    let totalpage = res.totalPage
+
+    // 전체 페이지가 1개인 경우
+    if (totalpage == 1) {
+        pagination += `
                                     <ul class="pagination-list" id="pagingList">
                                         <li>
                                             <a class="pagination-link is-current" href="?page=1" aria-label="1 페이지로 이동">
@@ -54,52 +62,55 @@ function getQuestionList() {
                                     </ul>
                                 </nav>
                             `
-            } else {
-                pagination += `<a class="pagination-next" href="?page=${nextPage}">다음 페이지</a>
-                                <ul class="pagination-list" id="pagingList">`
-
-                for (let i = 1; i <= totalpage; i++) {
-                    if (totalpage == 11) {
-                        pagination += `<li>
-                            <a className="pagination-link" href="?page=${i}" aria-label="${i} 페이지로 이동">
+    // 전체 페이지가 1개 이상인 경우
+    } else {
+        if (currentPage < totalpage) {
+            pagination += `<a class="pagination-next" href="?page=${nextPage}">다음 페이지</a>`
+        }
+        pagination += `<ul class="pagination-list" id="pagingList">`
+        for (let i = 1; i <= totalpage; i++) {
+            if (totalpage == 11) {
+                pagination += `<li>
+                            <a class="pagination-link" href="?page=${i}" aria-label="${i} 페이지로 이동">
                                 ...
                             </a>
                         </li>`
 
 
-                        break;
-                    }
-                    if (currentPage == i) {
-                        pagination += `
+                break;
+            }
+            // 현재 페이지 버튼에 대한 처리
+            if (currentPage == i) {
+                pagination += `
                                 <li>
                                     <a class="pagination-link is-current" href="?page=${i}" aria-label="${i} 페이지로 이동">
                                         ${i}
                                     </a>
                                 </li>
                                 `
-                    } else {
-                        pagination += `
+            } else {
+                pagination += `
                                 <li>
                                     <a class="pagination-link" href="?page=${i}" aria-label="${i} 페이지로 이동">
                                         ${i}
                                     </a>
                                 </li>
                                 `
-                    }
-
-                }
-                pagination += `</ul></nav>`
             }
-            $('#community-body').append(pagination)
-            for (let i = 0; i < data.length; i++) {
-                let date = new Date(data[i].createdAt)
-                date = dateFormat(date)
-                let li = `<li class="question-container">
+
+        }
+        pagination += `</ul></nav>`
+    }
+    $('#community-body').append(pagination)
+
+    for (let i = 0; i < data.length; i++) {
+        let date = new Date(data[i].createdAt)
+        date = dateFormat(date)
+        let li = `<li class="question-container">
                                 <a onclick="showQuestionDetails(${data[i].reviewRequestId})">
                                 <div class="question">
                                     <div class="question__info">
                                         <div class="question__title">
-    
                                             <h3 class="title__text">
                                                 ${data[i].title}
                                                 <span class="infd-icon title__icon">
@@ -133,14 +144,10 @@ function getQuestionList() {
                                     </div>
                                 </div>
                             </a></li>`
-                $('#reviewQuestionList').append(li);
-            } // end-for
-        }
-    })
-}
 
-function makePageButton(totalPages, totalElements, size, page) {
+        $('#reviewQuestionList').append(li);
 
+    }
 }
 
 function showQuestionDetails(id) {
@@ -151,6 +158,7 @@ function showQuestionDetails(id) {
 /**
  * 설정
  */
+
 // ========================================
 // ajax 요청시 token이 있다면 헤더에 추가하도록 설정
 // ========================================

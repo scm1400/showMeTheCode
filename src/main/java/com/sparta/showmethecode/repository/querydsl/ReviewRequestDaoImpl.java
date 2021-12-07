@@ -89,7 +89,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                         )
                 )
                 .from(reviewRequest)
-                .join(reviewRequest.requestUser, user).fetchJoin()
+                .join(reviewRequest.requestUser, user)
                 .where(containingTitleOrComment(keyword))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -115,10 +115,6 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                 .where(containingTitleOrComment(keyword));
 
         return PageableExecutionUtils.getPage(results, pageable, jpaQuery::fetchCount);
-    }
-
-    private BooleanExpression containingTitleOrComment(String keyword) {
-        return Objects.isNull(keyword) || keyword.isEmpty() ? null : reviewRequest.title.contains(keyword).or(reviewRequest.content.contains(keyword));
     }
 
     @Override
@@ -346,6 +342,12 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
     public void deleteComment(Long reviewId, Long commentId, Long userId) {
         query.delete(reviewRequest)
                 .where(reviewRequest.id.eq(reviewId));
+    }
+
+
+
+    private BooleanExpression containingTitleOrComment(String keyword) {
+        return Objects.isNull(keyword) || keyword.isEmpty() ? null : reviewRequest.title.contains(keyword).or(reviewRequest.content.contains(keyword));
     }
 
     private BooleanExpression statusEqual(ReviewRequestStatus status) {

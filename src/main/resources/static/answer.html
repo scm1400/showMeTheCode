@@ -173,15 +173,25 @@
                                             <h5 class="comment__user-name">리뷰작성</h5>
                                         </div>
                                     </div>
-                                    <div class="comment__body markdown-body">
+
+                                    <div class="comment__body markdown-body" id="content-answer-markdown-box">
                                         <textarea name="content-answer" class="form-control" id="content-answer">
 
                                         </textarea>
                                     </div>
+
+                                    <div class="question">
+                                        <div class="question__info">
+                                            <p class="question__body" id="content-answer-text">
+
+                                            </p>
+                                        </div>
+                                    </div>
+
                                     <div class="comment__footer flex-row">
                                         <div class="flex-right">
 
-                                            <button onclick="addAnswer()" class="ac-button is-md is-solid is-primary e-post-comment">리뷰등록</button>
+                                            <button id="addAnswerBtn" onclick="addAnswer()" class="ac-button is-md is-solid is-primary e-post-comment">리뷰등록</button>
                                         </div>
                                     </div>
                                 </div>

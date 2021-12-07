@@ -24,12 +24,6 @@ insert into review_request(id, created_at, updated_at, content, language_name, s
 values (1, current_timestamp, current_timestamp, '테스트내용', 'java', 'UNSOLVE', '테스트제목', 2, 1);
 
 call next value for hibernate_sequence;
-insert into review_answer(id, created_at, updated_at, content, point, answer_user_id, review_request_id)
-values (1, current_timestamp, current_timestamp, '테스트내용', 5, 2, 1);
-
-update review_request set review_answer_id = 1 where id = 1;
-
-call next value for hibernate_sequence;
 insert into review_request_comment(id, created_at, updated_at, content,  review_request_id, user_id)
 values (1, current_timestamp, current_timestamp, '테스트댓글내용', 1, 1);
 

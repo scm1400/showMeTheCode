@@ -1,9 +1,12 @@
 let reviewerId;
 
 $('document').ready(function() {
-   $('select-reviewer').on("change", () => {
-       reviewerId = $(this).val()
-   })
+    $("#select-reviewer").on("change", function () {
+        console.log($(this).val());
+        reviewerId = $(this).val();
+        console.log(reviewerId)
+
+    })
 })
 
 /**
@@ -18,16 +21,13 @@ function findReviewer() {
             type: "GET",
             url: `/user/language?language=${query}`,
             success: function (res) {
+                $('#select-reviewer').append('<option>리뷰어를 선택하세요</option>')
+
                 for (let i = 0; i < res.length; i++) {
                     let id = res[i]['id'];
                     let username = res[i]['username'];
                     let answerCount = res[i]['answerCount']; // 답변수
                     let point = res[i]['point']
-
-                    if (i===0) {
-                        reviewerId = id;
-                    }
-
 
                     let option_html = `<option value=${id}>
                                     <span>${username}</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;

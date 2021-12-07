@@ -57,7 +57,7 @@
 <script>
     $(function () {
 
-        CKEDITOR.replace('content-answer', {
+        CKEDITOR.replace('content-comment', {
             fontSize_defaultLabel: "12",
             skin: "minimalist",
             language: "ko"
@@ -228,8 +228,51 @@
             </div>
         </section>
 
-        <section class="community-post-detail__section community-post-detail__answer">
+        <!-- 답변 -->
+        <section style="display: none" id="answer-section" class="community-post-detail__section community-post-detail__answer">
 
+            <div class="section__content">
+                <div class="answer-info">
+                    <div class="answer-info__header">
+
+                    </div>
+
+                    <div class="community-post-info__content">
+                        <div class="content__body">
+                            <div id="answer-box" class="answer__comment" data-id="122943">
+                                <div class="answer__index">답변</div>
+                                <div class="comment__card">
+                                    <div class="comment__header flex-row">
+                                        <img class="comment__user-profile"
+                                             src="images/default_profile.png"
+                                             alt="[아이디] 프로필">
+                                        <div class="flex-column">
+                                            <div class="flex-row">
+                                                <a id="answer-username" class="comment__user-name">[아이디]</a>
+                                            </div>
+                                            <span id="answer-date" class="comment__updated-at">4달 전</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="comment__body markdown-body">
+                                        <p id="answer-content">
+
+                                            코드를 이렇게 고치는게 좋아보여요.
+
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 댓글 -->
+        <section  class="community-post-detail__section community-post-detail__answer">
             <div class="section__content">
                 <div class="answer-info">
                     <div class="answer-info__header">
@@ -238,7 +281,6 @@
 
                     <div class="community-post-info__content">
                         <div class="content__body">
-
                             <div id="question-comment-content-box" class="answer__comment" data-id="122943">
                                 <div class="comment__index">1</div>
                                 <div class="comment__card">
@@ -255,23 +297,6 @@
                                     </div>
                                     <div class="comment__body markdown-body">
                                         <p id="question-comment-content">코드를 이렇게 고치는게 좋아보여요.</p>
-                                        <div class="comment__features flex-row">
-
-                                            <div class="comment__like e-comment-like" data-id="122943" data-status="1"
-                                                 data-cnt="1">
-
-                                                <button class="ac-button is-md is-solid is-red button-rounded undefined"
-                                                        style="min-width: 75px">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         viewBox="0 0 16 16">
-                                                        <path fill="#E5503C"
-                                                              d="M9.333 13.605c-.328.205-.602.365-.795.473-.102.057-.205.113-.308.168h-.002c-.143.074-.313.074-.456 0-.105-.054-.208-.11-.31-.168-.193-.108-.467-.268-.795-.473-.655-.41-1.53-1.007-2.408-1.754C2.534 10.382.667 8.22.667 5.676c0-2.308 1.886-4.01 3.824-4.01 1.529 0 2.763.818 3.509 2.07.746-1.252 1.98-2.07 3.509-2.07 1.938 0 3.824 1.702 3.824 4.01 0 2.545-1.867 4.706-3.592 6.175-.878.747-1.753 1.344-2.408 1.754z"/>
-                                                    </svg>
-                                                    1
-                                                </button>
-                                            </div>
-
-                                        </div>
                                     </div>
                                 </div>
 

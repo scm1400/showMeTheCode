@@ -13,6 +13,9 @@ function getDetails(id) {
 		url: `/details?id=${id}`,
 		contentType: "application/json;charset-utf-8;",
 		success: function (res) {
+
+			console.log(res);
+
 			let date = new Date(res.createdAt);
 			let title = `<h1>`;
 			title = title + res.title + `</h1>`;
@@ -28,11 +31,17 @@ function getDetails(id) {
                                                 class="ac-tag__name">'${res.languageName}'</span></button>`);
 
 			let reviewAnswer = res["reviewAnswer"];
+			if (reviewAnswer) {
+				addAnswerHtml(reviewAnswer)
+			}
 
 			$("#question-comment-content-box").empty();
 			let comments = res["comments"];
 			if (comments.length > 0) {
-				getComments(comments);
+				$('#answer-section').show();
+				addCommentHtml(comments);
+			} else {
+				$('#answer-section').hide();
 			}
 		},
 	});
@@ -41,7 +50,7 @@ function getDetails(id) {
 // ========================================
 // 댓글 랜더링
 // ========================================
-function getComments(comments) {
+function addCommentHtml(comments) {
 	let size = comments.length;
 
 	$("#question-comment-qty").html(`총 ${size}개 댓글이 달렸습니다.`);
@@ -67,28 +76,35 @@ function getComments(comments) {
                             </div>
                         </div>
                         <div class="comment__body markdown-body">
-                            <p id="question-comment-content">${content}</p>
-                            <div class="comment__features flex-row">
-
-                                <div class="comment__like e-comment-like" data-id="122943" data-status="1" data-cnt="1">
-
-                                    <button class="ac-button is-md is-solid is-red button-rounded undefined"
-                                            style="min-width: 75px">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                             viewBox="0 0 16 16">
-                                            <path fill="#E5503C"
-                                                  d="M9.333 13.605c-.328.205-.602.365-.795.473-.102.057-.205.113-.308.168h-.002c-.143.074-.313.074-.456 0-.105-.054-.208-.11-.31-.168-.193-.108-.467-.268-.795-.473-.655-.41-1.53-1.007-2.408-1.754C2.534 10.382.667 8.22.667 5.676c0-2.308 1.886-4.01 3.824-4.01 1.529 0 2.763.818 3.509 2.07.746-1.252 1.98-2.07 3.509-2.07 1.938 0 3.824 1.702 3.824 4.01 0 2.545-1.867 4.706-3.592 6.175-.878.747-1.753 1.344-2.408 1.754z"/>
-                                        </svg>
-                                        1
-                                    </button>
-                                </div>
-
-                            </div>
+                            <p id="question-comment-content">
+								${content}
+							</p>
                         </div>
                     </div>`;
 		$("#question-comment-content-box").append(tmp_html);
 	}
 }
+
+// ========================================
+// 답변 랜더링
+// ========================================
+function addAnswerHtml(answer) {
+
+	console.log(answer);
+
+	let answerId = answer['reviewAnswerId'];
+	let questionId = answer['reviewRequestId'];
+	let username = answer['username']
+	let content = answer['answerContent'];
+	let point = answer['point'];
+	let createdAt = answer['createdAt'];
+
+	$('#answer-username').html(username);
+	$('#answer-date').html(dateFormat(new Date(createdAt)));
+	$('#answer-content').html(content);
+
+}
+
 
 // ========================================
 // 댓글등록

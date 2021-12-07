@@ -17,8 +17,8 @@ public interface ReviewRequestDao {
     Page<ReviewRequestResponseDto> findSearchByTitleOrComment(String keyword, Pageable pageable);
     // 코드리뷰요청 목록 제목+내용 검색쿼리
     Page<ReviewRequestResponseDto> findSearchByTitleOrCommentAdvanced(String keyword, Pageable pageable, boolean isAsc);
-    // 코드리뷰요청 상세정보 조회 (댓글포함)
-    ReviewRequestDetailResponseDto getReviewRequestDetailWithComment(Long id);
+    // 코드리뷰요청 상세정보 조회
+    ReviewRequestDetailResponseDto getReviewRequestDetails(Long id);
     // 언어별 코드리뷰요청 카운팅
     List<ReviewRequestLanguageCount> getReviewRequestLanguageCountGroupByLanguage();
     // 자신이 요청한 리뷰 조회

@@ -147,7 +147,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
     }
 
     @Override
-    public ReviewRequestDetailResponseDto getReviewRequestDetailWithComment(Long id) {
+    public ReviewRequestDetailResponseDto getReviewRequestDetails(Long id) {
 
         ReviewRequest result = query.select(reviewRequest).distinct()
                 .from(reviewRequest)
@@ -170,6 +170,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
             ReviewAnswerResponseDto reviewAnswerResponseDto = new ReviewAnswerResponseDto(
                     reviewAnswer.getId(),
                     result.getId(),
+                    reviewAnswer.getAnswerUser().getUsername(),
                     reviewAnswer.getContent(),
                     reviewAnswer.getPoint(),
                     reviewAnswer.getCreatedAt()
@@ -323,6 +324,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                         new QReviewAnswerResponseDto(
                                 reviewRequest.reviewAnswer.id,
                                 reviewRequest.id,
+                                reviewRequest.reviewAnswer.answerUser.username,
                                 reviewRequest.reviewAnswer.content,
                                 reviewRequest.reviewAnswer.point,
                                 reviewRequest.reviewAnswer.createdAt

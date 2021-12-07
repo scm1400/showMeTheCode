@@ -11,6 +11,7 @@ import com.sparta.showmethecode.service.ReviewerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +53,7 @@ public class ReviewerController {
     /**
      * 리뷰요청 거절 API
      */
+    @Secured({"ROLE_REVIEWER"})
     @GetMapping("/reviewer/request/reject")
     public ResponseEntity rejectRequestedReview(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
@@ -66,20 +68,22 @@ public class ReviewerController {
     /**
      * 리뷰요청에 대한 리뷰등록 API
      */
-    @PostMapping("/reviewer/request")
+    @Secured("ROLE_REVIEWER")
+    @PostMapping("/reviewer/request/{questionId}")
     public ResponseEntity addReviewAndComment(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestParam Long questionId,
+            @PathVariable Long questionId,
             @RequestBody AddAnswerDto addAnswerDto
     ) {
         User reviewer = userDetails.getUser();
-        reviewerService.addReviewAndComment(reviewer, questionId, addAnswerDto);
+        reviewerService.addAnswer(reviewer, questionId, addAnswerDto);
         return ResponseEntity.ok("ok");
     }
 
     /**
      * 내가 답변한 리뷰목록 조회 API
      */
+    @Secured({"ROLE_REVIEWER"})
     @GetMapping("/reviewer/answers")
     public ResponseEntity getMyAnswerList(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
@@ -96,6 +100,7 @@ public class ReviewerController {
     /**
      * 답변한 리뷰 수정 API
      */
+    @Secured({ "ROLE_REVIEWER"})
     @PutMapping("/reviewer/answer/{answerId}")
     public ResponseEntity updateMyAnswer(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
@@ -113,6 +118,7 @@ public class ReviewerController {
     /**
      * 나에게 요청된 리뷰목록 조회
      */
+    @Secured({"ROLE_REVIEWER"})
     @GetMapping("/user/received")
     public ResponseEntity<PageResponseDto> getMyReceivedList(
             @RequestParam ReviewRequestStatus status,
@@ -127,20 +133,5 @@ public class ReviewerController {
         PageResponseDto response = reviewerService.getMyReceivedRequestList(user, page, size, sortBy, isAsc, status);
 
         return ResponseEntity.ok(response);
-    }
-
-    /**
-     * 답변에 대한 평가 API
-     */
-    @PostMapping("/user/question/{answerId}/eval")
-    public ResponseEntity evaluateAnswer(
-            @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @PathVariable Long answerId,
-            @RequestBody EvaluateAnswerDto evaluateAnswerDto
-    ) {
-        User user = userDetails.getUser();
-        reviewerService.evaluateAnswer(user, answerId, evaluateAnswerDto);
-
-        return ResponseEntity.ok("ok");
     }
 }

@@ -41,4 +41,7 @@ public interface ReviewRequestDao {
 
     // 현재 리뷰요청에 달린 댓글 삭제
     void deleteComment(Long reviewId, Long commentId, Long userId);
+
+    // 리뷰 상세내용 조회 (댓글X)
+    RequestAndAnswerResponseDto findReviewRequestAndAnswer(Long id);
 }

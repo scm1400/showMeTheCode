@@ -3,35 +3,31 @@ package com.sparta.showmethecode.dto.response;
 import com.querydsl.core.annotations.QueryProjection;
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import lombok.Data;
-import lombok.ToString;
 
 import java.time.LocalDateTime;
 
-@ToString
 @Data
-public class ReviewRequestResponseDto {
+public class RequestAndAnswerResponseDto {
 
-    private Long reviewRequestId;
+    private Long questionId;
     private String username;
     private String title;
     private String content;
-
-    private String languageName;
     private String status;
-
     private LocalDateTime createdAt;
 
-    private long commentCount;
+    private Long answerId;
+    private String answerContent;
 
     @QueryProjection
-    public ReviewRequestResponseDto(Long reviewRequestId, String username, String title, String content, String languageName, ReviewRequestStatus status, LocalDateTime createdAt, long commentCount) {
-        this.reviewRequestId = reviewRequestId;
+    public RequestAndAnswerResponseDto(Long questionId, String username, String title, String content, ReviewRequestStatus status, LocalDateTime createdAt, Long answerId, String answerContent) {
+        this.questionId = questionId;
         this.username = username;
         this.title = title;
         this.content = content;
-        this.languageName = languageName;
         this.status = status.getDescription();
         this.createdAt = createdAt;
-        this.commentCount = commentCount;
+        this.answerId = answerId;
+        this.answerContent = answerContent;
     }
 }

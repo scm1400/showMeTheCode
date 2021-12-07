@@ -17,8 +17,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,10 +40,9 @@ public class ReviewerService {
      * 자신에게 요청된 리뷰가 아닌 경우에 대한 처리 필요
      */
     @Transactional
-    public void addReviewAndComment(User reviewer, Long reviewId, AddAnswerDto addAnswerDto) {
+    public void addAnswer(User reviewer, Long reviewId, AddAnswerDto addAnswerDto) {
         if (isRequestedToMe(reviewId, reviewer)) {
             ReviewAnswer reviewAnswer = ReviewAnswer.builder()
-                    .title(addAnswerDto.getTitle())
                     .content(addAnswerDto.getContent())
                     .answerUser(reviewer)
                     .build();
@@ -53,8 +54,8 @@ public class ReviewerService {
 
             reviewRequest.setStatus(ReviewRequestStatus.SOLVE);
             reviewRequest.setReviewAnswer(savedReviewAnswer);
-            notificationService.send(reviewRequest.getRequestUser(), reviewRequest, "리뷰 등록이 완료되었습니다.");
 
+            notificationService.send(reviewRequest.getRequestUser(), reviewRequest, "리뷰 등록이 완료되었습니다.");
         }
     }
 

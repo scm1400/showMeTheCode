@@ -26,8 +26,8 @@ public class ReviewAnswer extends Timestamped {
     @Id @GeneratedValue
     private Long id;
 
-    private String title;
-
+    @Lob
+    @Column(nullable = false)
     private String content;
 
     private double point;
@@ -38,24 +38,21 @@ public class ReviewAnswer extends Timestamped {
 
     @JsonIgnore
     @JoinColumn(name = "review_request_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "reviewAnswer")
     private ReviewRequest reviewRequest;
+
+    public void setReviewRequest(ReviewRequest reviewRequest) {
+        this.reviewRequest = reviewRequest;
+    }
 
     @OneToMany(mappedBy = "reviewAnswer", cascade = CascadeType.ALL)
     private List<ReviewAnswerComment> comments = new ArrayList<>();
-
-    public ReviewAnswer(String title, String content, User answerUser) {
-        this.title = title;
-        this.content = content;
-        this.answerUser = answerUser;
-    }
 
     public void evaluate(double point) {
         this.point = point;
     }
 
     public void update(UpdateAnswerDto dto) {
-        this.title = dto.getTitle();
         this.content = dto.getContent();
     }
 

@@ -49,10 +49,8 @@ public class ReviewRequest extends Timestamped {
     private User answerUser;
 
     @JoinColumn(name = "review_answer_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private ReviewAnswer reviewAnswer;
-
-
 
     @OneToMany(mappedBy = "reviewRequest", cascade = CascadeType.ALL)
     private List<ReviewRequestComment> reviewRequestComments = new ArrayList<>();
@@ -88,15 +86,16 @@ public class ReviewRequest extends Timestamped {
         }
     }
 
-    public void setReviewAnswer(ReviewAnswer reviewAnswer) {
-        this.reviewAnswer = reviewAnswer;
-    }
-
     public void setStatus(ReviewRequestStatus status) {
         this.status = status;
     }
 
     public boolean hasComments() {
         return this.reviewRequestComments.size() > 0 ? true : false;
+    }
+
+    public void setReviewAnswer(ReviewAnswer reviewAnswer) {
+        this.reviewAnswer = reviewAnswer;
+        reviewAnswer.setReviewRequest(this);
     }
 }

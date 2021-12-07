@@ -63,7 +63,6 @@ public class ReviewRequestController {
      */
     @GetMapping("/details")
     public ResponseEntity<ReviewRequestDetailResponseDto> getReviewRequest(@RequestParam Long id) {
-        System.out.println(id);
         ReviewRequestDetailResponseDto reviewRequest = reviewRequestService.getReviewRequest(id);
 
         return ResponseEntity.ok(reviewRequest);

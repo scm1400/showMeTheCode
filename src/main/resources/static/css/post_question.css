@@ -1616,6 +1616,23 @@ div:not(.course_description) .content ul ul ul {
     font-weight: 700
 }
 
+.pg___questions_detail .answer__index {
+    position: absolute;
+    top: 16px;
+    left: -40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: #4c59f3;
+    border: 1px solid #e2b600;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700
+}
+
 @media screen and (max-width: 1024px) {
     .pg___questions_detail .comment__index {
         display: none

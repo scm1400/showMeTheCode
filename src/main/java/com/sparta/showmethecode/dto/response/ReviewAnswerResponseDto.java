@@ -17,6 +17,8 @@ public class ReviewAnswerResponseDto {
     private Long reviewAnswerId;
     private Long reviewRequestId;
 
+    private String username;
+
     private String answerContent;
 
     private double point;
@@ -24,9 +26,12 @@ public class ReviewAnswerResponseDto {
     private LocalDateTime createdAt;
 
     @QueryProjection
-    public ReviewAnswerResponseDto(Long reviewAnswerId, Long reviewRequestId, String answerContent, double point, LocalDateTime createdAt) {
+    public ReviewAnswerResponseDto(
+            Long reviewAnswerId, Long reviewRequestId, String username, String answerContent, double point, LocalDateTime createdAt
+    ) {
         this.reviewAnswerId = reviewAnswerId;
         this.reviewRequestId = reviewRequestId;
+        this.username = username;
         this.answerContent = answerContent;
         this.point = point;
         this.createdAt = createdAt;

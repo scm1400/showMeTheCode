@@ -11,6 +11,7 @@ public enum ReviewRequestStatus {
     REJECTED("거절됨"),
     SOLVE("해결됨"),
 
+    EVALUATED("평가됨"),
     ALL("ALL");
 
     private final String description;

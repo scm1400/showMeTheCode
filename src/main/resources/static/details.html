@@ -51,13 +51,14 @@
     <script src="js/index.js"></script>
     <script src="js/details.js"></script>
     <script src="js/footer.js"></script>
+    <script src="js/login.js"></script>
 
 </head>
 <body id="inflearn" class="question_detail pg___questions_detail is_logged_in is-student-user">
 <script>
     $(function () {
 
-        CKEDITOR.replace('content-answer', {
+        CKEDITOR.replace('content-comment', {
             fontSize_defaultLabel: "12",
             skin: "minimalist",
             language: "ko"
@@ -106,45 +107,26 @@
                 </div>
                 <div class="sider__space"></div>
                 <div class="sider__right">
-                    <div class="post__features">
+                    <div class="post__features" id="request-status-box">
 
                         <div class="flex-row feature__status e-status e-hover-toggle" data-status="1">
-
-                            <button class="ac-button is-md is-solid is-primary button-rounded undefined">해결됨</button>
+                            <button id="request-status" class="ac-button is-md is-solid is-primary button-rounded undefined">해결됨</button>
                         </div>
 
-                        <div class="flex-row feature__recommend e-post-like e-hover-toggle"
-                             data-id="256304" data-status="" data-cnt="0">
 
-                            <button class="ac-button is-md is-outlined is-white button-rounded undefined">
-                                <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="#1B1C1D" fill-rule="evenodd" clip-rule="evenodd"
-                                          d="M4.49095 2.66666C3.10493 2.66666 1.66663 3.92028 1.66663 5.67567C1.66663 7.74725 3.21569 9.64919 4.90742 11.0894C5.73796 11.7965 6.571 12.3653 7.19759 12.7576C7.51037 12.9534 7.7704 13.1045 7.95123 13.2061C7.96818 13.2156 7.98443 13.2247 7.99996 13.2333C8.01549 13.2247 8.03174 13.2156 8.04869 13.2061C8.22952 13.1045 8.48955 12.9534 8.80233 12.7576C9.42892 12.3653 10.262 11.7965 11.0925 11.0894C12.7842 9.64919 14.3333 7.74725 14.3333 5.67567C14.3333 3.92028 12.895 2.66666 11.509 2.66666C10.1054 2.66666 8.9751 3.59266 8.4743 5.09505C8.40624 5.29922 8.21518 5.43693 7.99996 5.43693C7.78474 5.43693 7.59368 5.29922 7.52562 5.09505C7.02482 3.59266 5.89453 2.66666 4.49095 2.66666ZM7.99996 13.8018L8.22836 14.2466C8.08499 14.3202 7.91493 14.3202 7.77156 14.2466L7.99996 13.8018ZM0.666626 5.67567C0.666626 3.368 2.55265 1.66666 4.49095 1.66666C6.01983 1.66666 7.25381 2.48414 7.99996 3.73655C8.74611 2.48414 9.98009 1.66666 11.509 1.66666C13.4473 1.66666 15.3333 3.368 15.3333 5.67567C15.3333 8.22121 13.4657 10.3823 11.7407 11.8509C10.863 12.5982 9.98767 13.1953 9.33301 13.6052C9.00516 13.8104 8.73133 13.9696 8.53847 14.0779C8.44201 14.1321 8.36571 14.1737 8.31292 14.2019C8.28653 14.2161 8.26601 14.2269 8.25177 14.2344L8.2352 14.2431L8.23054 14.2455L8.22914 14.2462C8.22897 14.2463 8.22836 14.2466 7.99996 13.8018C7.77156 14.2466 7.77173 14.2467 7.77156 14.2466L7.76938 14.2455L7.76472 14.2431L7.74815 14.2344C7.73391 14.2269 7.71339 14.2161 7.687 14.2019C7.63421 14.1737 7.55791 14.1321 7.46145 14.0779C7.26858 13.9696 6.99476 13.8104 6.66691 13.6052C6.01225 13.1953 5.13695 12.5982 4.25917 11.8509C2.53423 10.3823 0.666626 8.22121 0.666626 5.67567Z"/>
-                                </svg>
-                                <div class="text features__text">0</div>
-                            </button>
-                            <div class="message e-target-hover-toggle hide">0명이 이 글을 좋아합니다!</div>
-                        </div>
 
-                        <div class="flex-row e-bookmark e-hover-toggle" data-id="256304" data-status="" data-cnt="0">
+<!--                        <div class="flex-row feature__recommend e-post-like e-hover-toggle"-->
+<!--                             data-id="256304" data-status="" data-cnt="0">-->
 
-                            <button class="ac-button is-md is-outlined is-white button-rounded undefined">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 384 512">
-                                    <path fill="#1B1C1D"
-                                          d="M336 0H48C21.49 0 0 21.49 0 48v464l192-112 192 112V48c0-26.51-21.49-48-48-48zm16 456.287l-160-93.333-160 93.333V48c0-8.822 7.178-16 16-16h288c8.822 0 16 7.178 16 16v408.287z"></path>
-                                </svg>
-                                <div class="text features__text">0</div>
-                            </button>
-                            <div class="message e-target-hover-toggle hide">0명이 이 글을 북마크 했습니다!</div>
-                        </div>
-
-                        <button class="ac-button is-md is-outlined is-white button-rounded flex-row features__share e-share">
-                            <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                                <path fill="#1B1C1D" fill-rule="evenodd" clip-rule="evenodd"
-                                      d="M13.3334 3.66666C13.3334 4.95533 12.2887 6 11 6C10.3257 6 9.7181 5.7139 9.29211 5.25646L5.88379 7.27067C5.95923 7.50012 6.00004 7.74529 6.00004 8C6.00004 8.25469 5.95923 8.49986 5.8838 8.72932L9.29224 10.7434C9.71822 10.286 10.3257 10 11 10C12.2887 10 13.3334 11.0447 13.3334 12.3333C13.3334 13.622 12.2887 14.6667 11 14.6667C9.71138 14.6667 8.66671 13.622 8.66671 12.3333C8.66671 12.0786 8.70752 11.8335 8.78296 11.604L5.37452 9.58992C4.94854 10.0473 4.34103 10.3333 3.66671 10.3333C2.37804 10.3333 1.33337 9.28866 1.33337 8C1.33337 6.71133 2.37804 5.66666 3.66671 5.66666C4.34102 5.66666 4.94853 5.9527 5.37452 6.41007L8.78295 4.39599L8.78321 4.39678C8.70761 4.1671 8.66671 3.92166 8.66671 3.66666C8.66671 2.378 9.71138 1.33333 11 1.33333C12.2887 1.33333 13.3334 2.378 13.3334 3.66666ZM12.3334 3.66666C12.3334 4.40304 11.7364 4.99999 11 4.99999C10.2637 4.99999 9.66671 4.40304 9.66671 3.66666C9.66671 2.93028 10.2637 2.33333 11 2.33333C11.7364 2.33333 12.3334 2.93028 12.3334 3.66666ZM3.66671 9.33333C4.40309 9.33333 5.00004 8.73637 5.00004 8C5.00004 7.26362 4.40309 6.66666 3.66671 6.66666C2.93033 6.66666 2.33337 7.26362 2.33337 8C2.33337 8.73637 2.93033 9.33333 3.66671 9.33333ZM12.3334 12.3333C12.3334 13.0697 11.7364 13.6667 11 13.6667C10.2637 13.6667 9.66671 13.0697 9.66671 12.3333C9.66671 11.5969 10.2637 11 11 11C11.7364 11 12.3334 11.5969 12.3334 12.3333Z"/>
-                            </svg>
-                            <div class="text features__text">공유</div>
-                        </button>
+<!--                            <button class="ac-button is-md is-outlined is-white button-rounded undefined">-->
+<!--                                <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                    <path fill="#1B1C1D" fill-rule="evenodd" clip-rule="evenodd"-->
+<!--                                          d="M4.49095 2.66666C3.10493 2.66666 1.66663 3.92028 1.66663 5.67567C1.66663 7.74725 3.21569 9.64919 4.90742 11.0894C5.73796 11.7965 6.571 12.3653 7.19759 12.7576C7.51037 12.9534 7.7704 13.1045 7.95123 13.2061C7.96818 13.2156 7.98443 13.2247 7.99996 13.2333C8.01549 13.2247 8.03174 13.2156 8.04869 13.2061C8.22952 13.1045 8.48955 12.9534 8.80233 12.7576C9.42892 12.3653 10.262 11.7965 11.0925 11.0894C12.7842 9.64919 14.3333 7.74725 14.3333 5.67567C14.3333 3.92028 12.895 2.66666 11.509 2.66666C10.1054 2.66666 8.9751 3.59266 8.4743 5.09505C8.40624 5.29922 8.21518 5.43693 7.99996 5.43693C7.78474 5.43693 7.59368 5.29922 7.52562 5.09505C7.02482 3.59266 5.89453 2.66666 4.49095 2.66666ZM7.99996 13.8018L8.22836 14.2466C8.08499 14.3202 7.91493 14.3202 7.77156 14.2466L7.99996 13.8018ZM0.666626 5.67567C0.666626 3.368 2.55265 1.66666 4.49095 1.66666C6.01983 1.66666 7.25381 2.48414 7.99996 3.73655C8.74611 2.48414 9.98009 1.66666 11.509 1.66666C13.4473 1.66666 15.3333 3.368 15.3333 5.67567C15.3333 8.22121 13.4657 10.3823 11.7407 11.8509C10.863 12.5982 9.98767 13.1953 9.33301 13.6052C9.00516 13.8104 8.73133 13.9696 8.53847 14.0779C8.44201 14.1321 8.36571 14.1737 8.31292 14.2019C8.28653 14.2161 8.26601 14.2269 8.25177 14.2344L8.2352 14.2431L8.23054 14.2455L8.22914 14.2462C8.22897 14.2463 8.22836 14.2466 7.99996 13.8018C7.77156 14.2466 7.77173 14.2467 7.77156 14.2466L7.76938 14.2455L7.76472 14.2431L7.74815 14.2344C7.73391 14.2269 7.71339 14.2161 7.687 14.2019C7.63421 14.1737 7.55791 14.1321 7.46145 14.0779C7.26858 13.9696 6.99476 13.8104 6.66691 13.6052C6.01225 13.1953 5.13695 12.5982 4.25917 11.8509C2.53423 10.3823 0.666626 8.22121 0.666626 5.67567Z"/>-->
+<!--                                </svg>-->
+<!--                                <div class="text features__text">0</div>-->
+<!--                            </button>-->
+<!--                            <div class="message e-target-hover-toggle hide">0명이 이 글을 좋아합니다!</div>-->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>
@@ -180,12 +162,6 @@
 
                             <div class="post__features">
 
-                                <div class="flex-row feature__status e-status e-hover-toggle" data-status="1">
-
-                                    <button id="request-status" class="ac-button is-md is-solid is-primary button-rounded undefined">해결됨
-                                    </button>
-                                </div>
-
                                 <div class="flex-row feature__recommend e-post-like e-hover-toggle"
                                      data-id="256304" data-status="" data-cnt="0">
 
@@ -200,27 +176,7 @@
                                     <div class="message e-target-hover-toggle hide">0명이 이 글을 좋아합니다!</div>
                                 </div>
 
-                                <div class="flex-row e-bookmark e-hover-toggle" data-id="256304" data-status=""
-                                     data-cnt="0">
 
-                                    <button class="ac-button is-md is-outlined is-white button-rounded undefined">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                             viewBox="0 0 384 512">
-                                            <path fill="#1B1C1D"
-                                                  d="M336 0H48C21.49 0 0 21.49 0 48v464l192-112 192 112V48c0-26.51-21.49-48-48-48zm16 456.287l-160-93.333-160 93.333V48c0-8.822 7.178-16 16-16h288c8.822 0 16 7.178 16 16v408.287z"></path>
-                                        </svg>
-                                        <div class="text features__text">0</div>
-                                    </button>
-                                    <div class="message e-target-hover-toggle hide">0명이 이 글을 북마크 했습니다!</div>
-                                </div>
-
-                                <button class="ac-button is-md is-outlined is-white button-rounded flex-row features__share e-share">
-                                    <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill="#1B1C1D" fill-rule="evenodd" clip-rule="evenodd"
-                                              d="M13.3334 3.66666C13.3334 4.95533 12.2887 6 11 6C10.3257 6 9.7181 5.7139 9.29211 5.25646L5.88379 7.27067C5.95923 7.50012 6.00004 7.74529 6.00004 8C6.00004 8.25469 5.95923 8.49986 5.8838 8.72932L9.29224 10.7434C9.71822 10.286 10.3257 10 11 10C12.2887 10 13.3334 11.0447 13.3334 12.3333C13.3334 13.622 12.2887 14.6667 11 14.6667C9.71138 14.6667 8.66671 13.622 8.66671 12.3333C8.66671 12.0786 8.70752 11.8335 8.78296 11.604L5.37452 9.58992C4.94854 10.0473 4.34103 10.3333 3.66671 10.3333C2.37804 10.3333 1.33337 9.28866 1.33337 8C1.33337 6.71133 2.37804 5.66666 3.66671 5.66666C4.34102 5.66666 4.94853 5.9527 5.37452 6.41007L8.78295 4.39599L8.78321 4.39678C8.70761 4.1671 8.66671 3.92166 8.66671 3.66666C8.66671 2.378 9.71138 1.33333 11 1.33333C12.2887 1.33333 13.3334 2.378 13.3334 3.66666ZM12.3334 3.66666C12.3334 4.40304 11.7364 4.99999 11 4.99999C10.2637 4.99999 9.66671 4.40304 9.66671 3.66666C9.66671 2.93028 10.2637 2.33333 11 2.33333C11.7364 2.33333 12.3334 2.93028 12.3334 3.66666ZM3.66671 9.33333C4.40309 9.33333 5.00004 8.73637 5.00004 8C5.00004 7.26362 4.40309 6.66666 3.66671 6.66666C2.93033 6.66666 2.33337 7.26362 2.33337 8C2.33337 8.73637 2.93033 9.33333 3.66671 9.33333ZM12.3334 12.3333C12.3334 13.0697 11.7364 13.6667 11 13.6667C10.2637 13.6667 9.66671 13.0697 9.66671 12.3333C9.66671 11.5969 10.2637 11 11 11C11.7364 11 12.3334 11.5969 12.3334 12.3333Z"/>
-                                    </svg>
-                                    <div class="text features__text">공유</div>
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -228,8 +184,51 @@
             </div>
         </section>
 
-        <section class="community-post-detail__section community-post-detail__answer">
+        <!-- 답변 -->
+        <section style="display: none" id="answer-section" class="community-post-detail__section community-post-detail__answer">
 
+            <div class="section__content">
+                <div class="answer-info">
+                    <div class="answer-info__header">
+
+                    </div>
+
+                    <div class="community-post-info__content">
+                        <div class="content__body">
+                            <div id="answer-box" class="answer__comment" data-id="122943">
+                                <div class="answer__index">답변</div>
+                                <div class="comment__card">
+                                    <div class="comment__header flex-row">
+                                        <img class="comment__user-profile"
+                                             src="images/default_profile.png"
+                                             alt="[아이디] 프로필">
+                                        <div class="flex-column">
+                                            <div class="flex-row">
+                                                <a id="answer-username" class="comment__user-name">[아이디]</a>
+                                            </div>
+                                            <span id="answer-date" class="comment__updated-at">4달 전</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="comment__body markdown-body">
+                                        <p id="answer-content">
+
+                                            코드를 이렇게 고치는게 좋아보여요.
+
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 댓글 -->
+        <section  class="community-post-detail__section community-post-detail__answer">
             <div class="section__content">
                 <div class="answer-info">
                     <div class="answer-info__header">
@@ -238,7 +237,6 @@
 
                     <div class="community-post-info__content">
                         <div class="content__body">
-
                             <div id="question-comment-content-box" class="answer__comment" data-id="122943">
                                 <div class="comment__index">1</div>
                                 <div class="comment__card">
@@ -255,23 +253,6 @@
                                     </div>
                                     <div class="comment__body markdown-body">
                                         <p id="question-comment-content">코드를 이렇게 고치는게 좋아보여요.</p>
-                                        <div class="comment__features flex-row">
-
-                                            <div class="comment__like e-comment-like" data-id="122943" data-status="1"
-                                                 data-cnt="1">
-
-                                                <button class="ac-button is-md is-solid is-red button-rounded undefined"
-                                                        style="min-width: 75px">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         viewBox="0 0 16 16">
-                                                        <path fill="#E5503C"
-                                                              d="M9.333 13.605c-.328.205-.602.365-.795.473-.102.057-.205.113-.308.168h-.002c-.143.074-.313.074-.456 0-.105-.054-.208-.11-.31-.168-.193-.108-.467-.268-.795-.473-.655-.41-1.53-1.007-2.408-1.754C2.534 10.382.667 8.22.667 5.676c0-2.308 1.886-4.01 3.824-4.01 1.529 0 2.763.818 3.509 2.07.746-1.252 1.98-2.07 3.509-2.07 1.938 0 3.824 1.702 3.824 4.01 0 2.545-1.867 4.706-3.592 6.175-.878.747-1.753 1.344-2.408 1.754z"/>
-                                                    </svg>
-                                                    1
-                                                </button>
-                                            </div>
-
-                                        </div>
                                     </div>
                                 </div>
 

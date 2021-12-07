@@ -9,6 +9,7 @@ import com.sparta.showmethecode.service.ReviewRequestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +46,7 @@ public class ReviewRequestController {
     /**
      * 코드리뷰 요청 API
      */
+    @Secured({"ROLE_USER", "ROLE_REVIEWER"})
     @PostMapping("/question")
     public ResponseEntity<String> addReviewRequest(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
@@ -70,6 +72,7 @@ public class ReviewRequestController {
     /**
      * 코드리뷰 수정 API
      */
+    @Secured({"ROLE_USER", "ROLE_REVIEWER"})
     @PutMapping("/question")
     public ResponseEntity updateReviewRequest(
             @RequestBody ReviewRequestUpdateDto updateDto,
@@ -85,6 +88,7 @@ public class ReviewRequestController {
     /**
      * 코드리뷰 삭제 API
      */
+    @Secured({"ROLE_USER", "ROLE_REVIEWER"})
     @DeleteMapping("/question")
     public ResponseEntity deleteReviewRequest(
             @RequestParam Long id,

@@ -1,6 +1,7 @@
 package com.sparta.showmethecode.controller;
 
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
+import com.sparta.showmethecode.dto.request.EvaluateAnswerDto;
 import com.sparta.showmethecode.security.UserDetailsImpl;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.SigninRequestDto;
@@ -94,6 +95,7 @@ public class UserController {
     /**
      * 내가 등록한 리뷰요청목록 조회 API
      */
+    @Secured({"ROLE_USER", "ROLE_REVIEWER"})
     @GetMapping("/user/requests")
     public ResponseEntity<PageResponseDto> getMyRequestList(
             @RequestParam ReviewRequestStatus status,
@@ -109,5 +111,21 @@ public class UserController {
         PageResponseDto response = userService.getMyReviewRequestList(user, page, size, sortBy, isAsc, status);
 
         return ResponseEntity.ok(response);
+    }
+
+    /**
+     * 답변에 대한 평가 API
+     */
+    @Secured({"ROLE_USER", "ROLE_REVIEWER"})
+    @PostMapping("/user/question/{answerId}/eval")
+    public ResponseEntity evaluateAnswer(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable Long answerId,
+            @RequestBody EvaluateAnswerDto evaluateAnswerDto
+    ) {
+        User user = userDetails.getUser();
+        reviewerService.evaluateAnswer(user, answerId, evaluateAnswerDto);
+
+        return ResponseEntity.ok("ok");
     }
 }

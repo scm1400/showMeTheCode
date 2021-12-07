@@ -170,7 +170,6 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
             ReviewAnswerResponseDto reviewAnswerResponseDto = new ReviewAnswerResponseDto(
                     reviewAnswer.getId(),
                     result.getId(),
-                    reviewAnswer.getTitle(),
                     reviewAnswer.getContent(),
                     reviewAnswer.getPoint(),
                     reviewAnswer.getCreatedAt()
@@ -324,7 +323,6 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                         new QReviewAnswerResponseDto(
                                 reviewRequest.reviewAnswer.id,
                                 reviewRequest.id,
-                                reviewRequest.reviewAnswer.title,
                                 reviewRequest.reviewAnswer.content,
                                 reviewRequest.reviewAnswer.point,
                                 reviewRequest.reviewAnswer.createdAt
@@ -344,7 +342,21 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                 .where(reviewRequest.id.eq(reviewId));
     }
 
+    @Override
+    public RequestAndAnswerResponseDto findReviewRequestAndAnswer(Long id) {
 
+        return query.select(
+                        new QRequestAndAnswerResponseDto(
+                                reviewRequest.id, reviewRequest.requestUser.username,
+                                reviewRequest.title, reviewRequest.content, reviewRequest.status, reviewRequest.createdAt,
+                                reviewRequest.reviewAnswer.id, reviewRequest.reviewAnswer.content
+                        )
+                ).from(reviewRequest)
+                .join(reviewRequest.requestUser, user)
+                .leftJoin(reviewRequest.reviewAnswer, reviewAnswer)
+                .where(reviewRequest.id.eq(id))
+                .fetchOne();
+    }
 
     private BooleanExpression containingTitleOrComment(String keyword) {
         return Objects.isNull(keyword) || keyword.isEmpty() ? null : reviewRequest.title.contains(keyword).or(reviewRequest.content.contains(keyword));

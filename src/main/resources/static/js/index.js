@@ -228,18 +228,22 @@ function loginCheck() {
         $('#signupBtn').hide()
         $('#logoutBtn').show()
         $('#mypageBtn').show()
+
         $('#signinBtnMobile').hide()
         $('#signupBtnMobile').hide()
         $('#logoutBtnMobile').show()
+        $('#myPageBtnMobile').show()
 
     } else { // 인증이 되지 않은 경우
         $('#signinBtn').show()
         $('#signupBtn').show()
         $('#logoutBtn').hide()
         $('#mypageBtn').hide()
+
         $('#signinBtnMobile').show()
         $('#signupBtnMobile').show()
         $('#logoutBtnMobile').hide()
+        $('#myPageBtnMobile').hide()
 
     }
 }

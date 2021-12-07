@@ -151,11 +151,18 @@ public class ReviewRequestService {
         );
     }
 
+    /**
+     * 답변을 위한 상세정보 조회 (댓글 X, 답변 O)
+     */
+    public RequestAndAnswerResponseDto getReviewRequestWithAnswer(Long id) {
+        RequestAndAnswerResponseDto reviewRequestAndAnswer = reviewRequestRepository.findReviewRequestAndAnswer(id);
+        return reviewRequestAndAnswer;
+    }
+
     private Pageable makePageable(int page, int size, String sortBy, boolean isAsc) {
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort sort = Sort.by(direction, sortBy);
 
         return PageRequest.of(page, size, sort);
     }
-
 }

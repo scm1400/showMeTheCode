@@ -30,6 +30,14 @@ $(document).ready(function () {
 function getQuestionList() {
     $('#reviewQuestionList').empty();
     let currentPage = getParameterByName('page');
+    let query = getParameterByName('query');
+    let sort = getParameterByName('sortBy');
+    let isAsc = getParameterByName('isAsc');
+    let size = getParameterByName('size');
+
+    if(!query){
+        query = null;
+    }
     if (!currentPage) {
         currentPage = 1
     }
@@ -38,12 +46,41 @@ function getQuestionList() {
         type: "GET",
         url: "/questions",
         data: {
-            page: currentPage
+            page: currentPage,
+            query: query,
+            sortBy: sort
         },
         success: function (res) {
             makeQuestionList(res, currentPage);
         }
     })
+}
+
+function move_page(page){
+    let URLSearch = new URLSearchParams(location.search);
+    URLSearch.set('page',page)
+
+    let newParam = URLSearch.toString();
+
+    window.open(location.pathname + '?' + newParam,'_self')
+    // location.href = "?query="+query
+}
+
+function reviewSearch_enter(){
+    if(window.event.keyCode == 13){
+        reviewSearch();
+    }
+}
+
+function reviewSearch(){
+    let query = $('#review-search-input').val()
+    let URLSearch = new URLSearchParams(location.search);
+    URLSearch.set('query',query)
+
+    let newParam = URLSearch.toString();
+
+    window.open(location.pathname + '?' + newParam,'_self')
+    // location.href = "?query="+query
 }
 
 function makeQuestionList(res, currentPage) {
@@ -56,7 +93,7 @@ function makeQuestionList(res, currentPage) {
         pagination += `
                                     <ul class="pagination-list" id="pagingList">
                                         <li>
-                                            <a class="pagination-link is-current" href="?page=1" aria-label="1 페이지로 이동">
+                                            <a class="pagination-link is-current" onclick="move_page(${1}) aria-label="1 페이지로 이동">
                                                 1
                                             </a>
                                         </li>
@@ -66,13 +103,13 @@ function makeQuestionList(res, currentPage) {
     // 전체 페이지가 1개 이상인 경우
     } else {
         if (currentPage < totalpage) {
-            pagination += `<a class="pagination-next" href="?page=${nextPage}">다음 페이지</a>`
+            pagination += `<a class="pagination-next" onclick="move_page(${nextPage})">다음 페이지</a>`
         }
         pagination += `<ul class="pagination-list" id="pagingList">`
         for (let i = 1; i <= totalpage; i++) {
             if (totalpage == 11) {
                 pagination += `<li>
-                            <a class="pagination-link" href="?page=${i}" aria-label="${i} 페이지로 이동">
+                            <a class="pagination-link" onclick="move_page(${i})" aria-label="${i} 페이지로 이동">
                                 ...
                             </a>
                         </li>`
@@ -84,7 +121,7 @@ function makeQuestionList(res, currentPage) {
             if (currentPage == i) {
                 pagination += `
                                 <li>
-                                    <a class="pagination-link is-current" href="?page=${i}" aria-label="${i} 페이지로 이동">
+                                    <a class="pagination-link is-current" onclick="move_page(${i})" aria-label="${i} 페이지로 이동">
                                         ${i}
                                     </a>
                                 </li>
@@ -92,7 +129,7 @@ function makeQuestionList(res, currentPage) {
             } else {
                 pagination += `
                                 <li>
-                                    <a class="pagination-link" href="?page=${i}" aria-label="${i} 페이지로 이동">
+                                    <a class="pagination-link" onclick="move_page(${i})" aria-label="${i} 페이지로 이동">
                                         ${i}
                                     </a>
                                 </li>

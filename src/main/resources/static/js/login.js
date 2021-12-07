@@ -6,7 +6,7 @@ function show_login_modal() {
       <svg width="16px" xmlns="http://www.w3.org/2000/svg" height="12" viewBox="0 0 12 12"><path fill="#3E4042" fill-rule="evenodd" d="M.203.203c.27-.27.708-.27.979 0L6 5.02 10.818.203c.27-.27.709-.27.98 0 .27.27.27.708 0 .979L6.978 6l4.818 4.818c.27.27.27.709 0 .98-.27.27-.709.27-.979 0L6 6.978l-4.818 4.818c-.27.27-.709.27-.98 0-.27-.27-.27-.709 0-.979L5.022 6 .203 1.182c-.27-.27-.27-.709 0-.98z" clip-rule="evenodd"></path></svg>
     </span>
     <span class="header__logo">
-      Show Me The Code [ 로고 넣는 곳 ]
+      <img src="./images/header_logo.png" style=" margin: auto" />
     </span>
     <form class="sign-in-modal__form">
       <div class="form__input-block">
@@ -23,7 +23,6 @@ function show_login_modal() {
     <button type="button" onclick="signin()" class="ac-button is-md is-solid is-primary form__button e-sign-in">로그인</button>
     </form>
     <p class="sign-in-modal__more-action">
-      <span class="e-find-password more-action__text">비밀번호 찾기</span>
       <span onclick="signup_page()" id="button_signup" class="e-to-sign-up more-action__text more-action__text--sign-up">회원가입</span>
     </p>
     <div class="sign-in-modal__social-sign-in">

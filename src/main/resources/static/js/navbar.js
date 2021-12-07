@@ -80,7 +80,6 @@ $(document).ready(function () {
                     <div class="brand_header">
                         <a href="/" class="brand_logo"><span class="visually_hidden">쇼미 더 코드</span>
                             <img src="images/logo.png">
-                            [ 모바일 로고 넣는 곳 ]
                         </a>
                     </div>
                     <div class="mobile_right">

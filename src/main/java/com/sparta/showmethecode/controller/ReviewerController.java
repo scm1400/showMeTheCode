@@ -1,6 +1,7 @@
 package com.sparta.showmethecode.controller;
 
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
+import com.sparta.showmethecode.dto.request.ChangeReviewerDto;
 import com.sparta.showmethecode.security.UserDetailsImpl;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.AddAnswerDto;
@@ -54,10 +55,10 @@ public class ReviewerController {
      * 리뷰요청 거절 API
      */
     @Secured({"ROLE_REVIEWER"})
-    @GetMapping("/reviewer/request/reject")
+    @PostMapping("/reviewer/reject/{questionId}")
     public ResponseEntity rejectRequestedReview(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestParam Long questionId
+            @PathVariable Long questionId
     ) {
         User user = userDetails.getUser();
         reviewerService.rejectRequestedReview(user, questionId);
@@ -133,5 +134,20 @@ public class ReviewerController {
         PageResponseDto response = reviewerService.getMyReceivedRequestList(user, page, size, sortBy, isAsc, status);
 
         return ResponseEntity.ok(response);
+    }
+
+    /**
+     * 리뷰어 변경하기 API
+     */
+    @Secured({"ROLE_USER", "ROLE_REVIEWER"})
+    @PostMapping("/question/{questionId}/reviewer/{reviewerId}")
+    public ResponseEntity changeReviewer(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestBody ChangeReviewerDto changeReviewerDto,
+            @PathVariable Long questionId, @PathVariable Long reviewerId
+    ) {
+        reviewerService.changeReviewer(changeReviewerDto, questionId, reviewerId);
+
+        return ResponseEntity.ok("success");
     }
 }

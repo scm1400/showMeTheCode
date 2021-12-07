@@ -52,6 +52,7 @@
     <script src="js/details.js"></script>
     <script src="js/footer.js"></script>
     <script src="js/login.js"></script>
+    <script src="js/post_question.js"></script>
 
 </head>
 <body id="inflearn" class="question_detail pg___questions_detail is_logged_in is-student-user">
@@ -148,7 +149,9 @@
 
                             <div class="flex-right">
 
-                                <button class="ac-button is-md is-text post__edit-btn e-edit">수정</button>
+                                <button class="ac-button is-md is-text post__edit-btn e-edit">내용수정</button>
+
+                                <button onclick="showChangeReviewerForm()" class="ac-button is-md is-text post__edit-btn e-edit">리뷰어 변경</button>
 
                                 <button class="ac-button is-md is-text post__remove-btn e-remove">삭제</button>
                             </div>

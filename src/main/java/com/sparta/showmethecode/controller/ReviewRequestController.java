@@ -1,6 +1,7 @@
 package com.sparta.showmethecode.controller;
 
 import com.sparta.showmethecode.domain.User;
+import com.sparta.showmethecode.dto.request.ChangeReviewerDto;
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
 import com.sparta.showmethecode.dto.request.ReviewRequestUpdateDto;
 import com.sparta.showmethecode.dto.response.*;

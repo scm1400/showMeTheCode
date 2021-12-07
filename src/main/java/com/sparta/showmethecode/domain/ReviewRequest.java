@@ -98,4 +98,8 @@ public class ReviewRequest extends Timestamped {
         this.reviewAnswer = reviewAnswer;
         reviewAnswer.setReviewRequest(this);
     }
+
+    public void updateReviewer(User answerUser) {
+        this.answerUser = answerUser;
+    }
 }

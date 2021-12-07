@@ -1,11 +1,6 @@
 $(document).ready(function () {
     let id = getParameterByName("id");
 
-    let tmp_html = `<div class="flex-row feature__status e-status e-hover-toggle" data-status="1">
-									<button onclick="showEvaluateForm()" class="ac-button is-md is-solid is-primary button-rounded undefined">평가하기</button>
-								</div>`
-    $('#request-status-box').append(tmp_html)
-
     getDetails(id);
 
 });
@@ -46,8 +41,11 @@ function getDetails(id) {
                                                 class="ac-tag__name">'${res.languageName}'</span></button>`);
 
             let reviewAnswer = res["reviewAnswer"];
-            if (reviewAnswer) {
+            if (JSON.stringify(reviewAnswer) === '{}') {
+                $('#answer-section').hide();
+            } else {
                 addAnswerHtml(reviewAnswer)
+                $('#answer-section').show()
             }
 
             let status = res.status
@@ -62,10 +60,8 @@ function getDetails(id) {
             $("#question-comment-content-box").empty();
             let comments = res["comments"];
             if (comments.length > 0) {
-                $('#answer-section').show();
+                $('#comment-section').show();
                 addCommentHtml(comments);
-            } else {
-                $('#answer-section').hide();
             }
         },
     });
@@ -186,6 +182,103 @@ function showEvaluateForm(answerId) {
 
 function close_eval_modal() {
     $('#eval_modal').remove();
+}
+
+// ========================================
+// 리뷰어 변경 모달폼 띄우기
+// ========================================
+function showChangeReviewerForm(languageName) {
+
+    temp_html = `<div id="change-reviewer-modal" class="modal ">
+                    <div class="dimmed"></div>
+                      <article class="sign-in-modal">
+                        <span onclick="close_change_reviewer_modal()" class="e-close header__close-button">
+                          <svg width="16px" xmlns="http://www.w3.org/2000/svg" height="12" viewBox="0 0 12 12"><path fill="#3E4042" fill-rule="evenodd" d="M.203.203c.27-.27.708-.27.979 0L6 5.02 10.818.203c.27-.27.709-.27.98 0 .27.27.27.708 0 .979L6.978 6l4.818 4.818c.27.27.27.709 0 .98-.27.27-.709.27-.979 0L6 6.978l-4.818 4.818c-.27.27-.709.27-.98 0-.27-.27-.27-.709 0-.979L5.022 6 .203 1.182c-.27-.27-.27-.709 0-.98z" clip-rule="evenodd"></path></svg>
+                        </span>
+                        <span class="header__logo">
+                          <img src="./images/header_logo.png" style=" margin: auto" />
+                        </span>
+                        <div class="form__item">
+                            <label class="form__label" for="language-input">언어이름으로 리뷰어 검색</label>
+                            <div class="ac-input-with-item--large question-modal__language ">
+                                <input id="language-input" value="" data-kv="language" type="text" placeholder="언어를 입력해주세요.">
+                                <button class="button is-primary" onclick="findReviewer()">확인</button>
+                            </div>
+                        </div>
+                        
+                                       
+                        <div id="select-reviewer-box" class="form__item is-hidden">
+                            <label class="form__label" for="select-reviewer">리뷰어 지정</label>
+                            <div class="select is-fullwidth">
+                                <select id="select-reviewer">
+        
+                                </select>
+                            </div>
+                        </div>        
+                        
+                         <footer class="modal-card-foot">
+                            <button onclick="close_change_reviewer_modal()"
+                                    class="ac-button is-lg is-outlined is-gray question-modal__button--cancel e-cancel-question-modal">
+                                취소
+                            </button>
+            
+                            <button id="send"
+                                    class="ac-button is-lg is-solid is-primary question-modal__button--cancel e-submit-question-modal"
+                                    onclick="changeReviewer()">
+                                변경
+                            </button>
+                        </footer>
+                      </article>
+                    </div>`
+
+    $('body').append(temp_html);
+}
+
+function close_change_reviewer_modal() {
+    $('#change-reviewer-modal').remove();
+}
+
+// ========================================
+// 언어이름으로 리뷰어 찾기
+// ========================================
+function findReviewer() {
+    $('#select-reviewer').empty();
+    let query = $('#language-input').val()
+
+    if (query != "") {
+        $.ajax({
+            type: "GET",
+            url: `/user/language?language=${query}`,
+            success: function (res) {
+                $('#select-reviewer').append('<option>리뷰어를 선택하세요</option>')
+
+                for (let i = 0; i < res.length; i++) {
+                    let id = res[i]['id'];
+                    let username = res[i]['username'];
+                    let answerCount = res[i]['answerCount']; // 답변수
+                    let point = res[i]['point']
+
+                    let option_html = `<option value=${id}>
+                                    <span>${username}</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                                    <span>답변수: ${answerCount}</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                                    <span>평균점수: ${point}</span>
+                                </option>`
+
+                    $('#select-reviewer').append(option_html);
+                }
+                $('#select-reviewer-box').removeClass("is-hidden");
+            }
+        })
+    } else {
+        alert('해당 언어의 리뷰어가 존재하지 않습니다.');
+    }
+}
+
+// ========================================
+// 리뷰어 변경
+// ========================================
+function changeReviewer() {
+
 }
 
 // ========================================

@@ -3,6 +3,7 @@ package com.sparta.showmethecode.service;
 import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.domain.User;
+import com.sparta.showmethecode.dto.request.ChangeReviewerDto;
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
 import com.sparta.showmethecode.dto.request.ReviewRequestUpdateDto;
 import com.sparta.showmethecode.dto.response.*;
@@ -119,8 +120,8 @@ public class ReviewRequestService {
      */
     @Transactional(readOnly = true)
     public ReviewRequestDetailResponseDto getReviewRequest(Long id) {
-        ReviewRequestDetailResponseDto reviewRequestDetailWithComment = reviewRequestRepository.getReviewRequestDetails(id);
-        return reviewRequestDetailWithComment;
+        ReviewRequestDetailResponseDto result = reviewRequestRepository.getReviewRequestDetails(id);
+        return result;
     }
 
     /**
@@ -165,4 +166,6 @@ public class ReviewRequestService {
 
         return PageRequest.of(page, size, sort);
     }
+
+
 }

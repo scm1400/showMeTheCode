@@ -59,6 +59,7 @@ public class UserService {
         User user = User.builder()
                 .username(requestDto.getUsername())
                 .password(passwordEncoder.encode(requestDto.getPassword()))
+                .nickname(requestDto.getNickname())
                 .role(userRole)
                 .evalCount(0)
                 .evalCount(0)
@@ -76,7 +77,6 @@ public class UserService {
                 languageRepository.save(language);
             }
         }
-
 
         return savedUser;
     }
@@ -113,6 +113,7 @@ public class UserService {
                 r -> new ReviewerInfoDto(
                         r.getId(),
                         r.getUsername(),
+                        r.getNickname(),
                         r.getLanguages().stream().map(l -> new String(l.getName())).collect(Collectors.toList()),
                         r.getAnswerCount(),
                         r.getEvalCount() == 0 ? 0 : Double.valueOf(decimalFormat.format(r.getEvalTotal() / r.getEvalCount())))

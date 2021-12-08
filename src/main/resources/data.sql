@@ -1,15 +1,15 @@
 call next value for hibernate_sequence;
-insert into user(id, created_at, updated_at, answer_count, eval_count, eval_total, password, role, username)
-values (1, current_timestamp, current_timestamp, 0, 0, 0, 1, 'ROLE_USER', 'user1');
+insert into user(id, created_at, updated_at, answer_count, eval_count, eval_total, password, role, username, nickname)
+values (1, current_timestamp, current_timestamp, 0, 0, 0, 1, 'ROLE_USER', 'user1', 'nickname1');
 call next value for hibernate_sequence;
-insert into user(id, created_at, updated_at, answer_count, eval_count, eval_total, password, role, username)
-values (2, current_timestamp, current_timestamp, 0, 0, 0, 1, 'ROLE_USER', 'user2');
+insert into user(id, created_at, updated_at, answer_count, eval_count, eval_total, password, role, username, nickname)
+values (2, current_timestamp, current_timestamp, 0, 0, 0, 1, 'ROLE_USER', 'user2', 'nickname2');
 call next value for hibernate_sequence;
-insert into user(id, created_at, updated_at, answer_count, eval_count, eval_total, password, role, username)
-values (3, current_timestamp, current_timestamp, 2, 23, 69, 1, 'ROLE_REVIEWER', 'JavaGod');
+insert into user(id, created_at, updated_at, answer_count, eval_count, eval_total, password, role, username, nickname)
+values (3, current_timestamp, current_timestamp, 2, 23, 69, 1, 'ROLE_REVIEWER', 'JavaGod', 'nickname3');
 call next value for hibernate_sequence;
-insert into user(id, created_at, updated_at, answer_count, eval_count, eval_total, password, role, username)
-values (4, current_timestamp, current_timestamp, 1, 11, 11, 1, 'ROLE_REVIEWER', 'PythonGod');
+insert into user(id, created_at, updated_at, answer_count, eval_count, eval_total, password, role, username, nickname)
+values (4, current_timestamp, current_timestamp, 1, 11, 11, 1, 'ROLE_REVIEWER', 'PythonGod', 'nickname4');
 call next value for hibernate_sequence;
 
 call next value for hibernate_sequence;

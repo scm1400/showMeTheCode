@@ -161,7 +161,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
 
         if (result.hasComments()) {
             comments = result.getReviewRequestComments().stream().map(
-                    c -> new CommentResponseDto(c.getId(), c.getUser().getId(), c.getUser().getUsername(), c.getContent(), c.getCreatedAt())
+                    c -> new CommentResponseDto(c.getId(), c.getUser().getId(), c.getUser().getUsername(), c.getUser().getNickname(), c.getContent(), c.getCreatedAt())
             ).collect(Collectors.toList());
         }
 
@@ -312,7 +312,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                         )
                 )
                 .from(reviewRequest)
-                .join(reviewRequest.requestUser, user).fetchJoin()
+                .join(reviewRequest.requestUser, user)
                 .where(reviewRequest.languageName.eq(languageName));
 
         List<ReviewRequestResponseDto> result = getQuerydsl().applyPagination(pageable, jpaQuery).fetch();

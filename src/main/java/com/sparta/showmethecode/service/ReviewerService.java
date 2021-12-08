@@ -107,6 +107,7 @@ public class ReviewerService {
                 u -> new ReviewerInfoDto(
                         u.getId(),
                         u.getUsername(),
+                        u.getNickname(),
                         u.getLanguages().stream().map(l -> new String(l.getName())).collect(Collectors.toList()),
                         u.getAnswerCount(),
                         u.getEvalTotal() / u.getEvalCount()
@@ -130,6 +131,7 @@ public class ReviewerService {
                 u -> new ReviewerInfoDto(
                         u.getId(),
                         u.getUsername(),
+                        u.getNickname(),
                         u.getLanguages().stream().map(
                                 l -> new String(l.getName())
                         ).collect(Collectors.toList()),

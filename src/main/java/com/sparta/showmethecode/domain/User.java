@@ -22,6 +22,9 @@ public class User extends Timestamped{
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String nickname;
+
     @Enumerated(EnumType.STRING)
     private UserRole role; // ROLE_USER: 일반사용자, ROLE_REVIEWER: 리뷰어
 
@@ -41,9 +44,10 @@ public class User extends Timestamped{
             language.setUser(this);
     }
 
-    public User(String username, String password, UserRole role, int answerCount, int evalCount,double evalTotal, List<Language> languages) {
+    public User(String username, String password, String nickname,UserRole role, int answerCount, int evalCount,double evalTotal, List<Language> languages) {
         this.username = username;
         this.password = password;
+        this.nickname = nickname;
         this.role = role;
         this.answerCount = answerCount;
         this.evalCount = evalCount;
@@ -51,9 +55,10 @@ public class User extends Timestamped{
         this.languages = languages;
     }
 
-    public User(String username, String password, UserRole role, int answerCount, int evalCount, double evalTotal) {
+    public User(String username, String password, String nickname, UserRole role, int answerCount, int evalCount, double evalTotal) {
         this.username = username;
         this.password = password;
+        this.nickname = nickname;
         this.role = role;
         this.answerCount = answerCount;
         this.evalCount = evalCount;

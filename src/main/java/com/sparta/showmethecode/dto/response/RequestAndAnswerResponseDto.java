@@ -11,6 +11,7 @@ public class RequestAndAnswerResponseDto {
 
     private Long questionId;
     private String username;
+    private String nickname;
     private String title;
     private String content;
     private String status;

@@ -189,7 +189,7 @@ function signup() {
 function logout() {
     $.ajax({
         type: "POST",
-        url: "/user/logout",
+        url: "/logout",
         success: function(res) {
             if (res['result'] == "success") {
                 sessionStorage.clear();

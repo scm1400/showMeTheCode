@@ -12,4 +12,6 @@ public interface UserDao {
     List<User> findReviewerByLanguage(String language);
     // 리뷰어 랭킹 조회
     Page<User> getReviewerRanking(Pageable pageable, boolean isAsc);
+    // 리부어 랭킹 조회 5위까지
+    List<User> getReviewerRankingTop5(boolean isDesc);
 }

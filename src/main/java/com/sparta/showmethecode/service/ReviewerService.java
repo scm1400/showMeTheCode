@@ -125,16 +125,16 @@ public class ReviewerService {
      * 리뷰어 랭킹 조회 API (상위 5명)
      */
     @Transactional(readOnly = true)
-    public List<ReviewerInfoDto> getReviewerTop5Ranking() {
-        return userRepository.findTop5ByOrderByEvalTotalDesc().stream().map(
+    public List<ReviewerInfoDto> getReviewerTop5Ranking(boolean isDesc) {
+        return userRepository.getReviewerRankingTop5(isDesc).stream().map(
                 u -> new ReviewerInfoDto(
                         u.getId(),
                         u.getUsername(),
                         u.getLanguages().stream().map(
-                                l -> new String(l.toString())
+                                l -> new String(l.getName())
                         ).collect(Collectors.toList()),
                         u.getAnswerCount(),
-                        u.getEvalTotal() / u.getEvalCount()
+                        u.getEvalCount() > 0 ? u.getEvalTotal() / u.getEvalCount() : 0
                 )
         ).collect(Collectors.toList());
     }

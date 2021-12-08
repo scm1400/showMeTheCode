@@ -45,7 +45,7 @@ function getTag(){
                 count = list[tag].count;
                 let temp_html = `<li class="popular-tags__tag ">
 
-                            <button onclick="getQuestionListByLanguage('${tagname}')" class="ac-button is-sm is-solid is-gray e-popular-tag ac-tag ac-tag--blue "><span class="ac-tag__hashtag">#&nbsp;</span><span class="ac-tag__name">${tagname}[${count}]</span></button>
+                            <button onclick="getQuestionListByLanguage('${tagname}')" class="ac-button is-sm is-solid is-gray e-popular-tag ac-tag ac-tag--blue "><span class="ac-tag__hashtag">#&nbsp;</span><span class="ac-tag__name">${tagname} [${count}]</span></button>
                             </li>`
                 $('#tag-list').append(temp_html)
             }

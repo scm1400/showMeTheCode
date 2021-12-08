@@ -31,6 +31,7 @@ public class ReviewRequestService {
     private final ReviewRequestRepository reviewRequestRepository;
     private final UserRepository userRepository;
     private final NotificationService notificationService;
+    private final ReviewRequestCommentRepository reviewRequestCommentRepository;
 
     /**
      * 코드리뷰 요청목록 API
@@ -105,6 +106,8 @@ public class ReviewRequestService {
     public void deleteReviewRequest(Long reviewId, User user){
         boolean isMyRequest = reviewRequestRepository.isMyReviewRequest(reviewId, user);
         if (isMyRequest) {
+            ReviewRequest reviewRequest = reviewRequestRepository.findById(reviewId).get();
+            reviewRequestCommentRepository.deleteByReviewRequestAndUser(reviewRequest, user);
             reviewRequestRepository.deleteById(reviewId);
         }
     }

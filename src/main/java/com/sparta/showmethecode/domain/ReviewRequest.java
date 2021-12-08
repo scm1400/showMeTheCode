@@ -52,7 +52,7 @@ public class ReviewRequest extends Timestamped {
     @OneToOne(fetch = FetchType.LAZY)
     private ReviewAnswer reviewAnswer;
 
-    @OneToMany(mappedBy = "reviewRequest", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reviewRequest", cascade = CascadeType.PERSIST)
     private List<ReviewRequestComment> reviewRequestComments = new ArrayList<>();
 
     public void addComment(ReviewRequestComment comment) {
@@ -87,7 +87,10 @@ public class ReviewRequest extends Timestamped {
     }
 
     public boolean hasComments() {
-        return this.reviewRequestComments.size() > 0 ? true : false;
+        if (!Objects.isNull(this.reviewRequestComments))
+            return this.getReviewRequestComments().size() > 0 ? true : false;
+        else
+            return false;
     }
 
     public void setReviewAnswer(ReviewAnswer reviewAnswer) {

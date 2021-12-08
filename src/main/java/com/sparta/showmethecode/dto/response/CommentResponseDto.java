@@ -15,6 +15,7 @@ public class CommentResponseDto {
     private String content;
     private LocalDateTime createdAt;
 
+    @QueryProjection
     public CommentResponseDto(Long commentId, Long userId, String username, String content, LocalDateTime createdAt) {
         this.commentId = commentId;
         this.userId = userId;

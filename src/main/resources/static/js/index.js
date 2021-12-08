@@ -377,6 +377,9 @@ function loginCheck() {
         $('#myPageBtnMobile').show()
 
         $('#writeBtn').show()
+        $('#changeReviewContentBtn').show();
+        $('#changeReviewerBtn').show();
+        $('#deleteReviewBtn').show();
     } else { // 인증이 되지 않은 경우
         $('#signinBtn').show()
         $('#signupBtn').show()
@@ -389,6 +392,9 @@ function loginCheck() {
         $('#myPageBtnMobile').hide()
 
         $('#writeBtn').hide()
+        $('#changeReviewContentBtn').hide();
+        $('#changeReviewerBtn').hide();
+        $('#deleteReviewBtn').hide();
 
     }
 }

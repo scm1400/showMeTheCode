@@ -3,12 +3,12 @@ let g_answerId;
 
 $(document).ready(function () {
     let id = getParameterByName("id");
-
     getDetails(id);
 
 });
 
-function evaluate_confirm(){
+function evaluate_confirm() {
+    let questionId = getParameterByName("id");
     let slider = document.getElementById("star_value");
     let point = slider.value/2;
     console.log("점수: ", slider.value/2);
@@ -17,12 +17,12 @@ function evaluate_confirm(){
 
     $.ajax({
         type: "POST",
-        url: `/user/question/${g_answerId}/eval`,
+        url: `/question/${questionId}/eval/${g_answerId}`,
         contentType: "application/json;charset=utf-8;",
         data: JSON.stringify(data),
         success: function (res) {
             alert('답변에 대한 평가를 완료했습니다.')
-            location.href = 'details.html';
+            location.href = 'mypage.html';
         }
     })
 }
@@ -47,7 +47,9 @@ function getDetails(id) {
             let title = `<h1>`;
             title = title + res.title + `</h1>`;
             date = dateFormat(date);
+
             g_reviewerId = res.answerUserId;
+            
             $("#request-title").append(title);
             $("#user-name").html(res.username);
             $("#created-at").html(`&nbsp;· ` + date);
@@ -58,16 +60,10 @@ function getDetails(id) {
                                                 class="ac-tag__hashtag">#&nbsp;</span><span
                                                 class="ac-tag__name">'${res.languageName}'</span></button>`);
 
-            let reviewAnswer = res["reviewAnswer"];
-            if (JSON.stringify(reviewAnswer) === '{}') {
-                $('#answer-section').hide();
-            } else {
-                addAnswerHtml(reviewAnswer)
-                $('#answer-section').show()
-            }
-
             let status = res.status
-            $("#request-status").text(res.status);
+
+            $("#request-status").text(status);
+            // 리뷰요청의 상태가 해결됨 인 경우 평가,수정,삭제 버튼 hide, 평가하기 버튼 show
             if (status === "해결됨") {
                 $('#changeReviewContentBtn').hide();
                 $('#changeReviewerBtn').hide();
@@ -84,6 +80,15 @@ function getDetails(id) {
                 $('#comment-section').show();
                 addCommentHtml(comments);
             }
+
+            let reviewAnswer = res["reviewAnswer"];
+            if (JSON.stringify(reviewAnswer) === '{}') {
+                $('#answer-section').hide();
+            } else {
+                addAnswerHtml(reviewAnswer)
+                $('#answer-section').show()
+            }
+
         },
     });
 }
@@ -173,7 +178,7 @@ function addComment() {
 // ========================================
 // 평가하기 폼 띄우기
 // ========================================
-function showEvaluateForm(answerId) {
+function showEvaluateForm() {
     temp_html = `<div id="eval_modal" class="modal ">
 					<div class="dimmed"></div>
 					  <article class="sign-in-modal">
@@ -331,9 +336,9 @@ function deleteReview() {
     $.ajax({
         type: "DELETE",
         url: `/question/${questionId}`,
-        success: function(res) {
+        success: function (res) {
             alert('리뷰요청 삭제했습니다.');
-            location.href = 'details.html';
+            location.href = 'mypage.html';
         }
     })
 }
@@ -342,8 +347,8 @@ function deleteReview() {
 // 리뷰 수정 모달 폼
 // ========================================
 function showEditModalForm() {
-    let content = $('#content').val();
-    let title = $('#request-title').val();
+    let content = $('#content').text();
+    let title = $('#request-title').html();
 
     editModal = `<div id="edit_modal" class="modal">
                         <div class="dimmed"></div>
@@ -353,14 +358,14 @@ function showEditModalForm() {
                                     <div class="form__item">
                                         <label class="form__label" for="title-input">제목</label>
                                         <div class="ac-input-with-item--large question-modal__title ">
-                                            <input id="title-input" value="" data-kv="title" type="text" placeholder="제목을 입력해주세요.">
+                                            <input id="title-input" data-kv="title" type="text" value="${title}">
                                         </div>
                                     </div>
                                     <div class="form__item">
                                         <label class="form__label">내용</label>
                     
-                                        <textarea name="contents" class="form-control" id="contents">
-                                            
+                                        <textarea name="modify-contents" class="form-control" id="modify-contents">
+                                            ${content}
                                         </textarea>
                     
                                     </div>
@@ -368,7 +373,7 @@ function showEditModalForm() {
                     
                                 <footer class="modal-card-foot">
                     
-                                    <button onclick="close_login_modal()" id="close_modal"
+                                    <button onclick="close_edit_modal()" id="close_modal"
                                             class="ac-button is-lg is-outlined is-gray question-modal__button--cancel e-cancel-question-modal">
                                         취소
                                     </button>
@@ -382,11 +387,19 @@ function showEditModalForm() {
                             </div>
                         </section>
                     </div>`
+
     $('#title-input').html(title);
+    $('#modify-contents').html(content)
     $('body').append(editModal);
+
+    CKEDITOR.replace('modify-contents', {
+        fontSize_defaultLabel: "12",
+        skin: "minimalist",
+        language: "ko"
+    });
 }
 
-function close_login_modal() {
+function close_edit_modal() {
     $('#edit_modal').remove();
 }
 

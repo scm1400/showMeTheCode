@@ -112,20 +112,4 @@ public class UserController {
 
         return ResponseEntity.ok(response);
     }
-
-    /**
-     * 답변에 대한 평가 API
-     */
-    @Secured({"ROLE_USER", "ROLE_REVIEWER"})
-    @PostMapping("/user/question/{answerId}/eval")
-    public ResponseEntity evaluateAnswer(
-            @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @PathVariable Long answerId,
-            @RequestBody EvaluateAnswerDto evaluateAnswerDto
-    ) {
-        User user = userDetails.getUser();
-        reviewerService.evaluateAnswer(user, answerId, evaluateAnswerDto);
-
-        return ResponseEntity.ok("ok");
-    }
 }

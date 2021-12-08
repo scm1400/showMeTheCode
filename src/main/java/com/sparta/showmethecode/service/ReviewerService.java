@@ -197,11 +197,17 @@ public class ReviewerService {
      * 평가하고자 하는 답변이 내가 요청한 코드리뷰에 대한 답변인지 확인해야 함
      */
     @Transactional
-    public void evaluateAnswer(User user, Long answerId, EvaluateAnswerDto evaluateAnswerDto) {
+    public void evaluateAnswer(User user, Long questionId, Long answerId, EvaluateAnswerDto evaluateAnswerDto) {
         if(reviewRequestRepository.isAnswerToMe(answerId, user)) {
             ReviewAnswer reviewAnswer = reviewAnswerRepository.findById(answerId).orElseThrow(
                     () -> new IllegalArgumentException("존재하지 않는 답변입니다.")
             );
+
+            ReviewRequest reviewRequest = reviewRequestRepository.findById(questionId).orElseThrow(
+                    () -> new IllegalArgumentException("존재하지 않는 리뷰요청입니다.")
+            );
+
+            reviewRequest.setStatus(ReviewRequestStatus.EVALUATED);
 
             reviewAnswer.evaluate(evaluateAnswerDto.getPoint());
             reviewAnswer.getAnswerUser().evaluate(evaluateAnswerDto.getPoint());

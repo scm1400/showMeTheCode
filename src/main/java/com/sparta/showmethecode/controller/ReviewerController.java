@@ -150,4 +150,21 @@ public class ReviewerController {
 
         return ResponseEntity.ok("success");
     }
+
+
+    /**
+     * 답변에 대한 평가 API
+     */
+    @Secured({"ROLE_USER", "ROLE_REVIEWER"})
+    @PostMapping("/question/{questionId}/eval/{answerId}")
+    public ResponseEntity evaluateAnswer(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable Long questionId, @PathVariable Long answerId,
+            @RequestBody EvaluateAnswerDto evaluateAnswerDto
+    ) {
+        User user = userDetails.getUser();
+        reviewerService.evaluateAnswer(user, questionId, answerId, evaluateAnswerDto);
+
+        return ResponseEntity.ok("ok");
+    }
 }

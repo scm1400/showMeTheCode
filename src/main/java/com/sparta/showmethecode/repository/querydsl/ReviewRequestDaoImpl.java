@@ -149,7 +149,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
     @Override
     public ReviewRequestDetailResponseDto getReviewRequestDetails(Long id) {
 
-        ReviewRequest result = query.select(reviewRequest).distinct()
+        ReviewRequest result = query.select(reviewRequest)
                 .from(reviewRequest)
                 .join(reviewRequest.requestUser, user).fetchJoin()
                 .leftJoin(reviewRequest.reviewAnswer, reviewAnswer).fetchJoin()
@@ -178,7 +178,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
             return new ReviewRequestDetailResponseDto(
                     result.getId(), result.getAnswerUser().getId(),
                     result.getRequestUser().getUsername(), result.getTitle(), result.getContent(),
-                    result.getStatus().getDescription(), result.getCreatedAt(),
+                    result.getStatus(), result.getCreatedAt(),
                     comments,
                     reviewAnswerResponseDto
             );
@@ -186,7 +186,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
         return new ReviewRequestDetailResponseDto(
                 result.getId(), result.getAnswerUser().getId(),
                 result.getRequestUser().getUsername(), result.getTitle(), result.getContent(),
-                result.getStatus().getDescription(), result.getCreatedAt(),
+                result.getStatus(), result.getCreatedAt(),
                 comments
         );
     }

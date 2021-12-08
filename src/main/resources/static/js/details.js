@@ -72,6 +72,10 @@ function getDetails(id) {
 									<button onclick="showEvaluateForm()" class="ac-button is-md is-solid is-success button-rounded undefined">평가하기</button>
 								</div>`
                 $('#request-status-box').append(tmp_html)
+            } else if (status === "평가됨") {
+                $('#changeReviewContentBtn').hide();
+                $('#changeReviewerBtn').hide();
+                $('#deleteReviewBtn').hide();
             }
 
             $("#question-comment-content-box").empty();
@@ -168,7 +172,6 @@ function addComment() {
         contentType: "application/json;charset=utf-8;",
         data: JSON.stringify(data),
         success: function (res) {
-            console.log(res);
             alert("댓글작성 완료");
             window.location.reload();
         },
@@ -408,7 +411,7 @@ function close_edit_modal() {
 // ========================================
 function editReview() {
     let questionId = getParameterByName("id");
-    let content = CKEDITOR.instances['contents'].getData()
+    let content = CKEDITOR.instances['modify-contents'].getData()
     let title = $('#title-input').val();
     let data = {
         title: title,
@@ -423,7 +426,7 @@ function editReview() {
         data: JSON.stringify(data),
         success: function (res) {
             alert('리뷰요청을 수정했습니다.');
-            location.href = 'details.html';
+            location.href = 'mypage.html';
         }
     })
 }

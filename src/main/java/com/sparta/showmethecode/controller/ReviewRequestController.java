@@ -76,7 +76,7 @@ public class ReviewRequestController {
     @PutMapping("/question/{questionId}")
     public ResponseEntity updateReviewRequest(
             @RequestBody ReviewRequestUpdateDto updateDto,
-            @RequestParam Long questionId,
+            @PathVariable Long questionId,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
         User user = userDetails.getUser();
@@ -91,7 +91,7 @@ public class ReviewRequestController {
     @Secured({"ROLE_USER", "ROLE_REVIEWER"})
     @DeleteMapping("/question/{questionId}")
     public ResponseEntity deleteReviewRequest(
-            @RequestParam Long questionId,
+            @PathVariable Long questionId,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         User user = userDetails.getUser();

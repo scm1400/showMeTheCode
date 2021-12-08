@@ -1,6 +1,7 @@
 package com.sparta.showmethecode.dto.response;
 
 import com.querydsl.core.annotations.QueryProjection;
+import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -28,7 +29,7 @@ public class ReviewRequestDetailResponseDto {
     @QueryProjection
     public ReviewRequestDetailResponseDto(
             Long reviewRequestId, Long answerUserId,
-            String username, String title, String content, String status, LocalDateTime createdAt,
+            String username, String title, String content, ReviewRequestStatus status, LocalDateTime createdAt,
             List<CommentResponseDto> comments,
             ReviewAnswerResponseDto reviewAnswer
     ) {
@@ -37,7 +38,7 @@ public class ReviewRequestDetailResponseDto {
         this.username = username;
         this.title = title;
         this.content = content;
-        this.status = status;
+        this.status = status.getDescription();
         this.createdAt = createdAt;
         this.comments = comments;
         this.reviewAnswer = reviewAnswer;
@@ -45,7 +46,7 @@ public class ReviewRequestDetailResponseDto {
 
     public ReviewRequestDetailResponseDto(
             Long reviewRequestId, Long answerUserId,
-            String username, String title, String content, String status, LocalDateTime createdAt,
+            String username, String title, String content, ReviewRequestStatus status, LocalDateTime createdAt,
             List<CommentResponseDto> comments
     ) {
         this.reviewRequestId = reviewRequestId;
@@ -54,7 +55,7 @@ public class ReviewRequestDetailResponseDto {
         this.title = title;
         this.content = content;
         this.languageName = languageName;
-        this.status = status;
+        this.status = status.getDescription();
         this.createdAt = createdAt;
         this.comments = comments;
     }

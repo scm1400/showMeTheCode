@@ -38,14 +38,14 @@ public class ReviewAnswer extends Timestamped {
 
     @JsonIgnore
     @JoinColumn(name = "review_request_id")
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "reviewAnswer")
+    @OneToOne(mappedBy = "reviewAnswer", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private ReviewRequest reviewRequest;
 
     public void setReviewRequest(ReviewRequest reviewRequest) {
         this.reviewRequest = reviewRequest;
     }
 
-    @OneToMany(mappedBy = "reviewAnswer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reviewAnswer", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ReviewAnswerComment> comments = new ArrayList<>();
 
     public void evaluate(double point) {

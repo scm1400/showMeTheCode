@@ -41,7 +41,8 @@ public class ReviewerService {
      * 자신에게 요청된 리뷰가 아닌 경우에 대한 처리 필요
      */
     @Transactional
-    public void addAnswer(User reviewer, Long reviewId, AddAnswerDto addAnswerDto) {
+    public void addAnswer(Long reviewerId, Long reviewId, AddAnswerDto addAnswerDto) {
+        User reviewer = userRepository.findById(reviewerId).get();
         if (isRequestedToMe(reviewId, reviewer)) {
             ReviewAnswer reviewAnswer = ReviewAnswer.builder()
                     .content(addAnswerDto.getContent())
@@ -53,6 +54,7 @@ public class ReviewerService {
                     () -> new IllegalArgumentException("존재하지 않는 리뷰요청입니다.")
             );
 
+            reviewer.increaseAnswerCount();
             reviewRequest.setStatus(ReviewRequestStatus.SOLVE);
             reviewRequest.setReviewAnswer(savedReviewAnswer);
 

@@ -11,6 +11,7 @@ import java.util.List;
 public class ReviewRequestDetailResponseDto {
 
     private Long reviewRequestId;
+    private Long answerUserId;
     private String username;
     private String title;
     private String content;
@@ -26,12 +27,13 @@ public class ReviewRequestDetailResponseDto {
 
     @QueryProjection
     public ReviewRequestDetailResponseDto(
-            Long reviewRequestId,
+            Long reviewRequestId, Long answerUserId,
             String username, String title, String content, String status, LocalDateTime createdAt,
             List<CommentResponseDto> comments,
             ReviewAnswerResponseDto reviewAnswer
     ) {
         this.reviewRequestId = reviewRequestId;
+        this.answerUserId = answerUserId;
         this.username = username;
         this.title = title;
         this.content = content;
@@ -42,11 +44,12 @@ public class ReviewRequestDetailResponseDto {
     }
 
     public ReviewRequestDetailResponseDto(
-            Long reviewRequestId,
+            Long reviewRequestId, Long answerUserId,
             String username, String title, String content, String status, LocalDateTime createdAt,
             List<CommentResponseDto> comments
     ) {
         this.reviewRequestId = reviewRequestId;
+        this.answerUserId = answerUserId;
         this.username = username;
         this.title = title;
         this.content = content;

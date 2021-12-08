@@ -1,3 +1,5 @@
+let g_reviewerId;
+
 $(document).ready(function () {
     let id = getParameterByName("id");
 
@@ -30,6 +32,7 @@ function getDetails(id) {
             let title = `<h1>`;
             title = title + res.title + `</h1>`;
             date = dateFormat(date);
+            g_reviewerId = res.answerUserId;
             $("#request-title").append(title);
             $("#user-name").html(res.username);
             $("#created-at").html(`&nbsp;· ` + date);
@@ -49,8 +52,11 @@ function getDetails(id) {
             }
 
             let status = res.status
-            $("#request-status").html(res.status);
+            $("#request-status").text(res.status);
             if (status === "해결됨") {
+                $('#changeReviewContentBtn').hide();
+                $('#changeReviewerBtn').hide();
+                $('#deleteReviewBtn').hide();
                 let tmp_html = `<div class="flex-row feature__status e-status e-hover-toggle" data-status="1">
 									<button onclick="showEvaluateForm()" class="ac-button is-md is-solid is-success button-rounded undefined">평가하기</button>
 								</div>`
@@ -109,8 +115,6 @@ function addCommentHtml(comments) {
 // 답변 랜더링
 // ========================================
 function addAnswerHtml(answer) {
-
-    console.log(answer);
 
     let answerId = answer['reviewAnswerId'];
     let questionId = answer['reviewRequestId'];
@@ -278,7 +282,29 @@ function findReviewer() {
 // 리뷰어 변경
 // ========================================
 function changeReviewer() {
+    let newReviewerId = $('#select-reviewer option:selected').val();
+    let questionId = getParameterByName("id");
 
+    console.log(g_reviewerId, newReviewerId, questionId);
+
+    if (g_reviewerId.toString() === newReviewerId.toString()) {
+        alert('기존 리뷰어와 동일한 리뷰어입니다.');
+    } else {
+
+        let data = {newReviewerId: newReviewerId};
+
+        $.ajax({
+            type: "POST",
+            url: `/question/${questionId}/reviewer/${g_reviewerId}`,
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify(data),
+            success: function (res) {
+                console.log(res);
+                alert('리뷰어를 변경했습니다.');
+                window.location.reload();
+            }
+        })
+    }
 }
 
 // ========================================

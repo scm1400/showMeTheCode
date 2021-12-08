@@ -176,14 +176,16 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                     reviewAnswer.getCreatedAt()
             );
             return new ReviewRequestDetailResponseDto(
-                    result.getId(), result.getRequestUser().getUsername(), result.getTitle(), result.getContent(),
+                    result.getId(), result.getAnswerUser().getId(),
+                    result.getRequestUser().getUsername(), result.getTitle(), result.getContent(),
                     result.getStatus().getDescription(), result.getCreatedAt(),
                     comments,
                     reviewAnswerResponseDto
             );
         }
         return new ReviewRequestDetailResponseDto(
-                result.getId(), result.getRequestUser().getUsername(), result.getTitle(), result.getContent(),
+                result.getId(), result.getAnswerUser().getId(),
+                result.getRequestUser().getUsername(), result.getTitle(), result.getContent(),
                 result.getStatus().getDescription(), result.getCreatedAt(),
                 comments
         );

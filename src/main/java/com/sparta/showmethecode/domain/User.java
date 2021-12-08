@@ -61,4 +61,8 @@ public class User extends Timestamped{
         this.evalCount++;
         this.evalTotal += point;
     }
+
+    public void increaseAnswerCount() {
+        this.answerCount++;
+    }
 }

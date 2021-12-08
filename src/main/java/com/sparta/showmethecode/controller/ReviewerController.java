@@ -77,7 +77,7 @@ public class ReviewerController {
             @RequestBody AddAnswerDto addAnswerDto
     ) {
         User reviewer = userDetails.getUser();
-        reviewerService.addAnswer(reviewer, questionId, addAnswerDto);
+        reviewerService.addAnswer(reviewer.getId(), questionId, addAnswerDto);
         return ResponseEntity.ok("ok");
     }
 

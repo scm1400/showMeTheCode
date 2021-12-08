@@ -350,8 +350,8 @@ function deleteReview() {
 // 리뷰 수정 모달 폼
 // ========================================
 function showEditModalForm() {
-    let content = $('#content').text();
-    let title = $('#request-title').html();
+    let content = $('#content').html();
+    let title = $('#request-title').text();
 
     editModal = `<div id="edit_modal" class="modal">
                         <div class="dimmed"></div>

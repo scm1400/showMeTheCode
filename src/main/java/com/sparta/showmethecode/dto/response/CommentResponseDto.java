@@ -12,11 +12,12 @@ public class CommentResponseDto {
     private Long commentId;
     private Long userId;
     private String username;
+    private String nickname;
     private String content;
     private LocalDateTime createdAt;
 
     @QueryProjection
-    public CommentResponseDto(Long commentId, Long userId, String username, String content, LocalDateTime createdAt) {
+    public CommentResponseDto(Long commentId, Long userId, String username, String nickname, String content, LocalDateTime createdAt) {
         this.commentId = commentId;
         this.userId = userId;
         this.username = username;

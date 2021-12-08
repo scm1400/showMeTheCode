@@ -102,7 +102,7 @@ function addReceivedReviewList(reviews) {
                                                     </div>
                                                     <div class="question__info-footer">
                                                         <div class="footer__cover">
-                                                            <span class="footer__name">${reviews[i].username}</span>
+                                                            <span class="footer__name">${reviews[i].nickname}</span>
                                                             <span class="footer__dot"> ·</span>
                                                             <span class="footer__info">${reviews[i].createdAt}</span>
                                                             <span class="footer__dot"> ·</span>
@@ -155,7 +155,7 @@ function addRequestReviewList(reviews) {
                                                     </div>
                                                     <div class="question__info-footer">
                                                         <div class="footer__cover">
-                                                            <span class="footer__name">${reviews[i].username}</span>
+                                                            <span class="footer__name">${reviews[i].nickname}</span>
                                                             <span class="footer__dot"> ·</span>
                                                             <span class="footer__info">${reviews[i].createdAt}</span>
                                                             <span class="footer__dot"> ·</span>

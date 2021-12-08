@@ -13,6 +13,7 @@ public class ReviewRequestResponseDto {
 
     private Long reviewRequestId;
     private String username;
+    private String nickname;
     private String title;
     private String content;
 
@@ -24,9 +25,10 @@ public class ReviewRequestResponseDto {
     private long commentCount;
 
     @QueryProjection
-    public ReviewRequestResponseDto(Long reviewRequestId, String username, String title, String content, String languageName, ReviewRequestStatus status, LocalDateTime createdAt, long commentCount) {
+    public ReviewRequestResponseDto(Long reviewRequestId, String username, String nickname, String title, String content, String languageName, ReviewRequestStatus status, LocalDateTime createdAt, long commentCount) {
         this.reviewRequestId = reviewRequestId;
         this.username = username;
+        this.nickname = nickname;
         this.title = title;
         this.content = content;
         this.languageName = languageName;

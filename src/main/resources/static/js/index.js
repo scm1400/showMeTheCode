@@ -2,7 +2,7 @@ function go_back() {
     history.go(-1);
 }
 
-let subscribeUrl = "http://localhost:8080"
+// let subscribeUrl = "http://localhost:8080"
 $(document).ready(function () {
 
     loginCheck()
@@ -11,20 +11,20 @@ $(document).ready(function () {
     getRankingAll();
     getTag();
 
-    if (sessionStorage.getItem("mytoken") != null) {
-        let token = sessionStorage.getItem("mytoken");
-        let eventSource = new EventSource(subscribeUrl + "?token=" + token);
-
-        eventSource.addEventListener("addComment", function (event) {
-            let message = event.data;
-            alert(message);
-        })
-
-        eventSource.addEventListener("error", function (event) {
-            sessionStorage.removeItem("mytoken")
-            eventSource.close()
-        })
-    }
+    // if (sessionStorage.getItem("mytoken") != null) {
+    //     let token = sessionStorage.getItem("mytoken");
+    //     let eventSource = new EventSource(subscribeUrl + "?token=" + token);
+    //
+    //     eventSource.addEventListener("addComment", function (event) {
+    //         let message = event.data;
+    //         alert(message);
+    //     })
+    //
+    //     eventSource.addEventListener("error", function (event) {
+    //         sessionStorage.removeItem("mytoken")
+    //         eventSource.close()
+    //     })
+    // }
 })
 
 // ========================================
@@ -466,17 +466,12 @@ function getRanking(){
                 let answerCount = res[i]["answerCount"];
                 let point = res[i]["point"];
 
-
-                console.log(languages)
-
                 let languages_html = `<span id="ranking-language">`;
                 for (let i=0;i<languages.length;i++) {
                     if (i+1 === languages.length) languages_html += `<p>${languages[i]}</p>`
                     else languages_html += `<p>${languages[i]} , </p>`
                 }
                 languages_html += `</span>`
-
-                console.log(languages_html)
 
                 let tmp_html = `<li class="">
                                     <div>

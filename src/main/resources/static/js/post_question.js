@@ -26,11 +26,12 @@ function findReviewer() {
                 for (let i = 0; i < res.length; i++) {
                     let id = res[i]['id'];
                     let username = res[i]['username'];
+                    let nickname = res[i]['nickname'];
                     let answerCount = res[i]['answerCount']; // 답변수
                     let point = res[i]['point']
 
                     let option_html = `<option value=${id}>
-                                    <span>${username}</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                                    <span>${nickname}</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                                     <span>답변수: ${answerCount}</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                                     <span>평균점수: ${point}</span>
                                 </option>`

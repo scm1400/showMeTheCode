@@ -269,6 +269,7 @@ function getRankingAll() {
 
 
                 let username = data[i]["username"]
+                let nickname = data[i]["nickname"]
                 let languages = data[i]["languages"];
                 let answerCount = data[i]["answerCount"];
                 let point = data[i]["point"];
@@ -276,7 +277,7 @@ function getRankingAll() {
 
                 let temp = ` <tr>
                                   <th scope="row">${ranking} 위</th>
-                                  <td>${username} 님</td>
+                                  <td>${nickname} 님</td>
                                   <td>${languages}</td>
                                   <td>${answerCount}</td>
                                   <td>${point}</td>
@@ -300,6 +301,7 @@ function getRanking(){
             for (let i = 0; i < res.length; i++){
                 let ranking = i + 1
                 let username = res[i]["username"];
+                let nickname = res[i]["nickname"];
                 let languages = res[i]["languages"];
                 let answerCount = res[i]["answerCount"];
                 let point = res[i]["point"];
@@ -319,7 +321,7 @@ function getRanking(){
                 let tmp_html = `<li class="">
                                     <div>
                                         <span>${ranking}위</span>
-                                        <span>${username} 님</span>
+                                        <span>${nickname} 님</span>
                                         ${languages_html}
                                     </div>
                                     <div>

@@ -337,6 +337,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                                 reviewRequest.reviewAnswer.id,
                                 reviewRequest.id,
                                 reviewRequest.reviewAnswer.answerUser.username,
+                                reviewRequest.reviewAnswer.answerUser.nickname,
                                 reviewRequest.reviewAnswer.content,
                                 reviewRequest.reviewAnswer.point,
                                 reviewRequest.reviewAnswer.createdAt

@@ -51,7 +51,7 @@ function getDetails(id) {
             g_reviewerId = res.answerUserId;
             
             $("#request-title").append(title);
-            $("#user-name").html(res.username);
+            $("#user-name").html(res.nickname);
             $("#created-at").html(`&nbsp;· ` + date);
             $("#content").html(res.content);
 
@@ -109,6 +109,7 @@ function addCommentHtml(comments) {
         let commentId = comments[i]["commentId"];
         let userId = comments[i]["userId"];
         let username = comments[i]["username"];
+        let nickname = comments[i]["nickname"];
         let content = comments[i]["content"];
         let createdAt = comments[i]["createdAt"];
 
@@ -119,8 +120,8 @@ function addCommentHtml(comments) {
                                  src="./images/default_profile.png"
                                  alt="[아이디] 프로필">
                             <div class="flex-column">
-                                <div class="flex-row" id="question-comment-username">
-                                    <a href="/users/@deeplyrooted" class="comment__user-name">${username}</a>
+                                <div class="flex-row" id="question-comment-nickname">
+                                    <a href="/users/@deeplyrooted" class="comment__user-name">${nickname}</a>
                                 </div>
                                 <span class="comment__updated-at">${createdAt}</span>
                             </div>
@@ -144,11 +145,13 @@ function addAnswerHtml(answer) {
     g_answerId = answerId;
     let questionId = answer['reviewRequestId'];
     let username = answer['username']
+    let nickname = answer['nickname']
+
     let content = answer['answerContent'];
     let point = answer['point'];
     let createdAt = answer['createdAt'];
 
-    $('#answer-username').html(username);
+    $('#answer-username').html(nickname);
     $('#answer-date').html(dateFormat(new Date(createdAt)));
     $('#answer-content').html(content);
 
@@ -283,11 +286,12 @@ function findReviewer() {
                 for (let i = 0; i < res.length; i++) {
                     let id = res[i]['id'];
                     let username = res[i]['username'];
+                    let nickname = res[i]['nickname'];
                     let answerCount = res[i]['answerCount']; // 답변수
                     let point = res[i]['point']
 
                     let option_html = `<option value=${id}>
-                                    <span>${username}</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                                    <span>${nickname}</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                                     <span>답변수: ${answerCount}</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                                     <span>평균점수: ${point}</span>
                                 </option>`

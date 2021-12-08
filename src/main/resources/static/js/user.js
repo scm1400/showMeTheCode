@@ -142,6 +142,7 @@ function signup() {
     }
 
     let id = $('#signup-id').val()
+    let nickname = $('#signup-nickname').val();
     let password = $('#signup-password').val()
     let isReviewer = $('input[id="signup-isReviewer"]').is(":checked")
     let data = {}
@@ -160,6 +161,7 @@ function signup() {
 
     data = {
         "username": id,
+        "nickname": nickname,
         "password": password,
         "reviewer": isReviewer,
         "languages": langs

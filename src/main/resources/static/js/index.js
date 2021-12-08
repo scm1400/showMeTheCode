@@ -67,11 +67,6 @@ function move_page(page){
     // location.href = "?query="+query
 }
 
-function reviewSearch_enter(){
-    if(window.event.keyCode == 13){
-        reviewSearch();
-    }
-}
 
 function reviewSearch(){
     let query = $('#review-search-input').val()
@@ -144,6 +139,10 @@ function makeQuestionList(res, currentPage) {
 
     for (let i = 0; i < data.length; i++) {
         let date = new Date(data[i].createdAt)
+        let content = data[i].content
+        console.log(content)
+        content = content.toString().replace(/(<([^>]+)>)/ig,"").replace(/\r\n/g, "").slice(0,50)
+        console.log(content)
         date = dateFormat(date)
         let li = `<li class="question-container">
                                 <a onclick="showQuestionDetails(${data[i].reviewRequestId})">
@@ -157,11 +156,11 @@ function makeQuestionList(res, currentPage) {
                                             </h3>
                                         </div>
                                         <p class="question__body">
-                                            ${data[i].content}
+                                            ${content}
                                         </p>
-                                        <div class="question__tags">
-    
-                                        </div>
+<!--                                        <div class="question__tags">-->
+<!--    -->
+<!--                                        </div>-->
                                         <div class="question__info-footer">
                                             ${data[i].languageName} · ${date}  · ${data[i].status} 
                                         </div>

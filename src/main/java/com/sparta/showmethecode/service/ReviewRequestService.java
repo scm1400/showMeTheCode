@@ -106,8 +106,6 @@ public class ReviewRequestService {
     public void deleteReviewRequest(Long reviewId, User user){
         boolean isMyRequest = reviewRequestRepository.isMyReviewRequest(reviewId, user);
         if (isMyRequest) {
-            ReviewRequest reviewRequest = reviewRequestRepository.findById(reviewId).get();
-            reviewRequestCommentRepository.deleteByReviewRequestAndUser(reviewRequest, user);
             reviewRequestRepository.deleteById(reviewId);
         }
     }

@@ -32,6 +32,9 @@ public class User extends Timestamped{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Language> languages = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<ReviewRequestComment> comments = new ArrayList<>();
+
     // 연관관계 편의 메서드
     public void addLanguage(Language language) {
             this.getLanguages().add(language);

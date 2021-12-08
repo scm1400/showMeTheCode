@@ -52,8 +52,11 @@ public class ReviewRequest extends Timestamped {
     @OneToOne(fetch = FetchType.LAZY)
     private ReviewAnswer reviewAnswer;
 
-    @OneToMany(mappedBy = "reviewRequest", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "reviewRequest", cascade = CascadeType.ALL)
     private List<ReviewRequestComment> reviewRequestComments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "review", cascade = CascadeType.REMOVE)
+    private List<Notification> notifications = new ArrayList<>();
 
     public void addComment(ReviewRequestComment comment) {
         this.reviewRequestComments.add(comment);

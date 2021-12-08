@@ -17,7 +17,9 @@ spring:
     show-sql: true
 
 
-
-
+#logging:
+#  level:
+#    org.hibernate: trace
+#
 
 

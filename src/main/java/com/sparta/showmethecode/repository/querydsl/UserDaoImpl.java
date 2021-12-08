@@ -41,7 +41,7 @@ public class UserDaoImpl implements UserDao {
                 .where(user.role.eq(UserRole.ROLE_REVIEWER).and(user.evalTotal.gt(0)))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(isAsc ? user.evalTotal.asc() : user.evalTotal.desc())
+                .orderBy(isAsc ? user.evalTotal.desc() : user.evalTotal.desc())
                 .fetch();
 
         JPAQuery<User> jpaQuery = query.select(user)

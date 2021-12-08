@@ -8,6 +8,7 @@ $(document).ready(function () {
     loginCheck()
     getQuestionList();
     getRanking();
+    getRankingAll();
 
     if (sessionStorage.getItem("mytoken") != null) {
         let token = sessionStorage.getItem("mytoken");
@@ -194,6 +195,101 @@ function showQuestionDetails(id) {
 
 
 // ========================================
+// 리뷰어 랭킹 - 전체 보기
+// ========================================
+
+function getRankingAll() {
+    $('#rankingList').empty();
+    let currentPage = getParameterByName('page');
+    if (!currentPage) {
+        currentPage = 1
+    }
+    nextPage = parseInt(currentPage) + 1;
+    $.ajax({
+        type: "GET",
+        url: "/reviewer/rank",
+        data: {
+            page: currentPage
+        },
+        success: function (res) {
+
+            let data = res['data']
+            let pagination = `<nav class="pagination is-centered is-small" role="navagation" aria-label="pagination">`
+            let totalpage = res.totalPage
+            if (totalpage == 1) {
+                pagination += `
+                                    <ul class="pagination-list" id="pagingList">
+                                        <li>
+                                            <a class="pagination-link is-current" href="?page=1" aria-label="1 페이지로 이동">
+                                                1
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            `
+            } else {
+                pagination += `<a class="pagination-next" href="?page=${nextPage}">다음 페이지</a>
+                                <ul class="pagination-list" id="pagingList">`
+
+                for (let i = 1; i <= totalpage; i++) {
+                    if (totalpage == 11) {
+                        pagination += `<li>
+                            <a className="pagination-link" href="?page=${i}" aria-label="${i} 페이지로 이동">
+                                ...
+                            </a>
+                        </li>`
+
+
+                        break;
+                    }
+                    if (currentPage == i) {
+                        pagination += `
+                                <li>
+                                    <a class="pagination-link is-current" href="?page=${i}" aria-label="${i} 페이지로 이동">
+                                        ${i}
+                                    </a>
+                                </li>
+                                `
+                    } else {
+                        pagination += `
+                                <li>
+                                    <a class="pagination-link" href="?page=${i}" aria-label="${i} 페이지로 이동">
+                                        ${i}
+                                    </a>
+                                </li>
+                                `
+                    }
+
+                }
+                pagination += `</ul></nav>`
+            }
+            $('#community-body2').append(pagination)
+
+            for (let i = 0; i < data.length; i++) {
+
+
+
+                let username = data[i]["username"]
+                let languages = data[i]["languages"];
+                let answerCount = data[i]["answerCount"];
+                let point = data[i]["point"];
+                let ranking = i + 1
+
+                let temp = ` <tr>
+                                  <th scope="row">${ranking} 위</th>
+                                  <td>${username} 님</td>
+                                  <td>${languages}</td>
+                                  <td>${answerCount}</td>
+                                  <td>${point}</td>
+                                </tr>`
+                $('#rankingList').append(temp);
+            } // end-for
+        }
+    })
+}
+
+
+// ========================================
 // 리뷰어 랭킹 - 상위 5위 목록보기
 // ========================================
 function getRanking(){
@@ -208,6 +304,10 @@ function getRanking(){
                 let languages = res[i]["languages"];
                 let answerCount = res[i]["answerCount"];
                 let point = res[i]["point"];
+
+                if (point === "NaN") {
+                    point = 0;
+                }
 
                 let tmp_html = `<li class="">
                                     <div>

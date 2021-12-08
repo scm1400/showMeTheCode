@@ -9,6 +9,7 @@ $(document).ready(function () {
     getQuestionList();
     getRanking();
     getRankingAll();
+    getTag();
 
     if (sessionStorage.getItem("mytoken") != null) {
         let token = sessionStorage.getItem("mytoken");
@@ -20,10 +21,71 @@ $(document).ready(function () {
         })
 
         eventSource.addEventListener("error", function (event) {
+            sessionStorage.removeItem("mytoken")
             eventSource.close()
         })
     }
 })
+
+// ========================================
+// 인기태그 목록
+// ========================================
+function getTag(){
+    $.ajax({
+        type: "GET",
+        url: "/question/languages/count",
+        success: function (res) {
+            let tagname = "";
+            let count = 0;
+            let list = res.sort(function (a,b){
+                return b.count - a.count;
+            });
+            for(tag in list){
+                tagname = list[tag].languageName;
+                count = list[tag].count;
+                let temp_html = `<li class="popular-tags__tag ">
+
+                            <button onclick="getQuestionListByLanguage('${tagname}')" class="ac-button is-sm is-solid is-gray e-popular-tag ac-tag ac-tag--blue "><span class="ac-tag__hashtag">#&nbsp;</span><span class="ac-tag__name">${tagname}[${count}]</span></button>
+                            </li>`
+                $('#tag-list').append(temp_html)
+            }
+        }
+    })
+}
+
+// function tagquery(tag){
+//     let query = "?query="+tag;
+//     location.href = query.toString();
+// }
+
+// ========================================
+// 언어별 코드리뷰 요청 목록보기
+// ========================================
+function getQuestionListByLanguage(language) {
+    $('#reviewQuestionList').empty();
+    let currentPage = getParameterByName('page');
+    let query = getParameterByName('query');
+
+    if(!query){
+        query = null;
+    }
+    if (!currentPage) {
+        currentPage = 1
+    }
+    nextPage = parseInt(currentPage) + 1;
+    $.ajax({
+        type: "GET",
+        url: "/question/language",
+        data: {
+            page: currentPage,
+            language: language
+        },
+        success: function (res) {
+            makeQuestionList(res, currentPage);
+        }
+    })
+}
+
 
 // ========================================
 // 코드리뷰 요청 목록보기
@@ -140,9 +202,7 @@ function makeQuestionList(res, currentPage) {
     for (let i = 0; i < data.length; i++) {
         let date = new Date(data[i].createdAt)
         let content = data[i].content
-        console.log(content)
         content = content.toString().replace(/(<([^>]+)>)/ig,"").replace(/\r\n/g, "").slice(0,50)
-        console.log(content)
         date = dateFormat(date)
         let li = `<li class="question-container">
                                 <a onclick="showQuestionDetails(${data[i].reviewRequestId})">

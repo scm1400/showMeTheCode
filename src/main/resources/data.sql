@@ -81,68 +81,68 @@ values (14, current_timestamp, current_timestamp, '테스트내용', 'java', 'UN
 
 call next value for hibernate_sequence;
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)
-values (15, current_timestamp, current_timestamp, '테스트내용', 'java', 'UNSOLVE', '테스트제목', 2, 1);
+values (15, current_timestamp, current_timestamp, '테스트내용', 'python', 'UNSOLVE', '테스트제목', 2, 1);
 
 call next value for hibernate_sequence;
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)
-values (16, current_timestamp, current_timestamp, '테스트내용', 'java', 'UNSOLVE', '테스트제목', 2, 1);
+values (16, current_timestamp, current_timestamp, '테스트내용', 'python', 'UNSOLVE', '테스트제목', 2, 1);
 
 call next value for hibernate_sequence;
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)
-values (17, current_timestamp, current_timestamp, '테스트내용', 'java', 'UNSOLVE', '테스트제목', 2, 1);
+values (17, current_timestamp, current_timestamp, '테스트내용', 'python', 'UNSOLVE', '테스트제목', 2, 1);
 
 call next value for hibernate_sequence;
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)
-values (18, current_timestamp, current_timestamp, '테스트내용', 'java', 'UNSOLVE', '테스트제목', 2, 1);
+values (18, current_timestamp, current_timestamp, '테스트내용', 'python', 'UNSOLVE', '테스트제목', 2, 1);
 
 call next value for hibernate_sequence;
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)
-values (19, current_timestamp, current_timestamp, '테스트내용', 'java', 'UNSOLVE', '테스트제목', 2, 1);
+values (19, current_timestamp, current_timestamp, '테스트내용', 'python', 'UNSOLVE', '테스트제목', 2, 1);
 
 call next value for hibernate_sequence;
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)
-values (20, current_timestamp, current_timestamp, '테스트내용', 'java', 'UNSOLVE', '테스트제목', 2, 1);
+values (20, current_timestamp, current_timestamp, '테스트내용', 'python', 'UNSOLVE', '테스트제목', 2, 1);
 
 call next value for hibernate_sequence;
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)
-values (21, current_timestamp, current_timestamp, '테스트내용', 'java', 'UNSOLVE', '테스트제목', 2, 1);
+values (21, current_timestamp, current_timestamp, '테스트내용', 'python', 'UNSOLVE', '테스트제목', 2, 1);
 
 call next value for hibernate_sequence;
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)
-values (22, current_timestamp, current_timestamp, '테스트내용', 'java', 'UNSOLVE', '테스트제목', 2, 1);
+values (22, current_timestamp, current_timestamp, '테스트내용', 'python', 'UNSOLVE', '테스트제목', 2, 1);
 
 call next value for hibernate_sequence;
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)
-values (23, current_timestamp, current_timestamp, '테스트내용', 'java', 'UNSOLVE', '테스트제목', 2, 1);
+values (23, current_timestamp, current_timestamp, '테스트내용', 'c', 'UNSOLVE', '테스트제목', 2, 1);
 
 call next value for hibernate_sequence;
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)
-values (24, current_timestamp, current_timestamp, '테스트내용', 'java', 'UNSOLVE', '테스트제목', 2, 1);
+values (24, current_timestamp, current_timestamp, '테스트내용', 'c', 'UNSOLVE', '테스트제목', 2, 1);
 
 call next value for hibernate_sequence;
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)
-values (25, current_timestamp, current_timestamp, '테스트내용', 'java', 'UNSOLVE', '테스트제목', 2, 1);
+values (25, current_timestamp, current_timestamp, '테스트내용', 'c', 'UNSOLVE', '테스트제목', 2, 1);
 
 call next value for hibernate_sequence;
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)
-values (26, current_timestamp, current_timestamp, '테스트내용', 'java', 'UNSOLVE', '테스트제목', 2, 1);
+values (26, current_timestamp, current_timestamp, '테스트내용', 'c', 'UNSOLVE', '테스트제목', 2, 1);
 
 call next value for hibernate_sequence;
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)
-values (27, current_timestamp, current_timestamp, '테스트내용', 'java', 'UNSOLVE', '테스트제목', 2, 1);
+values (27, current_timestamp, current_timestamp, '테스트내용', 'c', 'UNSOLVE', '테스트제목', 2, 1);
 
 call next value for hibernate_sequence;
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)
-values (28, current_timestamp, current_timestamp, '테스트내용', 'java', 'UNSOLVE', '테스트제목', 2, 1);
+values (28, current_timestamp, current_timestamp, '테스트내용', 'c', 'UNSOLVE', '테스트제목', 2, 1);
 
 call next value for hibernate_sequence;
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)
-values (29, current_timestamp, current_timestamp, '테스트내용', 'java', 'UNSOLVE', '테스트제목', 2, 1);
+values (29, current_timestamp, current_timestamp, '테스트내용', 'c', 'UNSOLVE', '테스트제목', 2, 1);
 
 call next value for hibernate_sequence;
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)
-values (30, current_timestamp, current_timestamp, '테스트내용', 'java', 'UNSOLVE', '테스트제목', 2, 1);
+values (30, current_timestamp, current_timestamp, '테스트내용', 'c', 'UNSOLVE', '테스트제목', 2, 1);
 
 call next value for hibernate_sequence;
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)
-values (31, current_timestamp, current_timestamp, '테스트내용', 'java', 'UNSOLVE', '테스트제목', 2, 1);
+values (31, current_timestamp, current_timestamp, '테스트내용', 'c', 'UNSOLVE', '테스트제목', 2, 1);

@@ -77,13 +77,9 @@ public class ReviewRequest extends Timestamped {
         this.languageName = languageName.toUpperCase();
     }
 
-    public void update(ReviewRequestUpdateDto dto, User newAnswerUser) {
+    public void update(ReviewRequestUpdateDto dto) {
         this.title = dto.getTitle();
         this.content = dto.getContent();
-
-        if (!Objects.isNull(newAnswerUser)) {
-            this.answerUser = newAnswerUser;
-        }
     }
 
     public void setStatus(ReviewRequestStatus status) {

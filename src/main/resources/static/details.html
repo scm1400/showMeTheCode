@@ -149,11 +149,11 @@
 
                             <div class="flex-right">
 
-                                <button id="changeReviewContentBtn" class="ac-button is-md is-text post__edit-btn e-edit">내용수정</button>
+                                <button id="changeReviewContentBtn" onclick="showEditModalForm()" class="ac-button is-md is-text post__edit-btn e-edit">내용수정</button>
 
                                 <button id="changeReviewerBtn" onclick="showChangeReviewerForm()" class="ac-button is-md is-text post__edit-btn e-edit">리뷰어 변경</button>
 
-                                <button id="deleteReviewBtn" class="ac-button is-md is-text post__remove-btn e-remove">삭제</button>
+                                <button id="deleteReviewBtn" onclick="deleteReview()" class="ac-button is-md is-text post__remove-btn e-remove">삭제</button>
                             </div>
                         </div>
                     </div>
@@ -216,8 +216,6 @@
                                     <div class="comment__body markdown-body">
                                         <p id="answer-content">
 
-                                            코드를 이렇게 고치는게 좋아보여요.
-
                                         </p>
                                     </div>
 
@@ -270,7 +268,6 @@
                     </div>
                 </div>
             </div>
-
         </section>
 
     </main>

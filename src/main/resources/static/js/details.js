@@ -308,6 +308,98 @@ function changeReviewer() {
 }
 
 // ========================================
+// 리뷰삭제
+// ========================================
+function deleteReview() {
+    let questionId = getParameterByName("id");
+    $.ajax({
+        type: "DELETE",
+        url: `/question/${questionId}`,
+        success: function(res) {
+            alert('리뷰요청 삭제했습니다.');
+            location.href = 'details.html';
+        }
+    })
+}
+
+// ========================================
+// 리뷰 수정 모달 폼
+// ========================================
+function showEditModalForm() {
+    let content = $('#content').val();
+    let title = $('#request-title').val();
+
+    editModal = `<div id="edit_modal" class="modal">
+                        <div class="dimmed"></div>
+                        <section class="modal-card question-modal">
+                            <div class="question-modal__form e-form-question-modal" onsubmit="return false">
+                                <div class="modal-card-body">
+                                    <div class="form__item">
+                                        <label class="form__label" for="title-input">제목</label>
+                                        <div class="ac-input-with-item--large question-modal__title ">
+                                            <input id="title-input" value="" data-kv="title" type="text" placeholder="제목을 입력해주세요.">
+                                        </div>
+                                    </div>
+                                    <div class="form__item">
+                                        <label class="form__label">내용</label>
+                    
+                                        <textarea name="contents" class="form-control" id="contents">
+                                            
+                                        </textarea>
+                    
+                                    </div>
+                                </div>
+                    
+                                <footer class="modal-card-foot">
+                    
+                                    <button onclick="close_login_modal()" id="close_modal"
+                                            class="ac-button is-lg is-outlined is-gray question-modal__button--cancel e-cancel-question-modal">
+                                        취소
+                                    </button>
+                    
+                                    <button id="send"
+                                            class="ac-button is-lg is-solid is-primary question-modal__button--cancel e-submit-question-modal"
+                                            onclick="editReview()">
+                                        저장
+                                    </button>
+                                </footer>
+                            </div>
+                        </section>
+                    </div>`
+    $('#title-input').html(title);
+    $('body').append(editModal);
+}
+
+function close_login_modal() {
+    $('#edit_modal').remove();
+}
+
+// ========================================
+// 리뷰 수정
+// ========================================
+function editReview() {
+    let questionId = getParameterByName("id");
+    let content = CKEDITOR.instances['contents'].getData()
+    let title = $('#title-input').val();
+    let data = {
+        title: title,
+        content: content
+    }
+    console.log(title, content);
+
+    $.ajax({
+        type: "PUT",
+        url: `/question/${questionId}`,
+        contentType: "application/json;charset=utf-8;",
+        data: JSON.stringify(data),
+        success: function (res) {
+            alert('리뷰요청을 수정했습니다.');
+            location.href = 'details.html';
+        }
+    })
+}
+
+// ========================================
 // 쿼리 파라미터 받아오기
 // ========================================
 function getParameterByName(name) {

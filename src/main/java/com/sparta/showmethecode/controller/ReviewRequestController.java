@@ -73,14 +73,14 @@ public class ReviewRequestController {
      * 코드리뷰 수정 API
      */
     @Secured({"ROLE_USER", "ROLE_REVIEWER"})
-    @PutMapping("/question")
+    @PutMapping("/question/{questionId}")
     public ResponseEntity updateReviewRequest(
             @RequestBody ReviewRequestUpdateDto updateDto,
-            @RequestParam Long id,
+            @RequestParam Long questionId,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
         User user = userDetails.getUser();
-        reviewRequestService.updateReviewRequest(updateDto, id, user);
+        reviewRequestService.updateReviewRequest(updateDto, questionId, user);
 
         return ResponseEntity.ok("ok");
     }
@@ -89,13 +89,13 @@ public class ReviewRequestController {
      * 코드리뷰 삭제 API
      */
     @Secured({"ROLE_USER", "ROLE_REVIEWER"})
-    @DeleteMapping("/question")
+    @DeleteMapping("/question/{questionId}")
     public ResponseEntity deleteReviewRequest(
-            @RequestParam Long id,
+            @RequestParam Long questionId,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         User user = userDetails.getUser();
-        reviewRequestService.deleteReviewRequest(id, user);
+        reviewRequestService.deleteReviewRequest(questionId, user);
         return ResponseEntity.ok("ok");
     }
 

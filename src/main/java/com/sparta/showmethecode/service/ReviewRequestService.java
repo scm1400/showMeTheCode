@@ -90,17 +90,11 @@ public class ReviewRequestService {
     public void updateReviewRequest(ReviewRequestUpdateDto updateDto, Long reviewId, User user) {
         boolean isMyRequest = reviewRequestRepository.isMyReviewRequest(reviewId, user);
         if (isMyRequest) {
-            User newAnswerUser = null;
-            if (!Objects.isNull(updateDto.getReviewerId())) {
-                newAnswerUser = userRepository.findById(updateDto.getReviewerId()).orElseThrow(
-                        () -> new IllegalArgumentException("존재하지 않는 리뷰어입니다.")
-                );
-            }
             ReviewRequest reviewRequest = reviewRequestRepository.findById(reviewId).orElseThrow(
                     () -> new IllegalArgumentException("존재하지 않는 요청입니다.")
             );
 
-            reviewRequest.update(updateDto, newAnswerUser);
+            reviewRequest.update(updateDto);
         }
     }
 

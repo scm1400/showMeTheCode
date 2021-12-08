@@ -12,5 +12,4 @@ public class ReviewRequestUpdateDto {
     private String title;
     private String content;
 
-    private Long reviewerId;
 }

@@ -69,6 +69,10 @@ public class MypageTest {
         PageResponseDto<ReviewRequestResponseDto> result2 = reviewRequestService.searchRequestByLanguageName("java", 0, 10, true);
         List<ReviewRequestResponseDto> data2 = result2.getData();
 
+        for (ReviewRequestResponseDto reviewRequestResponseDto : data2) {
+            System.out.println(reviewRequestResponseDto);
+        }
+
         PageResponseDto<ReviewRequestResponseDto> result3 = reviewRequestService.searchRequestByLanguageName("python", 0, 10, true);
         List<ReviewRequestResponseDto> data3 = result3.getData();
 

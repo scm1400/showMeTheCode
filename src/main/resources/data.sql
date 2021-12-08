@@ -61,7 +61,7 @@ values (9, current_timestamp, current_timestamp, '테스트내용 - 출력', 'ja
 
 call next value for hibernate_sequence;
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)
-values (10, current_timestamp, current_timestamp, '테스트내용', 'java', 'UNSOLVE', '테스트제목', 2, 1);
+values (10, current_timestamp, current_timestamp, '테스트내용', 'JAVA', 'UNSOLVE', '테스트제목', 2, 1);
 
 call next value for hibernate_sequence;
 insert into review_request(id, created_at, updated_at, content, language_name, status, title, answer_user_id,request_user_id)

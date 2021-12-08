@@ -53,6 +53,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
         JPAQuery<ReviewRequestResponseDto> jpaQuery = query.select(new QReviewRequestResponseDto(
                         reviewRequest.id,
                         reviewRequest.requestUser.username,
+                        reviewRequest.requestUser.nickname,
                         reviewRequest.title,
                         reviewRequest.content,
                         reviewRequest.languageName,
@@ -78,6 +79,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                 .select(new QReviewRequestResponseDto(
                         reviewRequest.id,
                         user.username,
+                        user.nickname,
                         reviewRequest.title,
                         reviewRequest.content,
                         reviewRequest.languageName,
@@ -100,6 +102,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                 .select(new QReviewRequestResponseDto(
                         reviewRequest.id,
                         user.username,
+                        user.nickname,
                         reviewRequest.title,
                         reviewRequest.content,
                         reviewRequest.languageName,
@@ -124,6 +127,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                 = query.select(new QReviewRequestResponseDto(
                         reviewRequest.id,
                         user.username,
+                        user.nickname,
                         reviewRequest.title,
                         reviewRequest.content,
                         reviewRequest.languageName,
@@ -171,13 +175,15 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                     reviewAnswer.getId(),
                     result.getId(),
                     reviewAnswer.getAnswerUser().getUsername(),
+                    reviewAnswer.getAnswerUser().getNickname(),
                     reviewAnswer.getContent(),
                     reviewAnswer.getPoint(),
                     reviewAnswer.getCreatedAt()
             );
             return new ReviewRequestDetailResponseDto(
                     result.getId(), result.getAnswerUser().getId(),
-                    result.getRequestUser().getUsername(), result.getTitle(), result.getContent(),
+                    result.getRequestUser().getUsername(), result.getRequestUser().getNickname(),
+                    result.getTitle(), result.getContent(),
                     result.getStatus(), result.getCreatedAt(),
                     comments,
                     reviewAnswerResponseDto
@@ -185,7 +191,8 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
         }
         return new ReviewRequestDetailResponseDto(
                 result.getId(), result.getAnswerUser().getId(),
-                result.getRequestUser().getUsername(), result.getTitle(), result.getContent(),
+                result.getRequestUser().getUsername(),  result.getRequestUser().getNickname(),
+                result.getTitle(), result.getContent(),
                 result.getStatus(), result.getCreatedAt(),
                 comments
         );
@@ -211,6 +218,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                 .select(new QReviewRequestResponseDto(
                                 reviewRequest.id,
                                 user.username,
+                                user.nickname,
                                 reviewRequest.title,
                                 reviewRequest.content,
                                 reviewRequest.languageName,
@@ -240,6 +248,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                 .select(new QReviewRequestResponseDto(
                                 reviewRequest.id,
                                 user.username,
+                                user.nickname,
                                 reviewRequest.title,
                                 reviewRequest.content,
                                 reviewRequest.languageName,
@@ -301,6 +310,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                 .select(new QReviewRequestResponseDto(
                                 reviewRequest.id,
                                 user.username,
+                                user.nickname,
                                 reviewRequest.title,
                                 reviewRequest.content,
                                 reviewRequest.languageName,

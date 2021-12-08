@@ -14,6 +14,7 @@ public class ReviewRequestDetailResponseDto {
     private Long reviewRequestId;
     private Long answerUserId;
     private String username;
+    private String nickname;
     private String title;
     private String content;
     private String languageName;
@@ -29,13 +30,15 @@ public class ReviewRequestDetailResponseDto {
     @QueryProjection
     public ReviewRequestDetailResponseDto(
             Long reviewRequestId, Long answerUserId,
-            String username, String title, String content, ReviewRequestStatus status, LocalDateTime createdAt,
+            String username, String nickname,
+            String title, String content, ReviewRequestStatus status, LocalDateTime createdAt,
             List<CommentResponseDto> comments,
             ReviewAnswerResponseDto reviewAnswer
     ) {
         this.reviewRequestId = reviewRequestId;
         this.answerUserId = answerUserId;
         this.username = username;
+        this.nickname = nickname;
         this.title = title;
         this.content = content;
         this.status = status.getDescription();
@@ -46,12 +49,14 @@ public class ReviewRequestDetailResponseDto {
 
     public ReviewRequestDetailResponseDto(
             Long reviewRequestId, Long answerUserId,
-            String username, String title, String content, ReviewRequestStatus status, LocalDateTime createdAt,
+            String username, String nickname,
+            String title, String content, ReviewRequestStatus status, LocalDateTime createdAt,
             List<CommentResponseDto> comments
     ) {
         this.reviewRequestId = reviewRequestId;
         this.answerUserId = answerUserId;
         this.username = username;
+        this.nickname = nickname;
         this.title = title;
         this.content = content;
         this.languageName = languageName;

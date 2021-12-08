@@ -77,6 +77,8 @@ public class NotificationService {
         String id = String.valueOf(receiver.getId());
         notificationRepository.save(notification);
 
+        log.info("Notification id = {}", id);
+
         Map<String, SseEmitter> sseEmitters = emitterRepository.findAllStarWithById(id);
         sseEmitters.forEach(
                 (key, emitter) -> {

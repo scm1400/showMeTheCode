@@ -55,7 +55,7 @@ public class UserService {
 
     @Transactional
     public User saveUser(SignupRequestDto requestDto) {
-        UserRole userRole = requestDto.isReviewer() ? UserRole.REVIEWER : UserRole.USER;
+        UserRole userRole = requestDto.isReviewer() ? UserRole.ROLE_REVIEWER : UserRole.ROLE_USER;
 
         User user = User.builder()
                 .username(requestDto.getUsername())

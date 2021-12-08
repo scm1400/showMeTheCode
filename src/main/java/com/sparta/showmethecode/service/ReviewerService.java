@@ -74,7 +74,8 @@ public class ReviewerService {
             );
 
             // SOLVE(해결됨)이 아닌 경우에만 거절이 가능하도록
-            if (!reviewRequest.getStatus().equals(ReviewRequestStatus.SOLVE)) {
+            ReviewRequestStatus status = reviewRequest.getStatus();
+            if (!status.equals(ReviewRequestStatus.SOLVE) && !status.equals(ReviewRequestStatus.EVALUATED)) {
                 reviewRequest.setStatus(ReviewRequestStatus.REJECTED);
                 notificationService.send(reviewRequest.getRequestUser(), reviewRequest, "리뷰 요청이 거절되었습니다.");
             } else {

@@ -33,10 +33,10 @@ function getDetails() {
             $('#question-status').text(status)
 
             // 리뷰요청의 상태가 [해결됨] 인 경우에만 거절하기 버튼을 활성화
-            if (status === "해결됨") {
-                $('#rejectBtn').show()
-            } else {
+            if (status === "해결됨" || status === "평가됨") {
                 $('#rejectBtn').hide()
+            } else {
+                $('#rejectBtn').show()
             }
 
 

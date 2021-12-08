@@ -1,4 +1,5 @@
 let g_reviewerId;
+let g_answerId;
 
 $(document).ready(function () {
     let id = getParameterByName("id");
@@ -9,7 +10,21 @@ $(document).ready(function () {
 
 function evaluate_confirm(){
     let slider = document.getElementById("star_value");
+    let point = slider.value/2;
     console.log("점수: ", slider.value/2);
+
+    let data = {point: point}
+
+    $.ajax({
+        type: "POST",
+        url: `/user/question/${g_answerId}/eval`,
+        contentType: "application/json;charset=utf-8;",
+        data: JSON.stringify(data),
+        success: function (res) {
+            alert('답변에 대한 평가를 완료했습니다.')
+            location.href = 'details.html';
+        }
+    })
 }
 
 function drawStar(target) {
@@ -117,6 +132,7 @@ function addCommentHtml(comments) {
 function addAnswerHtml(answer) {
 
     let answerId = answer['reviewAnswerId'];
+    g_answerId = answerId;
     let questionId = answer['reviewRequestId'];
     let username = answer['username']
     let content = answer['answerContent'];

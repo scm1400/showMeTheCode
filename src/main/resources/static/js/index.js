@@ -2,7 +2,7 @@ function go_back() {
     history.go(-1);
 }
 
-
+let subscribeUrl = "http://localhost:8080"
 $(document).ready(function () {
 
     loginCheck()

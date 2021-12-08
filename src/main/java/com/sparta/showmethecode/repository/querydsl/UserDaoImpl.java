@@ -3,6 +3,7 @@ package com.sparta.showmethecode.repository.querydsl;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.showmethecode.domain.*;
+import com.sparta.showmethecode.dto.response.QReviewerInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,5 +51,19 @@ public class UserDaoImpl implements UserDao {
 
 
         return PageableExecutionUtils.getPage(content, pageable, jpaQuery::fetchCount);
+    }
+
+    @Override
+    public List<User> getReviewerRankingTop5(boolean isDesc) {
+
+        List<User> users = query.select(user)
+                .from(user)
+                .join(user.languages, language).fetchJoin()
+                .where(user.role.eq(UserRole.ROLE_REVIEWER))
+                .limit(5)
+                .orderBy(isDesc ? user.evalTotal.desc() : user.evalTotal.desc())
+                .fetch();
+
+        return users;
     }
 }

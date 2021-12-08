@@ -64,11 +64,7 @@ public class MypageTest {
         int size = reviewRequestRepository.findByTitle("title").size();
         System.out.println(size);
 
-        ReviewRequestDetailResponseDto reviewRequest1 = reviewRequestService.getReviewRequest(MypageTest.reviewRequest.getId());
-        List<CommentResponseDto> comments = reviewRequest1.getComments();
-        for (CommentResponseDto comment : comments) {
-            System.out.println(comment);
-        }
+
 
         Assertions.assertEquals(0, size);
 

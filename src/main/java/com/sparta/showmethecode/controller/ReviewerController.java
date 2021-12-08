@@ -45,8 +45,10 @@ public class ReviewerController {
      * 리뷰어 랭킹 조회 API (상위 5위)
      */
     @GetMapping("/reviewer/top")
-    public ResponseEntity getReviewerTop5Ranking() {
-        List<ReviewerInfoDto> reviewers = reviewerService.getReviewerTop5Ranking();
+    public ResponseEntity getReviewerTop5Ranking(
+            @RequestParam(defaultValue = "true") boolean isDesc
+    ) {
+        List<ReviewerInfoDto> reviewers = reviewerService.getReviewerTop5Ranking(isDesc);
 
         return ResponseEntity.ok(reviewers);
     }

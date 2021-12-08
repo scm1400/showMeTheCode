@@ -305,15 +305,23 @@ function getRanking(){
                 let answerCount = res[i]["answerCount"];
                 let point = res[i]["point"];
 
-                if (point === "NaN") {
-                    point = 0;
+
+                console.log(languages)
+
+                let languages_html = `<span id="ranking-language">`;
+                for (let i=0;i<languages.length;i++) {
+                    if (i+1 === languages.length) languages_html += `<p>${languages[i]}</p>`
+                    else languages_html += `<p>${languages[i]} , </p>`
                 }
+                languages_html += `</span>`
+
+                console.log(languages_html)
 
                 let tmp_html = `<li class="">
                                     <div>
                                         <span>${ranking}위</span>
                                         <span>${username} 님</span>
-                                        <span id="ranking-language">${languages}</span>
+                                        ${languages_html}
                                     </div>
                                     <div>
                                         <span id="ranking-answer">답변수 ${answerCount}</span>
@@ -321,9 +329,7 @@ function getRanking(){
                                     </div>
                                 </li>`;
                 $("#top-ranking").append(tmp_html);
-
             }
-
         }
     })
 }

@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 @NoArgsConstructor
 @Builder
 public class SigninResponseDto {
+    private Long id;
     private String token;
     private String authority;
     private HttpStatus httpStatus;

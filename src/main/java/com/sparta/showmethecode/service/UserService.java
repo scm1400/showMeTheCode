@@ -3,6 +3,7 @@ package com.sparta.showmethecode.service;
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.dto.response.PageResponseDto;
 import com.sparta.showmethecode.security.JwtUtils;
+import com.sparta.showmethecode.security.UserDetailsImpl;
 import com.sparta.showmethecode.security.UserDetailsServiceImpl;
 import com.sparta.showmethecode.domain.Language;
 import com.sparta.showmethecode.domain.User;
@@ -90,12 +91,12 @@ public class UserService {
             throw new BadCredentialsException("로그인에 실패했습니다.");
         }
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(requestDto.getUsername());
+        UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(requestDto.getUsername());
         String token = jwtUtils.createToken(userDetails.getUsername());
 
         String authority = userDetails.getAuthorities().stream().findFirst().get().toString();
 
-        return new SigninResponseDto(token, authority, HttpStatus.CREATED, "로그인에 성공했습니다.");
+        return new SigninResponseDto(userDetails.getUser().getId(), token, authority, HttpStatus.CREATED, "로그인에 성공했습니다.");
     }
 
     public List<String> getMyLanguage(Long userId) {

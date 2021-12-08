@@ -7,9 +7,9 @@ $(document).ready(function () {
 
 });
 
-function evaluate_confirm(){
+function evaluate_confirm() {
     let slider = document.getElementById("star_value");
-    console.log("점수: ", slider.value/2);
+    console.log("점수: ", slider.value / 2);
 }
 
 function drawStar(target) {
@@ -315,7 +315,7 @@ function deleteReview() {
     $.ajax({
         type: "DELETE",
         url: `/question/${questionId}`,
-        success: function(res) {
+        success: function (res) {
             alert('리뷰요청 삭제했습니다.');
             location.href = 'details.html';
         }
@@ -326,8 +326,8 @@ function deleteReview() {
 // 리뷰 수정 모달 폼
 // ========================================
 function showEditModalForm() {
-    let content = $('#content').val();
-    let title = $('#request-title').val();
+    let content = $('#content').text();
+    let title = $('#request-title').html();
 
     editModal = `<div id="edit_modal" class="modal">
                         <div class="dimmed"></div>
@@ -337,14 +337,14 @@ function showEditModalForm() {
                                     <div class="form__item">
                                         <label class="form__label" for="title-input">제목</label>
                                         <div class="ac-input-with-item--large question-modal__title ">
-                                            <input id="title-input" value="" data-kv="title" type="text" placeholder="제목을 입력해주세요.">
+                                            <input id="title-input" data-kv="title" type="text" value="${title}">
                                         </div>
                                     </div>
                                     <div class="form__item">
                                         <label class="form__label">내용</label>
                     
-                                        <textarea name="contents" class="form-control" id="contents">
-                                            
+                                        <textarea name="modify-contents" class="form-control" id="modify-contents">
+                                            ${content}
                                         </textarea>
                     
                                     </div>
@@ -352,7 +352,7 @@ function showEditModalForm() {
                     
                                 <footer class="modal-card-foot">
                     
-                                    <button onclick="close_login_modal()" id="close_modal"
+                                    <button onclick="close_edit_modal()" id="close_modal"
                                             class="ac-button is-lg is-outlined is-gray question-modal__button--cancel e-cancel-question-modal">
                                         취소
                                     </button>
@@ -366,11 +366,19 @@ function showEditModalForm() {
                             </div>
                         </section>
                     </div>`
+
     $('#title-input').html(title);
+    $('#modify-contents').html(content)
     $('body').append(editModal);
+
+    CKEDITOR.replace('modify-contents', {
+        fontSize_defaultLabel: "12",
+        skin: "minimalist",
+        language: "ko"
+    });
 }
 
-function close_login_modal() {
+function close_edit_modal() {
     $('#edit_modal').remove();
 }
 

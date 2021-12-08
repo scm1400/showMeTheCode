@@ -19,7 +19,7 @@ public class User extends Timestamped{
     @Column(nullable = false)
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String password;
 
     @Column(nullable = false)
@@ -69,6 +69,16 @@ public class User extends Timestamped{
         this.evalCount++;
         this.evalTotal += point;
     }
+
+    public User update(String name){
+        this.username = name;
+
+        return this;
+    }
+    public String getRoleKey(){
+        return this.role.getKey();
+    }
+
 
     public void increaseAnswerCount() {
         this.answerCount++;

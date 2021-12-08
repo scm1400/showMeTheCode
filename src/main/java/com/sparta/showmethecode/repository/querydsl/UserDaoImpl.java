@@ -28,7 +28,7 @@ public class UserDaoImpl implements UserDao {
         List<User> result = query.select(user)
                 .from(user)
                 .join(user.languages, language)
-                .where(user.role.eq(UserRole.ROLE_REVIEWER).and(language.name.eq(languageName)))
+                .where(user.role.eq(UserRole.REVIEWER).and(language.name.eq(languageName)))
                 .fetch();
 
         return result;
@@ -39,7 +39,7 @@ public class UserDaoImpl implements UserDao {
 
         List<User> content = query.select(user)
                 .from(user)
-                .where(user.role.eq(UserRole.ROLE_REVIEWER).and(user.evalTotal.gt(0)))
+                .where(user.role.eq(UserRole.REVIEWER).and(user.evalTotal.gt(0)))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(isAsc ? user.evalTotal.desc() : user.evalTotal.desc())
@@ -47,7 +47,7 @@ public class UserDaoImpl implements UserDao {
 
         JPAQuery<User> jpaQuery = query.select(user)
                 .from(user)
-                .where(user.role.eq(UserRole.ROLE_REVIEWER).and(user.evalTotal.gt(0)));
+                .where(user.role.eq(UserRole.REVIEWER).and(user.evalTotal.gt(0)));
 
 
         return PageableExecutionUtils.getPage(content, pageable, jpaQuery::fetchCount);
@@ -59,7 +59,7 @@ public class UserDaoImpl implements UserDao {
         List<User> users = query.select(user)
                 .from(user)
                 .join(user.languages, language).fetchJoin()
-                .where(user.role.eq(UserRole.ROLE_REVIEWER))
+                .where(user.role.eq(UserRole.REVIEWER))
                 .limit(5)
                 .orderBy(isDesc ? user.evalTotal.desc() : user.evalTotal.desc())
                 .fetch();

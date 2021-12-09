@@ -289,6 +289,28 @@ public class ReviewRequestControllerTest {
                 );
     }
 
+    @Order(5)
+    @DisplayName("5. 코드리뷰 요청 언어별 카운팅 API 테스트")
+    @Test
+    void 언어별_카운팅() throws Exception {
+        mockMvc.perform(get("/question/language")
+                        .param("language", "JAVA")
+                        .param("page", "1")
+                        .param("size", "10")
+                        .param("isAsc", "true")
+                ).andExpect(status().isOk())
+                .andDo(document("get-question-language-count",
+                                requestParameters(
+                                        parameterWithName("language").description("언어이름"),
+                                        parameterWithName("page").description("요청_페이지_번호").optional(),
+                                        parameterWithName("size").description("페이지_당_요소수").optional(),
+                                        parameterWithName("isAsc").description("정렬방향").optional()
+                                )
+                        )
+                );
+    }
+
+
     private String createTokenAndSpringSecuritySetting() {
         UserDetailsImpl userDetails = new UserDetailsImpl(user);
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

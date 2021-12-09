@@ -6,12 +6,10 @@ import com.google.gson.GsonBuilder;
 import com.sparta.showmethecode.domain.*;
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
 import com.sparta.showmethecode.dto.request.UpdateReviewDto;
-import com.sparta.showmethecode.dto.response.ReviewAnswerResponseDto;
 import com.sparta.showmethecode.repository.ReviewAnswerRepository;
 import com.sparta.showmethecode.repository.ReviewRequestCommentRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
 import com.sparta.showmethecode.repository.UserRepository;
-import com.sparta.showmethecode.repository.querydsl.ReviewRequestDao;
 import com.sparta.showmethecode.security.JwtUtils;
 import com.sparta.showmethecode.security.UserDetailsImpl;
 import org.junit.jupiter.api.*;
@@ -28,7 +26,6 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -48,8 +45,6 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
@@ -76,7 +71,6 @@ public class ReviewRequestControllerTest {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    final String AUTHORIZATION_HEADER = "Authorization";
     final String TOKEN_PREFIX = "Bearer ";
 
     User user;
@@ -309,7 +303,6 @@ public class ReviewRequestControllerTest {
                         )
                 );
     }
-
 
     private String createTokenAndSpringSecuritySetting() {
         UserDetailsImpl userDetails = new UserDetailsImpl(user);

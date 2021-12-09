@@ -72,7 +72,7 @@ public class ReviewerController {
      * 리뷰요청에 대한 리뷰등록 API
      */
     @Secured("ROLE_REVIEWER")
-    @PostMapping("/reviewer/request/{questionId}")
+    @PostMapping("/answer/{questionId}")
     public ResponseEntity addReviewAndComment(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long questionId,

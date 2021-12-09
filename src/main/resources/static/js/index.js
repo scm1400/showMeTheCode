@@ -10,21 +10,6 @@ $(document).ready(function () {
     getRanking();
     getRankingAll();
     getTag();
-
-    // if (sessionStorage.getItem("mytoken") != null) {
-    //     let token = sessionStorage.getItem("mytoken");
-    //     let eventSource = new EventSource(subscribeUrl + "?token=" + token);
-    //
-    //     eventSource.addEventListener("addComment", function (event) {
-    //         let message = event.data;
-    //         alert(message);
-    //     })
-    //
-    //     eventSource.addEventListener("error", function (event) {
-    //         sessionStorage.removeItem("mytoken")
-    //         eventSource.close()
-    //     })
-    // }
 })
 
 // ========================================

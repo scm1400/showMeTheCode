@@ -1,5 +1,6 @@
 package com.sparta.showmethecode.service;
 
+import com.sparta.showmethecode.domain.MoveUriType;
 import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.domain.User;
@@ -69,6 +70,7 @@ public class ReviewRequestService {
 
     /**
      * 코드리뷰 요청 API
+     * SSE 이벤트 포함
      */
     @Transactional
     public void addReviewRequest(ReviewRequestDto requestDto, User user) {
@@ -81,7 +83,8 @@ public class ReviewRequestService {
 
         reviewRequestRepository.save(reviewRequest);
 
-        notificationService.send(reviewRequest.getAnswerUser(), reviewRequest, "새로운 리뷰 요청이 도착했습니다!");
+        notificationService
+                .send(reviewRequest.getAnswerUser(), reviewRequest, "새로운 리뷰 요청이 도착했습니다!", MoveUriType.ANSWER);
     }
 
     /**

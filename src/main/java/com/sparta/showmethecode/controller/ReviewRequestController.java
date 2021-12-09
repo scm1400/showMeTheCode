@@ -46,6 +46,7 @@ public class ReviewRequestController {
 
     /**
      * 코드리뷰 요청 API
+     * SSE 이벤트 포함
      */
     @Secured({"ROLE_USER", "ROLE_REVIEWER"})
     @PostMapping("/question")

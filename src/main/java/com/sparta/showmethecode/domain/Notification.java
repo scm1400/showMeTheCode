@@ -31,14 +31,17 @@ public class Notification extends Timestamped {
 
     private boolean isRead;
 
+
+    private String uri;
+
     @Builder
-    public Notification(User receiver, ReviewRequest review, String content, String url, boolean isRead){
+    public Notification(User receiver, ReviewRequest review, String content, String url, boolean isRead, String uri) {
         this.receiver = receiver;
         this.review = review;
         this.content = content;
         this.url = url;
         this.isRead = isRead;
-
+        this.uri = uri;
     }
 
     public void read(){

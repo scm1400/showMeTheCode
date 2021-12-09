@@ -1,5 +1,6 @@
 package com.sparta.showmethecode.service;
 
+import com.sparta.showmethecode.domain.MoveUriType;
 import com.sparta.showmethecode.domain.Notification;
 import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.User;
@@ -72,9 +73,12 @@ public class NotificationService {
     }
 
     @Transactional
-    public void send(User receiver, ReviewRequest review, String content){
-        Notification notification = createNotification(receiver, review, content);
+    public void send(User receiver, ReviewRequest review, String content, MoveUriType type){
+        Notification notification = createNotification(receiver, review, content, type);
         String id = String.valueOf(receiver.getId());
+
+        log.info("Notification send id = {}, type = {}", id, type.toString());
+
         notificationRepository.save(notification);
 
         log.info("Notification id = {}", id);
@@ -89,14 +93,24 @@ public class NotificationService {
 
     }
 
-    private Notification createNotification(User receiver, ReviewRequest review, String content){
-        return Notification.builder()
-                .receiver(receiver)
-                .content(content)
-                .review(review)
-                .url("/reviewer/" + review.getId())
-                .isRead(false)
-                .build();
+    private Notification createNotification(User receiver, ReviewRequest review, String content, MoveUriType type){
+        if (type.equals(MoveUriType.DETAILS)) {
+            return Notification.builder()
+                    .receiver(receiver)
+                    .content(content)
+                    .review(review)
+                    .url("/details.html?id=" + review.getId())
+                    .isRead(false)
+                    .build();
+        } else {
+            return Notification.builder()
+                    .receiver(receiver)
+                    .content(content)
+                    .review(review)
+                    .url("/answer.html?id=" + review.getId())
+                    .isRead(false)
+                    .build();
+        }
     }
 
 

@@ -1,9 +1,6 @@
 package com.sparta.showmethecode.service;
 
-import com.sparta.showmethecode.domain.ReviewAnswer;
-import com.sparta.showmethecode.domain.ReviewRequest;
-import com.sparta.showmethecode.domain.ReviewRequestStatus;
-import com.sparta.showmethecode.domain.User;
+import com.sparta.showmethecode.domain.*;
 import com.sparta.showmethecode.dto.request.AddAnswerDto;
 import com.sparta.showmethecode.dto.request.ChangeReviewerDto;
 import com.sparta.showmethecode.dto.request.EvaluateAnswerDto;
@@ -58,7 +55,8 @@ public class ReviewerService {
             reviewRequest.setStatus(ReviewRequestStatus.SOLVE);
             reviewRequest.setReviewAnswer(savedReviewAnswer);
 
-            notificationService.send(reviewRequest.getRequestUser(), reviewRequest, "리뷰 등록이 완료되었습니다.");
+            notificationService
+                    .send(reviewRequest.getRequestUser(), reviewRequest, "리뷰 등록이 완료되었습니다.", MoveUriType.DETAILS);
         }
     }
 
@@ -77,7 +75,7 @@ public class ReviewerService {
             ReviewRequestStatus status = reviewRequest.getStatus();
             if (!status.equals(ReviewRequestStatus.SOLVE) && !status.equals(ReviewRequestStatus.EVALUATED)) {
                 reviewRequest.setStatus(ReviewRequestStatus.REJECTED);
-                notificationService.send(reviewRequest.getRequestUser(), reviewRequest, "리뷰 요청이 거절되었습니다.");
+                notificationService.send(reviewRequest.getRequestUser(), reviewRequest, "리뷰 요청이 거절되었습니다.", MoveUriType.DETAILS);
             } else {
                 throw new IllegalArgumentException("해결되지 않은 리뷰요청에 대해서만 거절이 가능합니다.");
             }

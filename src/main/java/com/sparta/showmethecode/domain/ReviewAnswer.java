@@ -46,7 +46,7 @@ public class ReviewAnswer extends Timestamped {
     }
 
     @OneToMany(mappedBy = "reviewAnswer", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<ReviewAnswerComment> comments = new ArrayList<>();
+    private List<ReviewAnswerComment> comments;
 
     public void evaluate(double point) {
         this.point = point;

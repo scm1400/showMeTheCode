@@ -22,7 +22,7 @@ public class SignupRequestDto {
     private String password;
     private String nickname;
     private boolean reviewer;
-    private Set<String> languages = new HashSet<>();
+    private Set<String> languages;
     private int reviewCount;
     private int rankingPoint;
 }

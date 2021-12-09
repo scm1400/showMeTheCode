@@ -33,10 +33,10 @@ public class User extends Timestamped{
     private double evalTotal; // 평가점수 총점
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Language> languages = new ArrayList<>();
+    private List<Language> languages;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<ReviewRequestComment> comments = new ArrayList<>();
+    private List<ReviewRequestComment> comments;
 
     // 연관관계 편의 메서드
     public void addLanguage(Language language) {

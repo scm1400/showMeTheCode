@@ -4,6 +4,7 @@ import com.google.common.net.HttpHeaders;
 import com.google.gson.Gson;
 import com.sparta.showmethecode.domain.*;
 import com.sparta.showmethecode.dto.request.AddCommentDto;
+import com.sparta.showmethecode.dto.request.UpdateCommentDto;
 import com.sparta.showmethecode.repository.ReviewAnswerRepository;
 import com.sparta.showmethecode.repository.ReviewRequestCommentRepository;
 import com.sparta.showmethecode.repository.ReviewRequestRepository;
@@ -108,7 +109,7 @@ public class CommentControllerTest {
                 .build();
     }
 
-
+    @Order(1)
     @DisplayName("1. 댓글추가 API 테스트")
     @Test
     void 댓글추가() throws Exception {
@@ -133,6 +134,7 @@ public class CommentControllerTest {
                 );
     }
 
+    @Order(2)
     @DisplayName("2. 댓글삭제 API 테스트")
     @Test
     void 댓글삭제() throws Exception {
@@ -144,6 +146,31 @@ public class CommentControllerTest {
                 .andDo(document("delete-comment",
                                 pathParameters(
                                         parameterWithName("commentId").description("댓글_ID")
+                                )
+                        )
+                );
+    }
+
+    @Order(3)
+    @DisplayName("3. 댓글수정 API 테스트")
+    @Test
+    void 댓글수정() throws Exception {
+        String token = createTokenAndSpringSecuritySetting(user);
+        UpdateCommentDto updateCommentDto = new UpdateCommentDto("댓글수정 테스트");
+        String dtoJson = new Gson().toJson(updateCommentDto);
+
+        mockMvc.perform(RestDocumentationRequestBuilders.put("/question/comment/{commentId}", comment.getId())
+                        .header(HttpHeaders.AUTHORIZATION, TOKEN_PREFIX + token)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .content(dtoJson)
+                ).andExpect(status().isOk())
+                .andDo(document("put-comment",
+                                pathParameters(
+                                        parameterWithName("commentId").description("댓글_ID")
+                                ),
+                                requestFields(
+                                        fieldWithPath("content").description("수정내용")
                                 )
                         )
                 );

@@ -1,7 +1,7 @@
 package com.sparta.showmethecode.controller;
 
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
-import com.sparta.showmethecode.dto.request.ChangeReviewerDto;
+import com.sparta.showmethecode.dto.request.UpdateReviewerDto;
 import com.sparta.showmethecode.security.UserDetailsImpl;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.AddAnswerDto;
@@ -72,6 +72,7 @@ public class ReviewerController {
      * 리뷰요청에 대한 리뷰등록 API
      */
     @Secured("ROLE_REVIEWER")
+//    @PostMapping("/reviewer/request/{questionId}")
     @PostMapping("/answer/{questionId}")
     public ResponseEntity addReviewAndComment(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
@@ -87,13 +88,16 @@ public class ReviewerController {
      * 내가 답변한 리뷰목록 조회 API
      */
     @Secured({"ROLE_REVIEWER"})
-    @GetMapping("/reviewer/answers")
+//    @GetMapping("/reviewer/answers")
+    @GetMapping("/answers")
     public ResponseEntity getMyAnswerList(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "true") boolean isAsc,
             @RequestParam(defaultValue = "createdAt") String sortBy
     ) {
+        --page;
+
         User user = userDetails.getUser();
         PageResponseDto<ReviewAnswerResponseDto> result = reviewerService.getMyAnswerList(user, page, size, isAsc, sortBy);
 
@@ -104,7 +108,8 @@ public class ReviewerController {
      * 답변한 리뷰 수정 API
      */
     @Secured({ "ROLE_REVIEWER"})
-    @PutMapping("/reviewer/answer/{answerId}")
+//    @PutMapping("/reviewer/answer/{answerId}")
+    @PutMapping("/answer/{answerId}")
     public ResponseEntity updateMyAnswer(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long answerId,
@@ -142,10 +147,10 @@ public class ReviewerController {
      * 리뷰어 변경하기 API
      */
     @Secured({"ROLE_USER", "ROLE_REVIEWER"})
-    @PostMapping("/question/{questionId}/reviewer/{reviewerId}")
+    @PutMapping("/question/{questionId}/reviewer/{reviewerId}")
     public ResponseEntity changeReviewer(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestBody ChangeReviewerDto changeReviewerDto,
+            @RequestBody UpdateReviewerDto changeReviewerDto,
             @PathVariable Long questionId, @PathVariable Long reviewerId
     ) {
         reviewerService.changeReviewer(changeReviewerDto, questionId, reviewerId);

@@ -4,7 +4,6 @@ import com.sparta.showmethecode.domain.MoveUriType;
 import com.sparta.showmethecode.domain.ReviewRequest;
 import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.domain.User;
-import com.sparta.showmethecode.dto.request.ChangeReviewerDto;
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
 import com.sparta.showmethecode.dto.request.ReviewRequestUpdateDto;
 import com.sparta.showmethecode.dto.response.*;
@@ -21,8 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Slf4j

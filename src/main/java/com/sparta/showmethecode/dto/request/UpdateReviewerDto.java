@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class ChangeReviewerDto {
+public class UpdateReviewerDto {
 
     private Long newReviewerId;
 }

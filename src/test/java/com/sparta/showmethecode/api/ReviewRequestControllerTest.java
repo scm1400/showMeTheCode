@@ -171,6 +171,7 @@ public class ReviewRequestControllerTest {
                                         fieldWithPath("totalElements").description("전체 요소수").type(JsonFieldType.NUMBER),
                                         fieldWithPath("page").description("현재페이지 번호").type(JsonFieldType.NUMBER),
                                         fieldWithPath("size").description("페이지 당 요소수").type(JsonFieldType.NUMBER),
+
                                         subsectionWithPath("data").description("리뷰요청_데이터"),
                                         fieldWithPath("data.[].reviewRequestId").description("리뷰요청_ID").type(JsonFieldType.NUMBER),
                                         fieldWithPath("data.[].username").description("리뷰요청자_이름").type(JsonFieldType.STRING),

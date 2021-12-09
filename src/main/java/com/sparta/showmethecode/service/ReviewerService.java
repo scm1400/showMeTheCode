@@ -2,7 +2,7 @@ package com.sparta.showmethecode.service;
 
 import com.sparta.showmethecode.domain.*;
 import com.sparta.showmethecode.dto.request.AddAnswerDto;
-import com.sparta.showmethecode.dto.request.ChangeReviewerDto;
+import com.sparta.showmethecode.dto.request.UpdateReviewerDto;
 import com.sparta.showmethecode.dto.request.EvaluateAnswerDto;
 import com.sparta.showmethecode.dto.request.UpdateAnswerDto;
 import com.sparta.showmethecode.dto.response.*;
@@ -15,10 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -219,7 +217,7 @@ public class ReviewerService {
      * 리뷰어 변경하기 API
      */
     @Transactional
-    public void changeReviewer(ChangeReviewerDto changeReviewerDto, Long questionId, Long reviewerId) {
+    public void changeReviewer(UpdateReviewerDto changeReviewerDto, Long questionId, Long reviewerId) {
         ReviewRequest reviewRequest = reviewRequestRepository.findById(questionId).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 리뷰요청입니다.")
         );

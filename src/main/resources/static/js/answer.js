@@ -66,7 +66,7 @@ function getDetails() {
 }
 
 function addComment2() {
-    if(sessionStorage.getItem("token")==null)
+    if(sessionStorage.getItem("mytoken")==null)
     {
         return alert("로그인 후 이용해주세요.")
     }

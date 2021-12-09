@@ -12,7 +12,6 @@ $(document).ready(function () {
     getTag();
 
     $("ul.status").find('li').each(function (i, e) {
-        console.log($(this).data('status'))
         if ($(this).data('status') == getParameterByName("status")) {
             $(this).addClass('active')
         }
@@ -97,6 +96,7 @@ function getQuestionList() {
     let currentPage = getParameterByName('page');
     let query = getParameterByName('query');
     let sort = getParameterByName('sortBy');
+    let status = getParameterByName('status').toString().toUpperCase();
     let isAsc = getParameterByName('isAsc');
     let size = getParameterByName('size');
 
@@ -113,9 +113,11 @@ function getQuestionList() {
         data: {
             page: currentPage,
             query: query,
-            sortBy: sort
+            status: status
         },
         success: function (res) {
+
+            console.log(res)
             makeQuestionList(res, currentPage);
         }
     })
@@ -254,6 +256,7 @@ function makeQuestionList(res, currentPage) {
     let data = res['data']
     let pagination = `<nav id="pagination-container" class="pagination is-centered is-small" role="navagation" aria-label="pagination">`
     let totalpage = res.totalPage
+    console.log(totalpage)
 
     // 전체 페이지가 1개인 경우
     if (totalpage == 1) {
@@ -269,6 +272,7 @@ function makeQuestionList(res, currentPage) {
                             `
     // 전체 페이지가 1개 이상인 경우
     } else {
+        console.log(currentPage,totalpage)
         if (currentPage < totalpage) {
             pagination += `<a class="pagination-next" onclick="move_page(${nextPage})">다음 페이지</a>`
         }

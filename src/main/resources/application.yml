@@ -4,12 +4,12 @@ spring:
     console:
       enabled: true
   datasource:
-    url: jdbc:h2:mem:smtc
-    username: sa
+    url: jdbc:mysql://springboot-db.cd3omgwnvdqy.ap-northeast-2.rds.amazonaws.com:3306/showmethecode
+    username: kibm63
     password:
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         default_batch_fetch_size: 100

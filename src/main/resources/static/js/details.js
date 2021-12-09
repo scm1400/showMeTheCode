@@ -37,7 +37,7 @@ function drawStar(target) {
 function getDetails(id) {
     $.ajax({
         type: "GET",
-        url: `/details?id=${id}`,
+        url: `/question?id=${id}`,
         contentType: "application/json;charset-utf-8;",
         success: function (res) {
 

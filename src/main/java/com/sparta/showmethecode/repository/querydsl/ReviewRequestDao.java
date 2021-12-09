@@ -12,11 +12,11 @@ import java.util.List;
 public interface ReviewRequestDao {
 
     // 코드리뷰 목록 조회
-    Page<ReviewRequestResponseDto> findReviewRequestList(Pageable pageable, boolean isAsc);
+    Page<ReviewRequestResponseDto> findReviewRequestList(Pageable pageable, boolean isAsc, ReviewRequestStatus status);
 
     Page<ReviewRequestResponseDto> findSearchByTitleOrComment(String keyword, Pageable pageable);
     // 코드리뷰요청 목록 제목+내용 검색쿼리
-    Page<ReviewRequestResponseDto> findSearchByTitleOrCommentAdvanced(String keyword, Pageable pageable, boolean isAsc);
+    Page<ReviewRequestResponseDto> findSearchByTitleOrCommentAdvanced(String keyword, Pageable pageable, boolean isAsc, ReviewRequestStatus status);
     // 코드리뷰요청 상세정보 조회
     ReviewRequestDetailResponseDto getReviewRequestDetails(Long id);
     // 언어별 코드리뷰요청 카운팅

@@ -48,7 +48,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
     }
 
     @Override
-    public Page<ReviewRequestResponseDto> findReviewRequestList(Pageable pageable, boolean isAsc) {
+    public Page<ReviewRequestResponseDto> findReviewRequestList(Pageable pageable, boolean isAsc, ReviewRequestStatus status) {
 
         JPAQuery<ReviewRequestResponseDto> jpaQuery = query.select(new QReviewRequestResponseDto(
                         reviewRequest.id,
@@ -64,6 +64,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                                         .from(reviewRequestComment)
                                         .where(reviewRequestComment.reviewRequest.eq(reviewRequest)), "commentCount")
                 ))
+                .where(statusEqual(status))
                 .from(reviewRequest);
 
         JPQLQuery<ReviewRequestResponseDto> pagination = getQuerydsl().applyPagination(pageable, jpaQuery);
@@ -73,7 +74,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
     }
 
     @Override
-    public Page<ReviewRequestResponseDto> findSearchByTitleOrCommentAdvanced(String keyword, Pageable pageable, boolean isAsc) {
+    public Page<ReviewRequestResponseDto> findSearchByTitleOrCommentAdvanced(String keyword, Pageable pageable, boolean isAsc, ReviewRequestStatus status) {
 
         List<ReviewRequestResponseDto> results = query
                 .select(new QReviewRequestResponseDto(
@@ -93,6 +94,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                 .from(reviewRequest)
                 .join(reviewRequest.requestUser, user)
                 .where(containingTitleOrComment(keyword))
+                .where(statusEqual(status))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(isAsc ? reviewRequest.createdAt.desc() : reviewRequest.createdAt.asc())
@@ -184,7 +186,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                     result.getId(), result.getAnswerUser().getId(),
                     result.getRequestUser().getUsername(), result.getRequestUser().getNickname(),
                     result.getTitle(), result.getContent(),
-                    result.getStatus(), result.getCreatedAt(),
+                    result.getStatus(), result.getLanguageName(), result.getCreatedAt(),
                     comments,
                     reviewAnswerResponseDto
             );
@@ -193,7 +195,7 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
                 result.getId(), result.getAnswerUser().getId(),
                 result.getRequestUser().getUsername(),  result.getRequestUser().getNickname(),
                 result.getTitle(), result.getContent(),
-                result.getStatus(), result.getCreatedAt(),
+                result.getStatus(), result.getLanguageName(), result.getCreatedAt(),
                 comments
         );
     }

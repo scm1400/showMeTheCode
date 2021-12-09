@@ -31,7 +31,7 @@ public class ReviewRequestDetailResponseDto {
     public ReviewRequestDetailResponseDto(
             Long reviewRequestId, Long answerUserId,
             String username, String nickname,
-            String title, String content, ReviewRequestStatus status, LocalDateTime createdAt,
+            String title, String content, ReviewRequestStatus status, String languageName,LocalDateTime createdAt,
             List<CommentResponseDto> comments,
             ReviewAnswerResponseDto reviewAnswer
     ) {
@@ -42,6 +42,7 @@ public class ReviewRequestDetailResponseDto {
         this.title = title;
         this.content = content;
         this.status = status.getDescription();
+        this.languageName = languageName;
         this.createdAt = createdAt;
         this.comments = comments;
         this.reviewAnswer = reviewAnswer;
@@ -50,7 +51,7 @@ public class ReviewRequestDetailResponseDto {
     public ReviewRequestDetailResponseDto(
             Long reviewRequestId, Long answerUserId,
             String username, String nickname,
-            String title, String content, ReviewRequestStatus status, LocalDateTime createdAt,
+            String title, String content, ReviewRequestStatus status, String languageName, LocalDateTime createdAt,
             List<CommentResponseDto> comments
     ) {
         this.reviewRequestId = reviewRequestId;

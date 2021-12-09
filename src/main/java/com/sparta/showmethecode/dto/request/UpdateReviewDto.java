@@ -6,5 +6,6 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class UpdateReviewDto {
+    private String title;
     private String content;
 }

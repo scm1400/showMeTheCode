@@ -70,7 +70,7 @@ function addAnswer() {
 
     $.ajax({
         type: "POST",
-        url: `/reviewer/request/${questionId}`,
+        url: `/answer/${questionId}`,
         contentType: "application/json;charset=utf-8",
         data: JSON.stringify(data),
         success: function (res) {

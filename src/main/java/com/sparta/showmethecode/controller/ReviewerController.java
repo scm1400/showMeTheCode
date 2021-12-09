@@ -72,7 +72,6 @@ public class ReviewerController {
      * 리뷰요청에 대한 리뷰등록 API
      */
     @Secured("ROLE_REVIEWER")
-//    @PostMapping("/reviewer/request/{questionId}")
     @PostMapping("/answer/{questionId}")
     public ResponseEntity addReviewAndComment(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
@@ -88,7 +87,6 @@ public class ReviewerController {
      * 내가 답변한 리뷰목록 조회 API
      */
     @Secured({"ROLE_REVIEWER"})
-//    @GetMapping("/reviewer/answers")
     @GetMapping("/answers")
     public ResponseEntity getMyAnswerList(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
@@ -108,7 +106,6 @@ public class ReviewerController {
      * 답변한 리뷰 수정 API
      */
     @Secured({ "ROLE_REVIEWER"})
-//    @PutMapping("/reviewer/answer/{answerId}")
     @PutMapping("/answer/{answerId}")
     public ResponseEntity updateMyAnswer(
             @AuthenticationPrincipal UserDetailsImpl userDetails,

@@ -151,7 +151,7 @@ function addAnswerHtml(answer) {
     let point = answer['point'];
     let createdAt = answer['createdAt'];
 
-    $('#answer-username').html(nickname);
+    $('#answer-nickname').html(nickname);
     $('#answer-date').html(dateFormat(new Date(createdAt)));
     $('#answer-content').html(content);
 
@@ -162,6 +162,10 @@ function addAnswerHtml(answer) {
 // 댓글등록
 // ========================================
 function addComment() {
+    if(sessionStorage.getItem("mytoken")==null)
+    {
+        return alert("로그인 후 이용해주세요.")
+    }
     let questionId = getParameterByName("id");
     let content = CKEDITOR.instances["content-comment"].getData();
 

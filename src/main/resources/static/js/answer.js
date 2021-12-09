@@ -29,6 +29,8 @@ function getDetails() {
             $('#request-title').html(title);
             $('#user-name').html(username);
             $('#created-at').html(date);
+            $('#received_content').html(content);
+
 
             $('#question-status').text(status)
 
@@ -45,15 +47,46 @@ function getDetails() {
                 $('#content-answer-markdown-box').hide()
                 $('#addAnswerBtn').hide()
                 $('#content-answer-text').show()
-                $('#content-answer-text').html(content)
+                $('#content-answer-text').html(answerContent)
+                $('#question-comment-form-box2').hide()
+                $('#answer-section2').show();
+                $('#answer-content2').html(answerContent)
+
             // 답변이 없는 경우 답변이 가능하도록 textarea (markdown폼)을 랜더링
             } else {
                 $('#addAnswerBtn').show()
                 $('#content-answer-markdown-box').show()
                 $('#content-answer-text').hide()
+                $('#question-comment-form-box2').hide()
+                $('#answer-section2').hide();
+
             }
         }
     })
+}
+
+function addComment2() {
+    if(sessionStorage.getItem("token")==null)
+    {
+        return alert("로그인 후 이용해주세요.")
+    }
+    let questionId = getParameterByName("id");
+    let content = CKEDITOR.instances["content-answer2"].getData();
+
+    let data = {content: content};
+
+    console.log(data);
+
+    $.ajax({
+        type: "POST",
+        url: `/question/${questionId}/comment`,
+        contentType: "application/json;charset=utf-8;",
+        data: JSON.stringify(data),
+        success: function (res) {
+            alert("댓글작성 완료");
+            window.location.reload();
+        },
+    });
 }
 
 /**

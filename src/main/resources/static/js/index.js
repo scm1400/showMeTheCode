@@ -2,6 +2,8 @@ function go_back() {
     history.go(-1);
 }
 
+// let base_url = "http://aws-lb-1144110396.ap-northeast-2.elb.amazonaws.com"
+
 // let subscribeUrl = "http://localhost:8080"
 $(document).ready(function () {
 
@@ -546,7 +548,9 @@ function loginCheck() {
         $('#logoutBtnMobile').show()
         $('#myPageBtnMobile').show()
 
+
         $('#writeBtn').show()
+
         $('#changeReviewContentBtn').show();
         $('#changeReviewerBtn').show();
         $('#deleteReviewBtn').show();

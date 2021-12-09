@@ -91,13 +91,13 @@ public class ReviewRequestController {
      * 코드리뷰 삭제 API
      */
     @Secured({"ROLE_USER", "ROLE_REVIEWER"})
-    @DeleteMapping("/question/{questionId}")
+    @DeleteMapping("/question/{id}")
     public ResponseEntity deleteReviewRequest(
-            @PathVariable Long questionId,
+            @PathVariable Long id,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         User user = userDetails.getUser();
-        reviewRequestService.deleteReviewRequest(questionId, user);
+        reviewRequestService.deleteReviewRequest(id, user);
         return ResponseEntity.ok("ok");
     }
 

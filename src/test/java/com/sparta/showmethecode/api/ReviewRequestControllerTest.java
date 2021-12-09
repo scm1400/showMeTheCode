@@ -23,6 +23,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,8 +47,8 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -237,7 +238,7 @@ public class ReviewRequestControllerTest {
     }
 
     @Order(4)
-    @DisplayName("3. 코드리뷰 요청 수정")
+    @DisplayName("4. 코드리뷰 요청 수정")
     @Test
     void 코드리뷰_수정() throws Exception {
         UpdateReviewDto updateReviewDto = new UpdateReviewDto("제목수정", "내용수정");
@@ -245,19 +246,44 @@ public class ReviewRequestControllerTest {
 
         String token = createTokenAndSpringSecuritySetting();
 
-        mockMvc.perform(put("/question/" + reviewRequest.getId())
+        mockMvc.perform(RestDocumentationRequestBuilders.put("/question/{id}", reviewRequest.getId())
                         .header(HttpHeaders.AUTHORIZATION, TOKEN_PREFIX + token)
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
                         .characterEncoding(StandardCharsets.UTF_8)
                         .content(dtoJson)
                 ).andExpect(status().isOk())
                 .andDo(document("put-question",
+                                pathParameters(
+                                        parameterWithName("id").description("리뷰요청_ID")
+                                ),
                                 requestHeaders(
                                         headerWithName("Authorization").description("JWT token")
                                 ),
                                 requestFields(
-                                        fieldWithPath("title").description("수정하고자 하는 제목"),
-                                        fieldWithPath("content").description("수정하고자 하는 내용")
+                                        fieldWithPath("title").description("수정하고자_하는_제목"),
+                                        fieldWithPath("content").description("수정하고자_하는_내용")
+                                )
+                        )
+                );
+    }
+
+    @Order(5)
+    @DisplayName("5. 코드리뷰 요청 삭제")
+    @Test
+    void 코드리뷰_삭제() throws Exception {
+        String token = createTokenAndSpringSecuritySetting();
+
+        mockMvc.perform(RestDocumentationRequestBuilders.delete("/question/{id}", reviewRequest.getId())
+                        .header(HttpHeaders.AUTHORIZATION, TOKEN_PREFIX + token)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                        .characterEncoding(StandardCharsets.UTF_8)
+                ).andExpect(status().isOk())
+                .andDo(document("delete-question",
+                                pathParameters(
+                                        parameterWithName("id").description("리뷰요청_ID")
+                                ),
+                                requestHeaders(
+                                        headerWithName("Authorization").description("JWT token")
                                 )
                         )
                 );

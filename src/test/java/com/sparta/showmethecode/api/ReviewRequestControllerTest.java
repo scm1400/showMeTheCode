@@ -234,20 +234,44 @@ public class ReviewRequestControllerTest {
                                 )
                         )
                 );
-
-        @Order(4)
-        @DisplayName("3. 코드리뷰 요청 수정")
-        @Test
-        void 코드리뷰_수정() {
-            UpdateReviewDto updateReviewDto = new UpdateReviewDto("제목수정", "내용수정");
-            String dtoJson = new Gson().toJson(updateReviewDto);
-
-            mockMvc.perform(put("/question/"+reviewRequest.getId())
-                    .header(HttpHeaders.CONTENT_TYPE, )
-            )
-        }
-
     }
 
+    @Order(4)
+    @DisplayName("3. 코드리뷰 요청 수정")
+    @Test
+    void 코드리뷰_수정() throws Exception {
+        UpdateReviewDto updateReviewDto = new UpdateReviewDto("제목수정", "내용수정");
+        String dtoJson = new Gson().toJson(updateReviewDto);
+
+        String token = createTokenAndSpringSecuritySetting();
+
+        mockMvc.perform(put("/question/" + reviewRequest.getId())
+                        .header(HttpHeaders.AUTHORIZATION, TOKEN_PREFIX + token)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .content(dtoJson)
+                ).andExpect(status().isOk())
+                .andDo(document("put-question",
+                                requestHeaders(
+                                        headerWithName("Authorization").description("JWT token")
+                                ),
+                                requestFields(
+                                        fieldWithPath("title").description("수정하고자 하는 제목"),
+                                        fieldWithPath("content").description("수정하고자 하는 내용")
+                                )
+                        )
+                );
+    }
+
+    private String createTokenAndSpringSecuritySetting() {
+        UserDetailsImpl userDetails = new UserDetailsImpl(user);
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authToken);
+
+        return token = jwtUtils.createToken(userDetails.getUsername());
+    }
 
 }
+
+
+

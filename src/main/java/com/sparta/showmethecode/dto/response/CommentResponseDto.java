@@ -21,6 +21,7 @@ public class CommentResponseDto {
         this.commentId = commentId;
         this.userId = userId;
         this.username = username;
+        this.nickname = nickname;
         this.content = content;
         this.createdAt = createdAt;
     }

@@ -171,6 +171,11 @@ public class ReviewRequestDaoImpl extends QuerydslRepositorySupport implements R
             ).collect(Collectors.toList());
         }
 
+        for (CommentResponseDto comment : comments) {
+            System.out.println(comment);
+        }
+
+
         ReviewAnswer reviewAnswer = result.getReviewAnswer();
         if (!Objects.isNull(reviewAnswer)) {
             ReviewAnswerResponseDto reviewAnswerResponseDto = new ReviewAnswerResponseDto(

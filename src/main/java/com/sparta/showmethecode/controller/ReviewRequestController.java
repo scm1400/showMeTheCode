@@ -1,5 +1,6 @@
 package com.sparta.showmethecode.controller;
 
+import com.sparta.showmethecode.domain.ReviewRequestStatus;
 import com.sparta.showmethecode.domain.User;
 import com.sparta.showmethecode.dto.request.ChangeReviewerDto;
 import com.sparta.showmethecode.dto.request.ReviewRequestDto;
@@ -31,15 +32,15 @@ public class ReviewRequestController {
     public ResponseEntity<PageResponseDto> getReviewRequestList(
             @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "createdAt") String sortBy, @RequestParam(defaultValue = "true") Boolean isAsc,
-            @RequestParam(required = false) String query
+            @RequestParam(required = false) String query, @RequestParam(required = false, defaultValue = "ALL") ReviewRequestStatus status
     ) {
         --page;
 
         if (!Objects.isNull(query)) {
-            return ResponseEntity.ok(reviewRequestService.searchByTitleOrComment(query, page, size, sortBy, isAsc));
+            return ResponseEntity.ok(reviewRequestService.searchByTitleOrComment(query, page, size, sortBy, isAsc, status));
         }
 
-        PageResponseDto result = reviewRequestService.getReviewRequestList(page, size, sortBy, isAsc);
+        PageResponseDto result = reviewRequestService.getReviewRequestList(page, size, sortBy, isAsc, status);
 
         return ResponseEntity.ok(result);
     }
@@ -63,7 +64,7 @@ public class ReviewRequestController {
     /**
      * 코드리뷰 단건조회 API (코드리뷰 요청 상세정보)
      */
-    @GetMapping("/details")
+    @GetMapping("/question")
     public ResponseEntity<ReviewRequestDetailResponseDto> getReviewRequest(@RequestParam Long id) {
         ReviewRequestDetailResponseDto reviewRequest = reviewRequestService.getReviewRequest(id);
 

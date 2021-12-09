@@ -38,10 +38,10 @@ public class ReviewRequestService {
      * 코드리뷰 요청목록 API
      */
     @Transactional(readOnly = true)
-    public PageResponseDto getReviewRequestList(int page, int size, String sortBy, boolean isAsc) {
+    public PageResponseDto getReviewRequestList(int page, int size, String sortBy, boolean isAsc, ReviewRequestStatus status) {
         Pageable pageable = makePageable(page, size, sortBy, isAsc);
 
-        Page<ReviewRequestResponseDto> reviewRequestList = reviewRequestRepository.findReviewRequestList(pageable, isAsc);
+        Page<ReviewRequestResponseDto> reviewRequestList = reviewRequestRepository.findReviewRequestList(pageable, isAsc, status);
 
         return new PageResponseDto<ReviewRequestResponseDto>(
                 reviewRequestList.getContent(),
@@ -57,10 +57,11 @@ public class ReviewRequestService {
     @Transactional(readOnly = true)
     public PageResponseDto<ReviewRequestResponseDto> searchByTitleOrComment(
             String keyword,
-            int page, int size, String sortBy, boolean isAsc
+            int page, int size, String sortBy, boolean isAsc,
+            ReviewRequestStatus status
     ) {
         Pageable pageable = makePageable(page, size, sortBy, isAsc);
-        Page<ReviewRequestResponseDto> results = reviewRequestRepository.findSearchByTitleOrCommentAdvanced(keyword, pageable, isAsc);
+        Page<ReviewRequestResponseDto> results = reviewRequestRepository.findSearchByTitleOrCommentAdvanced(keyword, pageable, isAsc, status);
 
         return new PageResponseDto<ReviewRequestResponseDto>(
                 results.getContent(),

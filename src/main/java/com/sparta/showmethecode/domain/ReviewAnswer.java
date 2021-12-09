@@ -60,4 +60,11 @@ public class ReviewAnswer extends Timestamped {
         this.getComments().add(comment);
         comment.setReviewAnswer(this);
     }
+
+    public ReviewAnswer(String content, double point, User answerUser, ReviewRequest reviewRequest) {
+        this.content = content;
+        this.point = point;
+        this.answerUser = answerUser;
+        this.reviewRequest = reviewRequest;
+    }
 }

@@ -10,6 +10,30 @@ $(document).ready(function () {
     getRanking();
     getRankingAll();
     getTag();
+
+    $("ul.status").find('li').each(function (i, e) {
+        console.log($(this).data('status'))
+        if ($(this).data('status') == getParameterByName("status")) {
+            $(this).addClass('active')
+        }
+        else(
+            $(this).removeClass('active')
+        )
+    })
+
+    $("ul.status li").click(function () {
+        let URLSearch = new URLSearchParams(location.search);
+        $("ul.status li").removeClass("active")
+        $(this).addClass("active")
+        let status = $(this).data('status')
+
+
+        URLSearch.set('status', status)
+
+        let newParam = URLSearch.toString();
+
+        window.open(location.pathname + '?' + newParam, '_self')
+    })
 })
 
 // ========================================

@@ -47,7 +47,7 @@ public class ReviewRequestController {
     /**
      * 코드리뷰 요청 API
      */
-    @Secured({"ROLE_USER", "ROLE_REVIEWER"})
+    @Secured({"USER", "REVIEWER"})
     @PostMapping("/question")
     public ResponseEntity<String> addReviewRequest(
             @AuthenticationPrincipal UserDetailsImpl userDetails,

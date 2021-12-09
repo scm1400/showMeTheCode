@@ -91,12 +91,13 @@ public class UserService {
         }
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(requestDto.getUsername());
-        String token = jwtUtils.createToken(userDetails.getUsername());
+        Token token = jwtUtils.createToken(userDetails.getUsername());
 
         String authority = userDetails.getAuthorities().stream().findFirst().get().toString();
 
         return new SigninResponseDto(token, authority, HttpStatus.CREATED, "로그인에 성공했습니다.");
     }
+
 
     public List<String> getMyLanguage(Long userId) {
         return languageRepository.findByUserId(userId);

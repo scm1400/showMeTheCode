@@ -1,12 +1,16 @@
 package com.sparta.showmethecode.security;
 
+import com.sparta.showmethecode.service.Token;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import java.util.Base64;
 import java.util.Date;
 
 @RequiredArgsConstructor
@@ -15,19 +19,54 @@ import java.util.Date;
 public class JwtUtils {
 
     private final UserDetailsServiceImpl userDetailsService;
-    private final String JWT_SECRET = "secret";
-    private final SignatureAlgorithm SIGNATURE = SignatureAlgorithm.HS256;
+//    private final SignatureAlgorithm SIGNATURE = SignatureAlgorithm.HS256;
+    private String JWT_SECRET = "secret";
 
-    public String createToken(String username) {
+    @PostConstruct
+    protected void init() {
+        JWT_SECRET = Base64.getEncoder().encodeToString(JWT_SECRET.getBytes());
+    }
 
-        Claims claims = Jwts.claims();
-        claims.put("username", username);
+    public Token createToken(String uid) {
 
-        return Jwts.builder()
-                .setClaims(claims)
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
-                .signWith(SIGNATURE, JWT_SECRET)
-                .compact();
+        long tokenPeriod = 1000L * 60L * 10L;
+        long refreshPeriod = 1000L * 60L * 60L * 24L * 30L * 3L;
+        Date now = new Date();
+
+        Claims claims = Jwts.claims().setSubject(uid);
+
+        System.out.println("ooooooooooooooooooooooooo");
+
+        return new Token(
+                Jwts.builder()
+                        .setClaims(claims)
+                        .setIssuedAt(now)
+                        .setExpiration(new Date(now.getTime() + tokenPeriod))
+                        .signWith(SignatureAlgorithm.HS256, JWT_SECRET)
+                        .compact(),
+                Jwts.builder()
+                        .setClaims(claims)
+                        .setIssuedAt(now)
+                        .setExpiration(new Date(now.getTime() + refreshPeriod))
+                        .signWith(SignatureAlgorithm.HS256, JWT_SECRET)
+                        .compact());
+    }
+
+    public boolean verifyToken(String token) {
+        try {
+            Jws<Claims> claims = Jwts.parser()
+                    .setSigningKey(JWT_SECRET)
+                    .parseClaimsJws(token);
+            return claims.getBody()
+                    .getExpiration()
+                    .after(new Date());
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public String getUid(String token) {
+        return Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody().getSubject();
     }
 
     public Long getUserIdFromToken(String token) {

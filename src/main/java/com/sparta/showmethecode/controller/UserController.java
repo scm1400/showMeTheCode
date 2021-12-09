@@ -20,6 +20,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -70,6 +71,7 @@ public class UserController {
         return userService.signin(requestDto);
     }
 
+
     /**
      * 해당 언어의 리뷰어 조회 API
      */
@@ -87,6 +89,7 @@ public class UserController {
     @Secured({"ROLE_USER", "ROLE_REVIEWER"})
     @PostMapping("/user/logout")
     public BasicResponseDto logout() {
+//        System.out.println("되니?");
         SecurityContextHolder.clearContext();
 
         return new BasicResponseDto(null, "success", "로그아웃 완료", HttpStatus.OK);

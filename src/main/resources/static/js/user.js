@@ -106,7 +106,7 @@ function signin() {
 
 
 
-    console.log('로그인')
+    // console.log('로그인')
     let username = $('#signin-id').val()
     let password = $('#signin-password').val()
 
@@ -123,8 +123,9 @@ function signin() {
         contentType: "application/json;charset=utf-8;",
         data: JSON.stringify(data),
         success: function(res) {
-            sessionStorage.setItem("mytoken", res['token'])
-            sessionStorage.setItem("myAuthority", res['authority'])
+            console.log(res)
+            sessionStorage.setItem("mytoken", res['token'].token)
+            sessionStorage.setItem("myAuthority", res['token'].authority)
             alert('로그인에 성공했습니다.')
             location.href = "index.html";
         }, error: function(err) {
@@ -189,8 +190,9 @@ function signup() {
 function logout() {
     $.ajax({
         type: "POST",
-        url: "/logout",
+        url: "/user/logout",
         success: function(res) {
+            console.log(res)
             if (res['result'] == "success") {
                 sessionStorage.clear();
                 alert(res['message'])

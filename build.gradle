@@ -51,23 +51,15 @@ dependencies {
 
 // ==== Spring Rest Docs ==== //
 ext {
-    snippetsDir = file('build/generated-snippets')
-}
-
-bootJar {
-    dependsOn asciidoctor
-    from ("${asciidoctor.outputDir}/html5") {
-        into 'static/docs'
-    }
-}
-
-jar {
-    enabled = false
+    set('snippetsDir', file("build/generated-snippets"))
 }
 
 test {
-    useJUnitPlatform()
     outputs.dir snippetsDir
+    useJUnitPlatform()
+    filter {
+        includeTestsMatching "com.sparta.showmethecode.controller.*"
+    }
 }
 
 asciidoctor {
@@ -75,17 +67,10 @@ asciidoctor {
     dependsOn test
 }
 
-asciidoctor.doFirst {
-    delete file('src/main/resources/static/docs')
-}
-
-task copyDocument(type: Copy) {
+bootJar {
     dependsOn asciidoctor
-    from file("build/docs/asciidoc")
-    into file("src/main/resources/static/docs")
-}
-
-build {
-    dependsOn copyDocument
+    from ("${asciidoctor.outputDir}/html5") {
+        into "/static/docs"
+    }
 }
 // ==== Spring Rest Docs ==== //

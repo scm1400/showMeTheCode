@@ -108,7 +108,6 @@ public class ReviewerController {
      * 답변한 리뷰 수정 API
      */
     @Secured({ "ROLE_REVIEWER"})
-//    @PutMapping("/reviewer/answer/{answerId}")
     @PutMapping("/answer/{answerId}")
     public ResponseEntity updateMyAnswer(
             @AuthenticationPrincipal UserDetailsImpl userDetails,

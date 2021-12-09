@@ -31,7 +31,6 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
-    private final ReviewerService reviewerService;
 
     @PostMapping("/user/signup")
     public ResponseEntity<BasicResponseDto> signup(@Valid @RequestBody SignupRequestDto requestDto, Errors error) {
